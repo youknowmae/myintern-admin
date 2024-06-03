@@ -1,0 +1,31 @@
+<div class="container">
+    <div class="logo">
+        <h1>LOGO</h1>
+    </div>
+
+    <div class="container-content">
+        <div class="left-container">
+            <img src="assets/images/clipart.png" class="clipart" height="720" width="720">
+            
+            <div class="school-logo">
+                <img src="assets/images/ccs.png" class="ccs" height="100" width="100">
+                <img src="assets/images/GC.png" height="120" width="120">
+            </div>
+        </div>
+
+        <div class="right-container">
+            <h2>Welcome Adviser!</h2>
+
+            <div class="content">
+                <div class="input">
+                    <input type="email" name="email" placeholder="Enter Domain Email" required>      
+                </div>
+                <div class="input2">
+                    <input type="password" name="password" placeholder="Password" required>      
+                </div>
+
+                <button [routerLink]="['/main']" routerLinkActive="router-link-active" >Login</button>
+            </div>
+        </div>
+    </div>
+</div>
