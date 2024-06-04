@@ -20,42 +20,37 @@
         <div class="navigation-links">
             <li class="item">
                 <span class="side-link">
-                    <i class="fa-solid fa-handshake-angle"></i> Industry Partners
+                    <i class="fa-solid fa-handshake-angle" [routerLink]="['dashboard']" routerLinkActive="router-link-active" ></i> Dashboard
                 </span>
             </li>
             <li class="item">
                 <span class="side-link"> 
-                    <i class="fa-solid fa-user"></i> Profile
+                    <i class="fa-solid fa-handshake-angle" [routerLink]="['/main/industrypartners']" routerLinkActive="router-link-active" ></i> Industry Partners
                 </span>
             </li>
             <li class="item">
                 <span class="side-link"> 
-                    <i class="fa-solid fa-file"></i> Templates
+                    <i class="fa-solid fa-file" [routerLink]="['requirements']" routerLinkActive="router-link-active" ></i> Student's Requirements
                 </span>
             </li>
             <li class="item">
                 <span class="side-link"> 
-                    <i class="fa-solid fa-clock"></i> Application Status
+                    <i class="fa-solid fa-clock" [routerLink]="['Students']" routerLinkActive="router-link-active" ></i> Students
                 </span>
             </li>
             <li class="item">
                 <span class="side-link"> 
-                    <i class="fa-solid fa-map"></i> Map
+                    <i class="fa-solid fa-map" [routerLink]="['templates']" routerLinkActive="router-link-active" ></i> Template
                 </span>
             </li>
             <li class="item">
                 <span class="side-link"> 
-                    <i class="fa-solid fa-file"></i> Accomplishment Form
+                    <i class="fa-solid fa-file" [routerLink]="['announcement']" routerLinkActive="router-link-active" ></i> Announcement
                 </span>
             </li>
             <li class="item">
                 <span class="side-link"> 
-                    <i class="fa-solid fa-file"></i> Performance Evaluation
-                </span>
-            </li>
-            <li class="item">
-                <span class="side-link"> 
-                    <i class="fa-solid fa-square-poll-horizontal"></i> OJT Exit Poll
+                    <i class="fa-solid fa-square-poll-horizontal" [routerLink]="['exitpoll']" routerLinkActive="router-link-active" ></i> OJT Exit Poll
                 </span>
             </li>
         </div>
@@ -66,7 +61,10 @@
 
     <div class="body-content">
         <div class="container"> 
-            <router-outlet></router-outlet> 
+            <router-outlet></router-outlet>
+            <!-- <div class="notif">
+                <i class="fa-solid fa-bell"></i>
+            </div>  -->
         </div>
     </div>
 </div>
