@@ -13,7 +13,7 @@
             <p>SBMA, Olongapo City</p>
     
             <div class="view-button">
-                <button class="view"><b>View</b></button>
+                <button class="view" [routerLink]="['insideview1']" routerLinkActive="router-link-active" ><b>View</b></button>
             </div>
         </div>
         <div class="card">
@@ -99,3 +99,9 @@
         </div>
     </div>
 </main>
+
+<div class="body-content">
+    <div class="container">  
+        <router-outlet></router-outlet>
+    </div>
+</div>

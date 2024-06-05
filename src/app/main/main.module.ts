@@ -17,6 +17,7 @@ import { StudentsModule } from './components/students/students.module';
 import { TemplatesModule } from './components/templates/templates.module';
 import { ExitpollModule } from './components/exitpoll/exitpoll.module';
 import { RequirementsModule } from './components/requirements/requirements.module';
+import { Insideview1Component } from './components/industrypartners/components/insideview1/insideview1.component';
 
 
 @NgModule({
