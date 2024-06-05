@@ -1,15 +1,14 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { IndustrypartnersComponent } from './industrypartners.component';
-import { Insideview1Component } from './components/insideview1/insideview1.component';
-import { Addnew1Component } from './components/addnew1/addnew1.component';
 import { ListComponent } from './components/list/list.component';
+import { ViewComponent } from './components/view/view.component';
+import { AddnewComponent } from './components/addnew/addnew.component';
 
 const routes: Routes = [
   { path: '', redirectTo: 'list', pathMatch: 'full' },
   { path: 'list', component: ListComponent },
-  { path: 'insideview1', component: Insideview1Component },
-  { path: 'addnew1', component: Addnew1Component }
+  { path: 'view', component: ViewComponent },
+  { path: 'addnew', component: AddnewComponent }
 ];
 
 @NgModule({

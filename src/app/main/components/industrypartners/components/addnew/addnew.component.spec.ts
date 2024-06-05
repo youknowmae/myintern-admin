@@ -1,18 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { Insideview1Component } from './insideview1.component';
+import { AddnewComponent } from './addnew.component';
 
-describe('Insideview1Component', () => {
-  let component: Insideview1Component;
-  let fixture: ComponentFixture<Insideview1Component>;
+describe('AddnewComponent', () => {
+  let component: AddnewComponent;
+  let fixture: ComponentFixture<AddnewComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [Insideview1Component]
+      declarations: [AddnewComponent]
     })
     .compileComponents();
     
-    fixture = TestBed.createComponent(Insideview1Component);
+    fixture = TestBed.createComponent(AddnewComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
