@@ -1,12 +1,17 @@
 /* You can add global styles to this file, and also import other style files */
 
-
+* {
+    font-family: 'Poppins'; 
+    outline: none;
+    margin: 0;
+}
 
 :root {
     font-size: 100%;
     --primary-color: #E8751A;
+    --primary-font-color: white;
     --font-color: white;
-    --secondary-color: red;
+    --secondary-color: #898121;
     --main-green: #31A463;
     --border-color: #fff;
     --shadow: 0 4px 8px rgba(0,0,0,0.1);
@@ -18,7 +23,6 @@ html, body { height: 100%; }
 
 body { 
     margin: 0; 
-    font-family: 'Poppins';
     background-color: white;
     overflow: hidden;
 }
@@ -28,6 +32,6 @@ body {
 }
 
 *::-webkit-scrollbar-thumb {
-    background-color: rgba(49, 164, 99, .3);
+    background-color: rgba(232, 117, 26, .3);
     border-radius: 10px;
 }

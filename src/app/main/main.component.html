@@ -1,70 +1,68 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 
 <div>
-    <!-- <div class="rectangle"></div> -->
-
     <nav class="sidebar-content">
-        <!-- <div class="profile">
-            <img src="assets/images/profile.png" alt="Image" style="margin-bottom: 5px;" height="140px" width="140px">
-            <h3>Juan Dela Cruz</h3>
-            <p style="margin-bottom: 10px;">CCS / BSIT</p>
-        </div> -->
-        <div class="profile">
-            <div class="logo">
-                <img src="assets/images/profile.png" alt="Image">
+        <div>
+            <div class="profile">
+                <div class="logo">
+                    <img src="assets/images/profile.png" alt="Image">
+                </div>
+                <h3>Juan Dela Cruz</h3>
+                <p>CCS / BSIT</p>
             </div>
-            <h3>Juan Dela Cruz</h3>
-            <p>CCS / BSIT</p>
+            
+            <div class="navigation-links">
+                <li class="item" [routerLink]="['dashboard']" routerLinkActive="router-link-active" >
+                    <span class="side-link">
+                        <i class="fa-solid fa-handshake-angle" [routerLink]="['dashboard']" routerLinkActive="router-link-active" ></i> Dashboard
+                    </span>
+                </li>
+                <li class="item"  [routerLink]="['industrypartners']" routerLinkActive="router-link-active" >
+                    <span class="side-link"> 
+                        <i class="fa-solid fa-handshake-angle" [routerLink]="['/main/industrypartners']" routerLinkActive="router-link-active" ></i> Industry Partners
+                    </span>
+                </li>
+                <li class="item" [routerLink]="['requirements']" routerLinkActive="router-link-active" >
+                    <span class="side-link"> 
+                        <i class="fa-solid fa-file"></i> Student's Requirements
+                    </span>
+                </li>
+                <li class="item" [routerLink]="['students']" routerLinkActive="router-link-active">
+                    <span class="side-link"> 
+                        <i class="fa-solid fa-clock"></i> Students
+                    </span>
+                </li>
+                <li class="item" [routerLink]="['templates']" routerLinkActive="router-link-active" >
+                    <span class="side-link"> 
+                        <i class="fa-solid fa-map"></i> Template
+                    </span>
+                </li>
+                <li class="item" [routerLink]="['announcement']" routerLinkActive="router-link-active" >
+                    <span class="side-link"> 
+                        <i class="fa-solid fa-file"></i> Announcement
+                    </span>
+                </li>
+                <li class="item" [routerLink]="['exitpoll']" routerLinkActive="router-link-active" >
+                    <span class="side-link"> 
+                        <i class="fa-solid fa-square-poll-horizontal"></i> OJT Exit Poll
+                    </span>
+                </li>
+            </div>
         </div>
-
-        <div class="navigation-links">
-            <li class="item">
-                <span class="side-link">
-                    <i class="fa-solid fa-handshake-angle" [routerLink]="['dashboard']" routerLinkActive="router-link-active" ></i> Dashboard
-                </span>
-            </li>
-            <li class="item">
-                <span class="side-link"> 
-                    <i class="fa-solid fa-handshake-angle" [routerLink]="['/main/industrypartners']" routerLinkActive="router-link-active" ></i> Industry Partners
-                </span>
-            </li>
-            <li class="item">
-                <span class="side-link"> 
-                    <i class="fa-solid fa-file" [routerLink]="['requirements']" routerLinkActive="router-link-active" ></i> Student's Requirements
-                </span>
-            </li>
-            <li class="item">
-                <span class="side-link"> 
-                    <i class="fa-solid fa-clock" [routerLink]="['Students']" routerLinkActive="router-link-active" ></i> Students
-                </span>
-            </li>
-            <li class="item">
-                <span class="side-link"> 
-                    <i class="fa-solid fa-map" [routerLink]="['templates']" routerLinkActive="router-link-active" ></i> Template
-                </span>
-            </li>
-            <li class="item">
-                <span class="side-link"> 
-                    <i class="fa-solid fa-file" [routerLink]="['announcement']" routerLinkActive="router-link-active" ></i> Announcement
-                </span>
-            </li>
-            <li class="item">
-                <span class="side-link"> 
-                    <i class="fa-solid fa-square-poll-horizontal" [routerLink]="['exitpoll']" routerLinkActive="router-link-active" ></i> OJT Exit Poll
-                </span>
-            </li>
-        </div>
-        <div class="logout-icon">
-            <i class="fa-solid fa-right-from-bracket" [routerLink]="['/login']" routerLinkActive="router-link-active" ></i>
+        
+        <div class="logout">
+            <div class="logout-icon">
+                <i class="fa-solid fa-right-from-bracket" [routerLink]="['/login']" routerLinkActive="router-link-active" ></i>
+            </div>
         </div>
     </nav>
 
     <div class="body-content">
         <div class="container"> 
-            <router-outlet></router-outlet>
-            <!-- <div class="notif">
+            <div class="notif">
                 <i class="fa-solid fa-bell"></i>
-            </div>  -->
+            </div> 
+            <router-outlet></router-outlet>
         </div>
     </div>
 </div>
