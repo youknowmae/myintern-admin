@@ -1,0 +1,35 @@
+h1 {
+    color: var(--secondary-color);
+    opacity: .5;
+    font-size: 60px;
+    font-weight: 400;
+    padding: 10px;
+}
+
+.buttons {
+    display: flex;
+    margin-left: 40px;
+
+    button {
+        margin-right: 30px;
+        font-size: 15px;
+        background-color: #ffffff;
+        border: none;
+        cursor: pointer;
+        color: var(--primary-color);
+        margin-bottom: 10px;
+    }
+}
+
+.container {
+    background-color: none;
+    border: 1px solid var(--primary-color);
+    height: 60%;
+    border-radius: 37px;
+
+    .container-header {
+        display: flex;
+        justify-content: space-evenly;
+        margin-top: 15px;
+    }
+}
