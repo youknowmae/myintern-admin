@@ -8,7 +8,6 @@ import { RequirementsComponent } from './components/requirements/requirements.co
 import { StudentsComponent } from './components/students/students.component';
 import { TemplatesComponent } from './components/templates/templates.component';
 import { IndustrypartnersComponent } from './components/industrypartners/industrypartners.component';
-import { Insideview1Component } from './components/industrypartners/components/insideview1/insideview1.component';
 
 const routes: Routes = [
   { path: '', redirectTo: 'dashboard', pathMatch: 'full' },

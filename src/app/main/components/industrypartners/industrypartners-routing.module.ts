@@ -4,7 +4,7 @@ import { IndustrypartnersComponent } from './industrypartners.component';
 import { Insideview1Component } from './components/insideview1/insideview1.component';
 
 const routes: Routes = [
-  // { path: '', component: IndustrypartnersComponent }
+  { path: '', redirectTo: 'industrypartners', pathMatch: 'full' },
   { path: 'insideview1', component: Insideview1Component }
 ];
 
