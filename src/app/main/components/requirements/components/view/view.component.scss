@@ -1,0 +1,158 @@
+.container-header {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    h1 {
+        color: var(--secondary-color);
+        opacity: .5;
+        font-size: 60px;
+        font-weight: 400;
+        padding: 10px;
+    }
+}
+
+.container {
+    display: flex;
+    // flex-direction: column;
+    margin-top: 30px;
+    width: 100%;
+    margin: 0 auto;
+
+    .left-content {
+        display: flex;
+        flex-direction: column;
+        width: 100%;
+        justify-content: center;
+        margin-right: 30px;
+        justify-content: normal;
+
+        .comment {
+            display: flex;
+            align-items: center;
+            border: none;
+            background-color: #E5C287;
+            height: 80px;
+            justify-content: center;  
+            border-radius: 15px;  
+            
+            i {
+                font-size: 35px;
+                color: #ffffff;
+                margin-right: 5px;
+            }
+
+            input {
+                width: 340px;
+                height: 60px;
+                font-size: 15px;
+                background-color: #E5C287;
+                border: none;
+            }
+
+            .material-symbols-outlined {
+                font-size: 35px;
+                cursor: pointer;
+                color: #ffffff;
+            }
+        }
+
+        .upload {
+            display: block;
+            margin-right: 50px;
+            width: 100%;
+            background-color: #E5C287;
+            border-radius: 15px;
+            // height: 225px;
+            margin-bottom: 20px;
+    
+            .upload-content {
+                padding-left: 10px;
+    
+                .back-btn {
+                    padding-top: 15px;
+                    color: #898121;
+                    padding-bottom: 15px;
+                    cursor: pointer;
+                }
+    
+                p {
+                    color: #898121;
+                    font-size: 24px;
+                    padding-bottom: 8px;
+                }
+                
+                .uploaded {
+                    .inside-uploaded {
+                        border: none;
+                        background-color: #B9B042;
+                        width: 97.5%;
+                        margin-bottom: 15px;
+                        display: flex;
+                        align-items: center;
+                        height: 40px;
+
+                        .material-symbols-outlined {
+                            font-size: 40px;
+                            padding-right: 20px;
+                            padding-left: 20px;
+                        }
+
+                        p {
+                            font-size: 20px;
+                            color: black;
+                        }
+
+                        i {
+                            font-size: 20px;
+                            display: flex;
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    .right-content {
+        .content {
+            display: flex;
+            flex-direction: column;
+            background-color: #E5C287;
+            border-radius: 15px;
+            width: 100%;
+
+            .image {
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                margin-top: 20px;
+                img {
+                    width: 200px;
+                    height: 200px;
+                    padding: 20px;
+                    background-color: rebeccapurple;
+                }
+            }
+
+            .content-info {
+                padding-left: 20px;
+                padding-bottom: 20px;
+                padding-right: 10px;
+            }
+
+            .submit-btn {
+                background-color: #898121;
+                border: none;
+                border-radius: 2rem;
+                padding: 10px;
+                width: 20%;
+                text-align: center;
+                color: #ffffff;
+                float: right;
+                margin: 0 10px 10px 0;
+                cursor: pointer;
+            }
+        }
+    }
+}

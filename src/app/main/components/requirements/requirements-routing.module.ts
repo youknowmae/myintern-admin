@@ -1,9 +1,12 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { RequirementsComponent } from './requirements.component';
+import { ListComponent } from './components/list/list.component';
+import { ViewComponent } from './components/view/view.component';
 
 const routes: Routes = [
-  // { path: '', component: RequirementsComponent }
+  { path: '', redirectTo: 'list', pathMatch: 'full' },
+  { path: 'list', component: ListComponent },
+  { path: 'view', component: ViewComponent }
 ];
 
 @NgModule({
