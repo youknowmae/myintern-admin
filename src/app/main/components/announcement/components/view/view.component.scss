@@ -1,47 +1,7 @@
-.container-header {
-    width: 100%;
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    justify-content: space-between;
-    h1 {
-        color: var(--secondary-color);
-        opacity: .5;
-        font-size: 60px;
-        font-weight: 400;
-        padding: 10px;
-    }
-  
-    .btn {
-    
-        button {
-            border: 2px solid var(--secondary-color);
-            background-color: #ffffff;
-            font-size: 20px;
-            border-radius: 30px;
-            padding: 10px;
-            width: 120px;
-            cursor: pointer;
-        }
-  
-        button:hover {
-          background-color: var(--secondary-color);
-          color: #ffffff;
-        }
-    }
-  }
 .container {
-    border: 2px solid var(--primary-color);
-    margin: 13px;
-    width: 55%;
-    margin: 0 auto;
-    height: 425px;
-
-    input {
-        height: 40px;
-        border-radius: 10px;
-        font-size: 15px;
-    }
+    width: 700px;
+    padding: 20px;
+    height: fit-content;
 
     i {
         display: flex;
@@ -51,38 +11,61 @@
         cursor: pointer;
     }
 
-    .first-row {
-        display: flex;
-        padding: 10px 10px 10px 10px;
-
-        .first-form {
-            display: flex;
-            flex-direction: column;
-            width: 75%;
-            padding-right: 15px;
-        }
-
-        .second-form {
-            display: flex;
-            flex-direction: column;
-        }
+    input[type="text"],
+    input[type="date"],
+    textarea {
+        height: 40px;
+        border-radius: 10px;
+        font-size: 15px;
+        border: 1px solid black;
     }
 
-    .second-row {
+    .form-content {
         display: flex;
         flex-direction: column;
-        padding: 0 10px 10px 10px;
+        padding: 5px;
 
-        .third-form {
+        .input-row {
+            display: flex;
+            padding: 5px 0px;
+            width: 100%;
+
+            div {
+                width: 100%;
+                margin: 10px;
+            }
+        }
+
+        .form-row {
+            display: flex;
+            flex-direction: row;
+        }
+
+        .long-input {
+            flex: 2;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .short-input {
+            flex: 1;
+            max-width: 30%;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .large-input {
             display: flex;
             flex-direction: column;
             padding-bottom: 10px;
 
-            input {
+            textarea {
+                padding: 5px;
                 height: 150px;
+                resize: none;
             }
         }
-
+        
         .upload{
             display: flex;
             flex-direction: column;

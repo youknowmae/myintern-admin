@@ -7,6 +7,8 @@ import { LoginComponent } from './components/login/login.component';
 import { MainComponent } from './main/main.component';
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
 
+import { MatDialogModule } from '@angular/material/dialog';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -15,7 +17,8 @@ import { provideAnimationsAsync } from '@angular/platform-browser/animations/asy
   ],
   imports: [
     BrowserModule,
-    AppRoutingModule,    
+    AppRoutingModule,   
+    MatDialogModule 
   ],
   providers: [
     provideClientHydration(),
