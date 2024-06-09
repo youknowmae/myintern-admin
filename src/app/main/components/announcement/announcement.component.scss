@@ -201,3 +201,12 @@
     background-color: #e2e2e2;
     transition: all .2s ease-in-out;
   }
+  
+  .card-container > div:first-child {
+    grid-column: 1/-1;
+    height: 350px;
+  }
+
+  .card-container > div:first-child:hover {
+    transform: scale(1.02);
+  }
