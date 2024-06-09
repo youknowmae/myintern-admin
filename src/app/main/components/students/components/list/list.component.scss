@@ -4,15 +4,17 @@ h1 {
     font-size: 60px;
     font-weight: 400;
     padding: 10px;
+    margin-bottom: 30px;
 }
 
 .buttons {
     display: flex;
-    margin-left: 40px;
+    flex-direction: row;
+    margin: 10px 20px;
 
     button {
         margin-right: 30px;
-        font-size: 15px;
+        font-size: 18px;
         background-color: #ffffff;
         border: none;
         cursor: pointer;
@@ -22,18 +24,81 @@ h1 {
 }
 
 .container {
+    margin: 0px 20px;
     background-color: none;
+    overflow-y: auto;
     border: 1px solid var(--primary-color);
-    height: 60%;
-    border-radius: 37px;
+    height: 72vh;
+    padding: 0px 40px;
+    border-radius: 40px;
 
-    .container-header {
+    .table-container {
+        width: 100%;
         display: flex;
-        justify-content: space-evenly;
-        margin-top: 15px;
-
-        p {
-            color: var(--primary-color);
+        justify-content: center;
+        flex-direction: column;
+      }
+    
+    .table-header {
+        color: var(--primary-color);
+        padding: 15px 0px;
+    }
+    
+    .table-body {
+        display: flex;
+        flex-direction: column;
+        
+        .table-row {
+            border-bottom: 1px solid black;
+            padding: 2px 0px;
         }
+
+        .row-content {
+            padding: 5px 0px;
+            border-radius: 10px;
+            transition: all ease-in-out .1s;
+      
+            button {
+                font-size: 14px;
+                background-color: var(--primary-color);
+                color: #ffffff;
+                padding: 2px 20px;
+                border-radius: 20px;
+                cursor: pointer;
+            }
+
+            button:hover {
+                color: var(--primary-color);
+                background-color: #ffffff;
+                border: 2px solid var(--primary-color);
+            }
+        }
+    }
+
+    .table-header,
+    .row-content
+    {
+    display: flex;
+    flex-direction: row;
+    border-bottom: 1px solid var(--border-color);
+
+        div {
+            flex: 1;
+            flex-basis: 12%;
+            text-align: center;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        div:nth-child(1) {
+            flex-basis: 20%;
+            flex-direction: column;
+        }   
+    }
+
+    .row-content:hover {
+        background-color: rgba(var(--secondary-color-semi-transparent));
+        transition: all ease-in-out .1s;
     }
 }
