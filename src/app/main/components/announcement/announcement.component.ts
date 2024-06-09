@@ -17,7 +17,7 @@ export class AnnouncementComponent {
 
   viewAnnouncement() {
     this.dialogRef.open(ViewComponent, {
-      
+      disableClose: true       
     })
   }
 }
