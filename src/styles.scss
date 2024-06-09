@@ -4,6 +4,7 @@
     font-family: 'Poppins'; 
     outline: none;
     margin: 0;
+    border: none;
 }
 
 :root {
@@ -12,6 +13,7 @@
     --primary-font-color: white;
     --font-color: white;
     --secondary-color: #898121;
+    --secondary-color-semi-transparent: 137, 129, 33, .4;
     --main-green: #31A463;
     --border-color: #fff;
     --shadow: 0 4px 8px rgba(0,0,0,0.1);
