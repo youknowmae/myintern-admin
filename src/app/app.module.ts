@@ -8,6 +8,7 @@ import { MainComponent } from './main/main.component';
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
 
 import { MatDialogModule } from '@angular/material/dialog';
+import { RouterModule } from '@angular/router';
 
 @NgModule({
   declarations: [
@@ -17,8 +18,9 @@ import { MatDialogModule } from '@angular/material/dialog';
   ],
   imports: [
     BrowserModule,
-    AppRoutingModule,   
-    MatDialogModule 
+    AppRoutingModule,
+    MatDialogModule,
+    RouterModule,
   ],
   providers: [
     provideClientHydration(),
