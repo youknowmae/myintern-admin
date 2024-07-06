@@ -32,41 +32,40 @@
 
 .info-container {
     display: flex;
+    width: 100%;
     flex-direction: column;
 
+    mat-label {
+        font-size: 14px;
+    }
     input {
-        border: 2px solid black;
-        height: 35px;
-        width: 202px;
-        border-radius: 10px;
-        font-size: 15px;
-        padding: 0 10px 0 10px;
+    //     border: 2px solid black;
+    //     height: 35px;
+    //     width: 202px;
+    //     border-radius: 10px;
+        font-size: 14px;
+        // padding: 0 10px 0 10px;
     }
 
-    h3 {
-        font-size: 22px;
-        color: var(--primary-color);
-    }
 
     .content {
         display: flex;
         flex-direction: column;
         padding-bottom: 10px;
         
-        .row {
-            display: flex;
-            padding-right: 0;
+        h3 {
+            font-size: 22px;
+            color: var(--primary-color);
         }
         
-        .info {
+        .row {
             display: flex;
-            flex-direction: column;
-            padding-bottom: 10px;
-            padding-right: 20px;
-        }
-
-        .long {
-            width: 325px;
+            margin: 2px 0px;
+            padding-left: 5px;
         }
     }
+}
+
+mat-form-field {
+    width: 100%;
 }

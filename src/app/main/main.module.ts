@@ -39,7 +39,7 @@ import { RequirementsModule } from './components/requirements/requirements.modul
     StudentsModule,
     TemplatesModule,
     ExitpollModule,
-    RequirementsModule
+    RequirementsModule,
   ]
 })
 export class MainModule { }

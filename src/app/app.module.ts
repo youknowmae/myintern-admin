@@ -20,7 +20,7 @@ import { RouterModule } from '@angular/router';
     BrowserModule,
     AppRoutingModule,
     MatDialogModule,
-    RouterModule,
+    RouterModule
   ],
   providers: [
     provideClientHydration(),
