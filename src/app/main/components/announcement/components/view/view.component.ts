@@ -1,5 +1,6 @@
-import { Component, Inject } from '@angular/core';
-import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
+import { Component } from '@angular/core';
+import { MatDialogRef } from '@angular/material/dialog';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-view',
@@ -7,14 +8,23 @@ import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
   styleUrl: './view.component.scss'
 })
 export class ViewComponent {
-  constructor(
-    @Inject(MAT_DIALOG_DATA) public data: any,
-    private ref: MatDialogRef<ViewComponent>
-  ) {
-
-  }
-  closepopup() {
-    this.ref.close();
-  }
-
+  formDetails: FormGroup = this.fb.group({
+    title: [null, Validators.required],
+    description: [null, Validators.required],
+  })
+    
+    constructor(
+      private ref: MatDialogRef<ViewComponent>,
+      private fb: FormBuilder
+    ) {
+  
+    }
+    closepopup() {
+      this.ref.close();
+    }
+  
+    submit() {
+      console.log('test')
+      this.ref.close();
+    }
 }

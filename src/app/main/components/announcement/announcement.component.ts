@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { ViewComponent } from './components/view/view.component';
 import { MatDialog } from '@angular/material/dialog';
-import { AddnewComponent } from './components/addnew/addnew.component';
+import { AddAnnouncementComponent } from './components/add-announcement/add-announcement.component';
 
 @Component({
   selector: 'app-announcement',
@@ -23,7 +23,7 @@ export class AnnouncementComponent {
   }
 
   addAnnouncement() {
-    this.dialogRef.open(AddnewComponent, {
+    this.dialogRef.open(AddAnnouncementComponent, {
       disableClose: true 
     })
   }
