@@ -20,7 +20,7 @@ export class ViewComponent {
       mother_name: "Maria Delacruz",
       mother_employment: "Housewife",
       region: "III",
-      province: "Zambales",
+      province: "Zambales", 
       municipality: "Olongapo",
       barangay: "East Tapinac",
       address: "#22 Donor Street",

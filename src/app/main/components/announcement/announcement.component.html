@@ -7,21 +7,34 @@
     </div>
 
     <div class="card-container">
-        <div class="card">
+        <div class="card" *ngFor="let announcement of announcements">
             <div class="image-container">
-                <img src="/assets/images/logo.png" alt="logo image" class="card-image">
+                <img [src]="(announcement.image) ? announcement.image : '/assets/images/logo.png'" alt="logo image" class="card-image">
             </div>
             <div class="card-details">
-                <h2>Practicum Announcement</h2>
-                <p><i class="fa-regular fa-calendar"></i>May 10, 2024</p>
-                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam dignissim velit nisi, et feugiat ligula auctor at. Nullam finibus pulvinar dui, sit amet iaculis ex molestie quis. Nunc eget purus ante.</p>
+                <h2>{{ announcement.title }}</h2>
+                <p><i class="fa-regular fa-calendar"></i>{{ announcement.created_at | date:'MMMM d, y'  }}</p>
+                <p class="description">{{ announcement.description }}</p>
 
                 <div class="view-button">
-                    <button class="view" (click)="viewAnnouncement()"><b>Edit</b></button>
+                    <button class="delete" 
+                        mat-raised-button
+                        matTooltip="Delete"
+                        [matTooltipShowDelay] = "400" 
+                        (click)="deleteConfirmation(announcement.id)">
+                        <i class='bx bxs-trash'></i>
+                    </button>
+                    <button class="edit" 
+                        mat-raised-button
+                        matTooltip="Edit"
+                        [matTooltipShowDelay] = "400" 
+                         (click)="editAnnouncement(announcement)">
+                        <i class='bx bxs-edit'></i>
+                    </button>
                 </div>
             </div>
         </div>
-        <div class="card">
+        <!-- <div class="card">
             <img src="/assets/images/logo.png" alt="logo image" class="card-image">
             <h2>Practicum Announcement</h2>
             <p><i class="fa-regular fa-calendar"></i>May 10, 2024</p>
@@ -30,86 +43,6 @@
             <div class="view-button">
                 <button class="view"><b>Edit</b></button>
             </div>
-        </div>
-        <div class="card">
-            <img src="/assets/images/logo.png" alt="logo image" class="card-image">
-            <h2>Practicum Announcement</h2>
-            <p><i class="fa-regular fa-calendar"></i>May 10, 2024</p>
-            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam dignissim velit nisi, et feugiat ligula auctor at. Nullam finibus pulvinar dui, sit amet iaculis ex molestie quis. Nunc eget purus ante.</p>
-    
-            <div class="view-button">
-                <button class="view"><b>Edit</b></button>
-            </div>
-        </div>
-        <div class="card">
-            <img src="/assets/images/logo.png" alt="logo image" class="card-image">
-            <h2>Practicum Announcement</h2>
-            <p><i class="fa-regular fa-calendar"></i>May 10, 2024</p>
-            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam dignissim velit nisi, et feugiat ligula auctor at. Nullam finibus pulvinar dui, sit amet iaculis ex molestie quis. Nunc eget purus ante.</p>
-    
-            <div class="view-button">
-                <button class="view"><b>Edit</b></button>
-            </div>
-        </div>
-        <div class="card">
-            <img src="/assets/images/logo.png" alt="logo image" class="card-image">
-            <h2>Practicum Announcement</h2>
-            <p><i class="fa-regular fa-calendar"></i>May 10, 2024</p>
-            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam dignissim velit nisi, et feugiat ligula auctor at. Nullam finibus pulvinar dui, sit amet iaculis ex molestie quis. Nunc eget purus ante.</p>
-    
-            <div class="view-button">
-                <button class="view"><b>Edit</b></button>
-            </div>
-        </div>
-        <div class="card">
-            <img src="/assets/images/logo.png" alt="logo image" class="card-image">
-            <h2>Practicum Announcement</h2>
-            <p><i class="fa-regular fa-calendar"></i>May 10, 2024</p>
-            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam dignissim velit nisi, et feugiat ligula auctor at. Nullam finibus pulvinar dui, sit amet iaculis ex molestie quis. Nunc eget purus ante.</p>
-    
-            <div class="view-button">
-                <button class="view"><b>Edit</b></button>
-            </div>
-        </div>
-        <div class="card">
-            <img src="/assets/images/logo.png" alt="logo image" class="card-image">
-            <h2>Practicum Announcement</h2>
-            <p><i class="fa-regular fa-calendar"></i>May 10, 2024</p>
-            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam dignissim velit nisi, et feugiat ligula auctor at. Nullam finibus pulvinar dui, sit amet iaculis ex molestie quis. Nunc eget purus ante.</p>
-    
-            <div class="view-button">
-                <button class="view"><b>Edit</b></button>
-            </div>
-        </div>
-        <div class="card">
-            <img src="/assets/images/logo.png" alt="logo image" class="card-image">
-            <h2>Practicum Announcement</h2>
-            <p><i class="fa-regular fa-calendar"></i>May 10, 2024</p>
-            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam dignissim velit nisi, et feugiat ligula auctor at. Nullam finibus pulvinar dui, sit amet iaculis ex molestie quis. Nunc eget purus ante.</p>
-    
-            <div class="view-button">
-                <button class="view"><b>Edit</b></button>
-            </div>
-        </div>
-        <div class="card">
-            <img src="/assets/images/logo.png" alt="logo image" class="card-image">
-            <h2>Practicum Announcement</h2>
-            <p><i class="fa-regular fa-calendar"></i>May 10, 2024</p>
-            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam dignissim velit nisi, et feugiat ligula auctor at. Nullam finibus pulvinar dui, sit amet iaculis ex molestie quis. Nunc eget purus ante.</p>
-    
-            <div class="view-button">
-                <button class="view"><b>Edit</b></button>
-            </div>
-        </div>
-        <div class="card">
-            <img src="/assets/images/logo.png" alt="logo image" class="card-image">
-            <h2>Practicum Announcement</h2>
-            <p><i class="fa-regular fa-calendar"></i>May 10, 2024</p>
-            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam dignissim velit nisi, et feugiat ligula auctor at. Nullam finibus pulvinar dui, sit amet iaculis ex molestie quis. Nunc eget purus ante.</p>
-    
-            <div class="view-button">
-                <button class="view"><b>Edit</b></button>
-            </div>
-        </div>
+        </div> -->
     </div>
 </main>

@@ -17,7 +17,7 @@
                     <div class="col-md-3">
                         <mat-form-field>
                           <mat-label>date</mat-label>
-                          <input matInput>
+                          <input matInput formControlName="date" readonly>
                         </mat-form-field>
                     </div>
                 </div>
@@ -41,8 +41,7 @@
                     <div class="col-md-4">
                         <div class="file-input-container"> 
                             <div class="label"> Upload Image </div>
-                            <!-- (change)="uploadFile($event)" -->
-                            <input class="file-input" type="file" accept=".jpeg, .png, .jpg"  > 
+                            <input class="file-input" type="file" accept=".jpeg, .png, .jpg, .svg" (change)="uploadFile($event)"> 
                         </div>
                     </div>
                 </div>

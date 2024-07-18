@@ -1,7 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
-import { AnnouncementComponent } from './announcement.component';
 import { ViewComponent } from './components/view/view.component';
 import { AddAnnouncementComponent } from './components/add-announcement/add-announcement.component';
 import { ReactiveFormsModule } from '@angular/forms';

@@ -17,6 +17,7 @@ import { StudentsModule } from './components/students/students.module';
 import { TemplatesModule } from './components/templates/templates.module';
 import { ExitpollModule } from './components/exitpoll/exitpoll.module';
 import { RequirementsModule } from './components/requirements/requirements.module';
+import { MaterialsModules } from '../modules/materials.module';
 
 
 @NgModule({
@@ -40,6 +41,7 @@ import { RequirementsModule } from './components/requirements/requirements.modul
     TemplatesModule,
     ExitpollModule,
     RequirementsModule,
+    MaterialsModules
   ]
 })
 export class MainModule { }
