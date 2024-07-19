@@ -1,56 +1,58 @@
 <div class="container">
-    <div class="header">
-        <h1>Add Announcement</h1>
-        <i class="fa-solid fa-xmark" (click)="closepopup()"></i>
-    </div>
-    <div class="content">
-        <form [formGroup]="formDetails" (submit)="submit()">
-            <div class="form-content">
-                <div class="row">
-                    <div class="col-md-5">
-                        <mat-form-field [hideRequiredMarker]="true">
-                          <mat-label>Title</mat-label>
-                          <input matInput formControlName="title">
-                        </mat-form-field>
+    <div class="details-content"> 
+        <div class="header">
+            <h1>Add Announcement</h1>
+            <i class="fa-solid fa-xmark" (click)="closepopup()"></i>
+        </div>
+        <div class="content">
+            <form [formGroup]="formDetails" (submit)="submit()">
+                <div class="form-content">
+                    <div class="row">
+                        <div class="col-md-5">
+                            <mat-form-field [hideRequiredMarker]="true">
+                              <mat-label>Title</mat-label>
+                              <input matInput formControlName="title">
+                            </mat-form-field>
+                        </div>
+            
+                        <div class="col-md-3">
+                            <mat-form-field>
+                              <mat-label>date</mat-label>
+                              <input matInput formControlName="date" readonly>
+                            </mat-form-field>
+                        </div>
                     </div>
-        
-                    <div class="col-md-3">
-                        <mat-form-field>
-                          <mat-label>date</mat-label>
-                          <input matInput formControlName="date" readonly>
-                        </mat-form-field>
+    
+                    <div class="row">
+                        <div class="col-md-10">
+                            <mat-form-field [hideRequiredMarker]="true">
+                                <mat-label>Description</mat-label>
+                                <textarea matInput
+                                        cdkTextareaAutosize
+                                        #autosize="cdkTextareaAutosize"
+                                        cdkAutosizeMinRows="3"
+                                        cdkAutosizeMaxRows="3"
+                                        formControlName="description"
+                                        ></textarea>
+                            </mat-form-field>
+                        </div>
                     </div>
-                </div>
-
-                <div class="row">
-                    <div class="col-md-10">
-                        <mat-form-field [hideRequiredMarker]="true">
-                            <mat-label>Description</mat-label>
-                            <textarea matInput
-                                    cdkTextareaAutosize
-                                    #autosize="cdkTextareaAutosize"
-                                    cdkAutosizeMinRows="3"
-                                    cdkAutosizeMaxRows="3"
-                                    formControlName="description"
-                                    ></textarea>
-                        </mat-form-field>
-                    </div>
-                </div>
-
-                <div class="row">
-                    <div class="col-md-4">
-                        <div class="file-input-container"> 
-                            <div class="label"> Upload Image </div>
-                            <input class="file-input" type="file" accept=".jpeg, .png, .jpg, .svg" (change)="uploadFile($event)"> 
+    
+                    <div class="row">
+                        <div class="col-md-4">
+                            <div class="file-input-container"> 
+                                <div class="label"> Upload Image </div>
+                                <input class="file-input" type="file" accept=".jpeg, .png, .jpg, .svg" (change)="uploadFile($event)"> 
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
-
-
-            <div class="btn">
-                <button type="submit" [disabled]="formDetails.invalid">Post</button>
-            </div>
-        </form>
+    
+    
+                <div class="btn">
+                    <button type="submit" [disabled]="formDetails.invalid">Post</button>
+                </div>
+            </form>
+        </div>
     </div>
 </div>

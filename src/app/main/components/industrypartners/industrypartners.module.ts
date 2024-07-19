@@ -5,6 +5,9 @@ import { IndustrypartnersRoutingModule } from './industrypartners-routing.module
 import { ListComponent } from './components/list/list.component';
 import { ViewComponent } from './components/view/view.component';
 import { AddnewComponent } from './components/addnew/addnew.component';
+import { AddIndustryPartnerComponent } from './components/add-industry-partner/add-industry-partner.component';
+import { MaterialsModules } from '../../../modules/materials.module';
+import { ReactiveFormsModule } from '@angular/forms';
 
 
 @NgModule({
@@ -12,11 +15,14 @@ import { AddnewComponent } from './components/addnew/addnew.component';
     // IndustrypartnersComponent
     ListComponent,
     ViewComponent,
-    AddnewComponent
+    AddnewComponent,
+    AddIndustryPartnerComponent
   ],
   imports: [
     CommonModule,
-    IndustrypartnersRoutingModule
+    IndustrypartnersRoutingModule,
+    MaterialsModules,
+    ReactiveFormsModule
   ]
 })
 export class IndustrypartnersModule { }
