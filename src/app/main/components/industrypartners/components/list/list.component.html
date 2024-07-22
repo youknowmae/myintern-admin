@@ -8,94 +8,13 @@
     </div>
 
     <div class="card-container">
-        <div class="card">
-            <img src="/assets/images/logo.png" alt="logo image" class="card-image">
-            <h2>Game Dev Intern</h2>
-            <p>SBMA, Olongapo City</p>
+        <div class="card" *ngFor="let industryPartner of industryPartners">
+            <img [src]="(industryPartner.image) ? industryPartner.image : '/assets/images/logo.png'" alt="logo image" class="card-image">
+            <h2>{{ industryPartner.company_name }}</h2>
+            <p>{{ industryPartner.municipality }}</p>
     
             <div class="view-button">
                 <button class="view" [routerLink]="['../view']" routerLinkActive="router-link-active" ><b>View</b></button>
-            </div>
-        </div>
-        <div class="card">
-            <img src="/assets/images/logo.png" alt="logo image" class="card-image">
-            <h2>Game Dev Intern</h2>
-            <p>SBMA, Olongapo City</p>
-    
-            <div class="view-button">
-                <button class="view"><b>View</b></button>
-            </div>
-        </div>
-        <div class="card">
-            <img src="/assets/images/logo.png" alt="logo image" class="card-image">
-            <h2>Game Dev Intern</h2>
-            <p>SBMA, Olongapo City</p>
-    
-            <div class="view-button">
-                <button class="view"><b>View</b></button>
-            </div>
-        </div>
-        <div class="card">
-            <img src="/assets/images/logo.png" alt="logo image" class="card-image">
-            <h2>Game Dev Intern</h2>
-            <p>SBMA, Olongapo City</p>
-    
-            <div class="view-button">
-                <button class="view"><b>View</b></button>
-            </div>
-        </div>
-        <div class="card">
-            <img src="/assets/images/logo.png" alt="logo image" class="card-image">
-            <h2>Game Dev Intern</h2>
-            <p>SBMA, Olongapo City</p>
-    
-            <div class="view-button">
-                <button class="view"><b>View</b></button>
-            </div>
-        </div>
-        <div class="card">
-            <img src="/assets/images/logo.png" alt="logo image" class="card-image">
-            <h2>Game Dev Intern</h2>
-            <p>SBMA, Olongapo City</p>
-    
-            <div class="view-button">
-                <button class="view"><b>View</b></button>
-            </div>
-        </div>
-        <div class="card">
-            <img src="/assets/images/logo.png" alt="logo image" class="card-image">
-            <h2>Game Dev Intern</h2>
-            <p>SBMA, Olongapo City</p>
-    
-            <div class="view-button">
-                <button class="view"><b>View</b></button>
-            </div>
-        </div>
-        <div class="card">
-            <img src="/assets/images/logo.png" alt="logo image" class="card-image">
-            <h2>Game Dev Intern</h2>
-            <p>SBMA, Olongapo City</p>
-    
-            <div class="view-button">
-                <button class="view"><b>View</b></button>
-            </div>
-        </div>
-        <div class="card">
-            <img src="/assets/images/logo.png" alt="logo image" class="card-image">
-            <h2>Game Dev Intern</h2>
-            <p>SBMA, Olongapo City</p>
-    
-            <div class="view-button">
-                <button class="view"><b>View</b></button>
-            </div>
-        </div>
-        <div class="card">
-            <img src="/assets/images/logo.png" alt="logo image" class="card-image">
-            <h2>Game Dev Intern</h2>
-            <p>SBMA, Olongapo City</p>
-    
-            <div class="view-button">
-                <button class="view"><b>View</b></button>
             </div>
         </div>
     </div>

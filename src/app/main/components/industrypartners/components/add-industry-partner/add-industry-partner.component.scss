@@ -58,6 +58,10 @@
         outline: none;
     }
 
+    mat-label {
+        font-size: 14px;
+    }
+
     .form-content {
         display: flex;
         flex-direction: column;

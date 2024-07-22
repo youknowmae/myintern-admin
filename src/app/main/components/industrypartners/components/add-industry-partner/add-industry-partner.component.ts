@@ -13,9 +13,26 @@ export class AddIndustryPartnerComponent {
   file: any = null
 
   formDetails: FormGroup = this.fb.group({
-    title: [null, [Validators.required, Validators.maxLength(128)]],
-    description: [null, [Validators.required, Validators.maxLength(2048)]],
-    date: [null]
+    company_name: [null, [Validators.required, Validators.maxLength(64)]],
+    description: [null, [Validators.required, Validators.maxLength(1024)]],
+
+    company_head: [null, [Validators.required, Validators.maxLength(128)]],
+    head_position: [null, [Validators.required, Validators.maxLength(64)]],
+    immediate_supervisor: [null, [Validators.required, Validators.maxLength(128)]],
+    supervisor_position: [null, [Validators.required, Validators.maxLength(64)]],
+
+    region: ["III", [Validators.required, Validators.maxLength(32)]],
+    province: ["Zambales", [Validators.required, Validators.maxLength(32)]],
+    municipality: [null, [Validators.required, Validators.maxLength(32)]],
+    barangay: [null, [Validators.required, Validators.maxLength(32)]],
+    street: [null, [Validators.required, Validators.maxLength(32)]],
+    zip_code: [null, [Validators.required, Validators.pattern('[0-9]{4}')]],
+
+    telephone_number: [null, [Validators.pattern('(09)[0-9]{9}')]],
+    mobile_number: [null, [Validators.required, Validators.pattern('(09)[0-9]{9}')]],
+    fax_number: [null, [Validators.pattern('(09)[0-9]{9}')]],
+    email: [null, [Validators.required, Validators.email]],
+    website: [null, [Validators.maxLength(128)]],
   })
 
   
@@ -37,7 +54,7 @@ export class AddIndustryPartnerComponent {
   closepopup() {
     Swal.fire({
       title: "Cancel",
-      text: "Are you sure you want to cancel adding announcement?",
+      text: "Are you sure you want to cancel adding industry partner??",
       icon: "question",
       showCancelButton: true,
       confirmButtonText: 'Yes',
@@ -69,8 +86,8 @@ export class AddIndustryPartnerComponent {
 
   submit() {
     Swal.fire({
-      title: "Post New Announcement",
-      text: "Are you sure you want to post this announcement?",
+      title: "Create?",
+      text: "Are you sure you want to add this industry partner?",
       icon: "warning",
       showCancelButton: true,
       confirmButtonText: 'Yes',
@@ -79,22 +96,25 @@ export class AddIndustryPartnerComponent {
       cancelButtonColor: "#777777",
     }).then((result) => {
       if (result.isConfirmed) {
-        this.createAnnouncement()
+        this.create()
       }
     });
   }
 
-  createAnnouncement() {
-    var formDetails = this.formDetails.value
-
+  create() {
     var payload = new FormData();
-    payload.append('title', formDetails.title);
-    payload.append('description', formDetails.description);
+    
+    Object.entries(this.formDetails.value as { [key: string]: string | null})
+          .forEach(([key, value]) =>{
+            if(value)
+              payload.append(key, value)
+            console.log(value)
+          })
 
     if(this.file)
       payload.append('image', this.file);
     
-    this.dataService.post('announcements', '', payload).subscribe(
+    this.dataService.post('industryPartners', '', payload).subscribe(
       result => {
         Swal.fire({
           title: "Success!",

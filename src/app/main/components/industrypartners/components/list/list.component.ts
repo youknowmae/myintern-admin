@@ -9,7 +9,7 @@ import { AddIndustryPartnerComponent } from '../add-industry-partner/add-industr
   styleUrl: './list.component.scss'
 })
 export class ListComponent {
-  // announcements: announcement[] = []
+  industryPartners: any = []
   constructor(
     private dialogRef: MatDialog,
     private ds: DataService
@@ -17,11 +17,35 @@ export class ListComponent {
 
   }
 
+  ngOnInit() {
+    this.getIndustryPartners()
+  }
+
+  getIndustryPartners() {
+    this.ds.get('industryPartners').subscribe(
+      industryPartners => {
+        this.industryPartners = industryPartners
+        console.log(industryPartners)
+      },
+      error => {
+
+      }
+    )
+  }
+
   addIndustryPartner() {
     var modal = this.dialogRef.open(AddIndustryPartnerComponent, {
-      // data: announcement,
       disableClose: true       
     })
+
+    modal.afterClosed().subscribe((result) => {
+      console.log(result)
+      if (!result) {
+        return
+      }
+      
+      this.industryPartners.unshift(result)
+    });
   }
 
 }
