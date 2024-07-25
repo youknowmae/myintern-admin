@@ -6,6 +6,7 @@ import { ListComponent } from './components/list/list.component';
 import { ViewComponent } from './components/view/view.component';
 import { MatLabel } from '@angular/material/form-field';
 import { MaterialsModules } from '../../../modules/materials.module';
+import { ViewModule } from './components/view/view.module';
 
 
 @NgModule({
@@ -16,7 +17,8 @@ import { MaterialsModules } from '../../../modules/materials.module';
   imports: [
     CommonModule,
     StudentsRoutingModule,
-    MaterialsModules
+    MaterialsModules,
+    ViewModule
   ]
 })
 export class StudentsModule { }

@@ -7,8 +7,14 @@ import { ViewComponent } from './components/view/view.component';
 const routes: Routes = [
   { path: '', redirectTo: 'list', pathMatch: 'full' },
   { path: 'list', component: ListComponent },
-  { path: 'view', component: ViewComponent }
-];
+  { 
+    path: 'view', 
+    component: ViewComponent,
+    children: [{
+      path: '',
+      loadChildren: ()=>import('./components/view/view.module').then((m)=>m.ViewModule)
+    }]
+  },];
 
 @NgModule({
   imports: [RouterModule.forChild(routes)],
