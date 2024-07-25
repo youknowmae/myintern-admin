@@ -1,0 +1,162 @@
+<div class="container">
+    <div class="details-content"> 
+        <div class="header">
+            <h1>Edit Industry Partner</h1>
+            <i class="fa-solid fa-xmark" (click)="closepopup()"></i>
+        </div>
+        <div class="content">
+            <form [formGroup]="formDetails" (submit)="submit()">
+                <div class="form-content">
+                    <div class="row">
+                        <div class="col-md-5">
+                            <mat-form-field [hideRequiredMarker]="true">
+                              <mat-label>Name of Company</mat-label>
+                              <input matInput formControlName="company_name">
+                            </mat-form-field>
+                        </div>
+                    </div>
+                    
+                    <div class="row">
+                        <div class="col-md-10">
+                            <mat-form-field [hideRequiredMarker]="true">
+                                <mat-label>Description</mat-label>
+                                <textarea matInput
+                                        cdkTextareaAutosize
+                                        #autosize="cdkTextareaAutosize"
+                                        cdkAutosizeMinRows="2"
+                                        cdkAutosizeMaxRows="2"
+                                        formControlName="description"></textarea>
+                            </mat-form-field>
+                        </div>
+                    </div>
+                    
+                    <div class="row">
+                        <div class="col-md-4">
+                            <mat-form-field [hideRequiredMarker]="true">
+                              <mat-label>Head of Company</mat-label>
+                              <input matInput formControlName="company_head">
+                            </mat-form-field>
+                        </div>
+                        <div class="col-md-2">
+                            <mat-form-field [hideRequiredMarker]="true">
+                              <mat-label>Position</mat-label>
+                              <input matInput formControlName="head_position">
+                            </mat-form-field>
+                        </div>
+                        
+                        <div class="col-md-4">
+                            <mat-form-field [hideRequiredMarker]="true">
+                              <mat-label>Immediate Supervisor</mat-label>
+                              <input matInput formControlName="immediate_supervisor">
+                            </mat-form-field>
+                        </div>
+
+                        <div class="col-md-2">
+                            <mat-form-field [hideRequiredMarker]="true">
+                              <mat-label>Position</mat-label>
+                              <input matInput formControlName="supervisor_position">
+                            </mat-form-field>
+                        </div>
+                    </div>
+                    
+                    <h3>Address</h3>
+
+                    <div class="row">
+                        <div class="col-md-3">
+                            <mat-form-field [hideRequiredMarker]="true">
+                              <mat-label>Region</mat-label>
+                              <input matInput formControlName="region">
+                            </mat-form-field>
+                        </div>
+                        <div class="col-md-3">
+                            <mat-form-field [hideRequiredMarker]="true">
+                              <mat-label>Province</mat-label>
+                              <input matInput formControlName="province">
+                            </mat-form-field>
+                        </div>
+                        <div class="col-md-3">
+                            <mat-form-field [hideRequiredMarker]="true">
+                              <mat-label>Municipality</mat-label>
+                              <input matInput formControlName="municipality">
+                            </mat-form-field>
+                        </div>
+                        <div class="col-md-3">
+                            <mat-form-field [hideRequiredMarker]="true">
+                              <mat-label>Barangay</mat-label>
+                              <input matInput formControlName="barangay">
+                            </mat-form-field>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-5">
+                            <mat-form-field [hideRequiredMarker]="true">
+                              <mat-label>House No./Lot No./Street Name</mat-label>
+                              <input matInput formControlName="street">
+                            </mat-form-field>
+                        </div>
+                        <div class="col-md-2">
+                            <mat-form-field [hideRequiredMarker]="true">
+                              <mat-label>Zip Code</mat-label>
+                              <input matInput formControlName="zip_code">
+                            </mat-form-field>
+                        </div>
+                    </div>
+                    
+                    <h3>Contact Information</h3>
+                    
+                    <div class="row">
+                        <div class="col-md-4">
+                            <mat-form-field [hideRequiredMarker]="true">
+                              <mat-label>Telephone Number</mat-label>
+                              <input matInput formControlName="telephone_number">
+                            </mat-form-field>
+                        </div>
+                        <div class="col-md-4">
+                            <mat-form-field [hideRequiredMarker]="true">
+                              <mat-label>Mobile Number</mat-label>
+                              <input matInput formControlName="mobile_number">
+                            </mat-form-field>
+                        </div>
+                        <div class="col-md-4">
+                            <mat-form-field [hideRequiredMarker]="true">
+                              <mat-label>Fax Number</mat-label>
+                              <input matInput formControlName="fax_number">
+                            </mat-form-field>
+                        </div>
+                    </div>
+                    
+                    <div class="row">
+                        <div class="col-md-4">
+                            <mat-form-field [hideRequiredMarker]="true">
+                              <mat-label>Email Address</mat-label>
+                              <input matInput formControlName="email">
+                            </mat-form-field>
+                        </div>
+                        <div class="col-md-4">
+                            <mat-form-field [hideRequiredMarker]="true">
+                              <mat-label>URL/Website</mat-label>
+                              <input matInput formControlName="website">
+                            </mat-form-field>
+                        </div>
+                    </div>
+                
+                    <h3>Logo</h3>
+
+                    <div class="row">
+                        <div class="col-md-4">
+                            <div class="file-input-container"> 
+                                <div class="label"> Upload Image </div>
+                                <input class="file-input" type="file" accept=".jpeg, .png, .jpg, .svg" (change)="uploadFile($event)"> 
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="btn">
+                    <button type="submit" [disabled]="formDetails.invalid">Update</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

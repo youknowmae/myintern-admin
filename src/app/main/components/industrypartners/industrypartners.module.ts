@@ -8,6 +8,7 @@ import { AddnewComponent } from './components/addnew/addnew.component';
 import { AddIndustryPartnerComponent } from './components/add-industry-partner/add-industry-partner.component';
 import { MaterialsModules } from '../../../modules/materials.module';
 import { ReactiveFormsModule } from '@angular/forms';
+import { EditIndustryPartnerComponent } from './components/edit-industry-partner/edit-industry-partner.component';
 
 
 @NgModule({
@@ -16,7 +17,8 @@ import { ReactiveFormsModule } from '@angular/forms';
     ListComponent,
     ViewComponent,
     AddnewComponent,
-    AddIndustryPartnerComponent
+    AddIndustryPartnerComponent,
+    EditIndustryPartnerComponent
   ],
   imports: [
     CommonModule,

@@ -4,6 +4,7 @@ import { FormsModule } from "@angular/forms";
 import { MatFormFieldModule, MatHint, MatLabel } from '@angular/material/form-field'
 import { MatTooltipModule} from '@angular/material/tooltip';
 import { MatInputModule } from '@angular/material/input';
+import {MatPaginatorModule} from '@angular/material/paginator';
 
 const var_modules = [
     MatFormFieldModule,
@@ -11,7 +12,8 @@ const var_modules = [
     MatHint,
     FormsModule,
     MatInputModule,
-    MatTooltipModule
+    MatTooltipModule,
+    MatPaginatorModule
 ]
 
 @NgModule({
