@@ -5,7 +5,8 @@ import { Component } from '@angular/core';
   templateUrl: './studentprofile.component.html',
   styleUrl: './studentprofile.component.scss'
 })
-export class ViewComponent {
+
+export class StudentprofileComponent {
   student: any = {
     birth_date: "11-20-2022",
     civil_status: "single",

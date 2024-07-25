@@ -6,6 +6,7 @@ import { StudentprofileComponent } from './components/studentprofile/studentprof
 import { AttendanceformComponent } from './components/attendanceform/attendanceform.component';
 import { AccomplishmentreportComponent } from './components/accomplishmentreport/accomplishmentreport.component';
 import { ButtonsComponent } from './components/buttons/buttons.component';
+import { MaterialsModules } from '../../../../../modules/materials.module';
 
 
 @NgModule({
@@ -17,6 +18,7 @@ import { ButtonsComponent } from './components/buttons/buttons.component';
   ],
   imports: [
     CommonModule,
+    MaterialsModules,
     ViewRoutingModule
   ]
 })
