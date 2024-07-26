@@ -1,9 +1,8 @@
-import { Component, ViewChild, ChangeDetectorRef  } from '@angular/core';
+import { Component } from '@angular/core';
 import { ViewComponent } from './components/view/view.component';
 import { MatDialog } from '@angular/material/dialog';
 import { AddAnnouncementComponent } from './components/add-announcement/add-announcement.component';
 
-import { MatPaginator, MatPaginatorIntl } from '@angular/material/paginator';
 
 import { DataService } from '../../../services/data.service';
 import { announcement } from '../../../model/announcement.model';
@@ -16,17 +15,11 @@ import Swal from 'sweetalert2';
 })
 export class AnnouncementComponent {
   announcements: announcement[] = []
-  
-  @ViewChild(MatPaginator, {static:true}) paginator!: MatPaginator;
 
   constructor(
-    
-    private paginatorIntl: MatPaginatorIntl, 
-    private changeDetectorRef: ChangeDetectorRef,
     private dialogRef: MatDialog,
     private ds: DataService
   ) {
-    this.paginator = new MatPaginator(this.paginatorIntl, this.changeDetectorRef);
   }
 
   ngOnInit() {
@@ -43,7 +36,6 @@ export class AnnouncementComponent {
         console.error(error)
       }
     )
-  
   }
 
   editAnnouncement(announcement: announcement) {

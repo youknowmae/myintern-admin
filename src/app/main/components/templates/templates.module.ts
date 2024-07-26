@@ -1,18 +1,18 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
-import { TemplatesRoutingModule } from './templates-routing.module';
-import { TemplatesComponent } from './templates.component';
-import { ListComponent } from './components/list/list.component';
-
+import { MaterialsModules } from '../../../modules/materials.module';
+import { AddTemplateComponent } from './components/add-template/add-template.component';
+import { ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [ 
-    ListComponent
+    AddTemplateComponent
   ],
   imports: [
     CommonModule,
-    TemplatesRoutingModule
+    MaterialsModules,
+    ReactiveFormsModule
   ]
 })
 export class TemplatesModule { }

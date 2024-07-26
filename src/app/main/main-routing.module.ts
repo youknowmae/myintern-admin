@@ -54,10 +54,6 @@ const routes: Routes = [
   { 
     path: 'templates', 
     component: TemplatesComponent,
-    children: [{
-      path: '',
-      loadChildren: ()=>import('./components/templates/templates.module').then((m)=>m.TemplatesModule)
-    }]
   },
   { 
     path: 'industrypartners', 

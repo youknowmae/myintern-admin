@@ -1,2 +1,13 @@
-<router-outlet></router-outlet>
+<main>
+    <div class="container-header">
+        <h1>Templates</h1>
+        <div class="btn">
+            <button (click)="addTemplate()">+ New</button>
+        </div>
+    </div>
 
+    <!-- testing purposes -->
+    <div *ngFor="let item of templates">
+        {{item.name}}
+    </div>
+</main>

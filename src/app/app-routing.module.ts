@@ -18,7 +18,7 @@ const routes: Routes = [
   { path: 'industrypartners', loadChildren: () => import('./main/components/industrypartners/industrypartners.module').then(m => m.IndustrypartnersModule) },
   { path: 'requirements', loadChildren: () => import('./main/components/requirements/requirements.module').then(m => m.RequirementsModule) },
   { path: 'students', loadChildren: () => import('./main/components/students/students.module').then(m => m.StudentsModule) },
-  { path: 'templates', loadChildren: () => import('./main/components/templates/templates.module').then(m => m.TemplatesModule) },
+  // { path: 'templates', loadChildren: () => import('./main/components/templates/templates.module').then(m => m.TemplatesModule) },
   { path: 'announcement', loadChildren: () => import('./main/components/announcement/announcement.module').then(m => m.AnnouncementModule) },
   { path: 'exitpoll', loadChildren: () => import('./main/components/exitpoll/exitpoll.module').then(m => m.ExitpollModule) },
   { path: 'view', loadChildren: () => import('./main/components/students/components/view/view.module').then(m => m.ViewModule) }
