@@ -1,104 +1,103 @@
 h1 {
-  color: var(--secondary-color);
-  opacity: .5;
-  font-size: 60px;
-  font-weight: 400;
-  padding: 10px;
-  margin-bottom: 30px;
+    color: var(--secondary-color);
+    opacity: .5;
+    font-size: 60px;
+    font-weight: 400;
+    padding: 10px;
+    margin-bottom: 30px;
 }
 
 .buttons {
-  display: flex;
-  flex-direction: row;
-  margin: 10px 20px;
+    display: flex;
+    flex-direction: row;
+    margin: 10px 20px;
 
-  button {
-      margin-right: 30px;
-      font-size: 18px;
-      background-color: #ffffff;
-      border: none;
-      cursor: pointer;
-      color: var(--primary-color);
-      margin-bottom: 10px;
-  }
+    button {
+        margin-right: 30px;
+        font-size: 18px;
+        background-color: #ffffff;
+        border: none;
+        cursor: pointer;
+        color: var(--primary-color);
+        margin-bottom: 10px;
+    }
 }
 
 .container {
-  margin: 0px 20px;
-  background-color: none;
-  overflow-y: auto;
-  border: 1px solid var(--primary-color);
-  height: 68vh;
-  padding: 0px 40px;
-  border-radius: 40px;
+    margin: 0px 20px;
+    background-color: none;
+    overflow-y: auto;
+    border: 1px solid var(--primary-color);
+    height: 72vh;
+    padding: 0px 40px;
+    border-radius: 40px;
 
-  .table-container {
-      width: 100%;
-      display: flex;
-      justify-content: center;
-      flex-direction: column;
-    }
-  
-  .table-header {
-      color: var(--primary-color);
-      padding: 15px 0px;
-  }
-  
-  .table-body {
-      display: flex;
-      flex-direction: column;
-      
-      .table-row {
-          border-bottom: 1px solid black;
-          padding: 2px 0px;
+    .table-container {
+        width: 100%;
+        display: flex;
+        justify-content: center;
+        flex-direction: column;
       }
-
-      .row-content {
-          padding: 5px 0px;
-          border-radius: 10px;
-          transition: all ease-in-out .1s;
     
-          button {
-            font-size: 14px;
-            background-color: var(--secondary-color);
-            color: #ffffff;
-            padding: 2px 20px;
-            border-radius: 20px;
-            cursor: pointer;
+    .table-header {
+        color: var(--primary-color);
+        padding: 15px 0px;
+    }
+    
+    .table-body {
+        display: flex;
+        flex-direction: column;
+        
+        .table-row {
+            border-bottom: 1px solid var(--border-color);
+            padding: 2px 0px;
         }
 
-        button:hover {
-            color: var(--secondary-color);
-            background-color: #ffffff;
-            border: 2px solid var(--secondary-color);
+        .row-content {
+            padding: 5px 0px;
+            border-radius: 10px;
+            transition: all ease-in-out .1s;
+      
+            button {
+                font-size: 14px;
+                background-color: var(--secondary-color);
+                color: #ffffff;
+                padding: 2px 20px;
+                border-radius: 20px;
+                cursor: pointer;
+            }
+
+            button:hover {
+                color: var(--secondary-color);
+                background-color: #ffffff;
+                border: 2px solid var(--secondary-color);
+            }
         }
-      }
-  }
+    }
 
-  .table-header,
-  .row-content
-  {
-  display: flex;
-  flex-direction: row;
-  border-bottom: 1px solid var(--border-color);
+    .table-header,
+    .row-content
+    {
+    display: flex;
+    flex-direction: row;
 
-      div {
-          flex: 1;
-          flex-basis: 12%;
-          text-align: center;
-          display: flex;
-          align-items: center;
-          justify-content: center;
-      }
+        div {
+            flex: 1;
+            flex-basis: 12%;
+            text-align: center;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
 
-      div:nth-child(1) {
-          flex-basis: 20%;
-          flex-direction: column;
-      }   
-  }
+        div:nth-child(1) {
+            flex-basis: 20%;
+            flex-direction: column;
+        }   
+    }
 
-  .row-content:hover {
-      background-color: rgba(var(--secondary-color-semi-transparent));
-      transition: all ease-in-out .1s;
-  }
+    .row-content:hover {
+        background-color: rgba(var(--secondary-color-semi-transparent));
+        transition: all ease-in-out .1s;
+    }
 }

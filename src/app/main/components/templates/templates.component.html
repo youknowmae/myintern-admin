@@ -6,8 +6,46 @@
         </div>
     </div>
 
-    <!-- testing purposes -->
-    <div *ngFor="let item of templates">
-        {{item.name}}
+    <div class="container">
+        <div class="table-container">
+            <div class="table-header">
+                <div>Name</div>
+                <div>Actions</div>
+            </div>
+            <div class="table-body">
+                <div class="table-row" *ngFor="let template of templates">
+                    <div class="row-content">
+                        <div>
+                            <div> {{ template.name }}</div>
+                        </div>
+                        <div class="actions">
+                            <button class="delete" 
+                                mat-raised-button
+                                matTooltip="Delete"
+                                [matTooltipShowDelay] = "400"
+                                (click)="deleteConfirmation(template.id)">
+                                <i class='bx bxs-trash'></i>
+                            </button>
+
+                            <button class="edit" 
+                            mat-raised-button
+                            matTooltip="Edit"
+                            [matTooltipShowDelay] = "400"
+                            (click)="editTemplate(template)">
+                                <i class='bx bxs-edit'></i>
+                            </button>
+
+                            <button class="view" 
+                            mat-raised-button
+                            matTooltip="View"
+                            [matTooltipShowDelay] = "400"
+                            (click)="previewTemplate(template)">
+                                <i class='bx bx-detail' ></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 </main>
