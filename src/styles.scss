@@ -18,7 +18,7 @@
     --warning-color: #d11515;
     --font-color: white;
     --secondary-color: #898121;
-    --secondary-color-semi-transparent: 137, 129, 33, .4;
+    --secondary-color-semi-transparent: 137, 129, 33, .2;
     --main-green: #31A463;
     --border-color: rgba(0, 0, 0, 0.12);
     --shadow: 0 4px 8px rgba(0,0,0,0.1);
@@ -47,6 +47,18 @@ html, body { height: 100%; }
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 
 
+.col-md-12 {
+    flex: 0 0 auto;
+    width: 100%;
+    padding: 0px 5px;
+}
+
+.col-md-11 {
+    flex: 0 0 auto;
+    width: 91.6666667%;
+    padding: 0px 5px;
+}
+
 .col-md-10 {
     flex: 0 0 auto;
     width: 83.3333333%;
@@ -56,6 +68,12 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 .col-md-8 {
     flex: 0 0 auto;
     width: 66.6666666%;
+    padding: 0px 5px;
+}
+
+.col-md-7 {
+    flex: 0 0 auto;
+    width: 58.3333333%;
     padding: 0px 5px;
 }
 

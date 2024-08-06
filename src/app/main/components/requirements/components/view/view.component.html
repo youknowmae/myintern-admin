@@ -5,11 +5,10 @@
 </div>
 
 <div class="container">
-
     <div class="left-content">
         <div class="upload">
             <div class="upload-content">
-                <div class="back-btn" [routerLink]="['../list']" routerLinkActive="router-link-active" >
+                <div class="back-btn" [routerLink]="['../list']">
                     <span class="back-icon">
                         <i class="fa-solid fa-arrow-left"></i>
                     </span>
@@ -20,20 +19,25 @@
 
                 <p>Upload Documents</p>
                  
-                <div class="uploaded">
-                    <div class="inside-uploaded">
-                        <span class="material-symbols-outlined">
-                            picture_as_pdf
-                        </span>
-                        <p>Resume.pdf</p>
-                        <!-- <i class="fa-solid fa-magnifying-glass"></i> -->
+                <div class="files">
+                    <div class="items">
+                        <div class="name">
+                            <span class="material-symbols-outlined">
+                                picture_as_pdf
+                            </span>
+                            <p>Resume.pdf</p>
+                        </div>
+                        <i class="fa-solid fa-magnifying-glass"></i>
                     </div>
 
-                    <div class="inside-uploaded">
-                        <span class="material-symbols-outlined">
-                            picture_as_pdf
-                        </span>
-                        <p>Resume.pdf</p>
+                    <div class="items">
+                        <div class="name">
+                            <span class="material-symbols-outlined">
+                                picture_as_pdf
+                            </span>
+                            <p>Resume.pdf</p>
+                        </div>
+                        <i class="fa-solid fa-magnifying-glass"></i>
                     </div>
                 </div>
             </div>
@@ -53,7 +57,7 @@
     <div class="right-content">
         <div class="content">
             <div class="image">
-                <img src="">
+                <img src="/assets/images/logo.png">
             </div>
 
             <div class="content-info">
