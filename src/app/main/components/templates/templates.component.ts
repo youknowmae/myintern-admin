@@ -8,7 +8,7 @@ import { DataService } from '../../../services/data.service';
 import Swal from 'sweetalert2';
 import { AddTemplateComponent } from './components/add-template/add-template.component';
 import { EditTemplateComponent } from './components/edit-template/edit-template.component';
-import { PreviewTemplateComponent } from './components/preview-template/preview-template.component';
+import { PdfPreviewComponent } from '../../../components/pdf-preview/pdf-preview.component';
 
 @Component({
   selector: 'app-templates',
@@ -79,7 +79,7 @@ export class TemplatesComponent {
       return
     }
 
-    this.dialogRef.open(PreviewTemplateComponent, {
+    this.dialogRef.open(PdfPreviewComponent, {
       data: { name: template.name, pdf: template.pdf},
       disableClose: true
     })

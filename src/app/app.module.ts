@@ -16,12 +16,14 @@ import { HttpClientModule } from '@angular/common/http';
 
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { AuthInterceptor } from './interceptors/auth';
+import { PdfPreviewComponent } from './components/pdf-preview/pdf-preview.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     LoginComponent,
-    MainComponent
+    MainComponent,
+    PdfPreviewComponent
   ],
   imports: [
     BrowserModule,

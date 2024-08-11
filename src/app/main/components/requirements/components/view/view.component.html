@@ -8,7 +8,7 @@
     <div class="left-content">
         <div class="upload">
             <div class="upload-content">
-                <div class="back-btn" [routerLink]="['../list']">
+                <div class="back-btn" [routerLink]="['../../list']">
                     <span class="back-icon">
                         <i class="fa-solid fa-arrow-left"></i>
                     </span>
@@ -19,25 +19,15 @@
 
                 <p>Upload Documents</p>
                  
-                <div class="files">
-                    <div class="items">
+                <div class="files" *ngIf="applicationDetails">
+                    <div class="items" *ngFor="let item of applicationDetails.application_documents">
                         <div class="name">
                             <span class="material-symbols-outlined">
                                 picture_as_pdf
                             </span>
-                            <p>Resume.pdf</p>
+                            <p>{{ item.file_name }}</p>
                         </div>
-                        <i class="fa-solid fa-magnifying-glass"></i>
-                    </div>
-
-                    <div class="items">
-                        <div class="name">
-                            <span class="material-symbols-outlined">
-                                picture_as_pdf
-                            </span>
-                            <p>Resume.pdf</p>
-                        </div>
-                        <i class="fa-solid fa-magnifying-glass"></i>
+                        <i class="fa-solid fa-magnifying-glass" (click)="previewDocument(item)"></i>
                     </div>
                 </div>
             </div>
@@ -55,25 +45,24 @@
     </div>
 
     <div class="right-content">
-        <div class="content">
+        <div class="content" *ngIf="applicationDetails">
             <div class="image">
                 <img src="/assets/images/logo.png">
             </div>
 
             <div class="content-info">
-                <p>Game Dev Intern</p>
-                <p>Giga bolts dev Inc.</p>
-                <p>At Giga Bolts Dev Inc., we craft immersive digital 
-                    experiences that transport players to extraordinary 
-                    worlds. With a passion for storytelling and innovation, 
-                    we blend cutting-edge technology with creative design to 
-                    deliver unforgettable gaming adventures.
-                </p>
+                <p>{{ applicationDetails.industry_partner.company_name }}</p>
+                <p>{{ applicationDetails.industry_partner.description }}</p>
 
                 <ul>
-                    <li>Address: </li>
-                    <li>Email Address: </li>
-                    <li>Contact Number: </li>
+                    <li>
+                        Address: 
+                        {{ applicationDetails.industry_partner.street }}
+                        {{ applicationDetails.industry_partner.barangay }}
+                        {{ applicationDetails.industry_partner.municipality }}
+                    </li>
+                    <li>Email Address: {{ applicationDetails.industry_partner.email }}</li>
+                    <li>Contact Number: {{ applicationDetails.industry_partner.mobile_number }}</li>
                 </ul>
 
                 <div class="slots">
