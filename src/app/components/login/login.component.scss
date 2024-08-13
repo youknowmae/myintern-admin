@@ -1,10 +1,6 @@
 .container {
     display: row;
 
-    .logo {
-        margin-left: 20px;
-    }
-
     .container-content {
         display: flex;
 
@@ -12,7 +8,7 @@
             display: row;
 
             .clipart {
-                margin-top: -60px;
+                margin-top: -30px;
             }
 
             .school-logo {
@@ -29,18 +25,22 @@
 
         .right-container {
             height: 50vh;
-            margin-right: 80px;
-            margin-top: -40px;
+            margin-right: 140px;
+            margin-top: 65px;
+
+            .logo {
+                display: flex;
+                justify-content: center;
+            }
 
             h2 {
-                font-size: 50px;
-                margin-bottom: 15px;
+                font-size: 40px;
                 text-align: center;
             }
 
             .content {
-                background-color: #E8751A;
-                padding: 30px;
+                // background-color: #E8751A;
+                padding: 10px;
                 display: flex;
                 flex-direction: column;
                 align-items: center;
@@ -48,29 +48,26 @@
                 height: 500px;
                 width: 550px;
 
-                .input {
-                    margin-top: 150px;
-                }
-
                 input {
                     margin: 10px;
-                    padding: 10px;
-                    width: 500px;
+                    padding: 15px;
+                    width: 400px;
                     border: none;
-                    border-radius: 10px;
+                    border-radius: 30px;
                     background-color: #F9E8D9;
                     color: #EE7214;
-                    font-size: 22px;
-                    height: 40px;
+                    font-size: 15px;
+                    height: 60px;
+                    outline: none;
 
                 }
                 button {
                     border: none;
-                    color: #E8751A;
+                    color: var(--secondary-color);
                     background-color: #F9E8D9;
                     margin-top: 10px;
                     padding: 10px 20px;
-                    font-size: 22px;
+                    font-size: 19px;
                     border: none;
                     border-radius: 20px;
                     cursor: pointer;        
