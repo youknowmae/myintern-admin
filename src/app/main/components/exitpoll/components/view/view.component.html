@@ -1,6 +1,6 @@
 <div class="header">
     <h2>OJT Exit Poll</h2>
-    <form>
+    <form *ngIf="exitPollDetails">
         <div class="table-one">
             <h3>1. Relate your OJT Experience with the following OJT Standards/criteria:</h3>
             <table>
@@ -12,40 +12,10 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr>
-                        <td class="content">a. My scope of work is directly related to the academic program I am pursuing.</td>
-                        <td><input type="radio" name="criteria1" value="yes"></td>
-                        <td><input type="radio" name="criteria1" value="no"></td>
-                    </tr>
-                    <tr>
-                        <td class="content">b. I was given an orientation on the company organization and operations.</td>
-                        <td><input type="radio" name="criteria2" value="yes"></td>
-                        <td><input type="radio" name="criteria2" value="no"></td>
-                    </tr>
-                    <tr>
-                        <td class="content">c. I was given a job description on my specific duties and reporting relationships.</td>
-                        <td><input type="radio" name="criteria3" value="yes"></td>
-                        <td><input type="radio" name="criteria3" value="no"></td>
-                    </tr>
-                    <tr>
-                        <td class="content">d. My office/work hours were clear and convenient for me.</td>
-                        <td><input type="radio" name="criteria4" value="yes"></td>
-                        <td><input type="radio" name="criteria4" value="no"></td>
-                    </tr>
-                    <tr>
-                        <td class="content">e. I felt safe and secure in my work location and environment.</td>
-                        <td><input type="radio" name="criteria5" value="yes"></td>
-                        <td><input type="radio" name="criteria5" value="no"></td>
-                    </tr>
-                    <tr>
-                        <td class="content">f. I had no difficulty going to and from work.</td>
-                        <td><input type="radio" name="criteria6" value="yes"></td>
-                        <td><input type="radio" name="criteria6" value="no"></td>
-                    </tr>
-                    <tr>
-                        <td class="content">g. The company provided me with allowance, stipend, or subsidy indicate if _ _ _ meal or _ _ _ cash. If cash, how much? _ _ _/day</td>
-                        <td><input type="radio" name="criteria7" value="yes"></td>
-                        <td><input type="radio" name="criteria7" value="no"></td>
+                    <tr *ngFor="let item of exitPollDetails.short_answer; let i = index">
+                        <td class="content">{{ shortAnswerQuestions[i] }}</td>
+                        <td><input type="radio" [name]="'short_' + i" [checked]="item.answer === 1" value="1"></td>
+                        <td><input type="radio" [name]="'short_' + i" [checked]="item.answer === 0" value="0"></td>
                     </tr>
                 </tbody>
             </table>
@@ -68,45 +38,16 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr>
-                        <td class="content">a.</td>
-                        <td><input type="radio" name="objective1" value="0%"></td>
-                        <td><input type="radio" name="objective1" value="25%"></td>
-                        <td><input type="radio" name="objective1" value="50%"></td>
-                        <td><input type="radio" name="objective1" value="75%"></td>
-                        <td><input type="radio" name="objective1" value="100%"></td>
-                    </tr>
-                    <tr>
-                        <td class="content">b.</td>
-                        <td><input type="radio" name="objective2" value="0%"></td>
-                        <td><input type="radio" name="objective2" value="25%"></td>
-                        <td><input type="radio" name="objective2" value="50%"></td>
-                        <td><input type="radio" name="objective2" value="75%"></td>
-                        <td><input type="radio" name="objective2" value="100%"></td>
-                    </tr>
-                    <tr>
-                        <td class="content">c.</td>
-                        <td><input type="radio" name="objective3" value="0%"></td>
-                        <td><input type="radio" name="objective3" value="25%"></td>
-                        <td><input type="radio" name="objective3" value="50%"></td>
-                        <td><input type="radio" name="objective3" value="75%"></td>
-                        <td><input type="radio" name="objective3" value="100%"></td>
-                    </tr>
-                    <tr>
-                        <td class="content">d.</td>
-                        <td><input type="radio" name="objective4" value="0%"></td>
-                        <td><input type="radio" name="objective4" value="25%"></td>
-                        <td><input type="radio" name="objective4" value="50%"></td>
-                        <td><input type="radio" name="objective4" value="75%"></td>
-                        <td><input type="radio" name="objective4" value="100%"></td>
-                    </tr>
-                    <tr>
-                        <td class="content">e.</td>
-                        <td><input type="radio" name="objective5" value="0%"></td>
-                        <td><input type="radio" name="objective5" value="25%"></td>
-                        <td><input type="radio" name="objective5" value="50%"></td>
-                        <td><input type="radio" name="objective5" value="75%"></td>
-                        <td><input type="radio" name="objective5" value="100%"></td>
+                    <tr *ngFor="let training_obj of exitPollDetails.training_objectives; let i = index">
+                        <td class="content">
+                            <span style="margin-right: 5px;">{{ alphabet[i] }}.  </span>
+                            {{ training_obj.training_objective }}
+                        </td>
+                        <td><input type="radio" [name]="'obj_' + i" [checked]="training_obj.achievement_level === 0" value="0"></td>
+                        <td><input type="radio" [name]="'obj_' + i" [checked]="training_obj.achievement_level === 1" value="1"></td>
+                        <td><input type="radio" [name]="'obj_' + i" [checked]="training_obj.achievement_level === 2" value="2"></td>
+                        <td><input type="radio" [name]="'obj_' + i" [checked]="training_obj.achievement_level === 3" value="3"></td>
+                        <td><input type="radio" [name]="'obj_' + i" [checked]="training_obj.achievement_level === 4" value="4"></td>
                     </tr>
                 </tbody>
             </table>
@@ -115,25 +56,25 @@
         <h3>3. What is your overall rating of your training experience?</h3>
         <div class="rating">
             <label>
-                <input type="radio" name="rating" value="Poor"> Poor
+                <input type="radio" [checked]="exitPollDetails.likert === 0" name="experience_rating" [value]="0"> Poor
             </label>
             <label>
-                <input type="radio" name="rating" value="Below Average"> Below Average
+                <input type="radio" [checked]="exitPollDetails.likert === 1" name="experience_rating" [value]="1"> Below Average
             </label>
             <label>
-                <input type="radio" name="rating" value="Average"> Average
+                <input type="radio" [checked]="exitPollDetails.likert === 2" name="experience_rating" [value]="2"> Average
             </label>
             <label>
-                <input type="radio" name="rating" value="Above Average"> Above Average
+                <input type="radio" [checked]="exitPollDetails.likert === 3" name="experience_rating" [value]="3"> Above Average
             </label>
             <label>
-                <input type="radio" name="rating" value="Excellent"> Excellent
+                <input type="radio" [checked]="exitPollDetails.likert === 4"name="experience_rating" [value]="4"> Excellent
             </label>
         </div>
 
         <div class="large-textarea">
             <h3>4. In your own opinion, what can be done to improve the OJT program so as to improve further the training of succeeding student trainees?</h3>
-            <textarea></textarea>
+            <textarea readonly>{{ exitPollDetails.long_answer }}</textarea>
         </div> 
     </form>
 </div>

@@ -33,7 +33,7 @@ export class ListComponent {
         console.log(industryPartners)
       },
       error => {
-
+        console.error(error)
       }
     )
   }
