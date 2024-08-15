@@ -6,6 +6,7 @@ import { ExitpollComponent } from './exitpoll.component';
 import { ListComponent } from './components/list/list.component';
 import { ViewComponent } from './components/view/view.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { MaterialsModules } from '../../../modules/materials.module';
 
 
 @NgModule({
@@ -18,7 +19,8 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
   imports: [
     CommonModule,
     FormsModule,
-    ExitpollRoutingModule
+    ExitpollRoutingModule,
+    MaterialsModules
   ]
 })
 export class ExitpollModule { }

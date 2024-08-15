@@ -4,7 +4,7 @@ import { FormsModule } from "@angular/forms";
 import { MatFormFieldModule, MatHint, MatLabel } from '@angular/material/form-field'
 import { MatTooltipModule} from '@angular/material/tooltip';
 import { MatInputModule } from '@angular/material/input';
-import {MatPaginatorModule} from '@angular/material/paginator';
+import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatTableModule } from '@angular/material/table';
 
 const var_modules = [
