@@ -3,9 +3,11 @@ import { Component, ViewChild, ChangeDetectorRef } from '@angular/core';
 import { MatPaginator, MatPaginatorIntl } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
 
-import { DataSource } from '@angular/cdk/collections';
-
 import { DataService } from '../../../../../services/data.service';
+import { UserService } from '../../../../../services/user.service';
+
+import { Router } from '@angular/router';
+
 @Component({
   selector: 'app-list',
   templateUrl: './list.component.html',
@@ -21,7 +23,9 @@ export class ListComponent {
   constructor(
     private paginatorIntl: MatPaginatorIntl, 
     private changeDetectorRef: ChangeDetectorRef,
-    private ds: DataService
+    private router: Router,
+    private ds: DataService,
+    private us: UserService
   ) {
     this.paginator = new MatPaginator(this.paginatorIntl, this.changeDetectorRef);
   }
@@ -30,8 +34,16 @@ export class ListComponent {
     this.getStudents()
   }
 
-  a(){
-    console.log('work')
+  view(id: number){
+    this.router.navigate(['/main/exitpoll/view/' + id])
+    this.ds.get('exit-poll/', id).subscribe(
+      exitPollDetails=> {  
+        this.us.setStudentExitPoll(exitPollDetails)
+      },
+      error => {
+        console.error(error)
+      }
+    )
   }
   
   getStudents() {

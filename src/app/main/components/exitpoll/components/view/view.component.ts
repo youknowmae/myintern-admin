@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { DataService } from '../../../../../services/data.service';
 import { ExitpollComponent } from '../../exitpoll.component';
+import { UserService } from '../../../../../services/user.service';
 
 @Component({
   selector: 'app-view',
@@ -32,7 +33,7 @@ export class ViewComponent {
   }
 
   constructor(
-    private ds: DataService,
+    private us: UserService,
     private route: ActivatedRoute,
   ) {
     this.route.paramMap.subscribe(params => {
@@ -47,31 +48,25 @@ export class ViewComponent {
   }
 
   getExitPollDetails(id: number) {
-    this.ds.get('exit-poll/', id).subscribe(
-      exitPollDetails=> {        
-        //likert
-        this.exitPollDetails.likert = exitPollDetails.exit_poll_short_answer.pop().answer
+    var exitPollDetails = this.us.getStudentExitPoll();
+    
+    this.exitPollDetails.likert = exitPollDetails.exit_poll_short_answer.pop().answer
 
-        //short answers
-        exitPollDetails.exit_poll_short_answer.forEach((item: any) => {
-          this.exitPollDetails.short_answer.push({
-            answer: item.answer
-          })
-        });
-        //training objective
-        exitPollDetails.exit_poll_training_objective.forEach((item: any) => {
-          this.exitPollDetails.training_objectives.push({
-            training_objective: item.training_objective,
-            achievement_level: item.achievement_level
-           })
-        });
-        
-        this.exitPollDetails.long_answer = exitPollDetails.exit_poll_long_answer[0].answer
-      },
-      error => {
-        console.error(error)
-      }
-    )
+    //short answers
+    exitPollDetails.exit_poll_short_answer.forEach((item: any) => {
+      this.exitPollDetails.short_answer.push({
+        answer: item.answer
+      })
+    });
+    //training objective
+    exitPollDetails.exit_poll_training_objective.forEach((item: any) => {
+      this.exitPollDetails.training_objectives.push({
+        training_objective: item.training_objective,
+        achievement_level: item.achievement_level
+        })
+    });
+    
+    this.exitPollDetails.long_answer = exitPollDetails.exit_poll_long_answer.answer
   }
 
 }
