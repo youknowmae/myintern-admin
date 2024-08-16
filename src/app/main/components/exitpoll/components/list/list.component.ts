@@ -7,6 +7,7 @@ import { DataService } from '../../../../../services/data.service';
 import { UserService } from '../../../../../services/user.service';
 
 import { Router } from '@angular/router';
+import { BlockList } from 'net';
 
 @Component({
   selector: 'app-list',
@@ -16,6 +17,8 @@ import { Router } from '@angular/router';
 export class ListComponent {
   displayedColumns: string[] = ['name', 'student_number', 'course', 'year_level', 'status', 'actions'];
 
+  currentFilter: number = 0
+  unfilteredStudents: any
   dataSource: any = new MatTableDataSource<any>();
   
   @ViewChild(MatPaginator, {static:true}) paginator!: MatPaginator;
@@ -50,6 +53,7 @@ export class ListComponent {
     this.ds.get('exit-poll/students').subscribe(
       student => {
         console.log(student)
+        this.unfilteredStudents = student
         this.dataSource.data = student
         this.dataSource.paginator = this.paginator;
       },
@@ -57,15 +61,26 @@ export class ListComponent {
         console.error(error)
       }
     )
-    // this.dataSource.data = [
-    //   {
-    //     id: 1,
-    //     name: 'raven',
-    //     student_number: '202110187',
-    //     year: '3',
-    //     status: 'di pa tapos ano ka'
-    //   }
-    // ]
+  }
+
+  applyFilter(value: string) {
+    if(value == "all") {
+      this.dataSource.data = this.unfilteredStudents
+      return
+    }
+
+    this.dataSource.data = this.unfilteredStudents.filter((student: any) => {
+      if(value == 'completed') {
+        return student.ojt_exit_poll
+      }
+
+      if(value == 'pending') {
+        return !student.ojt_exit_poll
+      }
+
+      return false
+    })
+
     
   }
 }
