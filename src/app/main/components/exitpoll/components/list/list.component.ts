@@ -35,10 +35,10 @@ export class ListComponent {
   }
 
   view(id: number){
-    this.router.navigate(['/main/exitpoll/view/' + id])
     this.ds.get('exit-poll/', id).subscribe(
       exitPollDetails=> {  
         this.us.setStudentExitPoll(exitPollDetails)
+        this.router.navigate(['/main/exitpoll/view/' + id])
       },
       error => {
         console.error(error)

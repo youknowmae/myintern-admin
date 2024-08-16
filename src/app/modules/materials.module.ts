@@ -6,6 +6,9 @@ import { MatTooltipModule} from '@angular/material/tooltip';
 import { MatInputModule } from '@angular/material/input';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatTableModule } from '@angular/material/table';
+import { MatSelectModule } from "@angular/material/select";
+import { MatOptionModule } from "@angular/material/core";
+import { MatIconModule } from '@angular/material/icon'
 
 const var_modules = [
     MatFormFieldModule,
@@ -15,7 +18,10 @@ const var_modules = [
     MatInputModule,
     MatTooltipModule,
     MatPaginatorModule,
-    MatTableModule
+    MatTableModule,
+    MatSelectModule,
+    MatOptionModule,
+    MatIconModule
 ]
 
 @NgModule({

@@ -39,7 +39,9 @@
         
         <ng-container matColumnDef="status" >
             <th mat-header-cell *matHeaderCellDef class="col-md-2" > Status </th>
-            <td mat-cell *matCellDef="let element" class="col-md-2"> {{ (element.ojt_exit_poll) ? 'Completed' : 'Not Completed' }} </td>
+            <td mat-cell *matCellDef="let element" class="col-md-2"> 
+                <p> {{ (element.ojt_exit_poll) ? 'Completed' : 'Pending' }} </p>
+            </td>
         </ng-container>
 
         <ng-container matColumnDef="actions">

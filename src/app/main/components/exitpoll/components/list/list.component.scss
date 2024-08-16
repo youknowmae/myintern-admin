@@ -72,6 +72,25 @@ h1 {
         }
     }
 
+    p {
+        margin: 0;
+    }
+
+    .completed {
+        background-color: green ;
+        width: 120px;
+        color: #ffffff;
+        padding: 4px 20px;
+        border-radius: 20px;
+    }
+    
+    .pending {
+        background-color: #d4e014;
+        width: 120px;
+        color: #ffffff;
+        padding: 4px 20px;
+        border-radius: 20px;
+    }
 
     th, td {
         text-align: center;

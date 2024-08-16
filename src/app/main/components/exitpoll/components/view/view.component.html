@@ -1,5 +1,111 @@
 <div class="header">
     <h2>OJT Exit Poll</h2>
+    
+    <div class="row">
+        <div class="col-md-4">
+            <mat-form-field appearance="outline" floatLabel='always'>
+            <mat-label>First Name</mat-label>
+            <input matInput [value]="exitPollDetails.user.firstname" placeholder="None" readonly>
+            </mat-form-field>
+        </div>
+        <div class="col-md-3">
+            <mat-form-field appearance="outline" floatLabel='always'>
+            <mat-label>Middle Name</mat-label>
+            <input matInput [value]="exitPollDetails.user.middlename" placeholder="None" readonly>
+            </mat-form-field>
+        </div>
+        <div class="col-md-4">
+            <mat-form-field appearance="outline" floatLabel='always'>
+            <mat-label>Last Name</mat-label>
+            <input matInput [value]="exitPollDetails.user.lastname" placeholder="None" readonly>
+            </mat-form-field>
+        </div>
+        <div class="col-md-1">
+            <mat-form-field appearance="outline" floatLabel='always'>
+            <mat-label>Ext Name</mat-label>
+            <input matInput [value]="exitPollDetails.user.ext_name" placeholder="None" readonly>
+            </mat-form-field>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-2">
+            <mat-form-field appearance="outline" floatLabel='always'>
+            <mat-label>program</mat-label>
+            <input matInput [value]="exitPollDetails.user.student_profile.program" placeholder="None" readonly>
+            </mat-form-field>
+        </div>
+        <div class="col-md-2">
+            <mat-form-field appearance="outline" floatLabel='always'>
+            <mat-label>year Level</mat-label>
+            <input matInput [value]="exitPollDetails.user.student_profile.year_level" placeholder="None" readonly>
+            </mat-form-field>
+        </div>
+        <div class="col-md-4">
+            <mat-form-field appearance="outline" floatLabel='always'>
+            <mat-label>OJT Site/Company Name</mat-label>
+            <input matInput placeholder="None" readonly>
+            </mat-form-field>
+        </div>
+        <div class="col-md-4">
+            <mat-form-field appearance="outline" floatLabel='always'>
+            <mat-label>Total Hours Completed</mat-label>
+            <input matInput placeholder="None" readonly>
+            </mat-form-field>
+        </div>
+    </div>
+    
+    <div class="row">
+        <div class="col-md-7">
+            <mat-form-field appearance="outline" floatLabel='always'>
+            <mat-label>Company Address</mat-label>
+            <input matInput  placeholder="None" readonly>
+            </mat-form-field>
+        </div>
+        <div class="col-md-5">
+            <mat-form-field appearance="outline" floatLabel='always'>
+            <mat-label>Assigned Position</mat-label>
+            <input matInput placeholder="None" readonly>
+            </mat-form-field>
+        </div>
+    </div>
+    
+    <div class="row">
+        <div class="col-md-4">
+            <mat-form-field appearance="outline" floatLabel='always'>
+            <mat-label>Unit/Department</mat-label>
+            <input matInput  placeholder="None" readonly>
+            </mat-form-field>
+        </div>
+        <div class="col-md-8">
+            <mat-form-field appearance="outline" floatLabel='always'>
+            <mat-label>Brief Job Description</mat-label>
+            <input matInput placeholder="None" readonly>
+            </mat-form-field>
+        </div>
+    </div>
+    
+    <div class="row">
+        <div class="col-md-4">
+            <mat-form-field appearance="outline" floatLabel='always'>
+            <mat-label>Name of Supervisor</mat-label>
+            <input matInput  placeholder="None" readonly>
+            </mat-form-field>
+        </div>
+        <div class="col-md-4">
+            <mat-form-field appearance="outline" floatLabel='always'>
+            <mat-label>Position</mat-label>
+            <input matInput  placeholder="None" readonly>
+            </mat-form-field>
+        </div>
+        <div class="col-md-4">
+            <mat-form-field appearance="outline" floatLabel='always'>
+            <mat-label>Duration of OJT</mat-label>
+            <input matInput  placeholder="None" readonly>
+            </mat-form-field>
+        </div>
+    </div>
+
     <form *ngIf="exitPollDetails">
         <div class="table-one">
             <h3>1. Relate your OJT Experience with the following OJT Standards/criteria:</h3>
@@ -14,8 +120,8 @@
                 <tbody>
                     <tr *ngFor="let item of exitPollDetails.short_answer; let i = index">
                         <td class="content">{{ shortAnswerQuestions[i] }}</td>
-                        <td><input type="radio" [name]="'short_' + i" [checked]="item.answer === 1" value="1"></td>
-                        <td><input type="radio" [name]="'short_' + i" [checked]="item.answer === 0" value="0"></td>
+                        <td><input type="radio" [name]="'short_' + i" [checked]="item.answer === 1" value="1" [disabled]="item.answer !== 1"></td>
+                        <td><input type="radio" [name]="'short_' + i" [checked]="item.answer === 0" value="0" [disabled]="item.answer !== 0"></td>
                     </tr>
                 </tbody>
             </table>
@@ -43,11 +149,11 @@
                             <span style="margin-right: 5px;">{{ alphabet[i] }}.  </span>
                             {{ training_obj.training_objective }}
                         </td>
-                        <td><input type="radio" [name]="'obj_' + i" [checked]="training_obj.achievement_level === 0" value="0"></td>
-                        <td><input type="radio" [name]="'obj_' + i" [checked]="training_obj.achievement_level === 1" value="1"></td>
-                        <td><input type="radio" [name]="'obj_' + i" [checked]="training_obj.achievement_level === 2" value="2"></td>
-                        <td><input type="radio" [name]="'obj_' + i" [checked]="training_obj.achievement_level === 3" value="3"></td>
-                        <td><input type="radio" [name]="'obj_' + i" [checked]="training_obj.achievement_level === 4" value="4"></td>
+                        <td><input type="radio" [name]="'obj_' + i" [checked]="training_obj.achievement_level === 0" value="0" [disabled]="training_obj.achievement_level !== 0"></td>
+                        <td><input type="radio" [name]="'obj_' + i" [checked]="training_obj.achievement_level === 1" value="1" [disabled]="training_obj.achievement_level !== 1"></td>
+                        <td><input type="radio" [name]="'obj_' + i" [checked]="training_obj.achievement_level === 2" value="2" [disabled]="training_obj.achievement_level !== 2"></td>
+                        <td><input type="radio" [name]="'obj_' + i" [checked]="training_obj.achievement_level === 3" value="3" [disabled]="training_obj.achievement_level !== 3"></td>
+                        <td><input type="radio" [name]="'obj_' + i" [checked]="training_obj.achievement_level === 4" value="4" [disabled]="training_obj.achievement_level !== 4"></td>
                     </tr>
                 </tbody>
             </table>
@@ -56,19 +162,19 @@
         <h3>3. What is your overall rating of your training experience?</h3>
         <div class="rating">
             <label>
-                <input type="radio" [checked]="exitPollDetails.likert === 0" name="experience_rating" [value]="0"> Poor
+                <input type="radio" [checked]="exitPollDetails.likert === 0" name="experience_rating" [value]="0" [disabled]="exitPollDetails.likert !== 0"> Poor
             </label>
             <label>
-                <input type="radio" [checked]="exitPollDetails.likert === 1" name="experience_rating" [value]="1"> Below Average
+                <input type="radio" [checked]="exitPollDetails.likert === 1" name="experience_rating" [value]="1" [disabled]="exitPollDetails.likert !== 1"> Below Average
             </label>
             <label>
-                <input type="radio" [checked]="exitPollDetails.likert === 2" name="experience_rating" [value]="2"> Average
+                <input type="radio" [checked]="exitPollDetails.likert === 2" name="experience_rating" [value]="2" [disabled]="exitPollDetails.likert !== 2"> Average
             </label>
             <label>
-                <input type="radio" [checked]="exitPollDetails.likert === 3" name="experience_rating" [value]="3"> Above Average
+                <input type="radio" [checked]="exitPollDetails.likert === 3" name="experience_rating" [value]="3" [disabled]="exitPollDetails.likert !== 3"> Above Average
             </label>
             <label>
-                <input type="radio" [checked]="exitPollDetails.likert === 4"name="experience_rating" [value]="4"> Excellent
+                <input type="radio" [checked]="exitPollDetails.likert === 4"name="experience_rating" [value]="4" [disabled]="exitPollDetails.likert !== 4"> Excellent
             </label>
         </div>
 

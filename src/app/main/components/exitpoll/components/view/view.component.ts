@@ -1,14 +1,19 @@
 import { Component } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
-import { DataService } from '../../../../../services/data.service';
-import { ExitpollComponent } from '../../exitpoll.component';
 import { UserService } from '../../../../../services/user.service';
 
+interface ExitPoll {
+  user: any,
+  short_answer: any,
+  training_objectives: any,
+  likert: any,
+  long_answer: string
+}
 @Component({
   selector: 'app-view',
   templateUrl: './view.component.html',
   styleUrl: './view.component.scss'
 })
+
 export class ViewComponent {
   alphabet = 'abcdefghijklmnopqrstuvwxyz'.split('')
   shortAnswerQuestions = [
@@ -21,34 +26,28 @@ export class ViewComponent {
     'g. The company provided me with allowance, stipend, or subsidy indicate if _ _ _ meal or _ _ _ cash. If cash, how much? _ _ _/day'
   ]
 
-  exitPollDetails: any = {
+  exitPollDetails: ExitPoll = {
+    user: {},
     short_answer: [
 
     ],
     training_objectives: [
 
     ],
-    likert: null,
+    likert: '',
     long_answer: ''
   }
 
   constructor(
     private us: UserService,
-    private route: ActivatedRoute,
   ) {
-    this.route.paramMap.subscribe(params => {
-      let id = params.get('id')
-
-      if(!id) {
-        return
-      }
-      
-      this.getExitPollDetails(parseInt(id))
-    });
+    this.getExitPollDetails()
   }
 
-  getExitPollDetails(id: number) {
+  getExitPollDetails() {
     var exitPollDetails = this.us.getStudentExitPoll();
+
+    this.exitPollDetails.user = exitPollDetails.user
     
     this.exitPollDetails.likert = exitPollDetails.exit_poll_short_answer.pop().answer
 

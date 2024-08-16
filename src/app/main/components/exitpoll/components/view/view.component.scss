@@ -1,5 +1,5 @@
 .header {
-    max-width: 800px;
+    max-width: 1000px;
     margin: auto;
     padding: 20px;
     border: 1px solid black;
@@ -12,6 +12,13 @@
         margin-bottom: 20px;
     }
 }
+
+.row {
+    display: flex;
+    flex-wrap: wrap;
+    // margin-right: -15px;
+    // margin-left: -15px;
+  }
 
 .table-one {
     margin-bottom: 20px;
@@ -73,7 +80,7 @@
 }
 
 .rating, .large-textarea {
-    max-width: 750px;
+    
     padding-bottom: 20px;
 }
 
