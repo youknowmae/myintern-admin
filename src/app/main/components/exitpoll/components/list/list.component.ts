@@ -7,8 +7,6 @@ import { DataService } from '../../../../../services/data.service';
 import { UserService } from '../../../../../services/user.service';
 
 import { Router } from '@angular/router';
-import { BlockList } from 'net';
-
 @Component({
   selector: 'app-list',
   templateUrl: './list.component.html',
@@ -51,10 +49,16 @@ export class ListComponent {
   
   getStudents() {
     this.ds.get('exit-poll/students').subscribe(
-      student => {
-        console.log(student)
-        this.unfilteredStudents = student
-        this.dataSource.data = student
+      students => {
+        let studentsList = students.map((student: any) => {
+          return {
+            full_name: student.first_name + " " + student.last_name,
+            ...student
+          }
+        })
+        
+        this.unfilteredStudents = studentsList
+        this.dataSource.data = studentsList
         this.dataSource.paginator = this.paginator;
       },
       error => {

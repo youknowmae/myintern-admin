@@ -103,6 +103,7 @@ export class ListComponent {
         });
       },
       error => {
+        console.error(error)
         Swal.fire({
           title: 'Error!',
           text: 'Something went wrong. Please try again later.',

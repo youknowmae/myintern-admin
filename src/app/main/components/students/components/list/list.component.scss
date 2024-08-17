@@ -28,76 +28,56 @@ h1 {
     background-color: none;
     overflow-y: auto;
     border: 1px solid var(--primary-color);
-    height: 72vh;
-    padding: 0px 40px;
-    border-radius: 40px;
+    height: fit-content;
+    padding: 0px 30px;
+    border-radius: 30px;
+    box-shadow: 3px 3px 10px rgba(0, 0, 0, 0.1);
 
-    .table-container {
-        width: 100%;
+    table {
+        box-shadow: none;
+        margin-bottom: 10px;
+
+        button {
+            font-size: 14px;
+            background-color: var(--secondary-color);
+            color: #ffffff;
+            padding: 2px 20px;
+            border-radius: 20px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            color: var(--secondary-color);
+            background-color: #ffffff;
+            border: 2px solid var(--secondary-color);
+        }
+    }
+
+
+    th, td {
+        text-align: center;
         display: flex;
         justify-content: center;
-        flex-direction: column;
-      }
+        align-items: center;
+    }
     
+    tr {
+        display: flex;
+    }
+
+    .row {
+        color: red;
+    }
+
     .table-header {
         color: var(--primary-color);
-        padding: 15px 0px;
-    }
-    
-    .table-body {
-        display: flex;
-        flex-direction: column;
-        
-        .table-row {
-            border-bottom: 1px solid var(--border-color);
-            padding: 2px 0px;
-        }
-
-        .row-content {
-            padding: 5px 0px;
-            border-radius: 10px;
-            transition: all ease-in-out .1s;
-      
-            button {
-                font-size: 14px;
-                background-color: var(--secondary-color);
-                color: #ffffff;
-                padding: 2px 20px;
-                border-radius: 20px;
-                cursor: pointer;
-            }
-
-            button:hover {
-                color: var(--secondary-color);
-                background-color: #ffffff;
-                border: 2px solid var(--secondary-color);
-            }
-        }
     }
 
-    .table-header,
-    .row-content
-    {
-    display: flex;
-    flex-direction: row;
-
-        div {
-            flex: 1;
-            flex-basis: 12%;
-            text-align: center;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-
-        div:nth-child(1) {
-            flex-basis: 16%;
-            flex-direction: column;
-        }   
+    .table-items{
+        transition: all ease-in-out .2s;
     }
-
-    .row-content:hover {
+    .table-items:hover {
         background-color: rgba(var(--secondary-color-semi-transparent));
-        transition: all ease-in-out .1s;
+        transition: all ease-in-out .2s;
     }
 }
