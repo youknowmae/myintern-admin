@@ -15,7 +15,7 @@ import { Router } from '@angular/router';
 export class ListComponent {
   displayedColumns: string[] = ['name', 'student_number', 'course', 'year_level', 'status', 'actions'];
 
-  currentFilter: number = 0
+  currentFilter: string = 'all'
   unfilteredStudents: any
   dataSource: any = new MatTableDataSource<any>();
   
@@ -56,7 +56,7 @@ export class ListComponent {
             ...student
           }
         })
-        
+
         this.unfilteredStudents = studentsList
         this.dataSource.data = studentsList
         this.dataSource.paginator = this.paginator;
@@ -68,6 +68,7 @@ export class ListComponent {
   }
 
   applyFilter(value: string) {
+    this.currentFilter = value
     if(value == "all") {
       this.dataSource.data = this.unfilteredStudents
       return

@@ -16,9 +16,11 @@ import { Router } from '@angular/router';
 export class ListComponent {
   displayedColumns: string[] = ['name', 'student_number', 'mobile', 'course', 'program', 'year_level', 'time_completion', 'status', 'actions'];
 
-  currentFilter: number = 0
+  currentFilter: string = 'all'
   unfilteredStudents: any
   dataSource: any = new MatTableDataSource<any>();
+
+  isLoading: boolean = false
   
   @ViewChild(MatPaginator, {static:true}) paginator!: MatPaginator;
   
@@ -54,6 +56,51 @@ export class ListComponent {
       },
       error => {
         console.error(error)
+      }
+    )
+  }
+
+  applyFilter(value: string) {
+    this.currentFilter = value 
+
+    if(value == "all") {
+      this.dataSource.data = this.unfilteredStudents
+      return
+    }
+
+    this.dataSource.data = this.unfilteredStudents.filter((student: any) => {
+      var status = student.status.toLowerCase()
+      if(value == 'completed') {
+        return status.includes('completed') 
+      }
+
+      if(value == 'pending') {
+        return status.includes('pending') 
+      }
+      
+      if(value == 'ongoing') {
+        return status.includes('ongoing') 
+      }
+
+      return false
+    })    
+  }
+
+  viewStudent(id: number) {
+    if(this.isLoading) {
+      return
+    }
+
+    this.isLoading = true
+    this.ds.get('monitoring/students/', id).subscribe(
+      student => {
+        this.us.setStudentProfile(student)
+        this.router.navigate(['main/students/view'])
+        this.isLoading = false
+      },
+      error => {
+        console.error(error)
+        this.isLoading = false
       }
     )
   }

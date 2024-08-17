@@ -3,10 +3,20 @@
 </div>
 
 <div class="buttons">
-    <button (click)="applyFilter('all')">All Students</button>
-    <button (click)="applyFilter('completed')">Completed</button>
-    <button (click)="applyFilter('pending')">Pending</button>
-    <button>Export</button> 
+    <div class="filter-container">
+        <div [class.active]="currentFilter == 'all'" class="filter">
+            <button (click)="applyFilter('all')">All Students</button>
+        </div>
+        <div [class.active]="currentFilter == 'completed'" class="filter">
+            <button (click)="applyFilter('completed')">Completed</button>
+        </div>
+        <div [class.active]="currentFilter == 'pending'" class="filter">
+            <button (click)="applyFilter('pending')">Pending</button>
+        </div>
+    </div>
+    <div class="export">
+        <button>Export</button>
+    </div>
 </div>
 
 <div class="container">
