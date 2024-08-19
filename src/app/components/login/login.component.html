@@ -13,26 +13,28 @@
 
         <div class="right-container">
             <div class="logo">
-                <img src="assets/images/LOGO.png" alt="myintern-logo" style="width: 230px; height: 230px;">
+                <img src="assets/images/logo.png" alt="myintern-logo" style="width: 230px; height: 230px;">
             </div>
 
             <h2>Welcome Adviser!</h2>
 
-            <div class="content">
-                <div class="input">
-                    <input type="email" name="email" placeholder="Enter Domain Email" required>      
-                </div>
-                <div class="input2">
-                    <input [type]="changetype?'password':'text'" name="password" placeholder="Enter password" required>
-                    
-                    <div class="icon">
-                        <span class="password-toggle-icon" (click)="viewpass()"><i
-                            [ngClass]="visible?'fa-regular fa-eye':'fa-regular fa-eye-slash'"></i></span>
+            <form (submit)="login()" [formGroup]="loginForm" ngNativeValidate autocomplete="on">
+                <div class="content">
+                    <div class="input">
+                        <input type="text" name="email" placeholder="Enter Domain Email" formControlName="email" autocomplete="on" required>      
                     </div>
-                </div>
+                    <div class="input2">
+                        <input [type]="changetype?'password':'text'" name="password" placeholder="Enter password" formControlName="password" autocomplete="on" required>
+                        
+                        <div class="icon">
+                            <span class="password-toggle-icon" (click)="viewpass()"><i
+                                [ngClass]="visible?'fa-regular fa-eye':'fa-regular fa-eye-slash'"></i></span>
+                        </div>
+                    </div>
 
-                <button [routerLink]="['/main']" routerLinkActive="router-link-active" >Login</button>
-            </div>
+                    <button type="submit">Login</button>
+                </div>
+            </form>
         </div>
     </div>
 </div>
