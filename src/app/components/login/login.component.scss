@@ -9,6 +9,8 @@
 
             .clipart {
                 margin-top: -30px;
+                opacity: 0;
+                animation: fadeInUp 1s ease-in-out forwards;
             }
 
             .school-logo {
@@ -16,6 +18,8 @@
                 float: right;
                 margin-top: -130px;
                 margin-right: 190px;
+                opacity: 0;
+                animation: fadeInRight 1.5s ease-in-out forwards;
 
                 .ccs {
                     margin-top: 12px;
@@ -27,19 +31,24 @@
             height: 50vh;
             margin-right: 140px;
             margin-top: 65px;
+            opacity: 0;
+            animation: fadeInLeft 1.5s ease-in-out forwards;
 
             .logo {
                 display: flex;
                 justify-content: center;
+                transform: scale(0);
+                animation: scaleIn 1s ease-in-out forwards;
             }
 
             h2 {
                 font-size: 40px;
                 text-align: center;
+                opacity: 0;
+                animation: fadeIn 2s ease-in-out forwards;
             }
 
             .content {
-                // background-color: #E8751A;
                 padding: 10px;
                 display: flex;
                 flex-direction: column;
@@ -47,6 +56,8 @@
                 border-radius: 48px;
                 height: 500px;
                 width: 550px;
+                opacity: 0;
+                animation: fadeInUp 2s ease-in-out forwards;
 
                 input {
                     margin: 10px;
@@ -59,6 +70,7 @@
                     font-size: 15px;
                     height: 60px;
                     outline: none;
+                    transition: all 0.3s ease-in-out;
                 }
 
                 .input2 {
@@ -73,6 +85,11 @@
                             font-size: 20px;
                             cursor: pointer;
                             color: var(--secondary-color);
+                            transition: color 0.3s ease-in-out;
+                        }
+
+                        span:hover {
+                            color: #EE7214;
                         }
                     }
                 }
@@ -84,11 +101,68 @@
                     margin-top: 10px;
                     padding: 10px 20px;
                     font-size: 19px;
-                    border: none;
                     border-radius: 20px;
-                    cursor: pointer;        
+                    cursor: pointer;
+                    transition: background-color 0.3s ease-in-out, transform 0.3s ease-in-out;
+                }
+
+                button:hover {
+                    background-color: #EE7214;
+                    color: #F9E8D9;
+                    transform: scale(1.1);
                 }
             }
         }
+    }
+}
+
+@keyframes fadeIn {
+    0% {
+        opacity: 0;
+    }
+    100% {
+        opacity: 1;
+    }
+}
+
+@keyframes fadeInUp {
+    0% {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes fadeInRight {
+    0% {
+        opacity: 0;
+        transform: translateX(20px);
+    }
+    100% {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+@keyframes fadeInLeft {
+    0% {
+        opacity: 0;
+        transform: translateX(-20px);
+    }
+    100% {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+@keyframes scaleIn {
+    0% {
+        transform: scale(0);
+    }
+    100% {
+        transform: scale(1);
     }
 }
