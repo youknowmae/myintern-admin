@@ -1,4 +1,4 @@
-import { Component, Inject } from '@angular/core';
+import { Component, Inject, Type } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 
@@ -12,6 +12,9 @@ export class PdfPreviewComponent {
   fileName: string = '';
   pdfSource: SafeResourceUrl
 
+  docSource: string = ''
+  viewerType: any
+
   constructor(
     @Inject(MAT_DIALOG_DATA) public data: any,
     private ref: MatDialogRef<PdfPreviewComponent>,
@@ -20,6 +23,11 @@ export class PdfPreviewComponent {
     this.fileName = this.data.name
     this.pdfSource = this.sanitizer.bypassSecurityTrustResourceUrl(this.data.pdf);
     console.log(this.pdfSource)
+
+    if(this.data.pdf) {
+      this.viewerType = 'pdf'
+      this.docSource = this.data.pdf + '#toolbar=0&navpanes=0&scrollbar=0'
+    }
   }
   closepopup() {
     this.ref.close(null);
