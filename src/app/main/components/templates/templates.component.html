@@ -25,7 +25,8 @@
                         <i class='bx bx-detail' ></i>
                     </button>
 
-                    <button class="edit" 
+                    <button *ngIf="element.is_fillable == 0"
+                    class="edit" 
                     mat-raised-button
                     matTooltip="Edit"
                     [matTooltipShowDelay] = "400"
@@ -33,11 +34,12 @@
                         <i class='bx bxs-edit'></i>
                     </button>
 
-                    <button class="delete" 
-                        mat-raised-button
-                        matTooltip="Delete"
-                        [matTooltipShowDelay] = "400"
-                        (click)="deleteConfirmation(element.id)">
+                    <button *ngIf="element.is_fillable == 0"
+                    class="delete" 
+                    mat-raised-button
+                    matTooltip="Delete"
+                    [matTooltipShowDelay] = "400"
+                    (click)="deleteConfirmation(element.id)">
                         <i class='bx bxs-trash'></i>
                     </button>
                 </div>

@@ -10,7 +10,7 @@ import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 })
 export class PdfPreviewComponent {
   fileName: string = '';
-  pdfSource: SafeResourceUrl
+  // pdfSource: SafeResourceUrl
 
   docSource: string = ''
   viewerType: any
@@ -21,8 +21,8 @@ export class PdfPreviewComponent {
     private sanitizer: DomSanitizer
   ) { 
     this.fileName = this.data.name
-    this.pdfSource = this.sanitizer.bypassSecurityTrustResourceUrl(this.data.pdf);
-    console.log(this.pdfSource)
+    // this.pdfSource = this.sanitizer.bypassSecurityTrustResourceUrl(this.data.pdf);
+    // console.log(this.pdfSource)
 
     if(this.data.pdf) {
       this.viewerType = 'pdf'

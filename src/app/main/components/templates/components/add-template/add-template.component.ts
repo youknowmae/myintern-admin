@@ -3,6 +3,7 @@ import { MatDialogRef } from '@angular/material/dialog';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { DataService } from '../../../../../services/data.service';
 import Swal from 'sweetalert2';
+import { GeneralService } from '../../../../../services/general.service';
 
 @Component({
   selector: 'app-add-template',
@@ -10,7 +11,8 @@ import Swal from 'sweetalert2';
   styleUrl: './add-template.component.scss'
 })
 export class AddTemplateComponent {
-  file: any = null
+  docxFile: any = null
+  pdfFile: any = null
 
   formDetails: FormGroup = this.fb.group({
     name: [null, [Validators.required, Validators.maxLength(128)]]
@@ -20,12 +22,18 @@ export class AddTemplateComponent {
   constructor(
     private ref: MatDialogRef<AddTemplateComponent>,
     private fb: FormBuilder,
+    private gs: GeneralService,
     private dataService: DataService
   ) {
   }
   
-  uploadFile(event: any) {
-    this.file = event.target.files[0];
+  uploadDocxFile(event: any) {
+    console.log(event.target.files[0])
+    this.docxFile = event.target.files[0];
+  }
+
+  uploadPdfFile(event: any) {
+    this.pdfFile = event.target.files[0];
   }
 
   closepopup() {
@@ -86,8 +94,18 @@ export class AddTemplateComponent {
     var payload = new FormData();
     payload.append('name', formDetails.name);
 
-    if(this.file)
-      payload.append('docx', this.file);
+    if(!this.docxFile) {
+      this.gs.errorAlert('Error', 'Docx file is required.')
+      return
+    }
+
+    if(!this.pdfFile) {
+      this.gs.errorAlert('Error', 'Pdf file is required.')
+      return
+    }
+
+    payload.append('docx', this.docxFile);
+    payload.append('pdf', this.pdfFile);
     
     this.dataService.post('templates', '', payload).subscribe(
       result => {
@@ -102,18 +120,10 @@ export class AddTemplateComponent {
       error => {
         console.error(error)
         if (error.status == 422) {
-          Swal.fire({
-            title: "error!",
-            text: "Invalid input.",
-            icon: "error",
-          });
+          this.gs.errorAlert('Error!', 'Invalid input.')
         }
         else {
-          Swal.fire({
-            title: "error!",
-            text: "Something went wrong, please try again later.",
-            icon: "error",
-          });
+          this.gs.errorAlert('Error!', 'Something went wrong, please try again later.')
         }
       }
     )

@@ -18,10 +18,17 @@
     
     
                     <div class="row">
+                        <div class="col-md-4" style="margin-right: 20px;">
+                            <div class="file-input-container"> 
+                                <div class="label"> Upload Docx File </div>
+                                <input class="file-input" type="file" accept=".docx" (change)="uploadDocxFile($event)"> 
+                            </div>
+                        </div>
+
                         <div class="col-md-4">
                             <div class="file-input-container"> 
-                                <div class="label"> Upload Image </div>
-                                <input class="file-input" type="file" accept=".docx" (change)="uploadFile($event)"> 
+                                <div class="label"> Upload Pdf File </div>
+                                <input class="file-input" type="file" accept=".pdf" (change)="uploadPdfFile($event)"> 
                             </div>
                         </div>
                     </div>

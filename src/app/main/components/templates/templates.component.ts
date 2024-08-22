@@ -9,6 +9,7 @@ import Swal from 'sweetalert2';
 import { AddTemplateComponent } from './components/add-template/add-template.component';
 import { EditTemplateComponent } from './components/edit-template/edit-template.component';
 import { PdfPreviewComponent } from '../../../components/pdf-preview/pdf-preview.component';
+import { GeneralService } from '../../../services/general.service';
 
 @Component({
   selector: 'app-templates',
@@ -27,7 +28,8 @@ export class TemplatesComponent {
     private dialogRef: MatDialog,
     private paginatorIntl: MatPaginatorIntl, 
     private changeDetectorRef: ChangeDetectorRef,
-    private ds: DataService
+    private ds: DataService,
+    private gs: GeneralService
   ) {
     this.paginator = new MatPaginator(this.paginatorIntl, this.changeDetectorRef);
   }
@@ -79,6 +81,7 @@ export class TemplatesComponent {
       return
     }
 
+    console.log(template)
     this.dialogRef.open(PdfPreviewComponent, {
       data: { name: template.name, pdf: template.pdf},
       disableClose: true
@@ -109,23 +112,21 @@ export class TemplatesComponent {
       result => {
         console.log(result)
         this.dataSource.data = this.dataSource.data.filter((template: any) => template.id !== id);
-        Swal.fire({
-          title: 'Success!',
-          text: 'Template has been deleted.',
-          icon: 'success',
-          confirmButtonText: 'Close',
-          confirmButtonColor: '#777777',
-        });
+        this.gs.successAlert('Success', 'Template has been deleted.')
       },
       error => {
         console.error(error)
-        Swal.fire({
-          title: 'Error!',
-          text: 'Something went wrong. Please try again later.',
-          icon: 'error',
-          confirmButtonText: 'Close',
-          confirmButtonColor: '#777777',
-        });
+        console.log(error.error)
+        if(error.status == 409) {
+          this.gs.errorAlert('Error', error.error)
+        }
+        // Swal.fire({
+        //   title: 'Error!',
+        //   text: 'Something went wrong. Please try again later.',
+        //   icon: 'error',
+        //   confirmButtonText: 'Close',
+        //   confirmButtonColor: '#777777',
+        // });
       })
 
   }
