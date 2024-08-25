@@ -1,6 +1,6 @@
 <div class="outer-container">
-    <div class="container"  *ngFor="let report of accomplishmentReports">
-        <h3>Week {{ report.week }}</h3>
+    <div class="container"  *ngFor="let report of accomplishmentReports; index as i">
+        <h3>Week {{ i + 1 }}</h3>
         <table>
             <thead class="week">
                 <th>Date</th>

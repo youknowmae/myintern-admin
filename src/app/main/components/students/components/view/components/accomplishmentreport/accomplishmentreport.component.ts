@@ -26,16 +26,17 @@ export class AccomplishmentreportComponent {
   getAccomplishmentReport(id: number) {
     this.ds.get('monitoring/students/accomplishment-report/', id).subscribe(
       response => {
+        console.log(response)
         this.accomplishmentReports = Object.entries(response)
                                         .map(([week, accomplishment_report]: [string, any]) => { 
                                           var accumulated_hours: number = 0
 
                                           accomplishment_report.forEach((report: any) => {
-                                            console.log(new Date(report.date))
+                                            // console.log(new Date(report.date))
                                             accumulated_hours += report.total_hours
                                           });
 
-                                          return { week, accomplishment_report, accumulated_hours }
+                                          return { accomplishment_report, accumulated_hours }
                                         })
         console.log(this.accomplishmentReports)
       },
