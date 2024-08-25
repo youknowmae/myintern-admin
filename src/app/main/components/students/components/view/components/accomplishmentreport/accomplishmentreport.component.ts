@@ -31,6 +31,7 @@ export class AccomplishmentreportComponent {
                                           var accumulated_hours: number = 0
 
                                           accomplishment_report.forEach((report: any) => {
+                                            console.log(new Date(report.date))
                                             accumulated_hours += report.total_hours
                                           });
 

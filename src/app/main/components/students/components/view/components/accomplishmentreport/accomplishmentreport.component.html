@@ -15,8 +15,8 @@
                     <td>{{ accomplishment.arrival_time }} - {{ accomplishment.departure_time }}</td>
                     <td>{{ accomplishment.total_hours }}</td>
                 </tr>
-                <tr style="column-span: 4;">
-                    <p class="total-hours">Total: {{ report.accumulated_hours }} Hours</p>
+                <tr>
+                    <td colspan="4"><p class="total-hours">Total: {{ report.accumulated_hours }} Hours</p></td>
                 </tr>
             </tbody>
         </table>
