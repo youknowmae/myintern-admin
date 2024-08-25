@@ -3,11 +3,29 @@
 </div>
 
 <div class="buttons">
-    <button>All Students</button>
+    <!-- <button>All Students</button>
     <button>BSIT</button>
     <button>BSCS</button>
     <button>BSEMC</button>
     <button>ACT</button>
+     -->
+    <div class="filter-container">
+        <div [class.active]="currentFilter == 'all'" class="filter">
+            <button (click)="applyFilter('all')">All Students</button>
+        </div>
+        <div [class.active]="currentFilter == 'BSIT'" class="filter">
+            <button (click)="applyFilter('BSIT')">BSIT</button>
+        </div>
+        <div [class.active]="currentFilter == 'BSCS'" class="filter">
+            <button (click)="applyFilter('BSCS')">BSCS</button>
+        </div>
+        <div [class.active]="currentFilter == 'BSEMC'" class="filter">
+            <button (click)="applyFilter('BSEMC')">BSEMC</button>
+        </div>
+        <div [class.active]="currentFilter == 'ACT'" class="filter">
+            <button (click)="applyFilter('ACT')">ACT</button>
+        </div>
+    </div>
 </div>
 
 <div class="container">

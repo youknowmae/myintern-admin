@@ -51,7 +51,7 @@ export class LoginComponent {
       error => {
         console.error(error)
         if(error.status === 401) {
-          this.gs.errorAlert('Error!', 'Invalid Credentials.')
+          this.gs.errorAlert('Error!', error.error.message)
         }
 
         this.isLoggingIn = false

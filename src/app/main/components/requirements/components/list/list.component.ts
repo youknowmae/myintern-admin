@@ -15,6 +15,9 @@ import { Router } from '@angular/router';
 export class ListComponent {
   displayedColumns: string[] = ['name', 'student_number', 'category', 'year', 'program', 'company', 'status', 'actions'];
 
+  
+  currentFilter: string = 'all'
+  unfilteredStudents: any
   dataSource: any = new MatTableDataSource<any>();
   
   @ViewChild(MatPaginator, {static:true}) paginator!: MatPaginator;
@@ -29,16 +32,17 @@ export class ListComponent {
   }
 
   ngOnInit() {
-    this.getTemplates() 
+    this.getStudents() 
   }
 
-  getTemplates() {
+  getStudents() {
     this.ds.get('applications').subscribe(
-      templates => {
-        console.log(templates)
-        this.dataSource.data = templates;
+      students => {
+        console.log(students)
+        this.unfilteredStudents = students
+
+        this.dataSource.data = students;
         this.dataSource.paginator = this.paginator;
-        console.log(this.dataSource)
       },
       error => {
         console.error(error)
@@ -49,4 +53,17 @@ export class ListComponent {
   viewApplication(id: number) {
     this.router.navigate(['main/requirements/view/' + id])
   }
+  
+  applyFilter(value: string) {
+    this.currentFilter = value
+    if(value == "all") {
+      this.dataSource.data = this.unfilteredStudents
+      return
+    }
+
+    this.dataSource.data = this.unfilteredStudents.filter((student: any) => {
+      return student.user.student_profile.program.includes(value)
+    })
+  }
+
 }
