@@ -42,10 +42,38 @@ export class ListComponent {
     this.ds.get('monitoring/students').subscribe(
       students => {
         let studentsList = students.map((student: any) => {
+          let course = student.student_courses[0].course_code
+          let required_hours: number = 0
+
+          if(course === 'ITP132') {
+            required_hours = 500
+          }
+          else if (course === 'ITP131') {
+            required_hours = 200
+          }
+
+          let hours_left = required_hours
+
+          //if has accomplishment report
+          if(student.accomplishment_report.length > 0) {
+            student.accomplishment_report = student.accomplishment_report[0]
+
+            hours_left -= parseInt(student.accomplishment_report.current_total_hours)
+          }
+
+          let status = (student.internship_applications.length === 0) ? 'Pending' : 'Ongoing'
+
+          if(hours_left < 0) {
+            hours_left = 0
+            status = 'Completed'
+          }
+
           return {
             full_name: student.first_name + " " + student.last_name,
-            course: student.student_courses[0].course_code,
-            status: (student.internship_applications.length === 0) ? 'Pending' : 'Ongoing',
+            course,
+            required_hours,
+            hours_left,
+            status,
             ...student
           } 
         })
