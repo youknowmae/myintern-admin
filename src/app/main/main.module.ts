@@ -4,7 +4,6 @@ import { CommonModule } from '@angular/common';
 import { MainRoutingModule } from './main-routing.module';
 import { MainComponent } from './main.component';
 import { DashboardComponent } from './components/dashboard/dashboard.component';
-import { DashboardModule } from './components/dashboard/dashboard.module';
 import { AnnouncementComponent } from './components/announcement/announcement.component';
 import { ExitpollComponent } from './components/exitpoll/exitpoll.component';
 import { IndustrypartnersComponent } from './components/industrypartners/industrypartners.component';
@@ -34,7 +33,6 @@ import { MaterialsModules } from '../modules/materials.module';
   imports: [
     CommonModule,
     MainRoutingModule,
-    DashboardModule,
     AnnouncementModule,
     IndustrypartnersModule,
     StudentsModule,

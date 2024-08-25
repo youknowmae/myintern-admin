@@ -1,5 +1,9 @@
 import { Component, AfterViewInit } from '@angular/core';
-import { Chart, ChartConfiguration, ArcElement, Tooltip, Legend } from 'chart.js';
+import { Chart, ChartConfiguration, registerables, ArcElement, Tooltip, Legend } from 'chart.js';
+
+
+Chart.register(...registerables);
+
 
 // Register necessary components
 Chart.register(ArcElement, Tooltip, Legend);

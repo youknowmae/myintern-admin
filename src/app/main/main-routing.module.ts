@@ -14,10 +14,10 @@ const routes: Routes = [
   { 
     path: 'dashboard', 
     component: DashboardComponent,
-    children: [{
-      path: '',
-      loadChildren: ()=>import('./components/dashboard/dashboard.module').then((m)=>m.DashboardModule)
-    }]
+    // children: [{
+    //   path: '',
+    //   loadChildren: ()=>import('./components/dashboard/dashboard.module').then((m)=>m.DashboardModule)
+    // }]
   },
   { 
     path: 'announcement', 
