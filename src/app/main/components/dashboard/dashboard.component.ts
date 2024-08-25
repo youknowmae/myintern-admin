@@ -1,12 +1,10 @@
 import { Component, AfterViewInit } from '@angular/core';
-import { Chart, ChartConfiguration, registerables, ArcElement, Tooltip, Legend } from 'chart.js';
+import { Chart, ChartConfiguration, registerables, ArcElement, Tooltip, Legend, BarElement, CategoryScale, LinearScale } from 'chart.js';
+import { channel } from 'diagnostics_channel';
 
-
+// Register all necessary components
 Chart.register(...registerables);
-
-
-// Register necessary components
-Chart.register(ArcElement, Tooltip, Legend);
+Chart.register(ArcElement, Tooltip, Legend, BarElement, CategoryScale, LinearScale);
 
 @Component({
   selector: 'app-dashboard',
@@ -15,7 +13,9 @@ Chart.register(ArcElement, Tooltip, Legend);
 })
 export class DashboardComponent implements AfterViewInit {
 
-  chart: any;
+  pieChart: any;
+  barChart: any;
+  ojtBarChart: any;
 
   public config: ChartConfiguration<'pie'> = {
     type: 'pie',
@@ -41,10 +41,89 @@ export class DashboardComponent implements AfterViewInit {
     }
   };
 
+  public barConfig: ChartConfiguration<'bar'> = {
+    type: 'bar',
+    data: {
+      labels: ['BSIT', 'BSCS', 'BSEMC', 'ACT'],
+      datasets: [
+        {
+          label: 'Pending',
+          data: [5, 10, 7, 12],
+          backgroundColor: '#FABC3F'
+        },
+        {
+          label: 'Completed',
+          data: [10, 15, 12, 7],
+          backgroundColor: '#7C93C3'
+        }
+      ]
+    },
+    options: {
+      responsive: true,
+      plugins: {
+        legend: {
+          display: true,
+          position: 'top',
+        },
+        tooltip: {
+          enabled: true,
+        }
+      },
+      scales: {
+        x: {
+          stacked: true
+        },
+        y: {
+          stacked: true
+        }
+      }
+    }
+  };
+
+  public ojtBarConfig: ChartConfiguration<'bar'> = {
+    type: 'bar',
+    data: {
+      labels: ['BSIT', 'BSCS', 'BSEMC', 'ACT'],
+      datasets: [
+        {
+          label: 'Pending',
+          data: [3, 7, 4, 6],
+          backgroundColor: '#FABC3F'
+        },
+        {
+          label: 'Completed',
+          data: [12, 9, 15, 10],
+          backgroundColor: '#7C93C3'
+        }
+      ]
+    },
+    options: {
+      responsive: true,
+      plugins: {
+        legend: {
+          display: true,
+          position: 'top',
+        },
+        tooltip: {
+          enabled: true,
+        }
+      },
+      scales: {
+        x: {
+          stacked: true
+        },
+        y: {
+          stacked: true
+        }
+      }
+    }
+  };
+
   constructor() { }
 
   ngAfterViewInit(): void {
-    // Ensure the chart is created after the view is initialized
-    this.chart = new Chart('chart', this.config);
+    this.pieChart = new Chart('pieChart', this.config);
+    this.barChart = new Chart('barChart', this.barConfig);
+    this.ojtBarChart = new Chart('ojtBarChart', this.ojtBarConfig);
   }
 }
