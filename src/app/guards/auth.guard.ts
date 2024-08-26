@@ -28,7 +28,7 @@ export class AuthGuard implements CanActivate, CanActivateChild {
     }
 
     userLogState = sessionStorage.getItem('userLogState')
-    console.log(userLogState)
+    
     if(userLogState == 'true'){
         return true
     }  
