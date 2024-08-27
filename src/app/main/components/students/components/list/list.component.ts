@@ -63,7 +63,7 @@ export class ListComponent {
 
           let status = (student.internship_applications.length === 0) ? 'Pending' : 'Ongoing'
 
-          if(hours_left < 0) {
+          if(hours_left <= 0) {
             hours_left = 0
             status = 'Completed'
           }

@@ -21,20 +21,29 @@
                   <h2>{{ industryPartner.company_name }}</h2>
                   <p>{{ industryPartner.description }}</p>
                   
+                  <h3 style="margin: 0; font-weight: 600;" >Company Head:</h3>
+                  <p> {{ industryPartner.company_head }}, {{ industryPartner.head_position }}</p>
+  
+                  <h3 style="margin: 0; font-weight: 600;" >Immediate Supervisor :</h3>
+                  <p> {{ industryPartner.immediate_supervisor }}, {{ industryPartner.supervisor_position }}</p>
+                  
                   <ul>
-                      <li>
-                          Address: 
-                          {{  industryPartner.street }}
-                          {{  industryPartner.barangay }}
-                          {{  industryPartner.municipality }}
-                      </li>
-                      <li>Email Address: {{ industryPartner.email }}</li>
-                      <li>Contact Number: {{ industryPartner.mobile_number }}</li>
+                    <li>
+                        <b>Company Address: </b>
+                        {{  industryPartner.street }}
+                        {{  industryPartner.barangay }}
+                        {{  industryPartner.municipality }}
+                    </li>
+                    <li><b>Official Email Address:</b> {{ industryPartner.email }}</li>
+                    <li *ngIf="industryPartner.telephone_number"><b>Telephone Number:</b> {{ industryPartner.telephone_number }}</li>
+                    <li *ngIf="industryPartner.fax_number"><b>Fax Number:</b> {{ industryPartner.fax_number }}</li>
+                    <li><b>Contact Number:</b> {{ industryPartner.mobile_number }}</li>
+                    <li *ngIf="industryPartner.website"><b>Website:</b> {{ industryPartner.website }}</li>
                   </ul>
                   
-                  <div class="slots">
+                  <!-- <div class="slots">
                       <p>Available Slots: <p>
-                  </div>
+                  </div> -->
               </div>
           </div>
       </div>

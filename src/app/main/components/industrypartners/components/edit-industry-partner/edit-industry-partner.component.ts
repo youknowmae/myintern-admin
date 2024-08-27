@@ -69,7 +69,7 @@ export class EditIndustryPartnerComponent {
       mobile_number: this.data.mobile_number,
       fax_number: this.data.fax_number,
       email: this.data.email,
-      website: this.data.description.website
+      website: this.data.website
     })
 
     console.log(this.formDetails)
@@ -136,6 +136,9 @@ export class EditIndustryPartnerComponent {
           .forEach(([key, value]) =>{
             if(value)
               payload.append(key, value)
+            else
+              payload.append(key, '')
+
           })
 
     if(this.file)
@@ -144,7 +147,7 @@ export class EditIndustryPartnerComponent {
     this.dataService.post('industryPartners/', this.data.id, payload).subscribe(
       result => {
         Swal.fire({
-          title: "Success!",
+          title: "Updated!",
           text: result.message,
           icon: "success",
         });

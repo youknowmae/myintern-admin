@@ -7,22 +7,22 @@
         <div class="total">
             <div style="background-color: var(--primary-color);">
                 <p>Total Students Enrolled</p>
-                <h1>2</h1>
+                <h1>{{ enrolled_student }}</h1>
             </div>
 
             <div style="background-color: #FABC3F;">
                 <p>Pending Students</p>
-                <h1>2</h1>
+                <h1>{{ student_ojt_status_count.pending }}</h1>
             </div>
 
             <div style="background-color: var(--secondary-color);">
                 <p>Ongoing OJT</p>
-                <h1>2</h1>
+                <h1>{{ student_ojt_status_count.ongoing }}</h1>
             </div>
 
             <div style="background-color: #7C93C3;">
                 <p>Completed OJT</p>
-                <h1>2</h1>
+                <h1>{{ student_ojt_status_count.completed }}</h1>
             </div>
         </div>
 
@@ -33,7 +33,7 @@
             </div>
 
             <div class="bar">
-                <h1>Requirement Status</h1>
+                <h1>Student's Status</h1>
                 <canvas id="barChart"></canvas>
             </div>
         </div>
