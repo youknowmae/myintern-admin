@@ -51,7 +51,10 @@ export class ListComponent {
     this.ds.get('exit-poll/students').subscribe(
       students => {
         let studentsList = students.map((student: any) => {
+          let course = student.student_courses[0].course_code
+
           return {
+            course,
             full_name: student.first_name + " " + student.last_name,
             ...student
           }
