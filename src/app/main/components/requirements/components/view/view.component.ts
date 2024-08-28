@@ -53,7 +53,7 @@ export class ViewComponent {
   approveApplication() {
     Swal.fire({
       title: "Approve?",
-      text: "Are you sure you want to approve to application?",
+      text: "Are you sure you want to approve this application?",
       icon: "info",
       showCancelButton: true,
       confirmButtonText: 'Yes',
@@ -67,6 +67,33 @@ export class ViewComponent {
           response => {
             this.gs.successAlert('Approved!', response.message)
             this.applicationDetails.status = 3
+          },
+          error => {
+            console.error(error)
+          }
+        )
+        console.log(this.applicationDetails)
+      }
+    });
+  }
+
+  rejectApplication() {
+    Swal.fire({
+      title: "Reject?",
+      text: "Are you sure you want to reject this application?",
+      icon: "info",
+      showCancelButton: true,
+      confirmButtonText: 'Yes',
+      cancelButtonText: 'Cancel',
+      confirmButtonColor: "#4f6f52",
+      cancelButtonColor: "#777777",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        // this.apply()
+        this.ds.post('application/reject/', this.applicationDetails.id, null).subscribe(
+          response => {
+            this.gs.successAlert('Rejected!', response.message)
+            this.applicationDetails.status = 2
           },
           error => {
             console.error(error)

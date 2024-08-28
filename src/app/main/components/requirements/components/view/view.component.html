@@ -79,7 +79,8 @@
                 </div>   -->
                 
                 <div class="approve-btn" *ngIf="applicationDetails.status == 0">
-                    <button (click)="approveApplication()">Approve</button>
+                    <button (click)="approveApplication()" style="margin-right: 10px;">Approve</button>
+                    <button (click)="rejectApplication()">Reject</button>
                 </div>
             </div>
         </div>
