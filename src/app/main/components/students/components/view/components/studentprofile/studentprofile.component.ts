@@ -1,5 +1,8 @@
 import { Component } from '@angular/core';
 import { UserService } from '../../../../../../../services/user.service';
+import { DataService } from '../../../../../../../services/data.service';
+import { MatDialog } from '@angular/material/dialog';
+import { ViewImageComponent } from '../../../../../../../components/view-image/view-image.component';
 
 @Component({
   selector: 'app-studentprofile',
@@ -13,21 +16,21 @@ export class StudentprofileComponent {
     middle_name: '', 
     last_name: '', 
     ext_name: '', 
-    student_number: "202110187",
-    email: "202110187@gordoncollege.edu.ph",
-    birth_date: "11-20-2022",
-    civil_status: "single",
-    gender: "M",
-    citizenship: "filipino",
-    religion: "Catholic",
+    student_number: "",
+    email: "",
+    birth_date: "",
+    civil_status: "",
+    gender: "",
+    citizenship: "",
+    religion: "",
     student_profile: {
       program: '',
       student_number: '',
-      contact_number: "09275049530",
-      father_name: "Juan Delacruz",
-      father_employment: "worker",
-      mother_name: "Maria Delacruz",
-      mother_employment: "Housewife",
+      contact_number: "",
+      father_name: "",
+      father_employment: "",
+      mother_name: "",
+      mother_employment: "",
       region: "III",
       province: "Zambales", 
       municipality: "Olongapo",
@@ -37,12 +40,72 @@ export class StudentprofileComponent {
     }
   }
 
+  seminar_total_hours: any = 0
+  seminars: any = []
+  skills: any = []
+  personality_test: any = null
+
   constructor(
-    private us: UserService) {
+    private us: UserService,
+    private ds: DataService,
+    private dialog: MatDialog) {
   }
 
   ngOnInit() {
     this.student = this.us.getStudentProfile()
     this.student.gender = (this.student.gender == 0) ? 'Female' : 'Male'
+    this.getSeminars();
+    this.getSkills();
+    this.getPersonalityTest();
+  }
+
+  getPersonalityTest() {
+    this.ds.get('monitoring/personality-test/', this.student.id).subscribe(
+      response => {
+        console.log(response)
+        this.personality_test = response
+      },
+      error => {
+        console.error(error)
+      }
+    )
+  }
+  getSeminars() {
+    this.ds.get('monitoring/seminar/', this.student.id).subscribe(
+      response => {
+        this.seminars = response
+        this.seminars.forEach((seminar: any) => {
+          this.seminar_total_hours += seminar.total_hours
+        });
+      },
+      error => { 
+        console.error(error)
+      }
+    )
+  }
+
+  getSkills() {
+    this.ds.get('monitoring/skill-area/', this.student.id).subscribe(
+      response => {
+        console.log(response)
+        this.skills = response
+      },
+      error => { 
+        console.error(error)
+      }
+    )
+
+  }
+
+  viewSeminarImage(seminar: any) {
+    this.dialog.open(ViewImageComponent, {
+      data: { title: seminar.seminar_title, image: seminar.image}
+    })
+  }
+
+  viewPersonalityTestImage(test: any) {
+    this.dialog.open(ViewImageComponent, {
+      data: { title: test.name, image: test.file}
+    })
   }
 }

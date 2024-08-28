@@ -3,6 +3,8 @@ import { ActivatedRoute } from '@angular/router';
 import { DataService } from '../../../../../services/data.service';
 import { PdfPreviewComponent } from '../../../../../components/pdf-preview/pdf-preview.component';
 import { MatDialog } from '@angular/material/dialog';
+import Swal from 'sweetalert2';
+import { GeneralService } from '../../../../../services/general.service';
 
 @Component({
   selector: 'app-view',
@@ -15,7 +17,8 @@ export class ViewComponent {
   constructor(
     private ds: DataService,
     private route: ActivatedRoute,
-    private dialogRef: MatDialog
+    private dialogRef: MatDialog,
+    private gs: GeneralService
   ) {
     this.route.paramMap.subscribe(params => {
       let id = params.get('id')
@@ -45,5 +48,32 @@ export class ViewComponent {
       data: { name: file.file_name, pdf: file.file_location},
       disableClose: true
     })
+  }
+
+  approveApplication() {
+    Swal.fire({
+      title: "Approve?",
+      text: "Are you sure you want to approve to application?",
+      icon: "info",
+      showCancelButton: true,
+      confirmButtonText: 'Yes',
+      cancelButtonText: 'Cancel',
+      confirmButtonColor: "#4f6f52",
+      cancelButtonColor: "#777777",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        // this.apply()
+        this.ds.post('application/accept/', this.applicationDetails.id, null).subscribe(
+          response => {
+            this.gs.successAlert('Approved!', response.message)
+            this.applicationDetails.status = 3
+          },
+          error => {
+            console.error(error)
+          }
+        )
+        console.log(this.applicationDetails)
+      }
+    });
   }
 }

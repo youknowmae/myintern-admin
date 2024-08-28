@@ -51,23 +51,36 @@
             </div>
 
             <div class="content-info">
-                <p>{{ applicationDetails.industry_partner.company_name }}</p>
+                <h2>{{ applicationDetails.industry_partner.company_name }}</h2>
                 <p>{{ applicationDetails.industry_partner.description }}</p>
+                
+                <h3 style="margin: 0; font-weight: 600;" >Company Head:</h3>
+                <p> {{ applicationDetails.industry_partner.company_head }}, {{ applicationDetails.industry_partner.head_position }}</p>
+
+                <h3 style="margin: 0; font-weight: 600;" >Immediate Supervisor :</h3>
+                <p> {{ applicationDetails.industry_partner.immediate_supervisor }}, {{ applicationDetails.industry_partner.supervisor_position }}</p>
 
                 <ul>
                     <li>
-                        Address: 
+                        <b>Company Address: </b>
                         {{ applicationDetails.industry_partner.street }}
                         {{ applicationDetails.industry_partner.barangay }}
                         {{ applicationDetails.industry_partner.municipality }}
                     </li>
-                    <li>Email Address: {{ applicationDetails.industry_partner.email }}</li>
-                    <li>Contact Number: {{ applicationDetails.industry_partner.mobile_number }}</li>
+                    <li><b>Official Email Address:</b> {{ applicationDetails.industry_partner.email }}</li>
+                    <li *ngIf="applicationDetails.industry_partner.telephone_number"><b>Telephone Number:</b> {{ applicationDetails.industry_partner.telephone_number }}</li>
+                    <li *ngIf="applicationDetails.industry_partner.fax_number"><b>Fax Number:</b> {{ applicationDetails.industry_partner.fax_number }}</li>
+                    <li><b>Contact Number:</b> {{ applicationDetails.industry_partner.mobile_number }}</li>
+                    <li *ngIf="applicationDetails.industry_partner.website"><b>Website:</b> {{ applicationDetails.industry_partner.website }}</li>
                 </ul>
 
-                <div class="slots">
+                <!-- <div class="slots">
                     <p>Available Slots: <p>
-                </div>  
+                </div>   -->
+                
+                <div class="approve-btn" *ngIf="applicationDetails.status == 0">
+                    <button (click)="approveApplication()">Approve</button>
+                </div>
             </div>
         </div>
     </div>
