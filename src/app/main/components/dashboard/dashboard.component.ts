@@ -134,14 +134,29 @@ export class DashboardComponent implements AfterViewInit {
       labels: ['BSIT', 'BSCS', 'BSEMC', 'ACT'],
       datasets: [
         {
-          label: 'Pending',
+          label: '100-96',
           data: [0, 0, 0, 0],
           backgroundColor: '#FABC3F'
         },
         {
-          label: 'Completed',
+          label: '95-91',
           data: [0, 0, 0, 0],
           backgroundColor: '#7C93C3'
+        },
+        {
+          label: '90-86',
+          data: [0, 0, 0, 0],
+          backgroundColor: '#A1D6B2'
+        },
+        {
+          label: '85-81',
+          data: [0, 0, 0, 0],
+          backgroundColor: '#FF9874'
+        },
+        {
+          label: '80-75',
+          data: [0, 0, 0, 0],
+          backgroundColor: '#AD49E1'
         }
       ]
     },
