@@ -36,12 +36,25 @@
         <div class="comment">
             <i class="fa-regular fa-circle-user"></i>
             <form>
-                <input type="text" placeholder="Write a comment...">
+                <input type="text" [(ngModel)]="commentValue" [ngModelOptions]="{standalone: true}" placeholder="Write a comment...">
             </form>
-            <span class="material-symbols-outlined">
+            <span class="material-symbols-outlined" (click)="comment()">
                 send
             </span>
         </div>
+
+        <div class="comment-log-container" *ngIf="comments.length > 0">
+            <div class="comment-log">
+                <div class="message-container" *ngFor="let comment of comments">
+                    <i class="fa-regular fa-circle-user"></i>
+                    <div class="message">
+                        <h5> {{ comment.user.first_name }} {{ comment.user.last_name }}</h5>
+                        <p> {{ comment.message }}</p>  
+                    </div>
+                </div>
+            </div>
+        </div>
+
     </div>
 
     <div class="right-content">

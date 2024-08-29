@@ -5,6 +5,7 @@ import { PdfPreviewComponent } from '../../../../../components/pdf-preview/pdf-p
 import { MatDialog } from '@angular/material/dialog';
 import Swal from 'sweetalert2';
 import { GeneralService } from '../../../../../services/general.service';
+import { response } from 'express';
 
 @Component({
   selector: 'app-view',
@@ -13,6 +14,7 @@ import { GeneralService } from '../../../../../services/general.service';
 })
 export class ViewComponent {
   applicationDetails: any
+  comments: any = []
 
   constructor(
     private ds: DataService,
@@ -36,6 +38,7 @@ export class ViewComponent {
       applicationDetails=> {
         this.applicationDetails = applicationDetails
         console.log(this.applicationDetails)
+        this.comments = this.applicationDetails.application_comments
       },
       error => {
         console.error(error)
@@ -102,5 +105,35 @@ export class ViewComponent {
         console.log(this.applicationDetails)
       }
     });
+  }
+
+  commentValue: string = ''
+  isCommenting: boolean = false 
+
+  comment() {
+    if(this.isCommenting) {
+      return
+    }
+
+    this.isCommenting = true 
+
+    let payload = new FormData
+
+    payload.append('message', this.commentValue)
+
+    
+    this.ds.post('application/comment/', this.applicationDetails.id, payload).subscribe(
+      response => {
+        console.log(response)
+        this.commentValue = ''
+        this.gs.successToastAlert(response.message)
+        this.isCommenting = false
+        this.getApplicationDetails(this.applicationDetails.id)
+      },
+      error => {
+        console.error(error)
+        this.isCommenting = false
+      }
+    )
   }
 }
