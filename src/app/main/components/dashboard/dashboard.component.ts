@@ -24,6 +24,7 @@ export class DashboardComponent implements AfterViewInit {
   pieChart: any;
   barChart: any;
   ojtBarChart: any;
+  evaluationBarChart: any;
 
   public config: ChartConfiguration<'pie'> = {
     type: 'pie',
@@ -127,6 +128,45 @@ export class DashboardComponent implements AfterViewInit {
     }
   };
 
+  public evaluationConfig: ChartConfiguration<'bar'> = {
+    type: 'bar',
+    data: {
+      labels: ['BSIT', 'BSCS', 'BSEMC', 'ACT'],
+      datasets: [
+        {
+          label: 'Pending',
+          data: [0, 0, 0, 0],
+          backgroundColor: '#FABC3F'
+        },
+        {
+          label: 'Completed',
+          data: [0, 0, 0, 0],
+          backgroundColor: '#7C93C3'
+        }
+      ]
+    },
+    options: {
+      responsive: true,
+      plugins: {
+        legend: {
+          display: true,
+          position: 'top',
+        },
+        tooltip: {
+          enabled: true,
+        }
+      },
+      scales: {
+        x: {
+          stacked: true
+        },
+        y: {
+          stacked: true
+        }
+      }
+    }
+  };
+
   constructor(
     private ds: DataService
   ) { }
@@ -135,6 +175,8 @@ export class DashboardComponent implements AfterViewInit {
     this.pieChart = new Chart('pieChart', this.config);
     this.barChart = new Chart('barChart', this.barConfig);
     this.ojtBarChart = new Chart('ojtBarChart', this.ojtBarConfig);
+    this.evaluationBarChart = new Chart('evaluationBarChart', this.evaluationConfig);
+
 
     this.getData()
   }

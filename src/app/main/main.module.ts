@@ -17,6 +17,8 @@ import { TemplatesModule } from './components/templates/templates.module';
 import { ExitpollModule } from './components/exitpoll/exitpoll.module';
 import { RequirementsModule } from './components/requirements/requirements.module';
 import { MaterialsModules } from '../modules/materials.module';
+import { EvaluationComponent } from './components/evaluation/evaluation.component';
+import { EvaluationModule } from './components/evaluation/evaluation.module';
 
 
 @NgModule({
@@ -28,7 +30,8 @@ import { MaterialsModules } from '../modules/materials.module';
     IndustrypartnersComponent,
     RequirementsComponent,
     StudentsComponent,
-    TemplatesComponent
+    TemplatesComponent,
+    EvaluationComponent
   ],
   imports: [
     CommonModule,
@@ -39,7 +42,8 @@ import { MaterialsModules } from '../modules/materials.module';
     TemplatesModule,
     ExitpollModule,
     RequirementsModule,
-    MaterialsModules
+    MaterialsModules,
+    EvaluationModule
   ]
 })
 export class MainModule { }

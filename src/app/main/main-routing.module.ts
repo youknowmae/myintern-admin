@@ -8,6 +8,7 @@ import { RequirementsComponent } from './components/requirements/requirements.co
 import { StudentsComponent } from './components/students/students.component';
 import { TemplatesComponent } from './components/templates/templates.component';
 import { IndustrypartnersComponent } from './components/industrypartners/industrypartners.component';
+import { EvaluationComponent } from './components/evaluation/evaluation.component';
 
 const routes: Routes = [
   { path: '', redirectTo: 'dashboard', pathMatch: 'full' },
@@ -61,6 +62,14 @@ const routes: Routes = [
     children: [{
       path: '',
       loadChildren: ()=>import('./components/industrypartners/industrypartners.module').then((m)=>m.IndustrypartnersModule)
+    }]
+  },
+  { 
+    path: 'evaluation', 
+    component: EvaluationComponent,
+    children: [{
+      path: '',
+      loadChildren: ()=>import('./components/evaluation/evaluation.module').then((m)=>m.EvaluationModule)
     }]
   },
 ];

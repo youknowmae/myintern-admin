@@ -13,7 +13,7 @@
 
         <div class="right-container">
             <div class="logo">
-                <img src="/assets/images/logo.png" alt="myintern-logo" style="width: 230px; height: 230px;">
+                <img src="/assets/images/LOGO.png" alt="myintern-logo" style="width: 230px; height: 230px;">
             </div>
 
             <h2>Welcome Adviser!</h2>
@@ -21,7 +21,7 @@
             <form (submit)="login()" [formGroup]="loginForm" ngNativeValidate autocomplete="on">
                 <div class="content">
                     <div class="input">
-                        <input type="text" name="email" placeholder="Enter Domain Email" formControlName="email" autocomplete="on" required>      
+                        <input type="text" name="email" placeholder="Username" formControlName="email" autocomplete="on" required>      
                     </div>
                     <div class="input2">
                         <input [type]="changetype?'password':'text'" name="password" placeholder="Enter password" formControlName="password" autocomplete="on" required>

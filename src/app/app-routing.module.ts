@@ -16,6 +16,7 @@ const routes: Routes = [
       loadChildren: ()=> import('./main/main.module'). then((m)=>m.MainModule)
     }]
   },
+  { path: 'evaluation', loadChildren: () => import('./main/components/evaluation/evaluation.module').then(m => m.EvaluationModule) },
   // { path: 'dashboard', loadChildren: () => import('./main/components/dashboard/dashboard.module').then(m => m.DashboardModule) },
   // { path: 'industrypartners', loadChildren: () => import('./main/components/industrypartners/industrypartners.module').then(m => m.IndustrypartnersModule) },
   // { path: 'requirements', loadChildren: () => import('./main/components/requirements/requirements.module').then(m => m.RequirementsModule) },
