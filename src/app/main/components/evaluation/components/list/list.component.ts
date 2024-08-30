@@ -12,7 +12,7 @@ import { Router } from '@angular/router';
   styleUrl: './list.component.scss'
 })
 export class ListComponent {
-  displayedColumns: string[] = ['name', 'student_number', 'category', 'year', 'program', 'company', 'status', 'actions'];
+  displayedColumns: string[] = ['name', 'student_number', 'category', 'year', 'program', 'company', 'status', 'actions', 'average'];
 
   
   currentFilter: string = 'all'
