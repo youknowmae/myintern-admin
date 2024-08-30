@@ -244,6 +244,43 @@ export class DashboardComponent implements AfterViewInit {
           response.student_ojt_status.act.completed,
         ]       
         this.barChart.update()
+
+        this.evaluationBarChart.data.datasets[0].data = [
+          response.student_performance_evaluation.bsit.excellent,
+          response.student_performance_evaluation.bscs.excellent,
+          response.student_performance_evaluation.bsemc.excellent,
+          response.student_performance_evaluation.act.excellent,
+        ]
+        
+        this.evaluationBarChart.data.datasets[1].data = [
+          response.student_performance_evaluation.bsit.very_good,
+          response.student_performance_evaluation.bscs.very_good,
+          response.student_performance_evaluation.bsemc.very_good,
+          response.student_performance_evaluation.act.very_good,
+        ];
+
+        this.evaluationBarChart.data.datasets[2].data = [
+          response.student_performance_evaluation.bsit.good,
+          response.student_performance_evaluation.bscs.good,
+          response.student_performance_evaluation.bsemc.good,
+          response.student_performance_evaluation.act.good,
+        ];
+
+        this.evaluationBarChart.data.datasets[3].data = [
+          response.student_performance_evaluation.bsit.fair,
+          response.student_performance_evaluation.bscs.fair,
+          response.student_performance_evaluation.bsemc.fair,
+          response.student_performance_evaluation.act.fair,
+        ];
+
+        this.evaluationBarChart.data.datasets[4].data = [
+          response.student_performance_evaluation.bsit.poor,
+          response.student_performance_evaluation.bscs.poor,
+          response.student_performance_evaluation.bsemc.poor,
+          response.student_performance_evaluation.act.poor,
+        ];
+
+        this.evaluationBarChart.update()
       },
       error => {
         console.error(error)
