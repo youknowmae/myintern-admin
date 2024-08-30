@@ -104,7 +104,15 @@ h1 {
         transition: all ease-in-out .2s;
     }
 
+
     
+}
+
+button[disabled]{
+    border-color: #eeeeee !important;
+    background-color: #bbbbbb !important;
+    color: white !important;
+    pointer-events: none;
 }
 
 

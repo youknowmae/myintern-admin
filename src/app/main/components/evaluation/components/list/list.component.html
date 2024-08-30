@@ -26,50 +26,54 @@
     <table mat-table [dataSource]="dataSource">
         <ng-container matColumnDef="name" >
             <th mat-header-cell *matHeaderCellDef class="col-md-2"> Name </th>
-            <td mat-cell *matCellDef="let element" class="col-md-2">  {{ element.user.first_name }} {{ element.user.last_name }} </td>
+            <td mat-cell *matCellDef="let element" class="col-md-2">  
+                <p style="margin: 0;"> {{ element.full_name }} </p>
+                <p style="margin: 0;">{{ element.student_profile.program }}</p>
+            </td>
         </ng-container>
         
         <ng-container matColumnDef="student_number" >
             <th mat-header-cell *matHeaderCellDef class="col-md-2"> Student Number </th>
-            <td mat-cell *matCellDef="let element" class="col-md-2"> {{ element.user.student_profile.student_number }} </td>
+            <td mat-cell *matCellDef="let element" class="col-md-2"> {{ element.email }} </td>
         </ng-container>
 
         <ng-container matColumnDef="category" >
             <th mat-header-cell *matHeaderCellDef class="col-md-1"> Course </th>
-            <td mat-cell *matCellDef="let element" class="col-md-1"> {{  element.user.student_courses[0].course_code }} </td>
+            <td mat-cell *matCellDef="let element" class="col-md-1"> {{  element.course }} </td>
         </ng-container>
     
         <ng-container matColumnDef="program">
             <th mat-header-cell *matHeaderCellDef class="col-md-1"> Program </th>
-            <td mat-cell *matCellDef="let element" class="col-md-1"> {{ element.user.student_profile.program }} </td>
+            <td mat-cell *matCellDef="let element" class="col-md-1"> {{ element.student_profile.program }} </td>
         </ng-container>
       
         <ng-container matColumnDef="year">
             <th mat-header-cell *matHeaderCellDef class="col-md-1"> Year </th>
-            <td mat-cell *matCellDef="let element" class="col-md-1"> {{ element.user.student_profile.year_level }} </td>
+            <td mat-cell *matCellDef="let element" class="col-md-1"> {{ element.student_profile.year_level }} </td>
         </ng-container>
 
         <ng-container matColumnDef="company">
             <th mat-header-cell *matHeaderCellDef class="col-md-2"> Company </th>
-            <td mat-cell *matCellDef="let element" class="col-md-2">  {{ element.industry_partner.company_name }} </td>
+            <td mat-cell *matCellDef="let element" class="col-md-2">  {{ (element.company_name) ? element.company_name: 'none' }} </td>
         </ng-container>
         
         <ng-container matColumnDef="status">
             <th mat-header-cell *matHeaderCellDef class="col-md-1"> Status </th>
-            <td mat-cell *matCellDef="let element" class="col-md-1"> {{ (element.status) ? 'pending': 'pending' }} </td>
+            <td mat-cell *matCellDef="let element" class="col-md-1"> {{ element.status }} </td>
         </ng-container>
         
         <ng-container matColumnDef="actions">
             <th mat-header-cell *matHeaderCellDef class="col-md-2"> Action </th>
             <td mat-cell *matCellDef="let element" class="col-md-2"> 
-                 <button>Approve</button>
+                 <button (click)="approve(element.evaluation_id, element.average)" [disabled]="element.status == 'Pending' || element.eval_average != null">Approve</button>
             </td>
         </ng-container>
 
         <ng-container matColumnDef="average">
             <th mat-header-cell *matHeaderCellDef class="col-md-1"> Average </th>
             <td mat-cell *matCellDef="let element" class="col-md-1">
-              <input matInput [(ngModel)]="element.average" style="width: 100px; border: 2px solid var(--secondary-color);" />
+              <input matInput *ngIf="element.eval_average == null" [(ngModel)]="element.average" style="width: 100px; border: 2px solid var(--secondary-color); text-align: center;" />
+              <p *ngIf="element.eval_average != null">{{ element.eval_average }}</p>
             </td>
         </ng-container>
           
