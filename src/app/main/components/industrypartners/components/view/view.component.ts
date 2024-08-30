@@ -4,6 +4,7 @@ import { DataService } from '../../../../../services/data.service';
 import { MatDialog } from '@angular/material/dialog';
 import { IndustryPartner } from '../../../../../model/industry-partner.model';
 import { Router } from '@angular/router';
+import { MatTableDataSource } from '@angular/material/table';
 
 @Component({
   selector: 'app-view',
@@ -11,6 +12,10 @@ import { Router } from '@angular/router';
   styleUrl: './view.component.scss'
 })
 export class ViewComponent {
+  displayedColumns: string[] = ['name', 'student_number', 'course', 'year_level'];
+  
+  dataSource: any = new MatTableDataSource<any>();
+
   industryPartner: IndustryPartner = <IndustryPartner>{}
   id: number | null = null
   
@@ -18,7 +23,6 @@ export class ViewComponent {
     private ds: DataService,
     private route: ActivatedRoute,
     private router: Router,
-    private dialogRef: MatDialog,
   ) {
     this.route.paramMap.subscribe(params => {
       let id: any = params.get('id')
@@ -40,10 +44,17 @@ export class ViewComponent {
   }
   
   getIndustryPartner(id: number) {
-    this.ds.get('industryPartners/', id).subscribe(
+    this.ds.get('industry-partners-with-students/', id).subscribe(
       industryPartner => {
         this.industryPartner = industryPartner
-        console.log(this.industryPartner)
+
+        this.dataSource.data = industryPartner.internship_applications.map((student: any) => {
+          return {
+            full_name: student.user.first_name + " " + student.user.last_name,
+            ...student
+          }
+        })
+        console.log(industryPartner.internship_applications)
       },
       error => {
         console.error(error)

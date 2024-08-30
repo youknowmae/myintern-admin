@@ -6,6 +6,7 @@ import { MatTableDataSource } from '@angular/material/table';
 
 import { DataService } from '../../../../../services/data.service';
 import { Router } from '@angular/router';
+import { MatSelectChange } from '@angular/material/select';
 
 @Component({
   selector: 'app-list',
@@ -14,6 +15,7 @@ import { Router } from '@angular/router';
 })
 export class ListComponent {
   displayedColumns: string[] = ['name', 'student_number', 'category', 'year', 'program', 'company', 'status', 'actions'];
+  selectedFilter: string = '0'
 
   
   currentFilter: string = 'all'
@@ -39,10 +41,28 @@ export class ListComponent {
     this.ds.get('applications').subscribe(
       students => {
         console.log(students)
-        this.unfilteredStudents = students
+        this.unfilteredStudents = students.map((element: any) => {
+          if(element.status == 0) {
+            element.status_text = 'Pending'
+          }
+          if(element.status == 1) {
+            element.status_text = 'Cancelled'
+          }
+          if(element.status == 2) {
+            element.status_text = 'Rejected'
+          }
+          if(element.status == 3) {
+            element.status_text = 'Approved'
+          }
 
-        this.dataSource.data = students;
+          return element
+          
+        });
+
+        this.dataSource.data = this.unfilteredStudents;
         this.dataSource.paginator = this.paginator;
+
+        this.filterStudent()
       },
       error => {
         console.error(error)
@@ -56,14 +76,41 @@ export class ListComponent {
   
   applyFilter(value: string) {
     this.currentFilter = value
-    if(value == "all") {
-      this.dataSource.data = this.unfilteredStudents
-      return
+    this.filterStudent()
+    // if(value == "all") {
+    //   this.dataSource.data = this.unfilteredStudents
+    //   return
+    // }
+
+    // this.dataSource.data = this.unfilteredStudents.filter((student: any) => {
+    //   return student.user.student_profile.program.includes(value)
+    // })
+  }
+
+  onFilterChange(event: MatSelectChange) {
+    console.log(event.value)
+    this.selectedFilter = event.value
+    this.filterStudent()
+  }
+
+  filterStudent() {
+    let student 
+
+    if(this.currentFilter == "all") {
+      student = this.unfilteredStudents
+    }
+    else {
+      student = this.unfilteredStudents.filter((student: any) => {
+        return student.user.student_profile.program.includes(this.currentFilter)
+      })
     }
 
-    this.dataSource.data = this.unfilteredStudents.filter((student: any) => {
-      return student.user.student_profile.program.includes(value)
+
+    student = student.filter((student: any) => {
+      return student.status.includes(this.selectedFilter)
     })
+
+    this.dataSource.data = student
   }
 
 }
