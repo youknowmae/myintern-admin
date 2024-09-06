@@ -23,6 +23,12 @@ export class StudentprofileComponent {
     gender: "",
     citizenship: "",
     religion: "",
+    region: "",
+    province: "", 
+    municipality: "",
+    barangay: "",
+    address: "",
+    zip_code: "",
     student_profile: {
       program: '',
       student_number: '',
@@ -31,12 +37,6 @@ export class StudentprofileComponent {
       father_employment: "",
       mother_name: "",
       mother_employment: "",
-      region: "III",
-      province: "Zambales", 
-      municipality: "Olongapo",
-      barangay: "East Tapinac",
-      address: "#22 Donor Street",
-      zip_code: "2200"
     }
   }
 
@@ -54,8 +54,17 @@ export class StudentprofileComponent {
   ngOnInit() {
     this.student = this.us.getStudentProfile()
     this.student.gender = (this.student.gender == 0) ? 'Female' : 'Male'
+    
+    if(this.student.student_skills) {
+      this.skills = this.student.student_skills.skills
+    } else {
+      this.skills.push({strong_skill: '', weak_skill: ''})
+      this.skills.push({strong_skill: '', weak_skill: ''})
+      this.skills.push({strong_skill: '', weak_skill: ''})
+    }
+
     this.getSeminars();
-    this.getSkills();
+    // this.getSkills();
     this.getPersonalityTest();
   }
 
@@ -83,20 +92,7 @@ export class StudentprofileComponent {
       }
     )
   }
-
-  getSkills() {
-    this.ds.get('monitoring/skill-area/', this.student.id).subscribe(
-      response => {
-        console.log(response)
-        this.skills = response
-      },
-      error => { 
-        console.error(error)
-      }
-    )
-
-  }
-
+  
   viewSeminarImage(seminar: any) {
     this.dialog.open(ViewImageComponent, {
       data: { title: seminar.seminar_title, image: seminar.image}
