@@ -216,7 +216,7 @@
           <div class="file-input-container">
             <button *ngIf="personality_test" (click)="viewPersonalityTestImage(personality_test)">View</button>
             <div class="label"> Personality Test Result </div>
-            <div class="text">{{ (personality_test) ? personality_test.name : 'None' }}</div>
+            <div class="text">{{ (personality_test) ? personality_test.file_name : 'None' }}</div>
           </div>
         </div>
       </div>

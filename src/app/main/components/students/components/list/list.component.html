@@ -57,7 +57,7 @@
         
         <ng-container matColumnDef="time_completion">
             <th mat-header-cell *matHeaderCellDef class="col-md-2"> Estimated Time of Completion </th>
-            <td mat-cell *matCellDef="let element" class="col-md-2">  {{ (element.status === 'Completed') ? 'Completed' : element.hours_left + ' hrs left'}} </td>
+            <td mat-cell *matCellDef="let element" class="col-md-2">  {{ (element.hours_left <= 0) ? 'Completed' : element.hours_left + ' hrs left'}} </td>
         </ng-container>
         
         <ng-container matColumnDef="status">

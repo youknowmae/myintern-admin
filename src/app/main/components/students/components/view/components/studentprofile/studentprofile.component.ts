@@ -101,7 +101,7 @@ export class StudentprofileComponent {
 
   viewPersonalityTestImage(test: any) {
     this.dialog.open(ViewImageComponent, {
-      data: { title: test.name, image: test.file}
+      data: { title: test.file_name, image: test.file_path}
     })
   }
 }
