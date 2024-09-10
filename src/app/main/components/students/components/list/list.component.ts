@@ -14,7 +14,8 @@ import { Router } from '@angular/router';
   styleUrl: './list.component.scss'
 })
 export class ListComponent {
-  displayedColumns: string[] = ['name', 'student_number', 'mobile', 'course', 'program', 'year_level', 'time_completion', 'status', 'actions'];
+  displayedColumns: string[] = ['name', 'student_number', 'course', 'program', 'year_level', 'time_completion', 'student_evaluation', 'exit_poll', 'status', 'actions'];
+  //'mobile'
 
   currentFilter: string = 'all'
   unfilteredStudents: any
@@ -44,11 +45,17 @@ export class ListComponent {
         let studentsList = students.map((student: any) => {
           //pre 
           if(student.ojt_exit_poll) {
-            student.ojt_exit_poll = "Completed"
+            student.ojt_exit_poll = "Answered"
+          }
+          else {
+            student.ojt_exit_poll = null
           }
 
           if(student.student_evaluation) {
-            student.student_evaluation = "Completed"
+            student.student_evaluation = student.student_evaluation.average
+          }
+          else {
+            student.student_evaluation = null
           }
 
           //get required hours and course code
@@ -77,7 +84,7 @@ export class ListComponent {
 
           let status = (student.internship_applications.length === 0) ? 'Pending' : 'Ongoing'
 
-          if(hours_left <= 0 && student.ojt_exit_poll && student.student_evaluation == "Completed") {
+          if(hours_left <= 0 && student.ojt_exit_poll && student.student_evaluation) {
             status = "Completed"
           }
 
