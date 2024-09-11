@@ -12,7 +12,6 @@ import { GeneralService } from '../../services/general.service';
 })
 export class LoginComponent {
   visible: boolean = true;
-  changetype: boolean = true;
 
   isLoggingIn: boolean = false;
   
@@ -28,9 +27,8 @@ export class LoginComponent {
   ) {
 
   }
-  viewpass() {
+  togglePassVisibility() {
     this.visible = !this.visible;
-    this.changetype = !this.changetype;
   }
 
   login() {
@@ -39,9 +37,6 @@ export class LoginComponent {
     }
 
     this.isLoggingIn = true
-    
-    // this.router.navigate(['/main'])
-    // return
 
     this.as.login(this.loginForm.value).subscribe(
       response => {
@@ -50,8 +45,14 @@ export class LoginComponent {
       },
       error => {
         console.error(error)
-        if(error.status === 401) {
-          this.gs.errorAlert('Error!', error.error.message)
+        if(error.status === 0) {
+          this.gs.errorAlert('Oops!', 'Something went wrong. Please try again later.')
+        }
+        else if(error.status === 401) {
+          this.gs.errorAlert(error.error.title, error.error.message)
+        }
+        else if(error.status === 403) {
+          this.gs.errorAlert(error.error.title, error.error.message)
         }
 
         this.isLoggingIn = false

@@ -24,10 +24,10 @@
                         <input type="text" name="email" placeholder="Username" formControlName="email" autocomplete="on" required>      
                     </div>
                     <div class="input2">
-                        <input [type]="changetype?'password':'text'" name="password" placeholder="Enter password" formControlName="password" autocomplete="on" required>
+                        <input [type]="visible?'password':'text'" name="password" placeholder="Enter password" formControlName="password" autocomplete="on" required>
                         
                         <div class="icon">
-                            <span class="password-toggle-icon" (click)="viewpass()"><i
+                            <span class="password-toggle-icon" (click)="togglePassVisibility()"><i
                                 [ngClass]="visible?'fa-regular fa-eye':'fa-regular fa-eye-slash'"></i></span>
                         </div>
                     </div>

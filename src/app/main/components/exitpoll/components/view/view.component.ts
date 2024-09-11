@@ -3,7 +3,7 @@ import { UserService } from '../../../../../services/user.service';
 
 interface ExitPoll {
   user: any,
-  short_answer: any,
+  short_question: any,
   training_objectives: any,
   likert: any,
   long_answer: string
@@ -26,17 +26,7 @@ export class ViewComponent {
     'g. The company provided me with allowance, stipend, or subsidy indicate if _ _ _ meal or _ _ _ cash. If cash, how much? _ _ _/day'
   ]
 
-  exitPollDetails: ExitPoll = {
-    user: {},
-    short_answer: [
-
-    ],
-    training_objectives: [
-
-    ],
-    likert: '',
-    long_answer: ''
-  }
+  exitPollDetails: any
 
   constructor(
     private us: UserService,
@@ -47,25 +37,11 @@ export class ViewComponent {
   getExitPollDetails() {
     var exitPollDetails = this.us.getStudentExitPoll();
 
-    this.exitPollDetails.user = exitPollDetails.user
-    
-    this.exitPollDetails.likert = exitPollDetails.exit_poll_short_answer.pop().answer
+    this.exitPollDetails = exitPollDetails
 
-    //short answers
-    exitPollDetails.exit_poll_short_answer.forEach((item: any) => {
-      this.exitPollDetails.short_answer.push({
-        answer: item.answer
-      })
-    });
-    //training objective
-    exitPollDetails.exit_poll_training_objective.forEach((item: any) => {
-      this.exitPollDetails.training_objectives.push({
-        training_objective: item.training_objective,
-        achievement_level: item.achievement_level
-        })
-    });
-    
-    this.exitPollDetails.long_answer = exitPollDetails.exit_poll_long_answer.answer
+    this.exitPollDetails.industry_partner.full_address = exitPollDetails.industry_partner.street + ' ' + exitPollDetails.industry_partner.barangay + ' ' + exitPollDetails.industry_partner.municipality + ', ' + exitPollDetails.industry_partner.province
+
+    console.log(this.exitPollDetails)
   }
 
 }

@@ -38,6 +38,7 @@ export class ListComponent {
   view(id: number){
     this.ds.get('exit-poll/', id).subscribe(
       exitPollDetails=> {  
+        console.log(exitPollDetails)
         this.us.setStudentExitPoll(exitPollDetails)
         this.router.navigate(['/main/exitpoll/view/' + id])
       },
