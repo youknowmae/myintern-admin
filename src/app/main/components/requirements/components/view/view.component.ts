@@ -7,6 +7,8 @@ import Swal from 'sweetalert2';
 import { GeneralService } from '../../../../../services/general.service';
 import { response } from 'express';
 
+import { saveAs } from 'file-saver'
+
 @Component({
   selector: 'app-view',
   templateUrl: './view.component.html',
@@ -34,7 +36,7 @@ export class ViewComponent {
   }
 
   getApplicationDetails(id: number) {
-    this.ds.get('applications/', id).subscribe(
+    this.ds.get('adviser/applications/', id).subscribe(
       applicationDetails=> {
         this.applicationDetails = applicationDetails
         console.log(this.applicationDetails)
@@ -133,6 +135,22 @@ export class ViewComponent {
       error => {
         console.error(error)
         this.isCommenting = false
+      }
+    )
+  }
+
+  isDownloading: boolean = false
+  generateEndorsement() {
+    this.ds.download('generate/endorsement/', this.applicationDetails.id).subscribe(
+      (response: Blob) => {
+        saveAs(response, 'sample endorsement');
+        this.isDownloading = false
+      },
+      error => {
+        this.gs.errorAlert('Error!', 'Something went wrong. Please try again later.')
+        console.error(error)
+        this.isDownloading = false
+
       }
     )
   }

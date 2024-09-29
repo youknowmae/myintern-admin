@@ -38,7 +38,7 @@ export class ListComponent {
   }
 
   getStudents() {
-    this.ds.get('applications').subscribe(
+    this.ds.get('adviser/applications').subscribe(
       students => {
         console.log(students)
         this.unfilteredStudents = students.map((element: any) => {

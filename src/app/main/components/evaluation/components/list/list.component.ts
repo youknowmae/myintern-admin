@@ -37,7 +37,7 @@ export class ListComponent {
   }
 
   getStudents() {
-    this.ds.get('evaluation/students').subscribe(
+    this.ds.get('adviser/evaluation/students').subscribe(
       students => {
         console.log('test')
         this.unfilteredStudents = students.map((student: any) => {
@@ -104,24 +104,24 @@ export class ListComponent {
     })
   }
 
-  approve(id: number, average: number) {
-    if(isNaN(average) || average === null) {
-      this.gs.errorAlert('Not a number!', 'The number you\'ve input is not a number')
-      return
-    }
+  // approve(id: number, average: number) {
+  //   if(isNaN(average) || average === null) {
+  //     this.gs.errorAlert('Not a number!', 'The number you\'ve input is not a number')
+  //     return
+  //   }
 
-    const form = new FormData
-    form.append('average', average.toString())
+  //   const form = new FormData
+  //   form.append('average', average.toString())
     
-    this.ds.post('evaluation/approve/', id, form).subscribe(
-      response => {
-        console.log(response)
-        this.gs.successAlert('Approved!', response.message)
-        this.getStudents()
-      },
-      error => {
-        console.error(error)
-      }
-    )
-  }
+  //   this.ds.post('evaluation/approve/', id, form).subscribe(
+  //     response => {
+  //       console.log(response)
+  //       this.gs.successAlert('Approved!', response.message)
+  //       this.getStudents()
+  //     },
+  //     error => {
+  //       console.error(error)
+  //     }
+  //   )
+  // }
 }

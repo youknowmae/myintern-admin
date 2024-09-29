@@ -39,7 +39,7 @@ export class TemplatesComponent {
   }
 
   getTemplates() {
-    this.ds.get('templates').subscribe(
+    this.ds.get('adviser/templates').subscribe(
       templates => {
         console.log(templates)
         // this.dataSource = templates
@@ -108,7 +108,7 @@ export class TemplatesComponent {
   }
 
   deleteTemplate(id: number) {
-    this.ds.delete('templates/', id).subscribe(
+    this.ds.delete('adviser/templates/', id).subscribe(
       result => {
         console.log(result)
         this.dataSource.data = this.dataSource.data.filter((template: any) => template.id !== id);

@@ -5,6 +5,7 @@ import { AddIndustryPartnerComponent } from '../add-industry-partner/add-industr
 import { IndustryPartner } from '../../../../../model/industry-partner.model';
 import { EditIndustryPartnerComponent } from '../edit-industry-partner/edit-industry-partner.component';
 import Swal from 'sweetalert2';
+import { GeneralService } from '../../../../../services/general.service';
 
 @Component({
   selector: 'app-list',
@@ -17,7 +18,8 @@ export class ListComponent {
 
   constructor(
     private dialogRef: MatDialog,
-    private ds: DataService
+    private ds: DataService,
+    private gs: GeneralService
   ) {
 
   }
@@ -27,7 +29,7 @@ export class ListComponent {
   }
 
   getIndustryPartners() {
-    this.ds.get('industryPartners').subscribe(
+    this.ds.get('adviser/industryPartners').subscribe(
       industryPartners => {
         this.industryPartners = industryPartners
         console.log(industryPartners)
@@ -60,7 +62,7 @@ export class ListComponent {
 
     this.isLoading = true
 
-    this.ds.get('industryPartners/', id).subscribe(
+    this.ds.get('adviser/industryPartners/', id).subscribe(
       (industryPartner: IndustryPartner) => {
         var modal = this.dialogRef.open(EditIndustryPartnerComponent, {
           data: industryPartner,
@@ -90,17 +92,11 @@ export class ListComponent {
   }
 
   deleteIndustryPartner(id: number) {
-    this.ds.delete('industryPartners/', id).subscribe(
+    this.ds.delete('adviser/industryPartners/', id).subscribe(
       result => {
         console.log(result)
         this.industryPartners = this.industryPartners.filter((announcement: any) => announcement.id !== id);
-        Swal.fire({
-          title: 'Success!',
-          text: 'Announcement has been deleted.',
-          icon: 'success',
-          confirmButtonText: 'Close',
-          confirmButtonColor: '#777777',
-        });
+        this.gs.successToastAlert('Successfully removed')
       },
       error => {
         console.error(error)
@@ -116,8 +112,8 @@ export class ListComponent {
 
   deleteConfirmation(id: number) {
     Swal.fire({
-      title: 'Delete?',
-      text: 'Are you sure you want to delete this industry partner?',
+      title: 'Remove?',
+      text: 'Are you sure you want to remove this industry partner?',
       icon: 'warning',
       showCancelButton: true,
       confirmButtonText: 'Yes',

@@ -95,6 +95,10 @@
                     <button (click)="approveApplication()" style="margin-right: 10px;">Approve</button>
                     <button (click)="rejectApplication()">Reject</button>
                 </div>
+
+                <div class="approve-btn" *ngIf="applicationDetails.status == 3">
+                    <button (click)="generateEndorsement()" style="margin-right: 10px; width: fit-content;">Generate Endorsement</button>
+                </div>
             </div>
         </div>
     </div>

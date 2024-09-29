@@ -23,7 +23,7 @@ export class AddTemplateComponent {
     private ref: MatDialogRef<AddTemplateComponent>,
     private fb: FormBuilder,
     private gs: GeneralService,
-    private dataService: DataService
+    private ds: DataService
   ) {
   }
   
@@ -107,7 +107,7 @@ export class AddTemplateComponent {
     payload.append('docx', this.docxFile);
     payload.append('pdf', this.pdfFile);
     
-    this.dataService.post('templates', '', payload).subscribe(
+    this.ds.post('adviser/templates', '', payload).subscribe(
       result => {
         Swal.fire({
           title: "Success!",

@@ -22,7 +22,7 @@ export class AddAnnouncementComponent {
   constructor(
     private ref: MatDialogRef<AddAnnouncementComponent>,
     private fb: FormBuilder,
-    private dataService: DataService
+    private ds: DataService
   ) {
     const today = new Date();
     this.formDetails.patchValue({
@@ -94,7 +94,7 @@ export class AddAnnouncementComponent {
     if(this.file)
       payload.append('image', this.file);
     
-    this.dataService.post('announcements', '', payload).subscribe(
+    this.ds.post('adviser/announcements', '', payload).subscribe(
       result => {
         Swal.fire({
           title: "Success!",

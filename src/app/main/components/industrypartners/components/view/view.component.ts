@@ -44,7 +44,7 @@ export class ViewComponent {
   }
   
   getIndustryPartner(id: number) {
-    this.ds.get('industry-partners-with-students/', id).subscribe(
+    this.ds.get('adviser/industry-partners-with-students/', id).subscribe(
       industryPartner => {
         this.industryPartner = industryPartner
 

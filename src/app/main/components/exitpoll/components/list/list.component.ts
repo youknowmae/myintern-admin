@@ -36,7 +36,7 @@ export class ListComponent {
   }
 
   view(id: number){
-    this.ds.get('exit-poll/', id).subscribe(
+    this.ds.get('adviser/exit-poll/', id).subscribe(
       exitPollDetails=> {  
         console.log(exitPollDetails)
         this.us.setStudentExitPoll(exitPollDetails)
@@ -49,7 +49,7 @@ export class ListComponent {
   }
   
   getStudents() {
-    this.ds.get('exit-poll/students').subscribe(
+    this.ds.get('adviser/exit-poll/students').subscribe(
       students => {
         let studentsList = students.map((student: any) => {
           let course = student.student_courses[0].course_code
@@ -61,6 +61,8 @@ export class ListComponent {
           }
         })
 
+        console.log(studentsList)
+        
         this.unfilteredStudents = studentsList
         this.dataSource.data = studentsList
         this.dataSource.paginator = this.paginator;

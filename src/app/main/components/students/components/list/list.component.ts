@@ -40,8 +40,9 @@ export class ListComponent {
   }
 
   getStudents() {
-    this.ds.get('monitoring/students').subscribe(
+    this.ds.get('adviser/monitoring/students').subscribe(
       students => {
+        console.log(students)
         let studentsList = students.map((student: any) => {
           //pre 
           if(student.ojt_exit_poll) {
@@ -142,7 +143,7 @@ export class ListComponent {
     let studentDetails = this.unfilteredStudents.find((student: any) => student.id = id)
 
     console.log(studentDetails)
-    this.ds.get('monitoring/students/', id).subscribe(
+    this.ds.get('adviser/monitoring/students/', id).subscribe(
       student => {
         this.us.setStudentProfile({ ...student, required_hours: studentDetails.required_hours })
         this.router.navigate(['main/students/view'])

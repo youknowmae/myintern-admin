@@ -22,4 +22,8 @@ export class DataService {
   public delete(endpoint: string, params: string|number) {
     return this.http.delete<any>(apiUrl+endpoint+params)
   }
+
+  public download(endpoint: string, params: string|number = '',) {
+    return this.http.get(apiUrl+endpoint+params, { responseType: 'blob' })
+   }
 }

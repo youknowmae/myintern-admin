@@ -24,7 +24,7 @@ export class EditTemplateComponent {
     private ref: MatDialogRef<EditTemplateComponent>,
     private fb: FormBuilder,
     private gs: GeneralService,
-    private dataService: DataService
+    private ds: DataService
   ) {
   }
   
@@ -95,7 +95,7 @@ export class EditTemplateComponent {
     }
 
     
-    this.dataService.post('templates/', this.data.id, payload).subscribe(
+    this.ds.post('adviser/templates/', this.data.id, payload).subscribe(
       result => {
         this.gs.successAlert("Success!", result.message)
         this.ref.close(result.data);

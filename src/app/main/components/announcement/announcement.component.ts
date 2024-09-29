@@ -27,7 +27,7 @@ export class AnnouncementComponent {
   }
 
   getAnnouncements() {
-    this.ds.get('announcements').subscribe(
+    this.ds.get('adviser/announcements').subscribe(
       announcements => {
         console.log(announcements)
         this.announcements = announcements
@@ -72,7 +72,7 @@ export class AnnouncementComponent {
   }
 
   deleteAnnouncement(id: number) {
-    this.ds.delete('announcements/', id).subscribe(
+    this.ds.delete('adviser/announcements/', id).subscribe(
       result => {
         console.log(result)
         this.announcements = this.announcements.filter((announcement: any) => announcement.id !== id);

@@ -1,3 +1,12 @@
+@keyframes fade-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
 .container-header {
     width: 100%;
     display: flex;
@@ -48,6 +57,11 @@
       padding: 20px;
       transform: scale(1);
       transition: all .2s ease-in;
+
+      animation: fade-in 1s forwards; 
+      opacity: 0;         
+      will-change: opacity;     
+      
   
       .card-image {
         width: 100%; /* or any specific width */

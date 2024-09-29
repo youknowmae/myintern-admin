@@ -71,8 +71,8 @@ export class ViewComponent {
 
   submit() {
     Swal.fire({
-      title: "Post New Announcement",
-      text: "Are you sure you want to post this announcement?",
+      title: "Update Announcement?",
+      text: "Are you sure you want to update this announcement.",
       icon: "warning",
       showCancelButton: true,
       confirmButtonText: 'Yes',
@@ -97,7 +97,7 @@ export class ViewComponent {
       payload.append('image', this.file);
     
 
-    this.ds.post('announcements/', this.data.id, payload).subscribe(
+    this.ds.post('adviser/announcements/', this.data.id, payload).subscribe(
       result => {
         Swal.fire({
           title: "Success!",
