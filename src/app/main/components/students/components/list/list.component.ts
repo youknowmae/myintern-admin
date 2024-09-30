@@ -7,6 +7,10 @@ import { DataService } from '../../../../../services/data.service';
 import { UserService } from '../../../../../services/user.service';
 
 import { Router } from '@angular/router';
+import { MatSelectChange } from '@angular/material/select';
+
+import * as XLSX from 'xlsx';
+import { saveAs } from 'file-saver';
 
 @Component({
   selector: 'app-list',
@@ -14,12 +18,14 @@ import { Router } from '@angular/router';
   styleUrl: './list.component.scss'
 })
 export class ListComponent {
-  displayedColumns: string[] = ['name', 'student_number', 'course', 'program', 'year_level', 'time_completion', 'student_evaluation', 'exit_poll', 'status', 'actions'];
-  //'mobile'
+  displayedColumns: string[] = ['name', 'student_number', 'course', 'program', 'required_hours', 'time_completion', 'student_evaluation', 'exit_poll', 'status', 'actions'];
 
-  currentFilter: string = 'all'
   unfilteredStudents: any
   dataSource: any = new MatTableDataSource<any>();
+  
+  classList: any = []
+  statusFilter: string = 'all'
+  classFilter: string = 'all'
 
   isLoading: boolean = false
   
@@ -44,61 +50,43 @@ export class ListComponent {
       students => {
         console.log(students)
         let studentsList = students.map((student: any) => {
-          //pre 
+          //get all classes
+          if (!this.classList.includes(student.active_ojt_class.class_code)) 
+            this.classList.push(student.active_ojt_class.class_code) 
+
           if(student.ojt_exit_poll) {
             student.ojt_exit_poll = "Answered"
-          }
-          else {
-            student.ojt_exit_poll = null
           }
 
           if(student.student_evaluation) {
             student.student_evaluation = student.student_evaluation.average
           }
-          else {
-            student.student_evaluation = null
-          }
 
-          //get required hours and course code
-          let course = student.student_courses[0].course_code
-          let required_hours: number = 0
-
-          if(course === 'ITP132') {
-            required_hours = 500
-          }
-          else if (course === 'ITP131') {
-            required_hours = 200
-          }
-
-          let hours_left = required_hours
+          let required_hours: number = student.active_ojt_class.required_hours
+          let progress: number = 0
 
           //if has accomplishment report
           if(student.accomplishment_report.length > 0) {
             student.accomplishment_report = student.accomplishment_report[0]
-
-            hours_left -= parseInt(student.accomplishment_report.current_total_hours)
-
-            if(hours_left <= 0) {
-              hours_left = 0
-            }
+            progress += parseInt(student.accomplishment_report.current_total_hours)
           }
 
-          let status = (student.internship_applications.length === 0) ? 'Pending' : 'Ongoing'
 
-          if(hours_left <= 0 && student.ojt_exit_poll && student.student_evaluation) {
+          let status = (student.accepted_application) ? 'Ongoing' : 'Pending'
+
+          if(progress >= required_hours && student.ojt_exit_poll && student.student_evaluation) {
             status = "Completed"
           }
 
           return {
             full_name: student.first_name + " " + student.last_name,
-            course,
-            required_hours,
-            hours_left,
+            progress,
             status,
             ...student
           } 
         })
         console.log(studentsList)
+
         this.unfilteredStudents = studentsList
         this.dataSource.data = studentsList
         this.dataSource.paginator = this.paginator;
@@ -109,30 +97,35 @@ export class ListComponent {
     )
   }
 
-  applyFilter(value: string) {
-    this.currentFilter = value 
+  onClassFilterChange(event: MatSelectChange) {
+    this.classFilter = event.value
 
-    if(value == "all") {
-      this.dataSource.data = this.unfilteredStudents
-      return
+    this.statusFilter = 'all'
+    this.applyFilter()
+  }
+
+  onStatusFilterChange(value: string) {
+    this.statusFilter = value
+    this.applyFilter()
+  }
+
+  applyFilter() {
+    //class filter
+    let students = this.unfilteredStudents
+    
+    if(this.classFilter != 'all') {
+      students = students.filter((student: any) => {
+        return student.active_ojt_class.class_code === this.classFilter
+      })
     }
 
-    this.dataSource.data = this.unfilteredStudents.filter((student: any) => {
-      var status = student.status.toLowerCase()
-      if(value == 'completed') {
-        return status.includes('completed') 
-      }
+    if(this.statusFilter != "all") {
+      students = students.filter((student: any) => {
+        return student.status.toLowerCase() === this.statusFilter
+      })    
+    }
 
-      if(value == 'pending') {
-        return status.includes('pending') 
-      }
-      
-      if(value == 'ongoing') {
-        return status.includes('ongoing') 
-      }
-
-      return false
-    })    
+    this.dataSource.data = students
   }
 
   viewStudent(id: number) {
@@ -154,5 +147,71 @@ export class ListComponent {
         this.isLoading = false
       }
     )
+  }
+
+  downloadExcel() {
+    const data: any = this.generateExcelContent();
+    const wb: XLSX.WorkBook = XLSX.utils.book_new();
+    const ws: XLSX.WorkSheet = XLSX.utils.aoa_to_sheet(data);
+    XLSX.utils.book_append_sheet(wb, ws, 'Sheet1');
+
+
+    const excelBuffer: any = XLSX.write(wb, { bookType: 'xlsx', type: 'array' });
+
+    const file = new Blob([excelBuffer], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' });
+    if (file) {
+      saveAs(file, 'Report.xlsx');
+    } else {
+      console.error('Error generating Excel file data.');
+    }
+
+  }
+
+  generateExcelContent() {
+    console.log('generating excel...')
+
+    let data: any = []
+
+    //header
+    data.push([
+      'Last Name', 
+      'First Name', 
+      'Student Number', 
+      'Program', 
+      'Year Level', 
+      'Course', 
+      'Class Code', 
+      'Required OJT Hours', 
+      'Rendered OJT Hours',
+      'Student Evaluation', 
+      'Exit Poll',
+      'Remarks'
+    ])
+
+    let students = this.dataSource.data;
+
+    students = students.sort((a: any, b: any) => a.last_name.localeCompare(b.last_name))
+
+    students.forEach((student: any) => {
+      data.push([
+        student.last_name,
+        student.first_name,
+        student.student_profile.student_number,
+        student.student_profile.program,
+        student.student_profile.year_level,
+        student.active_ojt_class.course_code,
+        student.active_ojt_class.class_code,
+        student.active_ojt_class.required_hours,
+        student.progress,
+        (student.student_evaluation) ? student.student_evaluation : 'Not Evaluated',
+        (student.ojt_exit_poll) ? 'Completed' : 'INC',
+        (student.status === 'Completed') ? 'Completed': 'Incomplete',
+      ]);
+    });
+
+
+    console.log(data)
+
+    return data;
   }
 }
