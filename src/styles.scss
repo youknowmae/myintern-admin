@@ -12,14 +12,26 @@
     
 }
 
+
+// html, body { height: 100%; }
+// body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+
 :root {
     font-size: 100%;
-    --primary-color: #E8751A;
-    --primary-font-color: white;
+    --primary-color: #748E63;
+    --main-orange: #F9B572;
+    --semi-transparent-main-orange: #F9B57260;
     --warning-color: #d11515;
+
+    --main-bg-color: #faf8ed;
+
+    --primary-font-color: #FEFBE9;
     --font-color: white;
-    --secondary-color: #898121;
+
+    --secondary-color: #99B080;
     --secondary-color-semi-transparent: 137, 129, 33, .1;
+
+
     --main-green: #31A463;
     --border-color: rgba(0, 0, 0, 0.12);
     --table-border-color: #e0e0e0;
@@ -32,7 +44,7 @@ html, body { height: 100%; }
 
 body { 
     margin: 0; 
-    background-color: white;
+    background-color: #faf8ed;
     overflow: hidden;
 }
 

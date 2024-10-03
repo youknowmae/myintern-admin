@@ -6,9 +6,9 @@
     justify-content: space-between;
     margin-bottom: 30px;
     h1 {
-        color: var(--secondary-color);
-        opacity: .5;
-        font-size: 60px;
+        color: var(--main-orange);
+        opacity: .7;
+        font-size: 40px;
         font-weight: 400;
         padding: 10px;
     }
@@ -53,6 +53,7 @@
         display: flex;
         justify-content: center;
         align-items: center;
+        background-color: var(--main-bg-color);
     }
     
     tr {

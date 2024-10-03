@@ -5,9 +5,9 @@
     align-items: center;
     justify-content: space-between;
     h1 {
-        color: var(--secondary-color);
-        opacity: .5;
-        font-size: 60px;
+        color: var(--main-orange);
+        opacity: .7;
+        font-size: 40px;
         font-weight: 400;
         padding: 10px;
     }
@@ -48,15 +48,11 @@
         padding-right: 5px;
         font-size: 20px;
     }
-
-    .btn-name {
-        padding-top: 3px;
-    }
 }
   
 .content {
     display: flex;
-    background-color: #E5C287;
+    background-color: rgba(249, 181, 114, 0.5);
     border-radius: 20px;
     width: 100%;
     min-height: 500px;
@@ -120,7 +116,7 @@
 .students-content {
     display: flex;
     flex-direction: column;
-    background-color: #E5C287;
+    background-color: rgba(249, 181, 114, 0.5);
     border-radius: 20px;
     padding: 20px;
     width: 100%;

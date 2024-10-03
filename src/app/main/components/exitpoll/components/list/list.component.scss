@@ -1,7 +1,7 @@
 h1 {
-    color: var(--secondary-color);
-    opacity: .5;
-    font-size: 60px;
+    color: var(--main-orange);
+    opacity: .7;
+    font-size: 40px;
     font-weight: 400;
     padding: 10px;
     margin-bottom: 30px;
@@ -16,7 +16,7 @@ h1 {
     button {
         padding: 2px 8px;
         font-size: 18px;
-        background-color: #ffffff;
+        background-color: var(--main-bg-color);
         border: none;
         cursor: pointer;
         color: var(--primary-color);
@@ -107,6 +107,7 @@ h1 {
         display: flex;
         justify-content: center;
         align-items: center;
+        background-color: var(--main-bg-color);
     }
     
     tr {
