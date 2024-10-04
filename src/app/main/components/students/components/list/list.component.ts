@@ -18,7 +18,7 @@ import { saveAs } from 'file-saver';
   styleUrl: './list.component.scss'
 })
 export class ListComponent {
-  displayedColumns: string[] = ['name', 'student_number', 'course', 'program', 'required_hours', 'time_completion', 'student_evaluation', 'exit_poll', 'status', 'actions'];
+  displayedColumns: string[] = ['name', 'student_number', 'course', 'program', 'progess', 'student_evaluation', 'exit_poll', 'status', 'actions'];
 
   unfilteredStudents: any
   dataSource: any = new MatTableDataSource<any>();
@@ -138,7 +138,7 @@ export class ListComponent {
     console.log(studentDetails)
     this.ds.get('adviser/monitoring/students/', id).subscribe(
       student => {
-        this.us.setStudentProfile({ ...student, required_hours: studentDetails.required_hours })
+        this.us.setStudentProfile({ ...student, required_hours: studentDetails.active_ojt_class.required_hours })
         this.router.navigate(['main/students/view'])
         this.isLoading = false
       },
@@ -190,6 +190,8 @@ export class ListComponent {
 
     let students = this.dataSource.data;
 
+
+    //sort alphabetically
     students = students.sort((a: any, b: any) => a.last_name.localeCompare(b.last_name))
 
     students.forEach((student: any) => {
