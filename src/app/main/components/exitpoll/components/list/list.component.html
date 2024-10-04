@@ -4,18 +4,26 @@
 
 <div class="buttons">
     <div class="filter-container">
-        <div [class.active]="currentFilter == 'all'" class="filter">
-            <button (click)="applyFilter('all')">All Students</button>
+        <div [class.active]="statusFilter == 'all'" class="filter">
+            <button (click)="onStatusFilterChange('all')">All Students</button>
         </div>
-        <div [class.active]="currentFilter == 'completed'" class="filter">
-            <button (click)="applyFilter('completed')">Completed</button>
+        <div [class.active]="statusFilter == 'completed'" class="filter">
+            <button (click)="onStatusFilterChange('completed')">Completed</button>
         </div>
-        <div [class.active]="currentFilter == 'pending'" class="filter">
-            <button (click)="applyFilter('pending')">Pending</button>
+        <div [class.active]="statusFilter == 'pending'" class="filter">
+            <button (click)="onStatusFilterChange('pending')">Pending</button>
         </div>
     </div>
-    <div class="export">
-        <button>Export</button>
+    <div class="right">
+        <div class="class-filter">
+            <mat-form-field>
+                <mat-label>Class Filter</mat-label>
+                <mat-select disableRipple (selectionChange)="onClassFilterChange($event)" [(value)]="classFilter">
+                    <mat-option value="all"> All Classes</mat-option>
+                    <mat-option *ngFor="let option of classList" [value]="option"> {{ option }} </mat-option>
+                </mat-select>
+            </mat-form-field>
+        </div>
     </div>
 </div>
 
@@ -33,8 +41,13 @@
         
         
         <ng-container matColumnDef="course" >
-            <th mat-header-cell *matHeaderCellDef class="col-md-2" > Course </th>
-            <td mat-cell *matCellDef="let element" class="col-md-2"> {{ element.course }} </td>
+            <th mat-header-cell *matHeaderCellDef class="col-md-1" > Course </th>
+            <td mat-cell *matCellDef="let element" class="col-md-1"> {{ element.active_ojt_class.course_code }} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="class_code" >
+            <th mat-header-cell *matHeaderCellDef class="col-md-1" > Course </th>
+            <td mat-cell *matCellDef="let element" class="col-md-1"> {{ element.active_ojt_class.class_code }} </td>
         </ng-container>
 
         <ng-container matColumnDef="student_number" >
@@ -50,7 +63,7 @@
         <ng-container matColumnDef="status" >
             <th mat-header-cell *matHeaderCellDef class="col-md-2" > Status </th>
             <td mat-cell *matCellDef="let element" class="col-md-2"> 
-                <p> {{ (element.ojt_exit_poll) ? 'Completed' : 'Pending' }} </p>
+                <p> {{ element.status }} </p>
             </td>
         </ng-container>
 

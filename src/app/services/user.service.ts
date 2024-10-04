@@ -15,6 +15,7 @@ interface User {
 
 export class UserService {
     exitPollDetails: string = 'studentExitPoll'
+    studentEvaluation: string = 'studentEvaluation'
     studentProfile: string = 'studentProfile'
 
     constructor(
@@ -43,11 +44,6 @@ export class UserService {
         sessionStorage.setItem(this.exitPollDetails, JSON.stringify(exitPoll))
     }
 
-    setStudentProfile(studentProfile: any) {
-        sessionStorage.setItem(this.studentProfile, JSON.stringify(studentProfile))
-    }
-
-    
     getStudentExitPoll() {
         if (!isPlatformBrowser(this.platformId)){
             return null
@@ -61,6 +57,30 @@ export class UserService {
 
         return JSON.parse(exitPoll)
     }
+
+    setStudentEvaluation(exitPoll: any) {
+        sessionStorage.setItem(this.studentEvaluation, JSON.stringify(exitPoll))
+    }
+    
+    getStudentEvaluation() {
+        if (!isPlatformBrowser(this.platformId)){
+            return null
+        }
+        
+        let studentEvaluation = sessionStorage.getItem(this.studentEvaluation)
+
+        if(!studentEvaluation) {
+            return null
+        }
+
+        return JSON.parse(studentEvaluation)
+    }
+
+    setStudentProfile(studentProfile: any) {
+        sessionStorage.setItem(this.studentProfile, JSON.stringify(studentProfile))
+    }
+
+    
 
     getStudentProfile() {
         if (!isPlatformBrowser(this.platformId)){

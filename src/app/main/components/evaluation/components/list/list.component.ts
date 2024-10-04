@@ -6,6 +6,8 @@ import { MatTableDataSource } from '@angular/material/table';
 import { DataService } from '../../../../../services/data.service';
 import { Router } from '@angular/router';
 import { GeneralService } from '../../../../../services/general.service';
+import { MatSelectChange } from '@angular/material/select';
+import { UserService } from '../../../../../services/user.service';
 
 @Component({
   selector: 'app-list',
@@ -13,12 +15,16 @@ import { GeneralService } from '../../../../../services/general.service';
   styleUrl: './list.component.scss'
 })
 export class ListComponent {
-  displayedColumns: string[] = ['name', 'student_number', 'category', 'year', 'program', 'company', 'status', 'actions', 'average'];
+  displayedColumns: string[] = ['name', 'student_number', 'category', 'year', 'company', 'average', 'status', 'actions'];
 
-  
   currentFilter: string = 'all'
   unfilteredStudents: any
   dataSource: any = new MatTableDataSource<any>();
+  
+  classList: any = []
+
+  statusFilter: string = 'all'
+  classFilter: string = 'all'
   
   @ViewChild(MatPaginator, {static:true}) paginator!: MatPaginator;
   
@@ -27,6 +33,7 @@ export class ListComponent {
     private changeDetectorRef: ChangeDetectorRef,
     private ds: DataService,
     private gs: GeneralService,
+    private us: UserService,
     private router: Router
   ) {
     this.paginator = new MatPaginator(this.paginatorIntl, this.changeDetectorRef);
@@ -41,39 +48,24 @@ export class ListComponent {
       students => {
         console.log('test')
         this.unfilteredStudents = students.map((student: any) => {
-
+          if (!this.classList.includes(student.active_ojt_class.class_code)) 
+            this.classList.push(student.active_ojt_class.class_code) 
+          
           let company_name = ''
 
           if(student.internship_applications.length > 0) {
             company_name = student.internship_applications[0].industry_partner.company_name
           }
-          let course = student.student_courses[0].course_code
 
-          let status 
-          var eval_average = null
+          let status = (student.student_evaluation) ? 'Completed' : 'Pending'
 
-          if(student.student_evaluation == null) {
-            status = 'Pending'
-          } 
-          else {
-            if(student.student_evaluation.status === 1) {
-              status = 'Completed'
-              eval_average = student.student_evaluation.average
-            }
-            else {
-              var evaluation_id = student.student_evaluation.id
-              status = 'For Approval'
-            }
-          }
-          
+          if(student.student_evaluation)
+            student.student_evaluation = { id: student.student_evaluation.id, average: student.student_evaluation.average }
 
           return {
             full_name: student.first_name + " " + student.last_name,
             status,
-            course,
-            evaluation_id,
             company_name,
-            eval_average,
             ...student
           } 
         })
@@ -88,40 +80,47 @@ export class ListComponent {
     )
   }
 
-  viewApplication(id: number) {
-    this.router.navigate(['main/requirements/view/' + id])
+  viewEvaluation(id: number) {
+    this.ds.get('adviser/evaluation/students/', 1).subscribe(
+      response => {
+        console.log(response)
+        this.us.setStudentEvaluation(response)
+        this.router.navigate(['main/evaluation/view'])
+      },
+      error => {
+        console.error(error)
+      }
+    )
   }
   
-  applyFilter(value: string) {
-    this.currentFilter = value
-    if(value == "all") {
-      this.dataSource.data = this.unfilteredStudents
-      return
-    }
+  onClassFilterChange(event: MatSelectChange) {
+    this.classFilter = event.value
 
-    this.dataSource.data = this.unfilteredStudents.filter((student: any) => {
-      return student.student_profile.program.includes(value)
-    })
+    this.statusFilter = 'all'
+    this.applyFilter()
   }
 
-  // approve(id: number, average: number) {
-  //   if(isNaN(average) || average === null) {
-  //     this.gs.errorAlert('Not a number!', 'The number you\'ve input is not a number')
-  //     return
-  //   }
+  onStatusFilterChange(value: string) {
+    this.statusFilter = value
+    this.applyFilter()
+  }
 
-  //   const form = new FormData
-  //   form.append('average', average.toString())
+  applyFilter() {
+    //class filter
+    let students = this.unfilteredStudents
     
-  //   this.ds.post('evaluation/approve/', id, form).subscribe(
-  //     response => {
-  //       console.log(response)
-  //       this.gs.successAlert('Approved!', response.message)
-  //       this.getStudents()
-  //     },
-  //     error => {
-  //       console.error(error)
-  //     }
-  //   )
-  // }
+    if(this.classFilter != 'all') {
+      students = students.filter((student: any) => {
+        return student.active_ojt_class.class_code === this.classFilter
+      })
+    }
+
+    if(this.statusFilter != "all") {
+      students = students.filter((student: any) => {
+        return student.status.toLowerCase() === this.statusFilter
+      })    
+    }
+
+    this.dataSource.data = students
+  }
 }

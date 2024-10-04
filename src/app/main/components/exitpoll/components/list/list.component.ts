@@ -7,17 +7,22 @@ import { DataService } from '../../../../../services/data.service';
 import { UserService } from '../../../../../services/user.service';
 
 import { Router } from '@angular/router';
+import { MatSelectChange } from '@angular/material/select';
 @Component({
   selector: 'app-list',
   templateUrl: './list.component.html',
   styleUrl: './list.component.scss'
 })
 export class ListComponent {
-  displayedColumns: string[] = ['name', 'student_number', 'course', 'year_level', 'status', 'actions'];
+  displayedColumns: string[] = ['name', 'year_level', 'student_number', 'course', 'class_code', 'status', 'actions'];
 
-  currentFilter: string = 'all'
   unfilteredStudents: any
   dataSource: any = new MatTableDataSource<any>();
+
+  classList: any = []
+
+  statusFilter: string = 'all'
+  classFilter: string = 'all'
   
   @ViewChild(MatPaginator, {static:true}) paginator!: MatPaginator;
 
@@ -52,11 +57,14 @@ export class ListComponent {
     this.ds.get('adviser/exit-poll/students').subscribe(
       students => {
         let studentsList = students.map((student: any) => {
-          let course = student.student_courses[0].course_code
+          if (!this.classList.includes(student.active_ojt_class.class_code)) 
+            this.classList.push(student.active_ojt_class.class_code) 
+
+          let status = (student.ojt_exit_poll) ? 'Completed' : 'Pending'
 
           return {
-            course,
             full_name: student.first_name + " " + student.last_name,
+            status,
             ...student
           }
         })
@@ -73,25 +81,34 @@ export class ListComponent {
     )
   }
 
-  applyFilter(value: string) {
-    this.currentFilter = value
-    if(value == "all") {
-      this.dataSource.data = this.unfilteredStudents
-      return
+  onClassFilterChange(event: MatSelectChange) {
+    this.classFilter = event.value
+
+    this.statusFilter = 'all'
+    this.applyFilter()
+  }
+
+  onStatusFilterChange(value: string) {
+    this.statusFilter = value
+    this.applyFilter()
+  }
+
+  applyFilter() {
+    //class filter
+    let students = this.unfilteredStudents
+    
+    if(this.classFilter != 'all') {
+      students = students.filter((student: any) => {
+        return student.active_ojt_class.class_code === this.classFilter
+      })
     }
 
-    this.dataSource.data = this.unfilteredStudents.filter((student: any) => {
-      if(value == 'completed') {
-        return student.ojt_exit_poll
-      }
+    if(this.statusFilter != "all") {
+      students = students.filter((student: any) => {
+        return student.status.toLowerCase() === this.statusFilter
+      })    
+    }
 
-      if(value == 'pending') {
-        return !student.ojt_exit_poll
-      }
-
-      return false
-    })
-
-    
+    this.dataSource.data = students
   }
 }

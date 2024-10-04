@@ -3,6 +3,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { DataService } from '../../../../../services/data.service';
 import { GeneralService } from '../../../../../services/general.service';
 import { UserService } from '../../../../../services/user.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-evaluation-view',
@@ -26,8 +27,7 @@ export class EvaluationViewComponent {
   
   constructor(
     private fb: FormBuilder,
-    private ds: DataService,
-    private gs: GeneralService,
+    private router: Router,
     private us: UserService
   ) {
     this.formDetails = this.fb.group({
@@ -86,20 +86,14 @@ export class EvaluationViewComponent {
   }
 
   ngOnInit() {
-    this.ds.get('adviser/evaluation/students/', 1).subscribe(
-      response => {
-        console.log(response)
-        this.formDetails.patchValue({
-          ...response.evaluation
-        })
-      },
-      error => {
-        console.error(error)
-      }
-    )
+    let evaluation  = this.us.getStudentEvaluation()
 
-    // this.getExitpollSupportingDetails()
+    if(!evaluation) {
+      this.router.navigate(['main/evaluation/list'])
+    }
 
-    // console.log(this.exitPollDetails)
+    this.formDetails.patchValue({
+      ...evaluation.evaluation
+    })
   }
 }
