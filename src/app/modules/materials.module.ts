@@ -9,6 +9,9 @@ import { MatTableModule } from '@angular/material/table';
 import { MatSelectModule } from "@angular/material/select";
 import { MatOptionModule } from "@angular/material/core";
 import { MatIconModule } from '@angular/material/icon'
+import { MatDatepickerModule } from '@angular/material/datepicker';
+import { MatRadioModule } from '@angular/material/radio';
+import { MatCheckboxModule } from '@angular/material/checkbox';
 
 const var_modules = [
     MatFormFieldModule,
@@ -21,7 +24,10 @@ const var_modules = [
     MatTableModule,
     MatSelectModule,
     MatOptionModule,
-    MatIconModule
+    MatIconModule,
+    MatDatepickerModule,
+    MatRadioModule,
+    MatCheckboxModule,
 ]
 
 @NgModule({

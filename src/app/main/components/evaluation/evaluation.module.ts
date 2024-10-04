@@ -5,18 +5,22 @@ import { EvaluationRoutingModule } from './evaluation-routing.module';
 import { EvaluationComponent } from './evaluation.component';
 import { ListComponent } from './components/list/list.component';
 import { MaterialsModules } from '../../../modules/materials.module';
+import { EvaluationViewComponent } from './components/evaluation-view/evaluation-view.component';
+import { ReactiveFormsModule } from '@angular/forms';
 
 
 
 @NgModule({
   declarations: [
     // EvaluationComponent,
-    ListComponent
+    ListComponent,
+    EvaluationViewComponent
   ],
   imports: [
     CommonModule,
     EvaluationRoutingModule,
-    MaterialsModules
+    MaterialsModules,
+    ReactiveFormsModule
   ]
 })
 export class EvaluationModule { }
