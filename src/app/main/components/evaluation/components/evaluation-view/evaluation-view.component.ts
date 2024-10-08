@@ -23,6 +23,7 @@ export class EvaluationViewComponent {
     total_hours_completed: ''
   }
 
+  evaluation: any
   formDetails: FormGroup 
   
   constructor(
@@ -92,6 +93,8 @@ export class EvaluationViewComponent {
       this.router.navigate(['main/evaluation/list'])
     }
 
+    this.evaluation = evaluation
+    
     this.formDetails.patchValue({
       ...evaluation.evaluation
     })

@@ -482,7 +482,7 @@
                         <b>TOTAL RATING:</b>
                     </td>
                     <td colspan="5">
-                        / 130
+                       {{ evaluation.evaluation.total_rating }} / 130
                     </td>
                 </tr>
             </tbody>
@@ -495,7 +495,7 @@
                 <p style="width: 210px; font-weight: 600;">OVER-ALL PERFORMACE:</p>
             </div>
             <div> 
-                <p>97 - Excellent</p>
+                <p>{{ evaluation.average }} - {{ evaluation.evaluation.remarks }}</p>
             </div>
             
         </div>

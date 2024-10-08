@@ -81,7 +81,7 @@ export class ListComponent {
   }
 
   viewEvaluation(id: number) {
-    this.ds.get('adviser/evaluation/students/', 1).subscribe(
+    this.ds.get('adviser/evaluation/students/', id).subscribe(
       response => {
         console.log(response)
         this.us.setStudentEvaluation(response)

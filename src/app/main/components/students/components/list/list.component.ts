@@ -18,7 +18,7 @@ import { saveAs } from 'file-saver';
   styleUrl: './list.component.scss'
 })
 export class ListComponent {
-  displayedColumns: string[] = ['name', 'student_number', 'course', 'program', 'progess', 'student_evaluation', 'exit_poll', 'status', 'actions'];
+  displayedColumns: string[] = ['name', 'student_number', 'course', 'program', 'progress', 'student_evaluation', 'exit_poll', 'status', 'actions'];
 
   unfilteredStudents: any
   dataSource: any = new MatTableDataSource<any>();
