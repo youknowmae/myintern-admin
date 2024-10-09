@@ -5,7 +5,7 @@
 </div>
 
 <div class="container">
-    <div class="left-content">
+    <div class="left-container">
         <div class="upload">
             <div class="upload-content">
                 <div class="back-btn" [routerLink]="['../../list']">
@@ -17,7 +17,7 @@
                     </span>
                 </div>
 
-                <p>Upload Documents</p>
+                <h4>Upload Documents</h4>
                  
                 <div class="files" *ngIf="applicationDetails">
                     <div class="items" *ngFor="let item of applicationDetails.application_documents">
@@ -36,7 +36,7 @@
         <div class="comment">
             <i class="fa-regular fa-circle-user"></i>
             <form>
-                <input type="text" [(ngModel)]="commentValue" [ngModelOptions]="{standalone: true}" placeholder="Write a comment...">
+                <input type="text" [(ngModel)]="commentValue" [ngModelOptions]="{standalone: true}" placeholder="Write a comment..." (keyup.enter)="comment()">
             </form>
             <span class="material-symbols-outlined" (click)="comment()">
                 send
@@ -57,10 +57,10 @@
 
     </div>
 
-    <div class="right-content">
+    <div class="right-container">
         <div class="content" *ngIf="applicationDetails">
             <div class="image">
-                <img src="/assets/images/LOGO.png">
+                <img [src]="(applicationDetails.industry_partner.image) ? applicationDetails.industry_partner.image : '/assets/images/LOGO.png'">
             </div>
 
             <div class="content-info">
@@ -94,10 +94,6 @@
                 <div class="approve-btn" *ngIf="applicationDetails.status == 0">
                     <button (click)="approveApplication()" style="margin-right: 10px;">Approve</button>
                     <button (click)="rejectApplication()">Reject</button>
-                </div>
-
-                <div class="approve-btn" *ngIf="applicationDetails.status == 3">
-                    <button (click)="generateEndorsement()" style="margin-right: 10px; width: fit-content;">Generate Endorsement</button>
                 </div>
             </div>
         </div>

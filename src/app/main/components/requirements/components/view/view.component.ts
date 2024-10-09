@@ -15,6 +15,7 @@ import { saveAs } from 'file-saver'
   styleUrl: './view.component.scss'
 })
 export class ViewComponent {
+  id: any 
   applicationDetails: any
   comments: any = []
 
@@ -30,6 +31,8 @@ export class ViewComponent {
       if(!id) {
         return
       }
+
+      this.id = id
       
       this.getApplicationDetails(parseInt(id))
     });
@@ -39,6 +42,11 @@ export class ViewComponent {
     this.ds.get('adviser/applications/', id).subscribe(
       applicationDetails=> {
         this.applicationDetails = applicationDetails
+
+        if(applicationDetails.application_endorsement)
+          this.applicationDetails.application_documents.unshift(applicationDetails.application_endorsement)
+
+        
         console.log(this.applicationDetails)
         this.comments = this.applicationDetails.application_comments
       },
@@ -68,10 +76,12 @@ export class ViewComponent {
     }).then((result) => {
       if (result.isConfirmed) {
         // this.apply()
-        this.ds.post('application/accept/', this.applicationDetails.id, null).subscribe(
+        this.ds.post('adviser/application/accept/', this.applicationDetails.id, null).subscribe(
           response => {
             this.gs.successAlert('Approved!', response.message)
             this.applicationDetails.status = 3
+
+            this.generateEndorsement()
           },
           error => {
             console.error(error)
@@ -95,7 +105,7 @@ export class ViewComponent {
     }).then((result) => {
       if (result.isConfirmed) {
         // this.apply()
-        this.ds.post('application/reject/', this.applicationDetails.id, null).subscribe(
+        this.ds.post('adviser/application/reject/', this.applicationDetails.id, null).subscribe(
           response => {
             this.gs.successAlert('Rejected!', response.message)
             this.applicationDetails.status = 2
@@ -124,7 +134,7 @@ export class ViewComponent {
     payload.append('message', this.commentValue)
 
     
-    this.ds.post('application/comment/', this.applicationDetails.id, payload).subscribe(
+    this.ds.post('adviser/application/comment/', this.applicationDetails.id, payload).subscribe(
       response => {
         console.log(response)
         this.commentValue = ''
@@ -141,10 +151,12 @@ export class ViewComponent {
 
   isDownloading: boolean = false
   generateEndorsement() {
-    this.ds.download('generate/endorsement/', this.applicationDetails.id).subscribe(
+    this.ds.download('adviser/generate/endorsement/', this.applicationDetails.id).subscribe(
       (response: Blob) => {
         saveAs(response, 'sample endorsement');
         this.isDownloading = false
+
+        this.getApplicationDetails(this.id)
       },
       error => {
         this.gs.errorAlert('Error!', 'Something went wrong. Please try again later.')

@@ -45,14 +45,17 @@ export class ListComponent {
           if(element.status == 0) {
             element.status_text = 'Pending'
           }
-          if(element.status == 1) {
+          else if(element.status == 1) {
             element.status_text = 'Cancelled'
           }
-          if(element.status == 2) {
+          else if(element.status == 2) {
             element.status_text = 'Rejected'
           }
-          if(element.status == 3) {
+          else if(element.status == 3) {
             element.status_text = 'Approved'
+          }
+          else if(element.status == 4) {
+            element.status_text = 'Accepted'
           }
 
           return element

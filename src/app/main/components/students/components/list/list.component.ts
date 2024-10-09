@@ -65,10 +65,10 @@ export class ListComponent {
           let required_hours: number = student.active_ojt_class.required_hours
           let progress: number = 0
 
-          //if has accomplishment report
-          if(student.accomplishment_report.length > 0) {
-            student.accomplishment_report = student.accomplishment_report[0]
-            progress += parseInt(student.accomplishment_report.current_total_hours)
+          if(student.verified_attendance_total) {
+            progress += parseInt(student.verified_attendance_total.current_total_hours)
+            if(progress > required_hours)
+              progress = required_hours
           }
 
 
