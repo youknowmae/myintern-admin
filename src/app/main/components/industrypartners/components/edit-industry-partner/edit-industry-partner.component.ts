@@ -11,28 +11,46 @@ import Swal from 'sweetalert2';
 })
 export class EditIndustryPartnerComponent {
   file: any = null
+  
+  titles: string[] = ['Sr', 'Jr', 'II', 'III', 'IV', 'V'];
 
   formDetails: FormGroup = this.fb.group({
     company_name: [null, [Validators.required, Validators.maxLength(64)]],
-    description: [null, [Validators.required, Validators.maxLength(1024)]],
+      description: [null, [Validators.required, Validators.maxLength(2048)]],
+  
+      // company_head: [null, [Validators.required, Validators.maxLength(128)]],
+      company_head: this.fb.group({
+        first_name: [null, [Validators.required, Validators.maxLength(64)]],
+        middle_name: [null, [Validators.maxLength(64)]],
+        last_name: [null, [Validators.required, Validators.maxLength(64)]],
+        ext_name: [null], 
+        sex: [null, Validators.required],
+      }),
 
-    company_head: [null, [Validators.required, Validators.maxLength(128)]],
-    head_position: [null, [Validators.required, Validators.maxLength(64)]],
-    immediate_supervisor: [null, [Validators.required, Validators.maxLength(128)]],
-    supervisor_position: [null, [Validators.required, Validators.maxLength(64)]],
-
-    region: ["III", [Validators.required, Validators.maxLength(32)]],
-    province: ["Zambales", [Validators.required, Validators.maxLength(32)]],
-    municipality: [null, [Validators.required, Validators.maxLength(32)]],
-    barangay: [null, [Validators.required, Validators.maxLength(32)]],
-    street: [null, [Validators.required, Validators.maxLength(32)]],
-    zip_code: [null, [Validators.required, Validators.pattern('[0-9]{4}')]],
-
-    telephone_number: [null, [Validators.pattern('(09)[0-9]{9}')]],
-    mobile_number: [null, [Validators.required, Validators.pattern('(09)[0-9]{9}')]],
-    fax_number: [null, [Validators.pattern('(09)[0-9]{9}')]],
-    email: [null, [Validators.required, Validators.email]],
-    website: [null, [Validators.maxLength(128)]],
+      head_position: [null, [Validators.required, Validators.maxLength(64)]],
+      
+      // immediate_supervisor: [null, [Validators.required, Validators.maxLength(128)]],
+      immediate_supervisor: this.fb.group({
+        first_name: [null, [Validators.required, Validators.maxLength(64)]],
+        middle_name: [null, [Validators.maxLength(64)]],
+        last_name: [null, [Validators.required, Validators.maxLength(64)]],
+        ext_name: [null],
+        sex: [null, Validators.required],
+      }),
+      supervisor_position: [null, [Validators.required, Validators.maxLength(64)]],
+  
+      region: ["III", [Validators.required, Validators.maxLength(32)]],
+      province: [null, [Validators.required, Validators.maxLength(32)]],
+      municipality: [null, [Validators.required, Validators.maxLength(32)]],
+      barangay: [null, [Validators.required, Validators.maxLength(32)]],
+      street: [null, [Validators.required, Validators.maxLength(32)]],
+      zip_code: [null, [Validators.required, Validators.pattern('[0-9]{4}')]],
+  
+      telephone_number: [null, [Validators.pattern('(09)[0-9]{9}')]],
+      mobile_number: [null, [Validators.required, Validators.pattern('(09)[0-9]{9}')]],
+      fax_number: [null, [Validators.pattern('(09)[0-9]{9}')]],
+      email: [null, [Validators.required, Validators.email]],
+      website: [null, [Validators.maxLength(128)]],
   })
 
   
@@ -50,26 +68,7 @@ export class EditIndustryPartnerComponent {
 
   ngOnInit() {
     this.formDetails.patchValue({
-      company_name: this.data.company_name,
-      description: this.data.description,
-
-      company_head: this.data.company_head,
-      head_position: this.data.head_position,
-      immediate_supervisor: this.data.immediate_supervisor,
-      supervisor_position: this.data.supervisor_position,
-
-      region: this.data.region,
-      province: this.data.province,
-      municipality: this.data.municipality,
-      barangay: this.data.barangay,
-      street: this.data.street,
-      zip_code: this.data.zip_code,
-
-      telephone_number: this.data.telephone_number,
-      mobile_number: this.data.mobile_number,
-      fax_number: this.data.fax_number,
-      email: this.data.email,
-      website: this.data.website
+      ...this.data
     })
 
     console.log(this.formDetails)
