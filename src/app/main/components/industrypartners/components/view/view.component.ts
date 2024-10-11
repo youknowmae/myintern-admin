@@ -16,7 +16,7 @@ export class ViewComponent {
   
   dataSource: any = new MatTableDataSource<any>();
 
-  industryPartner: IndustryPartner = <IndustryPartner>{}
+  industryPartner: any
   id: number | null = null
   
   constructor(
@@ -47,6 +47,13 @@ export class ViewComponent {
     this.ds.get('adviser/industry-partners-with-students/', id).subscribe(
       industryPartner => {
         this.industryPartner = industryPartner
+        let companyHead = industryPartner.company_head;
+        let fullName = `${companyHead?.first_name || ''} ${companyHead?.last_name || ''} ${companyHead?.ext_name || ''}`.trim();
+        industryPartner.company_head.full_name = fullName;
+
+        let supervisor = industryPartner.immediate_supervisor;
+        let supervisorFullName = `${supervisor?.first_name || ''} ${supervisor?.last_name || ''} ${supervisor?.ext_name || ''}`.trim();
+        industryPartner.immediate_supervisor.full_name = supervisorFullName;
 
         this.dataSource.data = industryPartner.internship_applications.map((student: any) => {
           return {

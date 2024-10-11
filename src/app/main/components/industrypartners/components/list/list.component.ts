@@ -14,9 +14,9 @@ import { GeneralService } from '../../../../../services/general.service';
 })
 export class ListComponent {
   industryPartners: IndustryPartner[] = []
+  filteredIndustryPartners: any = []
   isLoading: boolean = false
 
-  search: string = ''
   constructor(
     private dialogRef: MatDialog,
     private ds: DataService,
@@ -29,10 +29,21 @@ export class ListComponent {
     this.getIndustryPartners()
   }
 
+  search(value: string) {
+    value = value.toLowerCase()
+    this.filteredIndustryPartners = this.industryPartners.filter(
+      (item: IndustryPartner) => {
+        return item.company_name.toLowerCase().includes(value) ||
+          item.municipality.toLowerCase().includes(value)
+      }
+    )
+  }
+
   getIndustryPartners() {
     this.ds.get('adviser/industryPartners').subscribe(
       industryPartners => {
         this.industryPartners = industryPartners
+        this.filteredIndustryPartners = this.industryPartners
         console.log(industryPartners)
       },
       error => {
