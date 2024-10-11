@@ -25,8 +25,9 @@ export class MainComponent {
 
   }
 
-  ngOnInit() {
+  ngOnInit(): void {
     this.getUser()
+    this.updateDateTime();
   }
   
   getUser() {
@@ -56,4 +57,19 @@ export class MainComponent {
     });
   }
 
+  updateDateTime(): void {
+    const dateTimeElement = document.getElementById("dateTime");
+    if (dateTimeElement) { // Check if dateTimeElement is not null
+      const now = new Date();
+      const options: Intl.DateTimeFormatOptions = { 
+        weekday: 'long' as const, 
+        month: 'short' as const, 
+        day: 'numeric' as const, 
+        year: 'numeric' as const, 
+        hour: '2-digit' as const, 
+        minute: '2-digit' as const 
+      };
+      dateTimeElement.textContent = now.toLocaleDateString('en-US', options);
+    }
+  }
 }
