@@ -104,4 +104,6 @@ export class StudentprofileComponent {
       data: { title: test.file_name, image: test.file_path}
     })
   }
+
+  
 }

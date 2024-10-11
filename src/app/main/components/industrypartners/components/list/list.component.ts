@@ -16,6 +16,7 @@ export class ListComponent {
   industryPartners: IndustryPartner[] = []
   isLoading: boolean = false
 
+  search: string = ''
   constructor(
     private dialogRef: MatDialog,
     private ds: DataService,

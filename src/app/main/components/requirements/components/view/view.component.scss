@@ -166,8 +166,8 @@
                 justify-content: space-between;
     
                 .name {
+                    width: calc(100% - 50px) ;
                     display: flex;
-                    width: 90%;
                     align-items: center;
                 }
     
@@ -192,11 +192,11 @@
                     outline: none;
                     cursor: pointer;
                 }
-                i {         
-                    font-size: 20px;
-                    cursor: pointer;
-                    margin-right: 10px;
-                    color: var(--primary-font-color);
+                    i {         
+                        font-size: 20px;
+                        cursor: pointer;
+                        margin-right: 10px;
+                        color: var(--primary-font-color);
                 }
             }
         }

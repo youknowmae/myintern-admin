@@ -46,6 +46,8 @@ export class ViewComponent {
         if(applicationDetails.application_endorsement)
           this.applicationDetails.application_documents.unshift(applicationDetails.application_endorsement)
 
+        console.log()
+
         
         console.log(this.applicationDetails)
         this.comments = this.applicationDetails.application_comments
@@ -153,7 +155,7 @@ export class ViewComponent {
   generateEndorsement() {
     this.ds.download('adviser/generate/endorsement/', this.applicationDetails.id).subscribe(
       (response: Blob) => {
-        saveAs(response, 'sample endorsement');
+        saveAs(response, 'GCCCS.ENDORSEMENT.LETTER.' + this.applicationDetails.user.first_name + '.' + this.applicationDetails.user.last_name + '.pdf');
         this.isDownloading = false
 
         this.getApplicationDetails(this.id)
@@ -166,4 +168,6 @@ export class ViewComponent {
       }
     )
   }
+
+  
 }

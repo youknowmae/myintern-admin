@@ -6,6 +6,14 @@
             <button (click)="addIndustryPartner()" >+ New</button>
         </div> -->
     </div>
+    <div class="search">
+        <form>
+            <mat-form-field>
+                <input #searchValue matInput type="email" [(ngModel)]="search" [ngModelOptions]="{standalone: true}" placeholder="Search...">
+            </mat-form-field>
+
+        </form>
+    </div>
 
     <div class="card-container">
         <div class="card" *ngFor="let industryPartner of industryPartners">
@@ -15,21 +23,21 @@
     
             <div class="action-buttons">
                 
-                <button class="delete" 
+                <!-- <button class="delete" 
                     mat-raised-button
                     matTooltip="Delete"
                     [matTooltipShowDelay] = "400" 
                     (click)="deleteConfirmation(industryPartner.id)">
                     <i class='bx bxs-trash'></i>
-                </button>
+                </button> -->
 
-                <button class="edit" 
+                <!-- <button class="edit" 
                 mat-raised-button
                 matTooltip="Edit"
                 [matTooltipShowDelay] = "400"
                 (click)="editIndustryPartner(industryPartner.id)">
                     <i class='bx bxs-edit'></i>
-                </button>
+                </button> -->
 
                 <button class="view" 
                 mat-raised-button
