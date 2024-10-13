@@ -20,7 +20,7 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    color: var(--font-color);
+    color: var(--primary-font-color);
     img {
         height: 130px;
         width: 130px;
@@ -54,7 +54,7 @@
     font-size: 14px;
     cursor: pointer;
     list-style-type: none;
-    color: var(--font-color);
+    color: var(--primary-font-color);
     
     .item {
         outline: none;  
@@ -98,7 +98,7 @@
             display: flex;
             align-items: center;
             font-size: 16px;
-            color: #555;
+            color: var(--main-orange);
             justify-content: end;
             border-bottom: 2px solid var(--main-orange);
             padding: 35px 0;
