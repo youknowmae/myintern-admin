@@ -47,7 +47,7 @@ export class ListComponent {
     this.ds.get('adviser/evaluation/students').subscribe(
       students => {
         console.log('test')
-        this.unfilteredStudents = students.map((student: any) => {
+        let studentsList = students.map((student: any) => {
           if (!this.classList.includes(student.active_ojt_class.class_code)) 
             this.classList.push(student.active_ojt_class.class_code) 
           
@@ -69,6 +69,8 @@ export class ListComponent {
             ...student
           } 
         })
+
+        this.unfilteredStudents = studentsList.sort((a: any, b: any) => a.last_name.localeCompare(b.last_name))
         console.log(this.unfilteredStudents)
 
         this.dataSource.data = this.unfilteredStudents;

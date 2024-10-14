@@ -43,6 +43,15 @@ export class ViewComponent {
       applicationDetails=> {
         this.applicationDetails = applicationDetails
 
+        let industryPartner = applicationDetails.industry_partner
+        let companyHead = industryPartner.company_head;
+        let fullName = `${companyHead?.first_name || ''} ${companyHead?.last_name || ''} ${companyHead?.ext_name || ''}`.trim();
+        this.applicationDetails.industry_partner.company_head.full_name = fullName;
+
+        let supervisor = industryPartner.immediate_supervisor;
+        let supervisorFullName = `${supervisor?.first_name || ''} ${supervisor?.last_name || ''} ${supervisor?.ext_name || ''}`.trim();
+        this.applicationDetails.industry_partner.immediate_supervisor.full_name = supervisorFullName;
+
         if(applicationDetails.application_endorsement)
           this.applicationDetails.application_documents.unshift(applicationDetails.application_endorsement)
 

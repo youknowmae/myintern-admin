@@ -71,6 +71,8 @@ export class ListComponent {
 
         console.log(studentsList)
         
+        studentsList = studentsList.sort((a: any, b: any) => a.last_name.localeCompare(b.last_name))
+        
         this.unfilteredStudents = studentsList
         this.dataSource.data = studentsList
         this.dataSource.paginator = this.paginator;

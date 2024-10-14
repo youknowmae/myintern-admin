@@ -68,10 +68,10 @@
                 <p>{{ applicationDetails.industry_partner.description }}</p>
                 
                 <h3 style="margin: 0; font-weight: 600;" >Company Head:</h3>
-                <p> {{ applicationDetails.industry_partner.company_head }}, {{ applicationDetails.industry_partner.head_position }}</p>
+                <p> {{ applicationDetails.industry_partner.company_head.full_name }}, {{ applicationDetails.industry_partner.head_position }}</p>
 
                 <h3 style="margin: 0; font-weight: 600;" >Immediate Supervisor :</h3>
-                <p> {{ applicationDetails.industry_partner.immediate_supervisor }}, {{ applicationDetails.industry_partner.supervisor_position }}</p>
+                <p> {{ applicationDetails.industry_partner.immediate_supervisor.full_name }}, {{ applicationDetails.industry_partner.supervisor_position }}</p>
 
                 <ul>
                     <li>
