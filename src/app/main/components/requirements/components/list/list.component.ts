@@ -15,7 +15,7 @@ import { MatSelectChange } from '@angular/material/select';
 })
 export class ListComponent {
   displayedColumns: string[] = ['name', 'student_number', 'category', 'year', 'program', 'company', 'status', 'actions'];
-  selectedFilter: string = '0'
+  statusFilter: number = 0
 
   
   currentFilter: string = 'all'
@@ -55,6 +55,9 @@ export class ListComponent {
             element.status_text = 'Approved'
           }
           else if(element.status == 4) {
+            element.status_text = 'Rejected'
+          }
+          else if(element.status == 5) {
             element.status_text = 'Accepted'
           }
 
@@ -90,9 +93,9 @@ export class ListComponent {
     // })
   }
 
-  onFilterChange(event: MatSelectChange) {
+  onStatusFilterChange(event: MatSelectChange) {
     console.log(event.value)
-    this.selectedFilter = event.value
+    this.statusFilter = event.value
     this.filterStudent()
   }
 
@@ -110,7 +113,7 @@ export class ListComponent {
 
 
     student = student.filter((student: any) => {
-      return student.status.includes(this.selectedFilter)
+      return student.status == this.statusFilter
     })
 
     this.dataSource.data = student

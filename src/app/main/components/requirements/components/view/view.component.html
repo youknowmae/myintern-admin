@@ -91,9 +91,9 @@
                     <p>Available Slots: <p>
                 </div>   -->
                 
-                <div class="approve-btn" *ngIf="applicationDetails.status == 0">
-                    <button (click)="approveApplication()" style="margin-right: 10px;">Approve</button>
-                    <button (click)="rejectApplication()">Reject</button>
+                <div class="action-buttons" *ngIf="applicationDetails.status == 0">
+                    <button (click)="approveApplication()" class="success">Approve</button>
+                    <button (click)="rejectApplication()" class="warning">Reject</button>
                 </div>
             </div>
         </div>
