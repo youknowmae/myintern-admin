@@ -15,6 +15,7 @@ interface User {
 
 export class UserService {
     exitPollDetails: string = 'studentExitPoll'
+    industryPartner: string = 'industryPartner'
     studentEvaluation: string = 'studentEvaluation'
     studentProfile: string = 'studentProfile'
 
@@ -40,6 +41,24 @@ export class UserService {
         return JSON.parse(user)
     }
 
+    setIndustryPartner(industryPartner: any) {
+        sessionStorage.setItem(this.industryPartner, JSON.stringify(industryPartner))
+    }
+
+    getIndustryPartner() {
+        if (!isPlatformBrowser(this.platformId)){
+            return null
+        }
+        
+        let industryPartner = sessionStorage.getItem(this.industryPartner)
+
+        if(!industryPartner) {
+            return null
+        }
+
+        return JSON.parse(industryPartner)
+    }
+    
     setStudentExitPoll(exitPoll: any) {
         sessionStorage.setItem(this.exitPollDetails, JSON.stringify(exitPoll))
     }

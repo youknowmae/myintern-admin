@@ -50,7 +50,7 @@
         <div class="col-md-4">
             <mat-form-field appearance="outline" floatLabel='always'>
             <mat-label>Total Hours Completed</mat-label>
-            <input matInput placeholder="None" [value]="exitPollDetails.total_hours_completed" readonly>
+            <input matInput placeholder="None" [value]="(exitPollDetails.total_hours_completed > exitPollDetails.required_hours) ? exitPollDetails.required_hours : exitPollDetails.total_hours_completed" readonly>
             </mat-form-field>
         </div>
     </div>
@@ -89,7 +89,7 @@
         <div class="col-md-4">
             <mat-form-field appearance="outline" floatLabel='always'>
             <mat-label>Name of Supervisor</mat-label>
-            <input matInput [value]="exitPollDetails.industry_partner.immediate_supervisor" readonly>
+            <input matInput [value]="exitPollDetails.industry_partner.immediate_supervisor.full_name" readonly>
             </mat-form-field>
         </div>
         <div class="col-md-4">

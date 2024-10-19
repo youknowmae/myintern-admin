@@ -105,13 +105,13 @@ h1 {
         color: #ffffff;
         padding: 2px 20px;
         border-radius: 20px;
+        border: 2px solid var(--secondary-color);
         cursor: pointer;
     }
 
     button:hover {
         color: var(--secondary-color);
         background-color: #ffffff;
-        border: 2px solid var(--secondary-color);
     }
     
     .table-items:hover {

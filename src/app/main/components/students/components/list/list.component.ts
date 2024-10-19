@@ -138,7 +138,7 @@ export class ListComponent {
       return
     }
 
-    let studentDetails = this.unfilteredStudents.find((student: any) => student.id = id)
+    let studentDetails = this.unfilteredStudents.find((student: any) => student.id == id)
 
     console.log(studentDetails)
     this.ds.get('adviser/monitoring/students/', id).subscribe(
@@ -160,11 +160,8 @@ export class ListComponent {
     //group by class code
     students = this.groupBy(students, (student: any) => student.active_ojt_class.class_code)
     console.log(students)
-    let a = true
-    // if(a) {
-    //   return
-    // }
-    const excel = await this.generateExcelContent2(students);
+    
+    const excel = await this.generateExcelContent(students);
 
     if (excel instanceof ExcelJS.Workbook) {
       const buffer = await excel.xlsx.writeBuffer();
@@ -178,53 +175,7 @@ export class ListComponent {
     }
   }
 
-  //old 
-  // generateExcelContent() {
-    // const data: any = this.generateExcelContent();
-    // const wb: XLSX.WorkBook = XLSX.utils.book_new();
-    // const ws: XLSX.WorkSheet = XLSX.utils.aoa_to_sheet(data);
-    // XLSX.utils.book_append_sheet(wb, ws, 'Sheet1');
-
-
-    // const excelBuffer: any = XLSX.write(wb, { bookType: 'xlsx', type: 'array' });
-
-    // const file = new Blob([excelBuffer], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' });
-
-  //   console.log('generating excel...')
-
-  //   let data: any = []
-    
-
-  //   let students = this.dataSource.data;
-
-  //   //sort alphabetically
-  //   students = students.sort((a: any, b: any) => a.last_name.localeCompare(b.last_name))
-
-  //   students.forEach((student: any) => {
-  //     data.push([
-  //       student.last_name,
-  //       student.first_name,
-  //       student.student_profile.student_number,
-  //       student.student_profile.program,
-  //       student.student_profile.year_level,
-  //       student.active_ojt_class.course_code,
-  //       student.active_ojt_class.class_code,
-  //       student.active_ojt_class.required_hours,
-  //       student.progress,
-  //       (student.student_evaluation) ? student.student_evaluation : 'Not Evaluated',
-  //       (student.ojt_exit_poll) ? 'Completed' : 'INC',
-  //       (student.status === 'Completed') ? 'Completed': 'Incomplete',
-  //     ]);
-  //   });
-
-
-  //   console.log(data)
-
-  //   return data;
-  // }
-
-  // using excel js
-  async generateExcelContent2 (data: any) {
+  async generateExcelContent(data: any) {
     const header = [
       'No.',
       'Last Name', 
@@ -326,6 +277,17 @@ export class ListComponent {
           ]);
           counter++
         });
+
+          worksheet.columns.forEach((column: any) => {
+            let maxLength = 0;
+            column.eachCell({ includeEmpty: true }, (cell: any) => {
+              if (cell.row >= 7) { 
+                const cellValue = cell.value ? cell.value.toString() : '';
+                maxLength = Math.max(maxLength, cellValue.length);
+              }
+            });
+            column.width = maxLength < 10 ? 10 : maxLength;
+          });
 
       })
 

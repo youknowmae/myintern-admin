@@ -43,7 +43,13 @@ export class ListComponent {
   view(id: number){
     this.ds.get('adviser/exit-poll/', id).subscribe(
       exitPollDetails=> {  
+
+        let supervisor = exitPollDetails.industry_partner.immediate_supervisor;
+        let supervisorFullName = `${supervisor?.first_name || ''} ${supervisor?.last_name || ''} ${supervisor?.ext_name || ''}`.trim();
+        exitPollDetails.industry_partner.immediate_supervisor.full_name = supervisorFullName;
+        
         console.log(exitPollDetails)
+        
         this.us.setStudentExitPoll(exitPollDetails)
         this.router.navigate(['/main/exitpoll/view/' + id])
       },
@@ -54,7 +60,7 @@ export class ListComponent {
   }
   
   getStudents() {
-    this.ds.get('adviser/exit-poll/students').subscribe(
+    this.ds.get('adviser/exit-poll').subscribe(
       students => {
         let studentsList = students.map((student: any) => {
           if (!this.classList.includes(student.active_ojt_class.class_code)) 
