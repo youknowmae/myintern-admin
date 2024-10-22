@@ -36,6 +36,8 @@ export class ViewComponent {
     this.industryPartner = industryPartner
 
     this.dataSource.data = this.industryPartner.internship_applications
+
+    console.log(this.dataSource.data)
       
   }
 

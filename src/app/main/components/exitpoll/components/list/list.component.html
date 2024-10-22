@@ -46,8 +46,8 @@
         </ng-container>
 
         <ng-container matColumnDef="class_code" >
-            <th mat-header-cell *matHeaderCellDef class="col-md-1" > Course </th>
-            <td mat-cell *matCellDef="let element" class="col-md-1"> {{ element.active_ojt_class.class_code }} </td>
+            <th mat-header-cell *matHeaderCellDef class="col-md-2" > Class Code </th>
+            <td mat-cell *matCellDef="let element" class="col-md-2"> {{ element.active_ojt_class.class_code }} </td>
         </ng-container>
 
         <ng-container matColumnDef="student_number" >
@@ -61,8 +61,8 @@
         </ng-container>
         
         <ng-container matColumnDef="status" >
-            <th mat-header-cell *matHeaderCellDef class="col-md-2" > Status </th>
-            <td mat-cell *matCellDef="let element" class="col-md-2"> 
+            <th mat-header-cell *matHeaderCellDef class="col-md-1" > Status </th>
+            <td mat-cell *matCellDef="let element" class="col-md-1"> 
                 <p> {{ element.status }} </p>
             </td>
         </ng-container>
