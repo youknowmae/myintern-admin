@@ -30,6 +30,14 @@
     }
 }
 
+.card {
+    width: 100%;
+    margin-bottom: 20px;
+    border-radius: 15px;
+    padding: 15px 20px;
+    background-color: var(--semi-transparent-main-orange);
+    box-shadow: var(--shadow);
+}
 .left-container {
     flex: 0 0 auto;
     width: 41.66666667%;
@@ -44,164 +52,8 @@
         padding-bottom: 15px;
         cursor: pointer;
     }
-
-    .comment {
-        display: flex;
-        align-items: center;
-        background-color: var(--semi-transparent-main-orange);
-        height: 80px;
-        padding: 15px;
-        justify-content: center;  
-        border-radius: 15px;  
-        margin-bottom: 20px;
-        
-        i {
-            width: 35px;
-            font-size: 35px;
-            color: #ffffff;
-            margin-right: 5px;
-        }
-
-        form {
-            width: 100%;
-        }
-        
-        input {
-            width: 100%;
-            padding: 5px 15px;
-            outline: none;
-            font-size: 14px;
-            background-color: transparent;
-            border: none;
-        }
-
-        .material-symbols-outlined {
-            width: 35px;
-            font-size: 35px;
-            cursor: pointer;
-            color: #ffffff;
-        }
-    }
-
-    //for comment display 
-    .comment-log-container {
-        display: flex;
-        padding: 15px;
-        align-items: center;
-        background-color: var(--semi-transparent-main-orange);
-        border-radius: 15px;  
-        margin-bottom: 20px;
-        
-    .comment-log {
-        display: flex;
-        flex-direction: column;
-        width: 100%;
-
-        .message-container {
-            padding: 5px 0;
-            width: 100%;
-            border-bottom: 1px solid var(--border-color);
-            display: flex;
-            flex-direction: row;
-            align-items: center;
-        }
-
-        .message-container:last-child {
-            border-bottom: none;
-        }
-        
-        i {
-            width: 35px;
-            font-size: 35px;
-            color: #ffffff;
-            margin-right: 5px;
-        }
-
-        .message {
-            padding: 6px 12px;
-            width: 100%;
-            display: flex;
-            flex-direction: column;
-        }
-
-        h5 {
-            color: #898121;
-            font-size: 12px;
-            font-weight: 500;
-            margin-bottom: 0;
-        }
-        p {
-            width: 100%;
-            margin: 0;
-            outline: none;
-            font-size: 12px;
-        }
-    }
-    }
-
-    .upload {
-        min-height: 110px;
-        width: 100%;
-        padding: 15px 25px;
-        background-color: var(--semi-transparent-main-orange);
-        border-radius: 15px;
-        margin-bottom: 20px;
-    
-        h4 {
-            color: #898121;
-            font-weight: 400;
-            font-size: 22px;
-            margin-bottom: 14px;
-        }
-            
-        .files {
-            .items {
-                border: none;
-                background-color: var(--secondary-color);
-                height: 35px;
-                width: 100%;
-                margin-bottom: 15px;
-                display: flex;
-                align-items: center;
-                justify-content: space-between;
-    
-                .name {
-                    width: calc(100% - 50px) ;
-                    display: flex;
-                    align-items: center;
-                }
-    
-                .material-symbols-outlined {
-                    font-size: 32px;
-                    padding-right: 20px;
-                    padding-left: 20px;
-                }
-    
-                p {
-                    font-size: 14px;
-                    overflow: hidden;
-                    text-wrap: nowrap;
-                    text-overflow: ellipsis;
-                    color: var(--primary-font-color);
-                    margin: 0;
-                }
-    
-                button {  
-                    background: none;
-                    border: none;
-                    outline: none;
-                    cursor: pointer;
-                }
-                    i {         
-                        font-size: 20px;
-                        cursor: pointer;
-                        margin-right: 10px;
-                        color: var(--primary-font-color);
-                }
-            }
-        }
-    }   
 }
+
 .right-container {
     flex: 0 0 auto;
     width: 58.3333333%;
@@ -209,29 +61,159 @@
     padding: 0 15px;
     flex-direction: column;
     margin-bottom: 30px;
+}
 
-    .content {
+.company-details {
+    .image {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin-top: 20px;
+        img {
+            object-fit: contain;
+            width: 200px;
+            height: 200px;
+            padding: 20px;
+        }
+    }
+
+    .content-info {
+        padding: 10px 20px;
+    }
+}
+
+.comment {
+    display: flex;
+    align-items: center;
+    justify-content: center;  
+    padding: 6px 0;
+    
+    i {
+        width: 35px;
+        font-size: 35px;
+        color: #ffffff;
+        margin-right: 5px;
+    }
+
+    form {
+        width: 100%;
+    }
+    
+    input {
+        width: 100%;
+        padding: 5px 15px;
+        outline: none;
+        font-size: 14px;
+        background-color: transparent;
+        border: none;
+    }
+
+    .material-symbols-outlined {
+        width: 35px;
+        font-size: 35px;
+        cursor: pointer;
+        color: #ffffff;
+    }
+}
+    
+.comment-log {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+
+    .message-container {
+        padding: 5px 0;
+        width: 100%;
+        border-bottom: 1px solid var(--border-color);
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+    }
+
+    .message-container:last-child {
+        border-bottom: none;
+    }
+    
+    i {
+        width: 35px;
+        font-size: 35px;
+        color: #ffffff;
+        margin-right: 5px;
+    }
+
+    .message {
+        padding: 6px 12px;
+        width: 100%;
         display: flex;
         flex-direction: column;
-        background-color: var(--semi-transparent-main-orange);
-        border-radius: 15px;
+    }
+
+    h5 {
+        color: #898121;
+        font-size: 12px;
+        font-weight: 500;
+        margin-bottom: 0;
+    }
+    p {
         width: 100%;
+        margin: 0;
+        outline: none;
+        font-size: 12px;
+    }
+}
 
-        .image {
+.upload {
+    h4 {
+        color: #898121;
+        font-weight: 400;
+        font-size: 22px;
+        margin-bottom: 14px;
+    }
+        
+    .files {
+        .items {
+            border: none;
+            background-color: var(--secondary-color);
+            height: 35px;
+            width: 100%;
+            margin-bottom: 15px;
             display: flex;
-            justify-content: center;
             align-items: center;
-            margin-top: 20px;
-            img {
-                object-fit: contain;
-                width: 200px;
-                height: 200px;
-                padding: 20px;
-            }
-        }
+            justify-content: space-between;
 
-        .content-info {
-            padding: 10px 20px;
+            .name {
+                width: calc(100% - 50px) ;
+                display: flex;
+                align-items: center;
+            }
+
+            .material-symbols-outlined {
+                font-size: 32px;
+                padding-right: 20px;
+                padding-left: 20px;
+            }
+
+            p {
+                font-size: 14px;
+                overflow: hidden;
+                text-wrap: nowrap;
+                text-overflow: ellipsis;
+                color: var(--primary-font-color);
+                margin: 0;
+            }
+
+            button {  
+                background: none;
+                border: none;
+                outline: none;
+                cursor: pointer;
+            }
+                i {         
+                    font-size: 20px;
+                    cursor: pointer;
+                    margin-right: 10px;
+                    color: var(--primary-font-color);
+            }
         }
     }
 }
@@ -279,30 +261,13 @@
     .container {
         flex-direction: column;
     }
+
     .right-container, .left-container {
         width: 100%;
-    }
-
-    .profile-content {
-        padding: 0;
-        font-size: 14px;
-    }
-
-    .skill-area {
-        font-size: 14px;
     }
 }
 
 @media only screen and (max-width: 720px) {
-
-    .profile-content {
-        font-size: 12px;
-    }
-
-    .skill-area {
-        font-size: 12px;
-    } 
-
     .upload {
         h4 {
             font-size: 18px !important;

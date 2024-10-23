@@ -18,6 +18,7 @@ export class UserService {
     industryPartner: string = 'industryPartner'
     studentEvaluation: string = 'studentEvaluation'
     studentProfile: string = 'studentProfile'
+    studentApplication: string = 'studentApplication'
 
     constructor(
         @Inject(PLATFORM_ID) private platformId: any,
@@ -99,8 +100,6 @@ export class UserService {
         sessionStorage.setItem(this.studentProfile, JSON.stringify(studentProfile))
     }
 
-    
-
     getStudentProfile() {
         if (!isPlatformBrowser(this.platformId)){
             return null
@@ -113,5 +112,31 @@ export class UserService {
         }
 
         return JSON.parse(studentProfile)
+    }
+
+    setStudentApplication(studentApplication: any) {
+        sessionStorage.setItem(this.studentApplication, JSON.stringify(studentApplication))
+    }
+
+    getStudentApplication() {
+        if (!isPlatformBrowser(this.platformId)){
+            return null
+        }
+        
+        let studentApplication = sessionStorage.getItem(this.studentApplication)
+
+        if(!studentApplication) {
+            return null
+        }
+
+        return JSON.parse(studentApplication)
+    }
+
+    encryptData(data: any) {
+        return data
+    }
+
+    decryptData(data: any) {
+        return data
     }
 }

@@ -7,6 +7,7 @@ import { MatTableDataSource } from '@angular/material/table';
 import { DataService } from '../../../../../services/data.service';
 import { Router } from '@angular/router';
 import { MatSelectChange } from '@angular/material/select';
+import { UserService } from '../../../../../services/user.service';
 
 @Component({
   selector: 'app-list',
@@ -28,7 +29,8 @@ export class ListComponent {
     private paginatorIntl: MatPaginatorIntl, 
     private changeDetectorRef: ChangeDetectorRef,
     private ds: DataService,
-    private router: Router
+    private router: Router,
+    private us: UserService
   ) {
     this.paginator = new MatPaginator(this.paginatorIntl, this.changeDetectorRef);
   }
@@ -77,7 +79,31 @@ export class ListComponent {
   }
 
   viewApplication(id: number) {
-    this.router.navigate(['main/requirements/view/' + id])
+    this.ds.get('adviser/applications/', id).subscribe(
+      applicationDetails=> {
+
+        let industryPartner = applicationDetails.industry_partner
+        let companyHead = industryPartner.company_head;
+        let fullName = `${companyHead?.first_name || ''} ${companyHead?.last_name || ''} ${companyHead?.ext_name || ''}`.trim();
+        applicationDetails.industry_partner.company_head.full_name = fullName;
+
+        let supervisor = industryPartner.immediate_supervisor;
+        let supervisorFullName = `${supervisor?.first_name || ''} ${supervisor?.last_name || ''} ${supervisor?.ext_name || ''}`.trim();
+        applicationDetails.industry_partner.immediate_supervisor.full_name = supervisorFullName;
+
+        if(applicationDetails.application_endorsement)
+          applicationDetails.application_documents.unshift(applicationDetails.application_endorsement)
+        
+        console.log(applicationDetails)
+
+        this.us.setStudentApplication(applicationDetails)
+        this.router.navigate(['main/requirements/view/'])
+
+      },
+      error => {
+        console.error(error)
+      }
+    )
   }
   
   applyFilter(value: string) {

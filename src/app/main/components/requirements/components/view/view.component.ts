@@ -8,6 +8,7 @@ import { GeneralService } from '../../../../../services/general.service';
 import { response } from 'express';
 
 import { saveAs } from 'file-saver'
+import { UserService } from '../../../../../services/user.service';
 
 @Component({
   selector: 'app-view',
@@ -19,52 +20,28 @@ export class ViewComponent {
   applicationDetails: any
   comments: any = []
 
+  commentValue: string = ''
+  isCommenting: boolean = false 
+
   constructor(
     private ds: DataService,
     private route: ActivatedRoute,
     private dialogRef: MatDialog,
-    private gs: GeneralService
+    private gs: GeneralService,
+    private us: UserService
   ) {
-    this.route.paramMap.subscribe(params => {
-      let id = params.get('id')
-
-      if(!id) {
-        return
-      }
-
-      this.id = id
-      
-      this.getApplicationDetails(parseInt(id))
-    });
   }
 
-  getApplicationDetails(id: number) {
-    this.ds.get('adviser/applications/', id).subscribe(
-      applicationDetails=> {
-        this.applicationDetails = applicationDetails
+  ngOnInit() {
+    this.getApplicationDetails()
+  }
 
-        let industryPartner = applicationDetails.industry_partner
-        let companyHead = industryPartner.company_head;
-        let fullName = `${companyHead?.first_name || ''} ${companyHead?.last_name || ''} ${companyHead?.ext_name || ''}`.trim();
-        this.applicationDetails.industry_partner.company_head.full_name = fullName;
+  getApplicationDetails() {
+    this.applicationDetails = this.us.getStudentApplication()
 
-        let supervisor = industryPartner.immediate_supervisor;
-        let supervisorFullName = `${supervisor?.first_name || ''} ${supervisor?.last_name || ''} ${supervisor?.ext_name || ''}`.trim();
-        this.applicationDetails.industry_partner.immediate_supervisor.full_name = supervisorFullName;
+    this.comments = this.applicationDetails.application_comments
 
-        if(applicationDetails.application_endorsement)
-          this.applicationDetails.application_documents.unshift(applicationDetails.application_endorsement)
-
-        console.log()
-
-        
-        console.log(this.applicationDetails)
-        this.comments = this.applicationDetails.application_comments
-      },
-      error => {
-        console.error(error)
-      }
-    )
+    console.log(this.comments)
   }
 
   previewDocument(file: any) {
@@ -86,7 +63,6 @@ export class ViewComponent {
       cancelButtonColor: "#777777",
     }).then((result) => {
       if (result.isConfirmed) {
-        // this.apply()
         this.ds.post('adviser/application/accept/', this.applicationDetails.id, null).subscribe(
           response => {
             this.gs.successAlert('Approved!', response.message)
@@ -130,9 +106,6 @@ export class ViewComponent {
     });
   }
 
-  commentValue: string = ''
-  isCommenting: boolean = false 
-
   comment() {
     if(this.isCommenting) {
       return
@@ -151,7 +124,9 @@ export class ViewComponent {
         this.commentValue = ''
         this.gs.successToastAlert(response.message)
         this.isCommenting = false
-        this.getApplicationDetails(this.applicationDetails.id)
+
+        this.comments.unshift(response.data)
+        // this.getApplicationDetails(this.applicationDetails.id)
       },
       error => {
         console.error(error)
@@ -167,7 +142,19 @@ export class ViewComponent {
         saveAs(response, 'GCCCS.ENDORSEMENT.LETTER.' + this.applicationDetails.user.first_name + '.' + this.applicationDetails.user.last_name + '.pdf');
         this.isDownloading = false
 
-        this.getApplicationDetails(this.id)
+        console.log(response)
+        
+        this.ds.get('adviser/application/endorsement/', this.applicationDetails.id).subscribe(
+          response => {
+            console.log(response)
+            if(response)
+              this.applicationDetails.application_documents.unshift(response)
+          },
+          error => {
+            console.error(error)
+          }
+        )
+        
       },
       error => {
         this.gs.errorAlert('Error!', 'Something went wrong. Please try again later.')
