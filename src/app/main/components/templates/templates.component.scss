@@ -6,6 +6,7 @@
     justify-content: space-between;
     margin-bottom: 30px;
     h1 {
+        margin: 0;
         color: var(--main-orange);
         opacity: .7;
         font-size: 40px;
@@ -34,7 +35,7 @@
 
 .container {
     margin: 0px 20px;
-    background-color: none;
+    background-color: white;
     overflow-y: auto;
     border: 1px solid var(--primary-color);
     height: fit-content;
@@ -53,7 +54,6 @@
         display: flex;
         justify-content: center;
         align-items: center;
-        background-color: var(--main-bg-color);
     }
     
     tr {

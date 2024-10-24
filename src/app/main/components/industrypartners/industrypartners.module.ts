@@ -6,9 +6,10 @@ import { ListComponent } from './components/list/list.component';
 import { ViewComponent } from './components/view/view.component';
 import { AddnewComponent } from './components/addnew/addnew.component';
 import { AddIndustryPartnerComponent } from './components/add-industry-partner/add-industry-partner.component';
-import { MaterialsModules } from '../../../modules/materials.module';
-import { ReactiveFormsModule } from '@angular/forms';
 import { EditIndustryPartnerComponent } from './components/edit-industry-partner/edit-industry-partner.component';
+import { ReactiveFormsModule } from '@angular/forms';
+
+import { MaterialsModules } from '../../../modules/materials.module';
 
 
 @NgModule({

@@ -65,7 +65,7 @@ h1 {
 
 .container {
     margin: 0px 20px;
-    background-color: none;
+    background-color: white;
     overflow-x: auto; 
     border: 1px solid var(--primary-color);
     height: fit-content;
@@ -82,17 +82,12 @@ h1 {
     
     th, td {
         text-align: center;
-        padding: 10px;
+        padding: 0 10px;
         white-space: nowrap; 
-        background-color: var(--main-bg-color);
     }
     
     th {
         color: var(--primary-color);
-    }
-    
-    td {
-        background-color: var(--main-bg-color);
     }
     
     tr {
@@ -124,7 +119,7 @@ h1 {
 }
 
 button[disabled]{
-    border-color: #eeeeee !important;
+    border-color: #bbbbbb !important;
     background-color: #bbbbbb !important;
     color: white !important;
     pointer-events: none;

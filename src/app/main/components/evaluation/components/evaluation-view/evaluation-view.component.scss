@@ -2,13 +2,13 @@
     margin: auto;
     max-width: 900px;
     padding: 20px 50px;
-    border: 1px solid black;
+    border: 1px solid var(--primary-color);
     border-radius: 8px;
     background-color: #ffffffb8;
 
     h2 {
         text-align: center;
-        border-bottom: 1px solid black;
+        border-bottom: 1px solid var(--primary-color);
         margin-top: 10px;
         margin-bottom: 40px;
     }
