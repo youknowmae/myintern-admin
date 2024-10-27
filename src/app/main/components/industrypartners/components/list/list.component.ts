@@ -66,12 +66,15 @@ export class ListComponent {
         let supervisorFullName = `${supervisor?.first_name || ''} ${supervisor?.last_name || ''} ${supervisor?.ext_name || ''}`.trim();
         industryPartner.immediate_supervisor.full_name = supervisorFullName;
 
-        industryPartner.internship_applications = industryPartner.internship_applications.map((student: any) => {
+        if(industryPartner.internship_applications) {  
+          industryPartner.internship_applications = industryPartner.internship_applications.map((student: any) => {
           return {
             full_name: student.user.first_name + " " + student.user.last_name,
             ...student
           }
         })
+      }
+        
         console.log(industryPartner)
 
         this.us.setIndustryPartner(industryPartner)
