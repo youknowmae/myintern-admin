@@ -7,16 +7,22 @@ $myintern-primary: mat.define-palette(mat.$green-palette, 800);
 // $myintern-accent: mat.define-palette(mat.$orange-palette, A400);
 $myintern-accent: mat.define-palette(mat.$blue-palette, A700);  //default color for now
 
+$myintern-typography: mat.define-typography-config(
+  $font-family: 'Poppins, sans-serif'
+);
+
+
 $myintern-theme: mat.define-light-theme((
   color: (
     primary: $myintern-primary,
     accent: $myintern-accent,
   ),
-  typography: mat.define-typography-config(),
+  typography: $myintern-typography,
   density: -1
 ));
 
 @include mat.all-component-themes($myintern-theme);
+@include mat.typography-hierarchy($myintern-typography);
 
 * {
     font-family: 'Poppins'; 
