@@ -63,7 +63,7 @@ export class ViewComponent {
       cancelButtonColor: "#777777",
     }).then((result) => {
       if (result.isConfirmed) {
-        this.ds.post('adviser/application/accept/', this.applicationDetails.id, null).subscribe(
+        this.ds.post('adviser/applications/accept/', this.applicationDetails.id, null).subscribe(
           response => {
             this.gs.successAlert('Approved!', response.message)
             this.applicationDetails.status = 3
@@ -92,7 +92,7 @@ export class ViewComponent {
     }).then((result) => {
       if (result.isConfirmed) {
         // this.apply()
-        this.ds.post('adviser/application/reject/', this.applicationDetails.id, null).subscribe(
+        this.ds.post('adviser/applications/reject/', this.applicationDetails.id, null).subscribe(
           response => {
             this.gs.successAlert('Rejected!', response.message)
             this.applicationDetails.status = 2
@@ -118,7 +118,7 @@ export class ViewComponent {
     payload.append('message', this.commentValue)
 
     
-    this.ds.post('adviser/application/comment/', this.applicationDetails.id, payload).subscribe(
+    this.ds.post('adviser/applications/comment/', this.applicationDetails.id, payload).subscribe(
       response => {
         console.log(response)
         this.commentValue = ''
@@ -144,7 +144,7 @@ export class ViewComponent {
 
         console.log(response)
         
-        this.ds.get('adviser/application/endorsement/', this.applicationDetails.id).subscribe(
+        this.ds.get('adviser/applications/endorsement/', this.applicationDetails.id).subscribe(
           response => {
             console.log(response)
             if(response)
