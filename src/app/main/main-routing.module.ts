@@ -9,6 +9,7 @@ import { StudentsComponent } from './components/students/students.component';
 import { TemplatesComponent } from './components/templates/templates.component';
 import { IndustrypartnersComponent } from './components/industrypartners/industrypartners.component';
 import { EvaluationComponent } from './components/evaluation/evaluation.component';
+import { EndorsementComponent } from './components/endorsement/endorsement.component';
 
 const routes: Routes = [
   { path: '', redirectTo: 'dashboard', pathMatch: 'full' },
@@ -19,6 +20,14 @@ const routes: Routes = [
     //   path: '',
     //   loadChildren: ()=>import('./components/dashboard/dashboard.module').then((m)=>m.DashboardModule)
     // }]
+  },
+  { 
+    path: 'endorsement', 
+    component: EndorsementComponent,
+    children: [{
+      path: '',
+      loadChildren: ()=>import('./components/endorsement/endorsement.module').then((m)=>m.EndorsementModule)
+    }]
   },
   { 
     path: 'announcement', 

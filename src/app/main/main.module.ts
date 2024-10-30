@@ -19,6 +19,8 @@ import { RequirementsModule } from './components/requirements/requirements.modul
 import { MaterialsModules } from '../modules/materials.module';
 import { EvaluationComponent } from './components/evaluation/evaluation.component';
 import { EvaluationModule } from './components/evaluation/evaluation.module';
+import { EndorsementComponent } from './components/endorsement/endorsement.component';
+import { EndorsementModule } from './components/endorsement/endorsement.module';
 
 
 @NgModule({
@@ -31,6 +33,7 @@ import { EvaluationModule } from './components/evaluation/evaluation.module';
     RequirementsComponent,
     StudentsComponent,
     TemplatesComponent,
+    EndorsementComponent,
     EvaluationComponent
   ],
   imports: [
@@ -40,6 +43,7 @@ import { EvaluationModule } from './components/evaluation/evaluation.module';
     IndustrypartnersModule,
     StudentsModule,
     TemplatesModule,
+    EndorsementModule,
     ExitpollModule,
     RequirementsModule,
     MaterialsModules,
