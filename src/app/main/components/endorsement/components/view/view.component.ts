@@ -6,5 +6,6 @@ import { Component } from '@angular/core';
   styleUrl: './view.component.scss'
 })
 export class ViewComponent {
+  industryPartner: any
 
 }
