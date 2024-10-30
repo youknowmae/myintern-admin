@@ -5,6 +5,7 @@ import { EndorsementRoutingModule } from './endorsement-routing.module';
 import { EndorsementComponent } from './endorsement.component';
 import { ViewComponent } from './components/view/view.component';
 import { ListComponent } from './components/list/list.component';
+import { MaterialsModules } from '../../../modules/materials.module';
 
 
 @NgModule({
@@ -15,7 +16,8 @@ import { ListComponent } from './components/list/list.component';
   ],
   imports: [
     CommonModule,
-    EndorsementRoutingModule
+    EndorsementRoutingModule,
+    MaterialsModules
   ]
 })
 export class EndorsementModule { }

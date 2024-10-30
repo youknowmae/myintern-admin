@@ -44,9 +44,9 @@
                 </div> -->
             </div>
 
-            <div class="action-buttons">
-                <button class="warning">Reject</button>
-                <button class="success">Verified</button>
+            <div class="action-buttons" *ngIf="industryPartner.status === 0">
+                <button class="warning" (click)="reject()">Reject</button>
+                <button class="success" (click)="verify()">Verify</button>
             </div>
         </div>
     </div>
