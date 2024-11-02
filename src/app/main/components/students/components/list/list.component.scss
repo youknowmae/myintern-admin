@@ -26,33 +26,34 @@ h1 {
     .filter-container {
         display: flex;
         flex-direction: row;
-    }
-    .filter {
-        display: flex;
-        justify-content: center;
-        margin-right: 30px;
-        position: relative;
-    }
+        
+        .filter {
+            display: flex;
+            justify-content: center;
+            margin-right: 30px;
+            position: relative;
+        }
 
-    .filter::before {
-        content: '';
-        position: absolute; 
-        transform: translateY(45px);
-        width: 0px;
-        height: 2px;
-        background: var(--primary-color);
-        transition: all .3s ease-in-out;
-      }
+        .filter::before {
+            content: '';
+            position: absolute; 
+            transform: translateY(45px);
+            width: 0px;
+            height: 2px;
+            background: var(--primary-color);
+            transition: all .3s ease-in-out;
+        }
 
-    .filter.active::before {
-        width: 120px;
+        .filter.active::before {
+            width: 120px;
+        }
     }
 
     .right {
         display: flex;
 
-        .class-filter {
-            width: 160px;
+        .filter {
+            width: 180px;
             margin-left: 20px;
         }
 

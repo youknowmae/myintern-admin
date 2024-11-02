@@ -16,6 +16,7 @@ export class ListComponent {
   filteredIndustryPartners: any = []
   
   statusFilter: string | number = 'all'
+  searchFilter: string = ''
 
   constructor(
     private us: UserService,
@@ -30,6 +31,11 @@ export class ListComponent {
     this.getIndustryPartnerRequests()
   }
   
+  search(search: string) {
+    this.searchFilter = search.trim().toLowerCase()
+    this.filterRequest()
+  }
+  
   onStatusFilterChange(event: MatSelectChange) {
     console.log(event.value)
     this.statusFilter = event.value
@@ -40,9 +46,14 @@ export class ListComponent {
     let request = this.industryPartners
 
     if(this.statusFilter != 'all') {
-      console.log('filtering')
       request = request.filter((element: any) => {
         return element.status == this.statusFilter
+      })
+    }
+
+    if(this.searchFilter) {
+      request = request.filter((element: any) => {
+        return element.company_name.includes(this.searchFilter)
       })
     }
 

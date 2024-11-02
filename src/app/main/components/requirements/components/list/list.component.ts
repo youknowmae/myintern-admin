@@ -33,6 +33,23 @@ export class ListComponent {
     private us: UserService
   ) {
     this.paginator = new MatPaginator(this.paginatorIntl, this.changeDetectorRef);
+    const nameFilterPredicate = (data: any, search: string): boolean => {
+      return data.user.full_name.toLowerCase().includes(search);
+    } 
+    
+    const studentNumberFilterPredicate = (data: any, search: string): boolean => {
+      // return data.student_profile.student_number.toLowerCase().includes(search);
+      return data.user.email.toLowerCase().includes(search);
+    } 
+
+    const filterPredicate = (data: any, search: string): boolean => {
+      return (
+        nameFilterPredicate(data, search) ||
+        studentNumberFilterPredicate(data, search)
+      );
+    };
+
+    this.dataSource.filterPredicate = filterPredicate
   }
 
   ngOnInit() {
@@ -62,6 +79,11 @@ export class ListComponent {
           else if(element.status == 5) {
             element.status_text = 'Accepted'
           }
+
+          let student = element.user
+
+          let full_name = student.first_name + " " + student.last_name
+          element.user.full_name = full_name
 
           return element
           
@@ -145,4 +167,7 @@ export class ListComponent {
     this.dataSource.data = student
   }
 
+  search(search: string) {
+    this.dataSource.filter = search.trim().toLowerCase()
+  }
 }

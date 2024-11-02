@@ -18,7 +18,7 @@ import { MaterialsModules } from '../../../modules/materials.module';
   ],
   imports: [
     CommonModule,
-    FormsModule,
+    ReactiveFormsModule,
     ExitpollRoutingModule,
     MaterialsModules
   ]

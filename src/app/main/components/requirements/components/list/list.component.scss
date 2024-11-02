@@ -26,26 +26,40 @@ h1 {
     .filter-container {
         display: flex;
         flex-direction: row;
+        
+        .filter {
+            display: flex;
+            justify-content: center;
+            margin-right: 40px;
+            position: relative;
+        }
+
+        .filter::before {
+            content: '';
+            position: absolute; 
+            transform: translateY(50px);
+            width: 0px;
+            height: 2px;
+            background: var(--primary-color);
+            transition: all .3s ease-in-out;
+        }
+
+        .filter.active::before {
+            width: 120px;
+        }
     }
-    .filter {
+
+    .right {
         display: flex;
-        justify-content: center;
-        margin-right: 40px;
-        position: relative;
-    }
 
-    .filter::before {
-        content: '';
-        position: absolute; 
-        transform: translateY(50px);
-        width: 0px;
-        height: 2px;
-        background: var(--primary-color);
-        transition: all .3s ease-in-out;
-      }
+        .filter {
+            width: 180px;
+            margin-left: 20px;
+        }
 
-    .filter.active::before {
-        width: 120px;
+        .export {
+            margin-left: 20px;
+        }
     }
 }
 
