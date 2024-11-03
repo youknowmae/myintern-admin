@@ -39,7 +39,13 @@ export class ViewComponent {
   getApplicationDetails() {
     this.applicationDetails = this.us.getStudentApplication()
 
-    this.comments = this.applicationDetails.application_comments
+    this.comments = this.applicationDetails.application_comments.map((element: any) => {
+
+      if(element.supervisor) 
+        element.supervisor = JSON.parse(element.supervisor.immediate_supervisor)
+
+      return element
+    });
 
     console.log(this.comments)
   }

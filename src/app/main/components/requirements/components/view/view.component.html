@@ -48,7 +48,8 @@
                 <div class="message-container" *ngFor="let comment of comments">
                     <i class="fa-regular fa-circle-user"></i>
                     <div class="message">
-                        <h5> {{ comment.user.first_name }} {{ comment.user.last_name }}</h5>
+                        <h5 *ngIf="comment.user"> {{ comment.user.first_name }} {{ comment.user.last_name }}</h5>
+                        <h5 *ngIf="comment.supervisor"> {{ comment.supervisor.first_name }} {{ comment.supervisor.last_name }}</h5>
                         <p> {{ comment.message }}</p>  
                     </div>
                 </div>
