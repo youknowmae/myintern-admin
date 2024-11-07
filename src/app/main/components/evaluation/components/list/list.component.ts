@@ -15,7 +15,7 @@ import { UserService } from '../../../../../services/user.service';
   styleUrl: './list.component.scss'
 })
 export class ListComponent {
-  displayedColumns: string[] = ['name', 'student_number', 'category', 'year', 'company', 'average', 'status', 'actions'];
+  displayedColumns: string[] = ['name', 'student_number', 'category', 'company', 'average', 'status', 'actions'];
 
   currentFilter: string = 'all'
   unfilteredStudents: any

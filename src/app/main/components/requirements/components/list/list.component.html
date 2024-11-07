@@ -72,8 +72,8 @@
         </ng-container>
 
         <ng-container matColumnDef="company">
-            <th mat-header-cell *matHeaderCellDef class="col-md-2"> Company </th>
-            <td mat-cell *matCellDef="let element" class="col-md-2">  {{ element.industry_partner.company_name }} </td>
+            <th mat-header-cell *matHeaderCellDef class="col-md-3"> Company </th>
+            <td mat-cell *matCellDef="let element" class="col-md-3">  {{ element.industry_partner.company_name }} </td>
         </ng-container>
         
         <ng-container matColumnDef="status">
@@ -82,8 +82,8 @@
         </ng-container>
         
         <ng-container matColumnDef="actions">
-            <th mat-header-cell *matHeaderCellDef class="col-md-2"> Action </th>
-            <td mat-cell *matCellDef="let element" class="col-md-2"> 
+            <th mat-header-cell *matHeaderCellDef class="col-md-1"> Action </th>
+            <td mat-cell *matCellDef="let element" class="col-md-1"> 
                  <button (click)="viewApplication(element.id)">View</button>
             </td>
         </ng-container>
