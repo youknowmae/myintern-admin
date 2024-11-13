@@ -15,6 +15,7 @@ import Swal from 'sweetalert2';
 })
 export class MainComponent {
   user: any 
+  private dateTimeInterval: any;
 
   constructor(
     private us: UserService,
@@ -28,11 +29,18 @@ export class MainComponent {
   ngOnInit(): void {
     this.getUser()
     this.updateDateTime();
+    
+    this.dateTimeInterval = setInterval(() => this.updateDateTime(), 30000);
+  }
+
+  ngOnDestroy(): void {
+    clearInterval(this.dateTimeInterval);
   }
   
   getUser() {
     this.user = this.us.getUser()
   }
+
   logout() {
     Swal.fire({
       icon: 'warning',

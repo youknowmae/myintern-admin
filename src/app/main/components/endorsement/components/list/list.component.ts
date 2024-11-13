@@ -14,7 +14,8 @@ import { MatSelectChange } from '@angular/material/select';
 export class ListComponent {
   industryPartners: IndustryPartner[] = []
   filteredIndustryPartners: any = []
-  
+  isLoading: boolean = true
+
   statusFilter: string | number = 'all'
   searchFilter: string = ''
 
@@ -53,7 +54,9 @@ export class ListComponent {
 
     if(this.searchFilter) {
       request = request.filter((element: any) => {
-        return element.company_name.includes(this.searchFilter)
+        return element.company_name.toLowerCase().includes(this.searchFilter) ||
+          element.full_location.toLowerCase().includes(this.searchFilter)
+          
       })
     }
 
@@ -79,14 +82,18 @@ export class ListComponent {
               element.status_text = 'Approved'
             }
   
+            element.full_location = element.municipality + ", " + element.province
             return element
-          }
-        )
+        })
         this.filteredIndustryPartners = this.industryPartners
+        
+        this.isLoading = false
+
         console.log(industryPartners)
       },
       error => {
         console.error(error)
+        this.isLoading = false
       }
     )
   }

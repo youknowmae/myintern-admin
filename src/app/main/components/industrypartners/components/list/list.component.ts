@@ -8,6 +8,7 @@ import Swal from 'sweetalert2';
 import { GeneralService } from '../../../../../services/general.service';
 import { UserService } from '../../../../../services/user.service';
 import { Router } from '@angular/router';
+import { pagination } from '../../../../../model/pagination.model';
 
 @Component({
   selector: 'app-list',
@@ -17,7 +18,11 @@ import { Router } from '@angular/router';
 export class ListComponent {
   industryPartners: IndustryPartner[] = []
   filteredIndustryPartners: any = []
-  isLoading: boolean = false
+  isLoading: boolean = true
+
+  searchValue: string = ''
+  
+  pagination: pagination = <pagination>{};
 
   constructor(
     private us: UserService,
@@ -25,7 +30,14 @@ export class ListComponent {
     private ds: DataService,
     private gs: GeneralService
   ) {
-
+    this.pagination = {
+      current_page: 1,
+      from: 0,
+      to: 0,
+      total: 0,
+      per_page: 15,
+      last_page: 0,
+    }
   }
 
   ngOnInit() {
@@ -34,22 +46,31 @@ export class ListComponent {
 
   search(value: string) {
     value = value.toLowerCase()
-    this.filteredIndustryPartners = this.industryPartners.filter(
-      (item: IndustryPartner) => {
-        return item.company_name.toLowerCase().includes(value) ||
-          item.municipality.toLowerCase().includes(value)
-      }
-    )
+    this.searchValue = value
+    this.pagination.current_page = 1
+
+    this.filterIndustryPartners()
   }
 
   getIndustryPartners() {
     this.ds.get('adviser/industryPartners').subscribe(
       industryPartners => {
-        this.industryPartners = industryPartners
-        this.filteredIndustryPartners = this.industryPartners
-        console.log(industryPartners)
+        this.industryPartners = industryPartners.map(
+          (element: any) => {
+            element.full_location = element.municipality + ", " + element.province
+
+            return element
+          }
+        )
+        
+        this.filterIndustryPartners()
+
+        console.log(this.filteredIndustryPartners)
+        this.isLoading = false
       },
       error => {
+        this.gs.errorAlert('Oops!', 'Something went wrong, please try again later.')
+        this.isLoading = false
         console.error(error)
       }
     )
@@ -87,116 +108,40 @@ export class ListComponent {
     )
   }
 
+  filterIndustryPartners() {
+    let search = this.searchValue.toLowerCase()
 
+    var data = this.industryPartners
+    if(search) {
+      data = data.filter(
+        (item: IndustryPartner) => {
+          return item.company_name.toLowerCase().includes(search) ||
+            item.full_location.toLowerCase().includes(search) 
+        }
+      )
+    }
 
+    this.pagination = this.gs.getPaginationDetails(data, this.pagination.current_page, this.pagination.per_page)
 
+    data = data.slice(this.pagination.from, this.pagination.to);
+    this.pagination.from++
+    
 
+    this.filteredIndustryPartners = data
+  }
 
+  changePage(page: number) {
+    const destination_page = this.pagination.current_page + page
+    if(destination_page < 1 || destination_page > this.pagination.last_page) {
+      return
+    }
+    
+    this.pagination.current_page += page
+    this.filterIndustryPartners()
+  }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-  // addIndustryPartner() {
-  //   var modal = this.dialogRef.open(AddIndustryPartnerComponent, {
-  //     disableClose: true       
-  //   })
-
-  //   modal.afterClosed().subscribe((result) => {
-  //     console.log(result)
-  //     if (!result) {
-  //       return
-  //     }
-      
-  //     this.industryPartners.unshift(result)
-  //   });
-  // }
-
-  // editIndustryPartner(id: number) {
-  //   if(this.isLoading === true) {
-  //     return
-  //   }
-
-  //   this.isLoading = true
-
-  //   this.ds.get('adviser/industryPartners/', id).subscribe(
-  //     (industryPartner: IndustryPartner) => {
-  //       var modal = this.dialogRef.open(EditIndustryPartnerComponent, {
-  //         data: industryPartner,
-  //         disableClose: true
-  //       })
-        
-  //       modal.afterClosed().subscribe((result) => {
-  //         console.log(result)
-
-  //         if (!result) {
-  //           return
-  //         }
-          
-  //         this.industryPartners = this.industryPartners.map((announcement: any) =>
-  //           announcement.id === result.id ? result : announcement
-  //         );
-  //       });
-  //     },
-  //     error => {
-  //       console.error(error);
-  //       this.isLoading = false
-  //     },
-  //     () => {
-  //       this.isLoading = false
-  //     }
-  //   )
-  // }
-
-  // deleteIndustryPartner(id: number) {
-  //   this.ds.delete('adviser/industryPartners/', id).subscribe(
-  //     result => {
-  //       console.log(result)
-  //       this.industryPartners = this.industryPartners.filter((announcement: any) => announcement.id !== id);
-  //       this.gs.successToastAlert('Successfully removed')
-  //     },
-  //     error => {
-  //       console.error(error)
-  //       Swal.fire({
-  //         title: 'Error!',
-  //         text: 'Something went wrong. Please try again later.',
-  //         icon: 'error',
-  //         confirmButtonText: 'Close',
-  //         confirmButtonColor: '#777777',
-  //       });
-  //     })
-  // }
-
-  // deleteConfirmation(id: number) {
-  //   Swal.fire({
-  //     title: 'Remove?',
-  //     text: 'Are you sure you want to remove this industry partner?',
-  //     icon: 'warning',
-  //     showCancelButton: true,
-  //     confirmButtonText: 'Yes',
-  //     cancelButtonText: 'Cancel',
-  //     confirmButtonColor: '#AB0E0E',
-  //     cancelButtonColor: '#777777',
-  //   }).then((result) => {
-  //     if (result.isConfirmed) {
-  //       this.deleteIndustryPartner(id);
-  //     }
-  //   });
-  // }
+  jumpPage(page: number){
+    this.pagination.current_page = page
+    this.filterIndustryPartners()
+  }
 }

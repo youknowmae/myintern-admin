@@ -37,7 +37,7 @@
                 <form>
                     <input type="text" [(ngModel)]="commentValue" [ngModelOptions]="{standalone: true}" placeholder="Write a comment..." (keyup.enter)="comment()">
                 </form>
-                <span class="material-symbols-outlined" (click)="comment()">
+                <span class="material-symbols-outlined" style="color: black;" (click)="comment()">
                     send
                 </span>
             </div>
@@ -62,7 +62,7 @@
         <div class="card" *ngIf="applicationDetails">
             <div class="company-details">
                 <div class="image">
-                    <img [src]="(applicationDetails.industry_partner.image) ? applicationDetails.industry_partner.image : '/assets/images/LOGO.png'">
+                    <img [src]="(applicationDetails.industry_partner.image) ? applicationDetails.industry_partner.image : 'assets/images/logo.png'">
                 </div>
     
                 <div class="content-info">

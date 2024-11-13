@@ -15,6 +15,7 @@ import Swal from 'sweetalert2';
 })
 export class AnnouncementComponent {
   announcements: announcement[] = []
+  isLoading: boolean = true
 
   constructor(
     private dialogRef: MatDialog,
@@ -31,8 +32,10 @@ export class AnnouncementComponent {
       announcements => {
         console.log(announcements)
         this.announcements = announcements
+        this.isLoading = false
       },
       error => {
+        this.isLoading = false
         console.error(error)
       }
     )

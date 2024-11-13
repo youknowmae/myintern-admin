@@ -12,6 +12,8 @@ import { MatIconModule } from '@angular/material/icon'
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatRadioModule } from '@angular/material/radio';
 import { MatCheckboxModule } from '@angular/material/checkbox';
+import { MatStepperModule } from '@angular/material/stepper';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 
 const var_modules = [
     MatFormFieldModule,
@@ -28,6 +30,8 @@ const var_modules = [
     MatDatepickerModule,
     MatRadioModule,
     MatCheckboxModule,
+    MatStepperModule,
+    MatProgressSpinnerModule
 ]
 
 @NgModule({

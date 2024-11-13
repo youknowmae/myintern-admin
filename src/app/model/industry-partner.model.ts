@@ -8,6 +8,7 @@ export interface IndustryPartner {
     immediate_supervisor: string,
     supervisor_position: string,
     
+    full_location: string,
     region: string, 
     province: string,
     municipality: string,
