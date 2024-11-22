@@ -234,3 +234,70 @@ h3 {
     top: calc(50% - 15px) !important;
     border-radius: 50%;
 }
+
+.certificate-container {
+    margin: auto;
+    margin-bottom: 20px;
+    width: 100%;
+    max-width: 900px;
+    padding: 20px 30px;
+    border: 1px solid var(--primary-color);
+    border-radius: 20px;
+    background-color: #ffffffb8;
+  
+    
+    h4 {
+      color: #898121;
+      font-weight: 400;
+      font-size: 22px;
+      margin-bottom: 14px;
+  }
+      
+  .files {
+      .items {
+          border: none;
+          background-color: var(--secondary-color);
+          height: 35px;
+          width: 100%;
+          max-width: 400px;
+          margin-bottom: 15px;
+          display: flex;
+          align-items: center;
+          justify-content: space-between;
+  
+          .name {
+              width: calc(100% - 50px) ;
+              display: flex;
+              align-items: center;
+          }
+  
+          .material-symbols-outlined {
+              font-size: 32px;
+              padding-right: 20px;
+              padding-left: 20px;
+          }
+  
+          p {
+              font-size: 14px;
+              overflow: hidden;
+              text-wrap: nowrap;
+              text-overflow: ellipsis;
+              color: var(--primary-font-color);
+              margin: 0;
+          }
+  
+          button {  
+              background: none;
+              border: none;
+              outline: none;
+              cursor: pointer;
+          }
+              i {         
+                  font-size: 20px;
+                  cursor: pointer;
+                  margin-right: 10px;
+                  color: var(--primary-font-color);
+          }
+      }
+    }
+  }

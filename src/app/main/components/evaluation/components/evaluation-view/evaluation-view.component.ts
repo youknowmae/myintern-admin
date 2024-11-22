@@ -1,7 +1,9 @@
 import { Component } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { DataService } from '../../../../../services/data.service';
 import { GeneralService } from '../../../../../services/general.service';
+import { MatDialog } from '@angular/material/dialog';
+import { PdfPreviewComponent } from '../../../../../components/pdf-preview/pdf-preview.component';
 import { UserService } from '../../../../../services/user.service';
 import { Router } from '@angular/router';
 
@@ -25,11 +27,14 @@ export class EvaluationViewComponent {
 
   evaluation: any
   formDetails: FormGroup 
+  certificate: any
   
   constructor(
     private fb: FormBuilder,
     private router: Router,
-    private us: UserService
+    private us: UserService,
+    private ds: DataService,
+    private dialogRef: MatDialog
   ) {
     this.formDetails = this.fb.group({
       knowledge: this.fb.array([
@@ -87,6 +92,32 @@ export class EvaluationViewComponent {
   }
 
   ngOnInit() {
+    this.getEvaluation()
+    this.getCompletionCert()
+  }
+
+  getCompletionCert() {
+    let evaluation = this.us.getStudentEvaluation()
+
+    let id = evaluation.user_id
+    this.ds.get('adviser/evaluation/certificate/', id).subscribe(
+      response => {
+        let certificate = response
+
+        if(!certificate) {
+          return
+        }
+
+        this.certificate = certificate        
+      },
+      error => {
+        console.error(error)
+      }
+    )
+
+  }
+
+  getEvaluation() {
     let evaluation  = this.us.getStudentEvaluation()
 
     if(!evaluation) {
@@ -97,6 +128,22 @@ export class EvaluationViewComponent {
     
     this.formDetails.patchValue({
       ...evaluation.evaluation
+    })
+
+    let further_employment =  this.formDetails.get('further_employment.response')?.value
+
+    const ifNotArray = this.formDetails.get('further_employment.if_not') as FormArray;
+
+    if (further_employment === '1') {
+      ifNotArray.disable();  
+    }
+  }
+
+  previewFile(file: any) {
+    console.log(file)
+    this.dialogRef.open(PdfPreviewComponent, {
+      data: { name: file.file_name, pdf: file.file_location},
+      disableClose: true
     })
   }
 }
