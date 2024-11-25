@@ -5,7 +5,7 @@
         <div>
             <div class="profile">
                 <div class="logo">
-                    <img [src]="(user.image_url) ? user.image_url : 'assets/images/profile.png'" alt="Image">
+                    <img [src]="(user.image) ? user.image : 'assets/images/profile.png'" alt="Image">
                 </div>
                 <h3>{{ user.first_name }} {{ user.last_name }}</h3>
                 <p>Adviser</p>

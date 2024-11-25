@@ -31,7 +31,7 @@
             </div>
         </div>
     
-        <div class="card-container" *ngIf="filteredIndustryPartners > 0; else noItems">
+        <div class="card-container" *ngIf="filteredIndustryPartners.length > 0; else noItems">
             <div class="card" *ngFor="let industryPartner of filteredIndustryPartners">
                 <div class="status"
                 [class.pending]="industryPartner.status == 0 || industryPartner.status == 2"
@@ -51,8 +51,28 @@
                     <button class="view" (click)="viewIndustryPartnerRequest(industryPartner.id)"><b>View</b></button>
                 </div>
             </div>
+            <div class="pagination-container">
+              <div class="pagination">
+                <div>
+                    <p> {{ pagination.from}} - {{ pagination.to }} of {{ pagination.total }} </p>
+                </div>
+                <div class="icons">
+                  <button (click)="jumpPage(1)" [disabled]="pagination.current_page === 1">
+                      <img src="assets/images/chevron-bar-left.svg" >
+                  </button>
+                  <button (click)="changePage(-1)" [disabled]="pagination.current_page === 1">
+                      <img src="assets/images/chevron-left.svg" >
+                  </button>
+                  <button (click)="changePage(1)"[disabled]="pagination.current_page === pagination.last_page">
+                      <img src="assets/images/chevron-right.svg">
+                  </button>
+                  <button (click)="jumpPage(pagination.last_page)" [disabled]="pagination.current_page === pagination.last_page">
+                      <img src="assets/images/chevron-bar-right.svg">
+                  </button>
+                </div>
+              </div>
+            </div> 
         </div>
-
     </ng-container>
 </main>
 

@@ -5,6 +5,7 @@ import { Router } from '@angular/router';
 import { DataService } from '../../../../../services/data.service';
 import { UserService } from '../../../../../services/user.service';
 import { MatSelectChange } from '@angular/material/select';
+import { pagination } from '../../../../../model/pagination.model';
 
 @Component({
   selector: 'app-list',
@@ -18,6 +19,8 @@ export class ListComponent {
 
   statusFilter: string | number = 'all'
   searchFilter: string = ''
+  
+  pagination: pagination = <pagination>{};
 
   constructor(
     private us: UserService,
@@ -25,7 +28,14 @@ export class ListComponent {
     private ds: DataService,
     private gs: GeneralService
   ) {
-
+    this.pagination = {
+      current_page: 1,
+      from: 0,
+      to: 0,
+      total: 0,
+      per_page: 15,
+      last_page: 0,
+    }
   }
 
   ngOnInit() {
@@ -44,23 +54,28 @@ export class ListComponent {
   }
 
   filterRequest() {
-    let request = this.industryPartners
+    let data = this.industryPartners
 
     if(this.statusFilter != 'all') {
-      request = request.filter((element: any) => {
+      data = data.filter((element: any) => {
         return element.status == this.statusFilter
       })
     }
 
     if(this.searchFilter) {
-      request = request.filter((element: any) => {
+      data = data.filter((element: any) => {
         return element.company_name.toLowerCase().includes(this.searchFilter) ||
           element.full_location.toLowerCase().includes(this.searchFilter)
           
       })
     }
 
-    this.filteredIndustryPartners = request
+    this.pagination = this.gs.getPaginationDetails(data, this.pagination.current_page, this.pagination.per_page)
+
+    data = data.slice(this.pagination.from, this.pagination.to);
+    this.pagination.from++
+
+    this.filteredIndustryPartners = data
 
   }
 
@@ -85,7 +100,8 @@ export class ListComponent {
             element.full_location = element.municipality + ", " + element.province
             return element
         })
-        this.filteredIndustryPartners = this.industryPartners
+
+        this.filterRequest()
         
         this.isLoading = false
 
@@ -119,5 +135,20 @@ export class ListComponent {
         this.gs.errorAlert('Oops', 'Something went wrong. Please try again later.')
       }
     )
+  }
+
+  changePage(page: number) {
+    const destination_page = this.pagination.current_page + page
+    if(destination_page < 1 || destination_page > this.pagination.last_page) {
+      return
+    }
+    
+    this.pagination.current_page += page
+    this.filterRequest()
+  }
+
+  jumpPage(page: number){
+    this.pagination.current_page = page
+    this.filterRequest()
   }
 }

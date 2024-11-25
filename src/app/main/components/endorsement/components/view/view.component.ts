@@ -28,18 +28,24 @@ export class ViewComponent {
 
   reject() {
     Swal.fire({
-      title: "Reject?",
-      text: "Are you sure you want to reject this company endorsement?",
-      icon: "info",
+      // title: "Reject?",
+      // text: "Are you sure you want to reject this company endorsement?",
+      
+      title: "Please state the reason for rejection?",
+      input: "text",
+      inputAttributes: {
+        autocapitalize: "off"
+      },
       showCancelButton: true,
-      confirmButtonText: 'Yes',
+      confirmButtonText: 'Reject',
       cancelButtonText: 'Cancel',
-      confirmButtonColor: "#4f6f52",
+      confirmButtonColor: "#ff4141",
       cancelButtonColor: "#777777",
     }).then((result) => {
       if (result.isConfirmed) {
-        // this.apply()
-        this.ds.post('adviser/request/industryPartners/reject/', this.industryPartner.id, null).subscribe(
+        const formData = new FormData
+        formData.append('message', result.value)
+        this.ds.post('adviser/request/industryPartners/reject/', this.industryPartner.id, formData).subscribe(
           response => {
             this.gs.successAlert(response.title, response.message)
             this.industryPartner.status = 1

@@ -19,6 +19,7 @@ export class ViewComponent {
   id: any 
   applicationDetails: any
   comments: any = []
+  user: any
 
   commentValue: string = ''
   isCommenting: boolean = false 
@@ -34,15 +35,23 @@ export class ViewComponent {
 
   ngOnInit() {
     this.getApplicationDetails()
+
+    this.user = this.us.getUser()
   }
 
   getApplicationDetails() {
     this.applicationDetails = this.us.getStudentApplication()
 
     this.comments = this.applicationDetails.application_comments.map((element: any) => {
+      if(element.supervisor) {
+        let name = JSON.parse(element.supervisor.immediate_supervisor)
 
-      if(element.supervisor) 
-        element.supervisor = JSON.parse(element.supervisor.immediate_supervisor)
+        element = {...name, image: element.supervisor.image, message: element.message}
+      }
+
+      if(element.user) {
+        element = {...element.user, message: element.message}
+      }
 
       return element
     });

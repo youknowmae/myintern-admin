@@ -33,7 +33,9 @@
 
         <div class="card">
             <div class="comment">
-                <i class="fa-regular fa-circle-user"></i>
+                <div class="profile-container">
+                    <img [src]="(user.image) ? user.image : 'assets/images/profile.png'">
+                </div>
                 <form>
                     <input type="text" [(ngModel)]="commentValue" [ngModelOptions]="{standalone: true}" placeholder="Write a comment..." (keyup.enter)="comment()">
                 </form>
@@ -46,10 +48,11 @@
         <div class="card" *ngIf="comments.length > 0">
             <div class="comment-log">
                 <div class="message-container" *ngFor="let comment of comments">
-                    <i class="fa-regular fa-circle-user"></i>
+                    <div class="profile-container">
+                        <img [src]="(comment.image) ? comment.image : 'assets/images/profile-dark.png'">
+                    </div>
                     <div class="message">
-                        <h5 *ngIf="comment.user"> {{ comment.user.first_name }} {{ comment.user.last_name }}</h5>
-                        <h5 *ngIf="comment.supervisor"> {{ comment.supervisor.first_name }} {{ comment.supervisor.last_name }}</h5>
+                        <h5> {{ comment.first_name }} {{ comment.middle_name }} {{ comment.last_name }} {{ comment.ext_name }}</h5>
                         <p> {{ comment.message }}</p>  
                     </div>
                 </div>

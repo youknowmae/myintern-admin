@@ -30,7 +30,8 @@
                     <b>Company Address: </b>
                     {{  industryPartner.street }}
                     {{  industryPartner.barangay }}
-                    {{  industryPartner.municipality }}
+                    {{  industryPartner.municipality }},
+                    {{  industryPartner.province }}
                 </li>
                 <li><b>Official Email Address:</b> {{ industryPartner.email }}</li>
                 <li *ngIf="industryPartner.telephone_number"><b>Telephone Number:</b> {{ industryPartner.telephone_number }}</li>
