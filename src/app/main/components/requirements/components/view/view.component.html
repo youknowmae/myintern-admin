@@ -34,7 +34,7 @@
         <div class="card">
             <div class="comment">
                 <div class="profile-container">
-                    <img [src]="(user.image) ? user.image : 'assets/images/profile.png'">
+                    <img [src]="(user.image) ? user.image : 'assets/images/profile-dark.png'">
                 </div>
                 <form>
                     <input type="text" [(ngModel)]="commentValue" [ngModelOptions]="{standalone: true}" placeholder="Write a comment..." (keyup.enter)="comment()">

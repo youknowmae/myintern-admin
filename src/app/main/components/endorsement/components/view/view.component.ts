@@ -3,6 +3,8 @@ import { UserService } from '../../../../../services/user.service';
 import Swal from 'sweetalert2';
 import { GeneralService } from '../../../../../services/general.service';
 import { DataService } from '../../../../../services/data.service';
+import { DomSanitizer } from '@angular/platform-browser';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-view',
@@ -11,11 +13,16 @@ import { DataService } from '../../../../../services/data.service';
 })
 export class ViewComponent {
   industryPartner: any
+  file: any
+  filePreview: any
+  isImage: boolean = false
 
   constructor(
     private us: UserService,
     private gs: GeneralService,
-    private ds: DataService
+    private ds: DataService,
+    private sanitizer: DomSanitizer,
+    private router: Router
   ) {}
 
   ngOnInit() {
@@ -24,6 +31,35 @@ export class ViewComponent {
 
   getRequestDetails() {
     this.industryPartner = this.us.getCompanyEndorsement()
+  }
+
+  uploadFile(event: any) {
+    this.file = event.target.files[0];
+
+    let file = this.file
+
+    const fileType = file.type;
+
+      if (fileType.startsWith('image/')) {
+        this.isImage = true;
+        const reader = new FileReader();
+        reader.onload = (e: any) => {
+          this.filePreview = e.target.result;
+        };
+        reader.readAsDataURL(file);
+      } 
+
+      else if (fileType === 'application/pdf') {
+        this.isImage = false;
+        const reader = new FileReader();
+        reader.onload = (e: any) => {
+          this.filePreview = this.sanitizer.bypassSecurityTrustResourceUrl(e.target.result +  '#toolbar=0&navpanes=0&scrollbar=0');
+        };
+        reader.readAsDataURL(file);
+      } 
+
+    
+    
   }
 
   reject() {
@@ -44,7 +80,7 @@ export class ViewComponent {
     }).then((result) => {
       if (result.isConfirmed) {
         const formData = new FormData
-        formData.append('message', result.value)
+        formData.append('remarks', result.value)
         this.ds.post('adviser/request/industryPartners/reject/', this.industryPartner.id, formData).subscribe(
           response => {
             this.gs.successAlert(response.title, response.message)
@@ -54,6 +90,9 @@ export class ViewComponent {
             console.error(error)
             if(error.status === 409) {
               this.gs.errorAlert(error.error.title, error.error.message)
+            }
+            else if(error.status === 422) {
+              this.gs.errorAlert(error.error.title, error.error.error)
             }
             else {
               this.gs.errorAlert("Oops!", "Something went wrong. Please try again later.")
@@ -77,8 +116,15 @@ export class ViewComponent {
     }).then((result) => {
       if (result.isConfirmed) {
         // this.apply()
-        this.ds.get('adviser/request/industryPartners/verify/', this.industryPartner.id).subscribe(
+        const payload = new FormData
+        if(this.file) {
+          console.log(this.file)
+          payload.append('mou', this.file)
+        }
+
+        this.ds.post('adviser/request/industryPartners/verify/', this.industryPartner.id, payload).subscribe(
           response => {
+            this.router.navigate(['main/endorsement/list'])
             this.gs.successAlert(response.title, response.message)
             this.industryPartner.status = 2
           },
@@ -87,6 +133,9 @@ export class ViewComponent {
             if(error.status === 409) {
               this.gs.errorAlert(error.error.title, error.error.message)
             }
+            else if(error.status === 422) {
+              this.gs.errorAlert(error.error.title, error.error.error)
+            }
             else {
               this.gs.errorAlert("Oops!", "Something went wrong. Please try again later.")
             }
@@ -94,5 +143,9 @@ export class ViewComponent {
         )
       }
     });
+  }
+
+  sanitizeUrl(url: string) {
+    return this.sanitizer.bypassSecurityTrustResourceUrl(url)
   }
 }
