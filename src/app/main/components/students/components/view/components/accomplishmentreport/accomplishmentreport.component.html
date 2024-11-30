@@ -1,4 +1,4 @@
-<div class="container">
+<div class="container" *ngIf="weekly_attendance.length > 0; else noItems">
     <div class="weekly_report"  *ngFor="let report of weekly_attendance; index as i">
         <h3>Week {{ i + 1 }}</h3>
         <table>
@@ -22,3 +22,9 @@
         </table>
     </div>
 </div>
+
+<ng-template #noItems>
+    <div class="no-items-container">
+        <p>Sorry, no data found</p>
+    </div>
+</ng-template>
