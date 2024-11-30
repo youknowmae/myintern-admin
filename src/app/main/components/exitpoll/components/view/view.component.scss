@@ -6,6 +6,22 @@
     border-radius: 30px;
     background-color: #ffffffb8;
 
+    #formContent {
+        padding: 20px;
+        border: 1px solid #ddd;
+        background-color: #f9f9f9;
+      }
+      .btn-icon {
+        background: none;
+        border: none;
+        cursor: pointer;
+        color: #007bff;
+        font-size: 20px;
+      }
+      .btn-icon:hover {
+        color: #0056b3;
+      }
+
     h2 {
         text-align: center;
         border-bottom: 1px solid var(--primary-color);
