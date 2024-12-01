@@ -1,11 +1,12 @@
-import { Component } from '@angular/core';
+import { Component, ViewEncapsulation } from '@angular/core';
 import { UserService } from '../../../../../../../services/user.service';
 import { DataService } from '../../../../../../../services/data.service';
 
 @Component({
   selector: 'app-accomplishmentreport',
   templateUrl: './accomplishmentreport.component.html',
-  styleUrl: './accomplishmentreport.component.scss'
+  styleUrl: './accomplishmentreport.component.scss',
+  encapsulation: ViewEncapsulation.None
 })
 export class AccomplishmentreportComponent {
   weekly_attendance: any = []

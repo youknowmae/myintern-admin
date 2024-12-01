@@ -14,6 +14,7 @@ import { MatRadioModule } from '@angular/material/radio';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatStepperModule } from '@angular/material/stepper';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { MatTabsModule } from '@angular/material/tabs';
 
 const var_modules = [
     MatFormFieldModule,
@@ -31,7 +32,8 @@ const var_modules = [
     MatRadioModule,
     MatCheckboxModule,
     MatStepperModule,
-    MatProgressSpinnerModule
+    MatProgressSpinnerModule,
+    MatTabsModule
 ]
 
 @NgModule({
