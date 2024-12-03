@@ -13,18 +13,21 @@
         </div>
     </div>
 </div> -->
-<div class="forms-container">
-    <h2>Performance Evaluation Rating for On-the-Job Training</h2>
+<div class="forms-container" >
+    <button (click)="downloadPdf()" class="btn-icon">
+        <i class="fa-solid fa-download"></i>
+    </button>
+    <h2 id="formContent-2">Performance Evaluation Rating for On-the-Job Training</h2>
     
     <form [formGroup]="formDetails" style="pointer-events: none;">
-        <div class="row">
+        <div class="row" id="formContent-1">
             <i style="text-align: justify;"><b>Direction:</b> Please evaluate the student according to company standards/job specifications and
                 individual standard of performance. Check on the appropriate spaces opposite each item, the
                 characteristics you think best describe the student-trainee based on the following ratings:
             </i>
         </div>
 
-        <div class="row" style="flex-direction: column;">
+        <div class="row" style="flex-direction: column;" id="formContent0">
             <h4>Rating Scale:</h4>
             <div class="ratings-legend">
                 <div>
@@ -51,8 +54,8 @@
         </div>
 
       <div class="table-two">
-          <table>
-            <thead>
+          <table >
+            <thead id="formContent1">
                 <tr>
                     <th >Training Objectives</th>
                     <th>1</th>
@@ -62,7 +65,7 @@
                     <th>5</th>
                 </tr>
             </thead>
-            <tbody formArrayName="knowledge">
+            <tbody formArrayName="knowledge"  id="formContent2">
                 <tr>
                     <td colspan="6" style="text-align: left;">B. Knowledge</td>
                 </tr>
@@ -144,7 +147,7 @@
             </tbody>
             <!-- end knowledge -->
 
-            <tbody formArrayName="skills">
+            <tbody formArrayName="skills" id="formContent3">
                 <tr>
                     <td colspan="6">B. Skills</td>
                 </tr>
@@ -266,7 +269,7 @@
             </tbody>
             <!-- end skills -->
 
-            <tbody formArrayName="attitude">
+            <tbody formArrayName="attitude" id="formContent4">
                 <tr>
                     <td colspan="6">C. Attitude</td>
                 </tr>
@@ -461,10 +464,7 @@
             </tbody>
             <!-- end skills -->
 
-            <tbody>
-                <tr>
-                    <td colspan="6" style="color: white;">0</td>
-                </tr>
+            <tbody id="formContent5">
                 <tr>
                     <td style="text-align: right;">
                         <b>TOTAL RATING:</b>
@@ -478,7 +478,7 @@
           </table>
       </div>
 
-        <div class="row"> 
+        <div class="row" id="formContent6"> 
             <div> 
                 <p style="width: 210px; font-weight: 600;">OVER-ALL PERFORMACE:</p>
             </div>
@@ -488,11 +488,11 @@
             
         </div>
             
-        <div class="row" style="justify-content: center;">
+        <div class="row" style="justify-content: center;" id="formContent7">
             <h3>Suggestions / Comments to Improve Trainee’s Performance</h3>
         </div>
 
-        <div formGroupName="suggestions" >
+        <div formGroupName="suggestions" id="formContent8">
             <div class="row">
                 <p style="padding: 10px 0px;">STUDENT’S MAJOR STRONG POINTS ARE</p>
                 <div class="col-md-12">
@@ -540,7 +540,7 @@
 
         </div>
 
-        <div formGroupName="further_employment">
+        <div formGroupName="further_employment"  id="formContent9">
             <div class="row" style="flex-direction: column;">
                 <p style="padding: 10px 0px;">WOULD YOU RECOMMENTD HIM/HER FOR FURTHER EMPLOYMENT IN YOUR OWN FIRM?</p>
     

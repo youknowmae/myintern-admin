@@ -73,7 +73,7 @@ export class ListComponent {
         console.log(exitPollDetails)
         
         this.us.setStudentExitPoll(exitPollDetails)
-        this.router.navigate(['/main/exitpoll/view/' + id])
+        this.router.navigate(['/main/exitpoll/view'])
       },
       error => {
         console.error(error)

@@ -6,6 +6,19 @@
     border-radius: 30px;
     background-color: #ffffffb8;
 
+    .btn-icon {
+        background: none;
+        border: none;
+        cursor: pointer;
+        color: var(--primary-color);
+        font-size: 20px;
+        transition: all .2s ease-in-out;
+    }
+    
+    .btn-icon:hover {
+        color: var(--secondary-color);
+    }
+
     h2 {
         text-align: center;
         border-bottom: 1px solid var(--primary-color);

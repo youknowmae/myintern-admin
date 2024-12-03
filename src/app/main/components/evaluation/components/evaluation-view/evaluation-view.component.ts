@@ -7,6 +7,10 @@ import { PdfPreviewComponent } from '../../../../../components/pdf-preview/pdf-p
 import { UserService } from '../../../../../services/user.service';
 import { Router } from '@angular/router';
 
+import { jsPDF } from 'jspdf';
+// import 'jspdf-autotable';
+import html2canvas from 'html2canvas';
+
 @Component({
   selector: 'app-evaluation-view',
   templateUrl: './evaluation-view.component.html',
@@ -28,6 +32,8 @@ export class EvaluationViewComponent {
   evaluation: any
   formDetails: FormGroup 
   certificate: any
+  
+  isGenerating: boolean = false
   
   constructor(
     private fb: FormBuilder,
@@ -139,11 +145,74 @@ export class EvaluationViewComponent {
     }
   }
 
-  previewFile(file: any) {
-    console.log(file)
-    this.dialogRef.open(PdfPreviewComponent, {
-      data: { name: file.file_name, pdf: file.file_location},
-      disableClose: true
-    })
+  // previewFile(file: any) {
+  //   console.log(file)
+  //   this.dialogRef.open(PdfPreviewComponent, {
+  //     data: { name: file.file_name, pdf: file.file_location},
+  //     disableClose: true
+  //   })
+  // }
+
+  async downloadPdf() {
+    if(this.isGenerating) {
+      return
+    }
+
+    this.isGenerating = true
+
+    console.log('generating')
+
+    const contentIds = [
+    'formContent-2',
+    'formContent-1',
+    'formContent0',
+    'formContent1', 
+    'formContent2', 
+    'formContent3',
+    'formContent4',
+    'formContent5',
+    'formContent6',
+    'formContent7',
+    'formContent8',
+    'formContent9',
+  
+  ]; // Add all the IDs you want to include in the PDF
+    const pdf = new jsPDF('p', 'mm', 'a4'); // A4 size
+    
+    const pdfWidth = 210; // A4 width in mm
+    const pdfHeight = 297; // A4 height in mm
+    const imgWidth = pdfWidth - 50.8; // 1in margin
+    const xOffset = (pdfWidth - imgWidth) / 2; // Center horizontally
+    const startPosition = 15; // Start 1 inch from top
+    const bottomMargin = 10   
+  
+    let position = startPosition;
+  
+    for (const contentId of contentIds) {
+      const content = document.getElementById(contentId);
+      if (!content) {
+        console.warn(`Element with ID '${contentId}' not found.`);
+        continue;
+      }
+    
+      const canvas = await html2canvas(content);
+      const imgData = canvas.toDataURL('image/png');
+      const imgHeight = (canvas.height * imgWidth) / canvas.width; // Maintain aspect ratio
+    
+      // Check if the image fits on the current page
+      if (position + imgHeight > pdfHeight - bottomMargin) { 
+        pdf.addPage(); // Add a new page if the image overflows
+        position = startPosition; // Reset to the top margin of the new page
+      }
+    
+      pdf.addImage(imgData, 'PNG', xOffset, position, imgWidth, imgHeight);
+      position += imgHeight; // Move the position down by the height of the image
+    }
+    
+  
+    this.isGenerating = false
+    // Save the PDF
+    pdf.save('STUDENT.EVALUATION.pdf');
+    console.log('Saving...')
   }
 }
