@@ -23,6 +23,8 @@ export class ListComponent {
   searchValue: string = ''
   
   pagination: pagination = <pagination>{};
+  
+  isFetching: boolean = false
 
   constructor(
     private us: UserService,
@@ -53,8 +55,14 @@ export class ListComponent {
   }
 
   getIndustryPartners() {
+    if(this.isFetching) {
+      return
+    }
+
+    this.isFetching = true
     this.ds.get('adviser/industryPartners').subscribe(
       industryPartners => {
+        this.isFetching = false
         this.industryPartners = industryPartners.map(
           (element: any) => {
             element.full_location = element.municipality + ", " + element.province
@@ -69,6 +77,7 @@ export class ListComponent {
         this.isLoading = false
       },
       error => {
+        this.isFetching = false
         this.gs.errorAlert('Oops!', 'Something went wrong, please try again later.')
         this.isLoading = false
         console.error(error)
@@ -77,8 +86,15 @@ export class ListComponent {
   }
 
   getIndustryPartner(id: number) {
+    if(this.isFetching) {
+      return
+    }
+
+    this.isFetching = true
+
     this.ds.get('adviser/industryPartners/', id).subscribe(
       industryPartner => {
+        this.isFetching = false
         let companyHead = industryPartner.company_head;
         let fullName = `${companyHead?.first_name || ''} ${companyHead?.last_name || ''} ${companyHead?.ext_name || ''}`.trim();
         industryPartner.company_head.full_name = fullName;
@@ -102,6 +118,7 @@ export class ListComponent {
         this.router.navigate(['main/industrypartners/view'])
       },
       error => {
+        this.isFetching = false
         console.error(error)
         this.gs.errorAlert('Oops', 'Something went wrong. Please try again later.')
       }

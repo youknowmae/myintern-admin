@@ -22,7 +22,7 @@ export class ViewComponent {
   user: any
 
   commentValue: string = ''
-  isCommenting: boolean = false 
+  isSubmitting: boolean = false 
 
   constructor(
     private ds: DataService,
@@ -78,20 +78,32 @@ export class ViewComponent {
       cancelButtonColor: "#777777",
     }).then((result) => {
       if (result.isConfirmed) {
-        this.ds.post('adviser/applications/accept/', this.applicationDetails.id, null).subscribe(
-          response => {
-            this.gs.successAlert('Approved!', response.message)
-            this.applicationDetails.status = 3
-
-            this.generateEndorsement()
-          },
-          error => {
-            console.error(error)
-          }
-        )
-        console.log(this.applicationDetails)
+        this.approve()
       }
     });
+  }
+
+  approve() {
+    if(this.isSubmitting) {
+      return
+    }
+
+    this.isSubmitting = true
+
+    this.ds.post('adviser/applications/accept/', this.applicationDetails.id, null).subscribe(
+      response => {
+        this.isSubmitting = false
+        this.gs.successAlert('Approved!', response.message)
+        this.applicationDetails.status = 3
+
+        this.generateEndorsement()
+      },
+      error => {
+        this.isSubmitting = false
+        console.error(error)
+      }
+    )
+    console.log(this.applicationDetails)
   }
 
   rejectApplication() {
@@ -106,27 +118,38 @@ export class ViewComponent {
       cancelButtonColor: "#777777",
     }).then((result) => {
       if (result.isConfirmed) {
-        // this.apply()
-        this.ds.post('adviser/applications/reject/', this.applicationDetails.id, null).subscribe(
-          response => {
-            this.gs.successAlert('Rejected!', response.message)
-            this.applicationDetails.status = 2
-          },
-          error => {
-            console.error(error)
-          }
-        )
-        console.log(this.applicationDetails)
+       this.reject()
       }
     });
   }
 
-  comment() {
-    if(this.isCommenting) {
+  reject() {
+    if(this.isSubmitting) {
       return
     }
 
-    this.isCommenting = true 
+    this.isSubmitting = true
+
+    this.ds.post('adviser/applications/reject/', this.applicationDetails.id, null).subscribe(
+      response => {
+        this.isSubmitting = false
+        this.gs.successAlert('Rejected!', response.message)
+        this.applicationDetails.status = 2
+      },
+      error => {
+        this.isSubmitting = false
+        console.error(error)
+      }
+    )
+    console.log(this.applicationDetails)
+  }
+
+  comment() {
+    if(this.isSubmitting) {
+      return
+    }
+
+    this.isSubmitting = true 
 
     let payload = new FormData
 
@@ -138,14 +161,14 @@ export class ViewComponent {
         console.log(response)
         this.commentValue = ''
         this.gs.successToastAlert(response.message)
-        this.isCommenting = false
+        this.isSubmitting = false
 
         this.comments.unshift(response.data)
         // this.getApplicationDetails(this.applicationDetails.id)
       },
       error => {
         console.error(error)
-        this.isCommenting = false
+        this.isSubmitting = false
       }
     )
   }

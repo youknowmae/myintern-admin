@@ -29,7 +29,7 @@ export class ListComponent {
   statusFilter: string = 'all'
   classFilter: string = 'all'
 
-  isLoading: boolean = false
+  isSubmitting: boolean = false
   
   @ViewChild(MatPaginator, {static:true}) paginator!: MatPaginator;
   
@@ -156,9 +156,11 @@ export class ListComponent {
   }
 
   viewStudent(id: number) {
-    if(this.isLoading) {
+    if(this.isSubmitting) {
       return
     }
+
+    this.isSubmitting = true
 
     let studentDetails = this.unfilteredStudents.find((student: any) => student.id == id)
 
@@ -167,11 +169,11 @@ export class ListComponent {
       student => {
         this.us.setStudentProfile({ ...student, required_hours: studentDetails.active_ojt_class.required_hours })
         this.router.navigate(['main/students/view'])
-        this.isLoading = false
+        this.isSubmitting = false
       },
       error => {
         console.error(error)
-        this.isLoading = false
+        this.isSubmitting = false
       }
     )
   }

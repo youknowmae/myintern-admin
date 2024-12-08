@@ -26,6 +26,8 @@ export class ListComponent {
   statusFilter: string = 'all'
   classFilter: string = 'all'
   
+  isSubmitting: boolean = false
+  
   @ViewChild(MatPaginator, {static:true}) paginator!: MatPaginator;
   
   constructor(
@@ -105,13 +107,22 @@ export class ListComponent {
   }
 
   viewEvaluation(id: number) {
+    if(this.isSubmitting) {
+      return
+    }
+
+    this.isSubmitting = true
+
     this.ds.get('adviser/evaluation/students/', id).subscribe(
       response => {
+        this.isSubmitting = false
         console.log(response)
         this.us.setStudentEvaluation(response)
         this.router.navigate(['main/evaluation/view'])
       },
       error => {
+        this.gs.errorAlert('Oops!', 'Something went wrong. Please try again later.')
+        this.isSubmitting = false
         console.error(error)
       }
     )

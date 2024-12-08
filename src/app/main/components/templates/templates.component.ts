@@ -24,6 +24,8 @@ export class TemplatesComponent {
   @ViewChild(MatPaginator, {static:true}) paginator!: MatPaginator;
 
   
+  isSubmitting: boolean = false
+  
   constructor(
     private dialogRef: MatDialog,
     private paginatorIntl: MatPaginatorIntl, 
@@ -108,18 +110,32 @@ export class TemplatesComponent {
   }
 
   deleteTemplate(id: number) {
+    if(this.isSubmitting) {
+      return
+    }
+
+    this.isSubmitting = true
+
     this.ds.delete('adviser/templates/', id).subscribe(
       result => {
+        
+        this.isSubmitting = false
         console.log(result)
         this.dataSource.data = this.dataSource.data.filter((template: any) => template.id !== id);
         this.gs.successAlert('Success', 'Template has been deleted.')
       },
       error => {
+        
+        this.isSubmitting = false
         console.error(error)
         console.log(error.error)
         if(error.status == 409) {
           this.gs.errorAlert('Error', error.error)
         }
+        else {
+          this.gs.errorAlert('Oops!', "Something went wrong. Please try again later.")
+        }
+
         // Swal.fire({
         //   title: 'Error!',
         //   text: 'Something went wrong. Please try again later.',

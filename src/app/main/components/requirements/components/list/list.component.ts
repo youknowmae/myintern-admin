@@ -8,6 +8,7 @@ import { DataService } from '../../../../../services/data.service';
 import { Router } from '@angular/router';
 import { MatSelectChange } from '@angular/material/select';
 import { UserService } from '../../../../../services/user.service';
+import { GeneralService } from '../../../../../services/general.service';
 
 @Component({
   selector: 'app-list',
@@ -22,6 +23,8 @@ export class ListComponent {
   currentFilter: string = 'all'
   unfilteredStudents: any
   dataSource: any = new MatTableDataSource<any>();
+
+  isSubmitting: boolean = false
   
   @ViewChild(MatPaginator, {static:true}) paginator!: MatPaginator;
   
@@ -30,7 +33,8 @@ export class ListComponent {
     private changeDetectorRef: ChangeDetectorRef,
     private ds: DataService,
     private router: Router,
-    private us: UserService
+    private us: UserService,
+    private gs: GeneralService
   ) {
     this.paginator = new MatPaginator(this.paginatorIntl, this.changeDetectorRef);
     const nameFilterPredicate = (data: any, search: string): boolean => {
@@ -101,9 +105,15 @@ export class ListComponent {
   }
 
   viewApplication(id: number) {
+    if(this.isSubmitting) {
+      return
+    }
+
+    this.isSubmitting = true
+
     this.ds.get('adviser/applications/', id).subscribe(
       applicationDetails=> {
-
+        this.isSubmitting = false
         let industryPartner = applicationDetails.industry_partner
         let companyHead = industryPartner.company_head;
         let fullName = `${companyHead?.first_name || ''} ${companyHead?.last_name || ''} ${companyHead?.ext_name || ''}`.trim();
@@ -123,6 +133,8 @@ export class ListComponent {
 
       },
       error => {
+        this.isSubmitting = false
+        this.gs.errorAlert('Oops!', 'Something went wrong. Please try again later.')
         console.error(error)
       }
     )

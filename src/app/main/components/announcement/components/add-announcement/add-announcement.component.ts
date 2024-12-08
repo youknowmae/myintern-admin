@@ -11,12 +11,9 @@ import Swal from 'sweetalert2';
 })
 export class AddAnnouncementComponent {
   file: any = null
+  isSubmitting = false
 
-  formDetails: FormGroup = this.fb.group({
-    title: [null, [Validators.required, Validators.maxLength(128)]],
-    description: [null, [Validators.required, Validators.maxLength(2048)]],
-    date: [null]
-  })
+  formDetails: FormGroup 
 
   
   constructor(
@@ -25,6 +22,13 @@ export class AddAnnouncementComponent {
     private ds: DataService
   ) {
     const today = new Date();
+
+    this.formDetails = this.fb.group({
+      title: [null, [Validators.required, Validators.maxLength(128)]],
+      description: [null, [Validators.required, Validators.maxLength(2048)]],
+      date: [null]
+    })
+
     this.formDetails.patchValue({
       date: today.toISOString().split('T')[0]
     })
@@ -85,6 +89,12 @@ export class AddAnnouncementComponent {
   }
 
   createAnnouncement() {
+    if(this.isSubmitting) {
+      return
+    }
+
+    this.isSubmitting = true
+
     var formDetails = this.formDetails.value
 
     var payload = new FormData();
@@ -96,6 +106,7 @@ export class AddAnnouncementComponent {
     
     this.ds.post('adviser/announcements', '', payload).subscribe(
       result => {
+        this.isSubmitting = false
         Swal.fire({
           title: "Success!",
           text: result.message,
@@ -105,6 +116,8 @@ export class AddAnnouncementComponent {
         
       },
       error => {
+        this.isSubmitting = false
+        
         console.error(error)
         if (error.status == 422) {
           Swal.fire({

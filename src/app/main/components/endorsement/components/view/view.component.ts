@@ -17,6 +17,8 @@ export class ViewComponent {
   filePreview: any
   isImage: boolean = false
 
+  isSubmitting: boolean = false
+
   constructor(
     private us: UserService,
     private gs: GeneralService,
@@ -115,20 +117,28 @@ export class ViewComponent {
       cancelButtonColor: "#777777",
     }).then((result) => {
       if (result.isConfirmed) {
-        // this.apply()
         const payload = new FormData
         if(this.file) {
           console.log(this.file)
           payload.append('mou', this.file)
         }
+        
+        if(this.isSubmitting) {
+          return
+        }
+
+        this.isSubmitting = true
 
         this.ds.post('adviser/request/industryPartners/verify/', this.industryPartner.id, payload).subscribe(
           response => {
+            
+            this.isSubmitting = false
             this.router.navigate(['main/endorsement/list'])
             this.gs.successAlert(response.title, response.message)
             this.industryPartner.status = 2
           },
           error => {
+            this.isSubmitting = false
             console.error(error)
             if(error.status === 409) {
               this.gs.errorAlert(error.error.title, error.error.message)

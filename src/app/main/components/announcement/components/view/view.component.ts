@@ -11,18 +11,22 @@ import Swal from 'sweetalert2';
 })
 export class ViewComponent {
   file: any = null
-  formDetails: FormGroup = this.fb.group({
-    title: [null, Validators.required],
-    description: [null, Validators.required],
-    date: [null]
-  })
+  formDetails: FormGroup 
+
+  isSubmitting: boolean = false
     
   constructor(
     @Inject(MAT_DIALOG_DATA) public data: any,
     private ds: DataService,
     private ref: MatDialogRef<ViewComponent>,
     private fb: FormBuilder
-  ) { }
+  ) { 
+    this.formDetails = this.fb.group({
+      title: [null, Validators.required],
+      description: [null, Validators.required],
+      date: [null]
+    })
+  }
 
   ngOnInit() {
     this.formDetails.patchValue({
@@ -87,6 +91,12 @@ export class ViewComponent {
   }
 
   updateAnnouncement() {
+    if(this.isSubmitting) {
+      return
+    }
+
+    this.isSubmitting = true
+
     var formDetails = this.formDetails.value
 
     var payload = new FormData();
@@ -99,6 +109,7 @@ export class ViewComponent {
 
     this.ds.post('adviser/announcements/', this.data.id, payload).subscribe(
       result => {
+        this.isSubmitting = false
         Swal.fire({
           title: "Success!",
           text: result.message,
@@ -107,6 +118,7 @@ export class ViewComponent {
         this.ref.close(result.data)
       },
       error => {
+        this.isSubmitting = false
         console.error(error)
         if (error.status == 422) {
           Swal.fire({

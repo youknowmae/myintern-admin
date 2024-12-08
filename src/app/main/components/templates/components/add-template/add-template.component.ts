@@ -17,6 +17,8 @@ export class AddTemplateComponent {
   formDetails: FormGroup = this.fb.group({
     name: [null, [Validators.required, Validators.maxLength(128)]]
   })
+  
+  isSubmitting: boolean = false
 
   
   constructor(
@@ -107,8 +109,16 @@ export class AddTemplateComponent {
     payload.append('docx', this.docxFile);
     payload.append('pdf', this.pdfFile);
     
+    
+    if(this.isSubmitting) {
+      return
+    }
+
+    this.isSubmitting = true
+    
     this.ds.post('adviser/templates', '', payload).subscribe(
       result => {
+        this.isSubmitting = false
         Swal.fire({
           title: "Success!",
           text: result.message,
@@ -118,6 +128,7 @@ export class AddTemplateComponent {
         
       },
       error => {
+        this.isSubmitting = false
         console.error(error)
         if (error.status == 422) {
           this.gs.errorAlert('Error!', 'Invalid input.')

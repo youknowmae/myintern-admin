@@ -17,6 +17,8 @@ export class AnnouncementComponent {
   announcements: announcement[] = []
   isLoading: boolean = true
 
+  isSubmitting: boolean = false
+
   constructor(
     private dialogRef: MatDialog,
     private ds: DataService
@@ -75,8 +77,15 @@ export class AnnouncementComponent {
   }
 
   deleteAnnouncement(id: number) {
+    if(this.isSubmitting) {
+      return
+    }
+
+    this.isSubmitting = true
+
     this.ds.delete('adviser/announcements/', id).subscribe(
       result => {
+        this.isSubmitting = false
         console.log(result)
         this.announcements = this.announcements.filter((announcement: any) => announcement.id !== id);
         Swal.fire({
@@ -88,6 +97,7 @@ export class AnnouncementComponent {
         });
       },
       error => {
+        this.isSubmitting = false
         Swal.fire({
           title: 'Error!',
           text: 'Something went wrong. Please try again later.',

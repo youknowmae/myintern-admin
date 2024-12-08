@@ -23,6 +23,8 @@ export class ListComponent {
 
   statusFilter: string = 'all'
   classFilter: string = 'all'
+
+  isSubmitting: boolean = false
   
   @ViewChild(MatPaginator, {static:true}) paginator!: MatPaginator;
 
@@ -63,8 +65,15 @@ export class ListComponent {
   }
 
   view(id: number){
+    if(this.isSubmitting) {
+      return
+    }
+
+    this.isSubmitting = true
+
     this.ds.get('adviser/exit-poll/', id).subscribe(
       exitPollDetails=> {  
+        this.isSubmitting = false
 
         let supervisor = exitPollDetails.industry_partner.immediate_supervisor;
         let supervisorFullName = `${supervisor?.first_name || ''} ${supervisor?.last_name || ''} ${supervisor?.ext_name || ''}`.trim();
@@ -76,6 +85,7 @@ export class ListComponent {
         this.router.navigate(['/main/exitpoll/view'])
       },
       error => {
+        this.isSubmitting = false
         console.error(error)
       }
     )

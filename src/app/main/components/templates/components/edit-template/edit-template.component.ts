@@ -18,6 +18,7 @@ export class EditTemplateComponent {
     name: [null, [Validators.required, Validators.maxLength(128)]]
   })
 
+  isSubmitting: boolean = false
   
   constructor(
     @Inject(MAT_DIALOG_DATA) public data: any,
@@ -95,19 +96,27 @@ export class EditTemplateComponent {
     }
 
     
+    if(this.isSubmitting) {
+      return
+    }
+
+    this.isSubmitting = true
+    
     this.ds.post('adviser/templates/', this.data.id, payload).subscribe(
       result => {
+        this.isSubmitting = false
         this.gs.successAlert("Success!", result.message)
         this.ref.close(result.data);
         
       },
       error => {
+        this.isSubmitting = false
         console.error(error)
         if (error.status == 422) {
           this.gs.errorAlert("Error!", "Invalid input.")
         }
         else {
-          this.gs.errorAlert("Error!", "Something went wrong, please try again later.")
+          this.gs.errorAlert("Oops!", "Something went wrong, please try again later.")
         }
       }
     )
