@@ -80,8 +80,18 @@ export class ListComponent {
           else if(element.status == 4) {
             element.status_text = 'Rejected'
           }
-          else if(element.status == 5) {
-            element.status_text = 'Accepted'
+          else if (
+            element.status == 5 ||
+            element.status == 6 ||
+            element.status == 7
+          ) {
+            element.status = 5
+            element.status_text = 'For Interview';
+
+          }
+          else if (element.status == 8) {
+            element.status = 6
+            element.status_text = 'Accepted';
           }
 
           let student = element.user

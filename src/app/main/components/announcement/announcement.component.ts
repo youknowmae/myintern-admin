@@ -83,7 +83,7 @@ export class AnnouncementComponent {
 
     this.isSubmitting = true
 
-    this.ds.delete('adviser/announcements/', id).subscribe(
+    this.ds.get(`adviser/announcements/${id}/delete`).subscribe(
       result => {
         this.isSubmitting = false
         console.log(result)

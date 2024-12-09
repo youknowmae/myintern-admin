@@ -44,7 +44,9 @@
             "allowedCommonJsDependencies": [
                 "file-saver",
                 "sweetalert2",
-                "exceljs"
+                "exceljs",
+                "jspdf-autotable",
+                "html2canvas"
             ]
 
           },

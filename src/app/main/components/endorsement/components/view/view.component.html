@@ -45,19 +45,24 @@
                             </ul>
                         </div>
                     </div>
-
+                </div>
+                <div class="stepper-content">
+                    <div *ngIf="industryPartner.remarks">
+                        <h3 style="margin: 0; font-weight: 600;" >Remarks:</h3>
+                        <p>{{ industryPartner.remarks }}</p>
+                    </div>
                 </div>
         
                 <div class="action-buttons">
                     <button class="warning" *ngIf="industryPartner.status === 0" (click)="reject()">Reject</button>
-                    <button class="success" mat-button matStepperNext>Next</button>
+                    <button class="success" mat-button matStepperNext *ngIf="industryPartner.status != 1">Next</button>
                 </div>
             </mat-step>
             
-            <mat-step>
+            <mat-step *ngIf="industryPartner.status != 1">
                 <ng-template matStepLabel>Documents</ng-template>
 
-                <div class="stepper-content" *ngIf="industryPartner.status === 0; else mouPreview">
+                <div class="stepper-content" *ngIf="industryPartner.status === 0 || industryPartner.status === 1; else mouPreview">
                     <div class="row" >
                         <div class="col-md-4">
                             <div class="file-input-container"> 

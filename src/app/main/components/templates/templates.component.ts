@@ -116,7 +116,7 @@ export class TemplatesComponent {
 
     this.isSubmitting = true
 
-    this.ds.delete('adviser/templates/', id).subscribe(
+    this.ds.get(`adviser/templates/${id}/delete`).subscribe(
       result => {
         
         this.isSubmitting = false
