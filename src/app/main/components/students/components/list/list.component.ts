@@ -11,7 +11,6 @@ import { MatSelectChange } from '@angular/material/select';
 
 import * as ExcelJS from 'exceljs';
 
-import * as XLSX from 'xlsx';
 import { saveAs } from 'file-saver';
 
 @Component({
@@ -20,7 +19,10 @@ import { saveAs } from 'file-saver';
   styleUrl: './list.component.scss'
 })
 export class ListComponent {
-  displayedColumns: string[] = ['name', 'student_number', 'course', 'program', 'progress', 'student_evaluation', 'exit_poll', 'status', 'actions'];
+  // displayedColumns: string[] = ['name', 'student_number', 'course', 'program', 'progress', 'student_evaluation', 'exit_poll', 'status', 'actions'];
+
+  
+  displayedColumns: string[] = ['name', 'company', 'progress', 'student_evaluation', 'exit_poll', 'status', 'actions'];
 
   unfilteredStudents: any
   dataSource: any = new MatTableDataSource<any>();
