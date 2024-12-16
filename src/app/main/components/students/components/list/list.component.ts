@@ -75,7 +75,7 @@ export class ListComponent {
             this.classList.push(student.active_ojt_class.class_code) 
 
           if(student.ojt_exit_poll) {
-            student.ojt_exit_poll = "Answered"
+            student.ojt_exit_poll = "Done"
           }
 
           if(student.student_evaluation) {
