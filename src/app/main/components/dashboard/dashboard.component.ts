@@ -61,6 +61,11 @@ export class DashboardComponent implements AfterViewInit {
           backgroundColor: '#FABC3F'
         },
         {
+          label: 'Ongoing',
+          data: [0, 0, 0, 0],
+          backgroundColor: '#99B080'
+        },
+        {
           label: 'Completed',
           data: [0, 0, 0, 0],
           backgroundColor: '#7C93C3'
@@ -238,11 +243,19 @@ export class DashboardComponent implements AfterViewInit {
         ]       
 
         this.barChart.data.datasets[1].data = [
+          response.student_ojt_status.bsit.ongoing,
+          response.student_ojt_status.bscs.ongoing,
+          response.student_ojt_status.bsemc.ongoing,
+          response.student_ojt_status.act.ongoing,
+        ]       
+
+        this.barChart.data.datasets[2].data = [
           response.student_ojt_status.bsit.completed,
           response.student_ojt_status.bscs.completed,
           response.student_ojt_status.bsemc.completed,
           response.student_ojt_status.act.completed,
-        ]       
+        ]
+
         this.barChart.update()
 
         this.evaluationBarChart.data.datasets[0].data = [

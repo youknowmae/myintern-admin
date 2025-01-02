@@ -76,10 +76,6 @@ export class ListComponent {
           if (!this.classList.includes(student.active_ojt_class.class_code)) 
             this.classList.push(student.active_ojt_class.class_code) 
 
-          if(student.ojt_exit_poll) {
-            student.ojt_exit_poll = "Done"
-          }
-
           if(student.student_evaluation) {
             student.student_evaluation = student.student_evaluation.average
           }
@@ -93,11 +89,21 @@ export class ListComponent {
               progress = required_hours
           }
 
-
-          let status = (student.accepted_application) ? 'Ongoing' : 'Pending'
+          let status = null
 
           if(progress >= required_hours && student.ojt_exit_poll && student.student_evaluation) {
             status = "Completed"
+          }
+          else if (student.accepted_application) {
+            status = 'Ongoing'
+          }  
+          else if (student.pending_application && student.pending_application.status == 0)
+            status = 'Pending - Adviser Approval'
+          else if(student.pending_application) {
+            status = 'Pending - Company Approval'
+          }
+          else {
+            status = 'Pending - w/o application'
           }
 
           return {
