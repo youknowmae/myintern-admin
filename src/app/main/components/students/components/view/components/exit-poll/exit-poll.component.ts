@@ -37,15 +37,17 @@ export class ExitPollComponent {
     let user = this.us.getStudentProfile()
 
     this.ds.get('adviser/students/exit-poll/', user.id).subscribe(
-      exitPollDetails=> {  
+      response => {  
         this.isLoading = false
 
 
-        console.log(exitPollDetails)
-        if(!exitPollDetails.data) {
+        console.log(response)
+        if(!response.data) {
           return
         }
 
+        let exitPollDetails = response.data
+        
         let supervisor = exitPollDetails.industry_partner.immediate_supervisor;
         let supervisorFullName = `${supervisor?.first_name || ''} ${supervisor?.last_name || ''} ${supervisor?.ext_name || ''}`.trim();
         exitPollDetails.industry_partner.immediate_supervisor.full_name = supervisorFullName;
