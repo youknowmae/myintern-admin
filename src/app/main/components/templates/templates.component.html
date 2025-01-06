@@ -2,7 +2,7 @@
     <div class="container-header">
         <h1>Templates</h1>
         <div class="btn">
-            <button (click)="addTemplate()">+ New</button>
+            <button mat-ripple (click)="addTemplate()">+ New</button>
         </div>
     </div>
 
@@ -19,6 +19,7 @@
                 <div class="actions">
                     <button class="view" 
                     mat-raised-button
+                    mat-ripple
                     matTooltip="View"
                     [matTooltipShowDelay] = "400"
                     (click)="previewTemplate(element)">
@@ -28,6 +29,7 @@
                     <button
                     class="edit" 
                     mat-raised-button
+                    mat-ripple
                     matTooltip="Edit"
                     [matTooltipShowDelay] = "400"
                     (click)="editTemplate(element)">
@@ -37,6 +39,7 @@
                     <button
                     class="delete" 
                     mat-raised-button
+                    mat-ripple
                     matTooltip="Delete"
                     [matTooltipShowDelay] = "400"
                     (click)="deleteConfirmation(element.id)">

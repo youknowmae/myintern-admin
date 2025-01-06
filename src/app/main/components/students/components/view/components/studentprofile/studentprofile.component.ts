@@ -69,7 +69,7 @@ export class StudentprofileComponent {
   }
 
   getPersonalityTest() {
-    this.ds.get('adviser/monitoring/personality-test/', this.student.id).subscribe(
+    this.ds.get('adviser/students/personality-test/', this.student.id).subscribe(
       response => {
         console.log(response)
         this.personality_test = response
@@ -80,7 +80,7 @@ export class StudentprofileComponent {
     )
   }
   getSeminars() {
-    this.ds.get('adviser/monitoring/seminar/', this.student.id).subscribe(
+    this.ds.get('adviser/students/seminar/', this.student.id).subscribe(
       response => {
         this.seminars = response
         this.seminars.forEach((seminar: any) => {

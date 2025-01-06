@@ -1,10 +1,7 @@
 import { Component } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { DataService } from '../../../../../services/data.service';
-import { AddIndustryPartnerComponent } from '../add-industry-partner/add-industry-partner.component';
 import { IndustryPartner } from '../../../../../model/industry-partner.model';
-import { EditIndustryPartnerComponent } from '../edit-industry-partner/edit-industry-partner.component';
-import Swal from 'sweetalert2';
 import { GeneralService } from '../../../../../services/general.service';
 import { UserService } from '../../../../../services/user.service';
 import { Router } from '@angular/router';
@@ -23,8 +20,6 @@ export class ListComponent {
   searchValue: string = ''
   
   pagination: pagination = <pagination>{};
-  
-  isFetching: boolean = false
 
   constructor(
     private us: UserService,
@@ -55,14 +50,8 @@ export class ListComponent {
   }
 
   getIndustryPartners() {
-    if(this.isFetching) {
-      return
-    }
-
-    this.isFetching = true
     this.ds.get('adviser/industryPartners').subscribe(
       industryPartners => {
-        this.isFetching = false
         this.industryPartners = industryPartners.map(
           (element: any) => {
             element.full_location = element.municipality + ", " + element.province
@@ -77,7 +66,6 @@ export class ListComponent {
         this.isLoading = false
       },
       error => {
-        this.isFetching = false
         this.gs.errorAlert('Oops!', 'Something went wrong, please try again later.')
         this.isLoading = false
         console.error(error)
@@ -86,43 +74,8 @@ export class ListComponent {
   }
 
   getIndustryPartner(id: number) {
-    if(this.isFetching) {
-      return
-    }
-
-    this.isFetching = true
-
-    this.ds.get('adviser/industryPartners/', id).subscribe(
-      industryPartner => {
-        this.isFetching = false
-        let companyHead = industryPartner.company_head;
-        let fullName = `${companyHead?.first_name || ''} ${companyHead?.last_name || ''} ${companyHead?.ext_name || ''}`.trim();
-        industryPartner.company_head.full_name = fullName;
-
-        let supervisor = industryPartner.immediate_supervisor;
-        let supervisorFullName = `${supervisor?.first_name || ''} ${supervisor?.last_name || ''} ${supervisor?.ext_name || ''}`.trim();
-        industryPartner.immediate_supervisor.full_name = supervisorFullName;
-
-        if(industryPartner.internship_applications) {  
-          industryPartner.internship_applications = industryPartner.internship_applications.map((student: any) => {
-          return {
-            full_name: student.user.first_name + " " + student.user.last_name,
-            ...student
-          }
-        })
-      }
-        
-        console.log(industryPartner)
-
-        this.us.setIndustryPartner(industryPartner)
-        this.router.navigate(['main/industrypartners/view'])
-      },
-      error => {
-        this.isFetching = false
-        console.error(error)
-        this.gs.errorAlert('Oops', 'Something went wrong. Please try again later.')
-      }
-    )
+    this.us.setIndustryPartner(id)
+    this.router.navigate(['main/industrypartners/view'])
   }
 
   filterIndustryPartners() {

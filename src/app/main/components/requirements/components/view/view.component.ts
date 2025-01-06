@@ -5,10 +5,10 @@ import { PdfPreviewComponent } from '../../../../../components/pdf-preview/pdf-p
 import { MatDialog } from '@angular/material/dialog';
 import Swal from 'sweetalert2';
 import { GeneralService } from '../../../../../services/general.service';
-import { response } from 'express';
-
+import { Router } from '@angular/router';
 import { saveAs } from 'file-saver'
 import { UserService } from '../../../../../services/user.service';
+import { formatDate } from '@angular/common';
 
 @Component({
   selector: 'app-view',
@@ -17,6 +17,8 @@ import { UserService } from '../../../../../services/user.service';
 })
 export class ViewComponent {
   id: any 
+  
+  isLoading: boolean = true
   applicationDetails: any
   comments: any = []
   user: any
@@ -29,7 +31,8 @@ export class ViewComponent {
     private route: ActivatedRoute,
     private dialogRef: MatDialog,
     private gs: GeneralService,
-    private us: UserService
+    private us: UserService,
+    private router: Router,
   ) {
   }
 
@@ -40,23 +43,95 @@ export class ViewComponent {
   }
 
   getApplicationDetails() {
-    this.applicationDetails = this.us.getStudentApplication()
+        
+    let id = this.us.getStudentApplication()
 
-    this.comments = this.applicationDetails.application_comments.map((element: any) => {
-      if(element.supervisor) {
-        let name = JSON.parse(element.supervisor.immediate_supervisor)
+    this.ds.get('adviser/applications/', id).subscribe(
+          applicationDetails=> {
+            this.isSubmitting = false
+            let industryPartner = applicationDetails.industry_partner
+            let companyHead = industryPartner.company_head;
+            let fullName = `${companyHead?.first_name || ''} ${companyHead?.last_name || ''} ${companyHead?.ext_name || ''}`.trim();
+            applicationDetails.industry_partner.company_head.full_name = fullName;
+    
+            let supervisor = industryPartner.immediate_supervisor;
+            let supervisorFullName = `${supervisor?.first_name || ''} ${supervisor?.last_name || ''} ${supervisor?.ext_name || ''}`.trim();
+            applicationDetails.industry_partner.immediate_supervisor.full_name = supervisorFullName;
+    
+            let full_address = `${industryPartner?.street || ''} ${industryPartner?.barangay || ''}, ${industryPartner?.municipality || ''}`
+            industryPartner.full_address = full_address
 
-        element = {...name, image: element.supervisor.image, message: element.message}
-      }
+            if(applicationDetails.application_endorsement)
+              applicationDetails.application_documents.unshift(applicationDetails.application_endorsement)
 
-      if(element.user) {
-        element = {...element.user, message: element.message}
-      }
+            if(applicationDetails.status == 0) {
+              applicationDetails.status_text = 'Pending'
+            }
+            else if(applicationDetails.status == 1) {
+              applicationDetails.status_text = 'Cancelled'
+            }
+            else if(applicationDetails.status == 2) {
+              applicationDetails.status_text = 'Rejected (Adviser)'
+            }
+            else if(applicationDetails.status == 3) {
+              applicationDetails.status_text = 'Approved'
+            }
+            else if(applicationDetails.status == 4) {
+              applicationDetails.status_text = 'Rejected (Company)'
+            }
+            else if (
+              applicationDetails.status == 5 ||
+              applicationDetails.status == 6 ||
+              applicationDetails.status == 7
+            ) {
+              applicationDetails.status = 5
+              applicationDetails.status_text = 'For Interview';
+  
+            }
+            else if (applicationDetails.status == 8) {
+              applicationDetails.status = 6
+              applicationDetails.status_text = 'Accepted';
+            }
+            
+            console.log(applicationDetails)
 
-      return element
-    });
+            this.applicationDetails = applicationDetails
+    
+            this.comments = this.applicationDetails.application_comments 
 
-    console.log(this.comments)
+            // .map((applicationDetails: any) => {
+            //   if(applicationDetails.supervisor) {
+            //     let name = JSON.parse(applicationDetails.supervisor.immediate_supervisor)
+        
+            //     applicationDetails = {...name, image: applicationDetails.supervisor.image, message: applicationDetails.message}
+            //   }
+        
+            //   if(applicationDetails.user) {
+            //     applicationDetails = {...applicationDetails.user, message: applicationDetails.message}
+            //   }
+        
+            //   return applicationDetails
+            // });            
+        
+            this.isLoading = false
+            console.log(this.comments)
+    
+          },
+          error => {
+            this.isLoading = false
+            this.gs.errorAlert('Oops!', 'Something went wrong. Please try again later.')
+            console.error(error)
+            if(error.status === 404) {
+              this.router.navigate(['main/requirements/list'])
+              this.gs.errorAlert('Not Found!', 'Application not found.')
+            }
+            else {
+              this.gs.errorAlert('Oops!', 'Something went wrong. Please try again later.')
+            }
+          }
+        )
+
+        
   }
 
   previewDocument(file: any) {
@@ -95,6 +170,7 @@ export class ViewComponent {
         this.isSubmitting = false
         this.gs.successAlert('Approved!', response.message)
         this.applicationDetails.status = 3
+        this.applicationDetails.status_text = 'Approved'
 
         this.generateEndorsement()
       },
@@ -135,6 +211,7 @@ export class ViewComponent {
         this.isSubmitting = false
         this.gs.successAlert('Rejected!', response.message)
         this.applicationDetails.status = 2
+        this.applicationDetails.status_text = 'Rejected (Adviser)'
       },
       error => {
         this.isSubmitting = false
@@ -202,6 +279,22 @@ export class ViewComponent {
       }
     )
   }
+
+  formatTimestamp(timestamp: string): string {
+    const now = new Date();
+    console.log(now)
+    const date = new Date(timestamp);
+  
+    const isToday = now.toDateString() === date.toDateString();
+  
+    if (isToday) {
+      return formatDate(date, 'h:mm a', 'en-US');
+    } 
+     else {
+      return formatDate(date, 'MMM d, h:mm a', 'en-US');
+    }
+  }
+  
 
   
 }

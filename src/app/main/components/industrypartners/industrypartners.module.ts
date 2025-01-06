@@ -4,28 +4,23 @@ import { CommonModule } from '@angular/common';
 import { IndustrypartnersRoutingModule } from './industrypartners-routing.module';
 import { ListComponent } from './components/list/list.component';
 import { ViewComponent } from './components/view/view.component';
-import { AddnewComponent } from './components/addnew/addnew.component';
-import { AddIndustryPartnerComponent } from './components/add-industry-partner/add-industry-partner.component';
-import { EditIndustryPartnerComponent } from './components/edit-industry-partner/edit-industry-partner.component';
 import { ReactiveFormsModule } from '@angular/forms';
 
 import { MaterialsModules } from '../../../modules/materials.module';
+import { LoadingSpinnerComponent } from '../../../components/loading-spinner/loading-spinner.component';
 
 
 @NgModule({
   declarations: [
-    // IndustrypartnersComponent
     ListComponent,
     ViewComponent,
-    AddnewComponent,
-    AddIndustryPartnerComponent,
-    EditIndustryPartnerComponent
   ],
   imports: [
     CommonModule,
     IndustrypartnersRoutingModule,
     MaterialsModules,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    LoadingSpinnerComponent
   ]
 })
 export class IndustrypartnersModule { }

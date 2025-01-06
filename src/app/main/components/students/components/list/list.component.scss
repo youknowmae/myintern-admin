@@ -71,7 +71,7 @@ h1 {
     height: fit-content;
     padding: 0px 30px;
     border-radius: 30px;
-    box-shadow: 3px 3px 10px rgba(0, 0, 0, 0.1);
+    box-shadow: var(--shadow);
 
     table {
         box-shadow: none;
@@ -123,12 +123,6 @@ h1 {
             border: 2px solid var(--secondary-color);
         }
     }
-}
-
-.sub-text {
-    margin: 0;
-    color: grey;
-    font-size: 12px;
 }
 
 mat-paginator {

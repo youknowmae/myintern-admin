@@ -2,7 +2,7 @@
     <div class="container-header">
         <h1>Announcement</h1>
         <div class="btn">
-            <button (click)="addAnnouncement()">+ New</button>
+            <button mat-ripple (click)="addAnnouncement()">+ New</button>
         </div>
     </div>
     
@@ -20,12 +20,14 @@
                     <div class="view-button">
                         <button class="delete" 
                             mat-raised-button
+                            mat-ripple
                             matTooltip="Delete"
                             [matTooltipShowDelay] = "400" 
                             (click)="deleteConfirmation(announcement.id)">
                             <i class='bx bxs-trash'></i>
                         </button>
                         <button class="edit" 
+                            mat-ripple
                             mat-raised-button
                             matTooltip="Edit"
                             [matTooltipShowDelay] = "400" 

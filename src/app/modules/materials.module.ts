@@ -7,7 +7,7 @@ import { MatInputModule } from '@angular/material/input';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatTableModule } from '@angular/material/table';
 import { MatSelectModule } from "@angular/material/select";
-import { MatOptionModule } from "@angular/material/core";
+import { MatOptionModule, MatRippleModule } from "@angular/material/core";
 import { MatIconModule } from '@angular/material/icon'
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatRadioModule } from '@angular/material/radio';
@@ -33,7 +33,8 @@ const var_modules = [
     MatCheckboxModule,
     MatStepperModule,
     MatProgressSpinnerModule,
-    MatTabsModule
+    MatTabsModule,
+    MatRippleModule
 ]
 
 @NgModule({

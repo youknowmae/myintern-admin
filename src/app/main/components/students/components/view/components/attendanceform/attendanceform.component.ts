@@ -16,6 +16,8 @@ export class AttendanceformComponent {
     required_hours: 0,
     remarks: ''
   }
+  
+  isLoading: boolean = true
 
   displayedColumns: string[] = ['date', 'arrival_time', 'departure_time', 'total_hours', 'is_verified'];
   
@@ -23,7 +25,11 @@ export class AttendanceformComponent {
 
   dataSource: any = new MatTableDataSource<any>();
   
-  @ViewChild(MatPaginator, {static:true}) paginator!: MatPaginator;
+  @ViewChild(MatPaginator) set paginator(paginator: MatPaginator) {
+    if (paginator) {
+      this.dataSource.paginator = paginator;
+    }
+  }
 
   constructor(
     private paginatorIntl: MatPaginatorIntl, 
@@ -41,16 +47,17 @@ export class AttendanceformComponent {
   }
 
   getAttendance(id: number) {
-    this.ds.get('adviser/monitoring/students/attendance/', id).subscribe(
+    this.ds.get('adviser/students/attendance/', id).subscribe(
       response => {
+        this.isLoading = false
         console.log(response)
 
         this.dataSource.data = response;
-        this.dataSource.paginator = this.paginator;
         
         this.tallyProgress()
       },
       error => {
+        this.isLoading = false
         console.error(error)
       }
     )

@@ -5,6 +5,7 @@ import { RequirementsRoutingModule } from './requirements-routing.module';
 import { ViewComponent } from './components/view/view.component';
 import { ListComponent } from './components/list/list.component';
 import { MaterialsModules } from '../../../modules/materials.module';
+import { LoadingSpinnerComponent } from '../../../components/loading-spinner/loading-spinner.component';
 
 
 @NgModule({
@@ -17,7 +18,8 @@ import { MaterialsModules } from '../../../modules/materials.module';
   imports: [
     CommonModule,
     RequirementsRoutingModule,
-    MaterialsModules
+    MaterialsModules,
+    LoadingSpinnerComponent
   ]
 })
 export class RequirementsModule { }

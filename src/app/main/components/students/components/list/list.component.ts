@@ -20,8 +20,6 @@ import { saveAs } from 'file-saver';
 })
 export class ListComponent {
   // displayedColumns: string[] = ['name', 'student_number', 'course', 'program', 'progress', 'student_evaluation', 'exit_poll', 'status', 'actions'];
-
-  
   displayedColumns: string[] = ['name', 'company', 'progress', 'student_evaluation', 'exit_poll', 'status', 'actions'];
 
   unfilteredStudents: any
@@ -68,7 +66,7 @@ export class ListComponent {
   }
 
   getStudents() {
-    this.ds.get('adviser/monitoring/students').subscribe(
+    this.ds.get('adviser/students').subscribe(
       students => {
         console.log(students)
         let studentsList = students.map((student: any) => {
@@ -98,7 +96,7 @@ export class ListComponent {
             status = 'Ongoing'
           }  
           else if (student.pending_application && student.pending_application.status == 0)
-            status = 'Pending - Adviser Approval'
+            status = 'Pending - Adviser\'s Approval'
           else if(student.pending_application) {
             status = 'Pending - Company Approval'
           }
@@ -173,7 +171,7 @@ export class ListComponent {
     let studentDetails = this.unfilteredStudents.find((student: any) => student.id == id)
 
     console.log(studentDetails)
-    this.ds.get('adviser/monitoring/students/', id).subscribe(
+    this.ds.get('adviser/students/', id).subscribe(
       student => {
         this.us.setStudentProfile({ ...student, required_hours: studentDetails.active_ojt_class.required_hours })
         this.router.navigate(['main/students/view'])
@@ -195,8 +193,15 @@ export class ListComponent {
       });
     }
 
-    //group by class code
-    students = this.groupBy(students, (student: any) => student.active_ojt_class.class_code)
+    //group by class code and course
+    students = students.map(
+      (data: any) => {
+        //class and course code
+        data.class_course_code = data.active_ojt_class.class_code + ' - ' + data.active_ojt_class.course_code
+        return data
+      }
+    )
+    students = this.groupBy(students, (student: any) => student.class_course_code)
     console.log(students)
     
     const excel = await this.generateExcelContent(students);
@@ -219,10 +224,8 @@ export class ListComponent {
       'Last Name', 
       'First Name', 
       'Student Number', 
-      'Program', 
-      'Year Level', 
-      'Course', 
-      'Class Code', 
+      'Seminar Hours', 
+      'Other Works', 
       'Required OJT Hours', 
       'Rendered OJT Hours',
       'Student Evaluation', 
@@ -250,52 +253,97 @@ export class ListComponent {
         base64: ccsImageBase64,
         extension: "png",
       });
+
+      var currentPageLine = 0;
       
+      var worksheet: any
+
+      const pageSetup: Partial<ExcelJS.PageSetup>  = {
+        orientation: 'landscape', 
+        paperSize: 9, // A4 paper size
+        fitToPage: true,
+        fitToWidth: 1, // Fit to one page width
+        fitToHeight: 0, // Fit to unlimited page height
+      };
+
+      if(this.classFilter == 'all') {
+        worksheet = excel.addWorksheet('All Classes', {
+          pageSetup,
+        });
+      }
+
+
+      var items: any = [];
+      
+
+
       Object.entries(data)
-      .map(([class_code, students]: [string, any]) => {
-        const worksheet = excel.addWorksheet('Class ' + class_code);
+      .map(([class_course_code, students]: [string, any]) => {
+        if(this.classFilter != 'all') {
+          worksheet = excel.addWorksheet('Class ' + class_course_code, {
+            pageSetup,
+          });
+        }
   
         worksheet.addImage(gcLogo, {
-          tl: { col: 0, row: 0 },
+          tl: { col: 0, row: currentPageLine },
           ext: { width: 120, height: 120 },
           editAs: "absolute",
         });
   
         worksheet.addImage(ccsLogo, {
-          tl: { col: 11, row: 0 },
+          tl: { col: 9, row: currentPageLine },
           ext: { width: 120, height: 120 },
           editAs: "absolute",
         });
   
-        worksheet.mergeCells("A2:M2");
-        worksheet.getCell("A2").value = "Gordon College";
-        worksheet.getCell("A2").alignment = {
+        currentPageLine += 1
+        worksheet.mergeCells(`A${currentPageLine+1}:K${currentPageLine+1}`);
+        worksheet.getCell(`A${currentPageLine+1}`).value = "Gordon College";
+        worksheet.getCell(`A${currentPageLine+1}`).alignment = {
           vertical: "middle",
           horizontal: "center",
         };
-        worksheet.getCell("A2").font = { size: 16, bold: true };
+        worksheet.getCell(`A${currentPageLine+1}`).font = { size: 16, bold: true };
   
-        worksheet.mergeCells("A3:M3");
-        worksheet.getCell("A3").value = "College of Computer Studies";
-        worksheet.getCell("A3").alignment = {
+        currentPageLine += 1
+
+        worksheet.mergeCells(`A${currentPageLine+1}:K${currentPageLine+1}`);
+        worksheet.getCell(`A${currentPageLine+1}`).value = "College of Computer Studies";
+        worksheet.getCell(`A${currentPageLine+1}`).alignment = {
           vertical: "middle",
           horizontal: "center",
         };
-        worksheet.getCell("A3").font = { size: 12 };
+        worksheet.getCell(`A${currentPageLine+1}`).font = { size: 12 };
+
+        currentPageLine += 1
   
-        worksheet.mergeCells("A4:M4");
-        worksheet.getCell("A4").value = "A.Y. 2024-2025";
-        worksheet.getCell("A4").alignment = {
+        worksheet.mergeCells(`A${currentPageLine + 1}:K${currentPageLine + 1}`);
+        worksheet.getCell(`A${currentPageLine + 1}`).value = "A.Y. 2024-2025";
+        worksheet.getCell(`A${currentPageLine + 1}`).alignment = {
           vertical: "middle",
           horizontal: "center",
         };
-        worksheet.getCell("A4").font = { size: 12 };
+        worksheet.getCell(`A${currentPageLine + 1}`).font = { size: 12 };
+        currentPageLine += 1;
+
+        worksheet.mergeCells(`A${currentPageLine + 1}:K${currentPageLine + 1}`);
+        worksheet.getCell(`A${currentPageLine + 1}`).value = "Class " + class_course_code;
+        worksheet.getCell(`A${currentPageLine + 1}`).alignment = {
+          vertical: "middle",
+          horizontal: "center",
+        };
+        worksheet.getCell(`A${currentPageLine + 1}`).font = { size: 12 };
+        currentPageLine += 1;
   
         worksheet.addRow([]); 
-        worksheet.addRow([]);
+
+        currentPageLine += 1
   
         worksheet.addRow(header)
+        currentPageLine += 1
   
+        let itemStartingLine =  currentPageLine
         let counter = 1
         students.forEach((student: any) => {
           worksheet.addRow([
@@ -303,19 +351,22 @@ export class ListComponent {
             student.last_name,
             student.first_name,
             student.student_profile.student_number,
-            student.student_profile.program,
-            student.student_profile.year_level,
-            student.active_ojt_class.course_code,
-            student.active_ojt_class.class_code,
+            'to be done',
+            'to be done',
             student.active_ojt_class.required_hours,
             student.progress,
             (student.student_evaluation) ? student.student_evaluation : 'Not Evaluated',
-            (student.ojt_exit_poll) ? 'Completed' : 'INC',
+            (student.ojt_exit_poll) ? 'Answered' : 'Not Completed',
             (student.status === 'Completed') ? 'Completed': 'Incomplete',
           ]);
           counter++
+          currentPageLine++
         });
 
+        items.push({start: itemStartingLine, end: currentPageLine})
+        console.log(items)
+
+        if(this.classFilter != 'all') {
           worksheet.columns.forEach((column: any) => {
             let maxLength = 0;
             column.eachCell({ includeEmpty: true }, (cell: any) => {
@@ -324,12 +375,32 @@ export class ListComponent {
                 maxLength = Math.max(maxLength, cellValue.length);
               }
             });
-            column.width = maxLength < 10 ? 10 : maxLength;
+            column.width = maxLength < 6 ? 6 : maxLength + 1;
           });
-
+          currentPageLine = 0
+        } 
+        else {
+          worksheet.getRow(currentPageLine).addPageBreak()
+          currentPageLine += 1
+        }
       })
-
+      
+      worksheet.columns.forEach((column: any) => {
+          let maxLength = 0;
+          column.eachCell({ includeEmpty: true }, (cell: any) => {
+            items.forEach((item: any) => {
+              if (cell.row >= item.start && cell.row <= item.end) { 
+                const cellValue = cell.value ? cell.value.toString() : '';
+                maxLength = Math.max(maxLength, cellValue.length);
+              }
+            });
+            
+          });
+          column.width = maxLength < 6 ? 6 : maxLength + 1;
+        });
       return excel; // Return the excel workbook
+
+
     } catch (error) {
       console.error("Error in convertExcel:", error);
       return false

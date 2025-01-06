@@ -16,7 +16,8 @@ import { GeneralService } from '../../../../../services/general.service';
   styleUrl: './list.component.scss'
 })
 export class ListComponent {
-  displayedColumns: string[] = ['name', 'student_number', 'category', 'year', 'program', 'company', 'status', 'actions'];
+  // displayedColumns: string[] = ['name', 'student_number', 'category', 'year', 'program', 'company', 'status', 'actions'];
+  displayedColumns: string[] = ['name', 'course_code', 'class_code', 'company', 'application_date', 'status', 'actions'];
   statusFilter: number = 0
 
   
@@ -115,39 +116,8 @@ export class ListComponent {
   }
 
   viewApplication(id: number) {
-    if(this.isSubmitting) {
-      return
-    }
-
-    this.isSubmitting = true
-
-    this.ds.get('adviser/applications/', id).subscribe(
-      applicationDetails=> {
-        this.isSubmitting = false
-        let industryPartner = applicationDetails.industry_partner
-        let companyHead = industryPartner.company_head;
-        let fullName = `${companyHead?.first_name || ''} ${companyHead?.last_name || ''} ${companyHead?.ext_name || ''}`.trim();
-        applicationDetails.industry_partner.company_head.full_name = fullName;
-
-        let supervisor = industryPartner.immediate_supervisor;
-        let supervisorFullName = `${supervisor?.first_name || ''} ${supervisor?.last_name || ''} ${supervisor?.ext_name || ''}`.trim();
-        applicationDetails.industry_partner.immediate_supervisor.full_name = supervisorFullName;
-
-        if(applicationDetails.application_endorsement)
-          applicationDetails.application_documents.unshift(applicationDetails.application_endorsement)
-        
-        console.log(applicationDetails)
-
-        this.us.setStudentApplication(applicationDetails)
-        this.router.navigate(['main/requirements/view/'])
-
-      },
-      error => {
-        this.isSubmitting = false
-        this.gs.errorAlert('Oops!', 'Something went wrong. Please try again later.')
-        console.error(error)
-      }
-    )
+    this.us.setStudentApplication(id)
+    this.router.navigate(['main/requirements/view'])
   }
   
   applyFilter(value: string) {
