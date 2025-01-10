@@ -84,12 +84,11 @@ export class ViewComponent {
               applicationDetails.status == 6 ||
               applicationDetails.status == 7
             ) {
-              applicationDetails.status = 5
+              // applicationDetails.status = 5
               applicationDetails.status_text = 'For Interview';
-  
             }
             else if (applicationDetails.status == 8) {
-              applicationDetails.status = 6
+              // applicationDetails.status = 6
               applicationDetails.status_text = 'Accepted';
             }
             
@@ -119,7 +118,6 @@ export class ViewComponent {
           },
           error => {
             this.isLoading = false
-            this.gs.errorAlert('Oops!', 'Something went wrong. Please try again later.')
             console.error(error)
             if(error.status === 404) {
               this.router.navigate(['main/requirements/list'])
@@ -282,7 +280,7 @@ export class ViewComponent {
 
   formatTimestamp(timestamp: string): string {
     const now = new Date();
-    console.log(now)
+    // console.log(now)
     const date = new Date(timestamp);
   
     const isToday = now.toDateString() === date.toDateString();

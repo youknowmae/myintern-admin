@@ -18,6 +18,7 @@
         background: none;
         width: fit-content;
         display: flex;
+        justify-content: center;
         align-items: center;
         margin-bottom: 20px;
         color: #898121;
@@ -40,7 +41,7 @@
 }
   
 .card {
-    margin-top: 25px;
+    margin-bottom: 20px;
     padding: 20px;
     width: 100%;
     background-color: white;
