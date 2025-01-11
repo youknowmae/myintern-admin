@@ -21,10 +21,10 @@
                         <mat-label>Status Filter</mat-label>
                         <mat-select disableRipple (selectionChange)="onStatusFilterChange($event)" [(value)]="statusFilter">
                             <mat-option [value]="'all'"> All </mat-option>
-                            <mat-option [value]="0"> Pending </mat-option>
+                            <mat-option [value]="0"> Pending for Endorsement </mat-option>
                             <mat-option [value]="1"> Rejected</mat-option>
-                            <mat-option [value]="2"> Verified </mat-option>
-                            <mat-option [value]="3"> Approved</mat-option>
+                            <mat-option [value]="2"> Endorsed </mat-option>
+                            <!-- <mat-option [value]="3"> Approved</mat-option> -->
                         </mat-select>
                     </mat-form-field>
                 </div>

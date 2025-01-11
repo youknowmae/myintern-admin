@@ -4,13 +4,19 @@
     </div>
     
     <ng-container *ngIf="!isLoading; else loading">
-        <div class="search">
-            <form>
-                <mat-form-field>
-                    <input #searchValue matInput type="email" (keyup)="search(searchValue.value)" placeholder="Search...">
-                    <mat-icon mat-icon matSuffix *ngIf="searchValue.value" (click)="searchValue.value=''" (click)="search('')" >clear</mat-icon>
-                </mat-form-field>
-            </form>
+        <div class="upper-content">
+            <div class="button">
+                <button>Company for Students</button>
+            </div>
+
+            <div class="search">
+                <form>
+                    <mat-form-field>
+                        <input #searchValue matInput type="email" (keyup)="search(searchValue.value)" placeholder="Search...">
+                        <mat-icon mat-icon matSuffix *ngIf="searchValue.value" (click)="searchValue.value=''" (click)="search('')" >clear</mat-icon>
+                    </mat-form-field>
+                </form>    
+            </div>
         </div>
 
         <div class="card-container" *ngIf="filteredIndustryPartners.length > 0; else noItems">

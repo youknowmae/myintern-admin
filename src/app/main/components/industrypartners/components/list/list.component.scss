@@ -41,6 +41,27 @@
 }
 }
 
+.upper-content {
+  display: flex;
+  width: 100%;
+  justify-content: space-between;
+  align-items: center;
+
+  .button {
+    margin-left: 15px;
+    button {
+      background-color: var(--main-bg-color);
+      font-size: 18px;
+      border-bottom: 3px solid var(--primary-color);
+      width: auto;
+      padding: 2px 8px;
+      cursor: pointer;
+      margin-right: 18px;
+      color: var(--primary-color);
+    }
+  }
+}
+
 .search {
   width: 300px;
   padding: 10px;
