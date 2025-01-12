@@ -77,6 +77,16 @@ h1 {
         box-shadow: none;
         margin-bottom: 10px;
 
+        th {
+            font-weight: 400;
+            font-size: 14px;
+        }
+
+        td {
+            font-size: 12px;
+            line-height: 16px;
+        }
+        
         th, td {
             text-align: center;
             display: flex;

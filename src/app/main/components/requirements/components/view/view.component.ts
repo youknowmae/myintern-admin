@@ -64,10 +64,7 @@ export class ViewComponent {
             if(applicationDetails.application_endorsement)
               applicationDetails.application_documents.unshift(applicationDetails.application_endorsement)
 
-            if(applicationDetails.status == 0) {
-              applicationDetails.status_text = 'Pending'
-            }
-            else if(applicationDetails.status == 1) {
+            if(applicationDetails.status == 1) {
               applicationDetails.status_text = 'Cancelled'
             }
             else if(applicationDetails.status == 2) {

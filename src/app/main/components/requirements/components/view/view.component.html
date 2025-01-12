@@ -109,13 +109,19 @@
                         </div>
         
                         
-                        <div class="actions" *ngIf="applicationDetails.status != 0">
-                            <p class="remarks"
-                            [class.warning-text]="applicationDetails.status == 1 || applicationDetails.status == 2 || applicationDetails.status == 4"
-                            [class.pending-text]="applicationDetails.status == 0 || applicationDetails.status == 5 || applicationDetails.status == 6 || applicationDetails.status == 7"
-                            [class.success-text]="applicationDetails.status == 3 ||applicationDetails.status == 8"
-                            
-                            >{{ applicationDetails.status_text }}</p>
+                        <div class="remarks-section" *ngIf="applicationDetails.status_text">
+                            <div class="remarks">
+                                <p
+                                [class.warning-text]="applicationDetails.status == 1 || applicationDetails.status == 2 || applicationDetails.status == 4"
+                                [class.pending-text]="applicationDetails.status == 0 || applicationDetails.status == 5 || applicationDetails.status == 6 || applicationDetails.status == 7"
+                                [class.success-text]="applicationDetails.status == 3 ||applicationDetails.status == 8"
+                                >
+                                    {{ applicationDetails.status_text }}
+                                    <br>
+                                    <span *ngIf="applicationDetails.rejection_remarks"> Reason: {{ applicationDetails.rejection_remarks }}</span>
+                                </p>
+    
+                            </div>
                         </div>
                         
                         <div class="actions" *ngIf="applicationDetails.status == 0">

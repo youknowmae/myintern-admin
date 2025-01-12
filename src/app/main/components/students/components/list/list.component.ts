@@ -20,7 +20,7 @@ import { saveAs } from 'file-saver';
 })
 export class ListComponent {
   // displayedColumns: string[] = ['name', 'student_number', 'course', 'program', 'progress', 'student_evaluation', 'exit_poll', 'status', 'actions'];
-  displayedColumns: string[] = ['name', 'company', 'progress', 'student_evaluation', 'exit_poll', 'status', 'actions'];
+  displayedColumns: string[] = ['name', 'company', 'class_code', 'progress', 'student_evaluation', 'exit_poll', 'status', 'actions'];
 
   unfilteredStudents: any
   dataSource: any = new MatTableDataSource<any>();
@@ -71,8 +71,11 @@ export class ListComponent {
         console.log(students)
         let studentsList = students.map((student: any) => {
           //get all classes
-          if (!this.classList.includes(student.active_ojt_class.class_code)) 
-            this.classList.push(student.active_ojt_class.class_code) 
+          if (!this.classList.some((data: any) => data.label.includes(student.active_ojt_class.class_code + ' - ' + student.active_ojt_class.course_code  ))) 
+            this.classList.push({
+              label: student.active_ojt_class.class_code + ' - ' + student.active_ojt_class.course_code,
+              value: student.active_ojt_class.class_code
+          }) 
 
           if(student.student_evaluation) {
             student.student_evaluation = student.student_evaluation.average
@@ -150,7 +153,7 @@ export class ListComponent {
 
     if(this.statusFilter != "all") {
       students = students.filter((student: any) => {
-        return student.status.toLowerCase() === this.statusFilter
+        return student.status.toLowerCase().includes(this.statusFilter)
       })    
     }
 

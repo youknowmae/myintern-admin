@@ -105,10 +105,6 @@
             font-weight: 600
         }
 
-        p {
-            text-align: justify;
-        }
-
         .details-section {
             margin-bottom: 15px;
         }
@@ -282,15 +278,18 @@
     }
 }
 
-.actions {
-    margin-top: 20px;
+.remarks-section {
     padding: 8px 0;
     display: flex;
+    flex-wrap: wrap;
+    flex-direction: column;
     justify-content: flex-end;
+    align-content: flex-end;
 
     .remarks {
         font-size: 16px;
         font-weight: 500    ;
+        text-align: right;
     }
 
     .warning-text {
@@ -304,6 +303,14 @@
     .success-text {
         color: var(--primary-color);
     }
+}
+
+
+.actions {
+    margin-top: 20px;
+    padding: 8px 0;
+    display: flex;
+    justify-content: flex-end;
 
     button {
         width: 100px;

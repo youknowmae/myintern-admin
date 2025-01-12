@@ -79,9 +79,14 @@ h1 {
 
         th {
             font-weight: 400;
+            font-size: 14px;
+        }
+
+        td {
+            font-size: 12px;
+            line-height: 16px;
         }
         th, td {
-            font-size: 14px;
             text-align: center;
             display: flex;
             justify-content: center;
