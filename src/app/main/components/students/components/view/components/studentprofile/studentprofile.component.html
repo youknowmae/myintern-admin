@@ -194,7 +194,61 @@
         </div>
       </div>
       <!-- seminars and training end -->
-  
+
+
+      <div class="content">
+        <h3>Seminars and Training Attended related to IT</h3>
+        <div class="table-container">
+          <div class="table">
+            <div class="table-row">
+              <div class="col-md-3">
+                <h4>Task Name</h4>
+              </div>
+              <div class="col-md-3">
+                <h4>Venue</h4>
+              </div>
+              <div class="col-md-2">
+                <h4>Date</h4>
+              </div>
+              <div class="col-md-2">
+                <h4>Number of Hours</h4>
+              </div>
+              <div class="col-md-2">
+                <h4>Evidence</h4>
+              </div>
+            </div>
+            <div class="table-row" *ngFor="let item of other_tasks">
+              <div class="col-md-3"> 
+                <p>{{ item.task_name }}</p> 
+              </div>
+              <div class="col-md-3"> 
+                <p>{{ item.venue }}</p> 
+              </div>
+              <div class="col-md-2"> 
+                <p>{{ item.date }}</p> 
+              </div>
+              <div class="col-md-2"> 
+                <p>{{ item.total_hours }}</p> 
+              </div>
+              <div class="col-md-2"> 
+                <div class="actions">
+                  <button class="view" 
+                  mat-raised-button
+                  matTooltip="View"
+                  [matTooltipShowDelay] = "400"
+                  (click)="viewSeminarImage(item)">
+                      <i class='bx bx-detail' ></i>
+                  </button>
+                </div>
+              </div>
+            </div>
+            <div class="table-row">
+              <p>Total Hours: {{ other_task_total_hours }} </p>
+            </div>
+          </div>  
+        </div>
+      </div>
+      
       <!-- skills -->
       <div class="content">
         <p class="text">I have done a self-evaluation of my abilities  based on my past experiences. Listed below is what I consider my strong and weak skill areas. If i work in your company, I would like an opportunity to increase my proficiency in weak areas.</p>

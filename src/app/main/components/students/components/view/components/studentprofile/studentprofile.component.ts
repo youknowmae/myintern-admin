@@ -40,8 +40,11 @@ export class StudentprofileComponent {
     }
   }
 
-  seminar_total_hours: any = 0
   seminars: any = []
+  other_tasks: any = []
+  seminar_total_hours: number = 0
+  other_task_total_hours: number = 0
+
   skills: any = []
   personality_test: any = null
 
@@ -64,6 +67,7 @@ export class StudentprofileComponent {
     }
 
     this.getSeminars();
+    this.getOtherTask()
     // this.getSkills();
     this.getPersonalityTest();
   }
@@ -79,6 +83,23 @@ export class StudentprofileComponent {
       }
     )
   }
+
+  getOtherTask() {
+    this.ds.get('adviser/students/other-task/', this.student.id).subscribe(
+      response => {
+        this.other_tasks = response
+        this.other_tasks.forEach((data: any) => {
+          this.other_task_total_hours += data.total_hours
+        });
+
+      },
+      error => { 
+        console.error(error)
+      }
+    )
+
+  }
+
   getSeminars() {
     this.ds.get('adviser/students/seminar/', this.student.id).subscribe(
       response => {
@@ -93,6 +114,12 @@ export class StudentprofileComponent {
     )
   }
   
+  viewOtherTaskImage(seminar: any) {
+    this.dialog.open(ViewImageComponent, {
+      data: { title: seminar.task_name, image: seminar.image}
+    })
+  }
+
   viewSeminarImage(seminar: any) {
     this.dialog.open(ViewImageComponent, {
       data: { title: seminar.seminar_title, image: seminar.image}
