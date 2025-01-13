@@ -66,9 +66,6 @@ export class ViewComponent {
 
   reject() {
     Swal.fire({
-      // title: "Reject?",
-      // text: "Are you sure you want to reject this company endorsement?",
-      
       title: "Please state the reason for rejection?",
       input: "text",
       inputAttributes: {
@@ -107,8 +104,8 @@ export class ViewComponent {
 
   verify() {
     Swal.fire({
-      title: "Verify?",
-      text: "Are you sure you want to verify this company endorsement?",
+      title: "Recommend?",
+      text: "Are you sure you want to recommend this company?",
       icon: "info",
       showCancelButton: true,
       confirmButtonText: 'Yes',
@@ -117,21 +114,14 @@ export class ViewComponent {
       cancelButtonColor: "#777777",
     }).then((result) => {
       if (result.isConfirmed) {
-        const payload = new FormData
-        if(this.file) {
-          console.log(this.file)
-          payload.append('mou', this.file)
-        }
-        
         if(this.isSubmitting) {
           return
         }
 
         this.isSubmitting = true
 
-        this.ds.post('adviser/request/industryPartners/verify/', this.industryPartner.id, payload).subscribe(
+        this.ds.post('adviser/request/industryPartners/verify/', this.industryPartner.id, null).subscribe(
           response => {
-            
             this.isSubmitting = false
             this.router.navigate(['main/endorsement/list'])
             this.gs.successAlert(response.title, response.message)

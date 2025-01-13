@@ -17,7 +17,7 @@ export class ListComponent {
   filteredIndustryPartners: any = []
   isLoading: boolean = true
 
-  statusFilter: string | number = 'all'
+  statusFilter: string | number = 0
   searchFilter: string = ''
   
   pagination: pagination = <pagination>{};
@@ -87,15 +87,18 @@ export class ListComponent {
         this.industryPartners = industryPartners.map(
           (element: any) => {
             if(element.status == 0) {
-              element.status_text = 'For Verification'
+              element.status_text = 'For Recommendation'
             }
             else if(element.status == 1) {
-              element.status_text = 'Rejected'
+              element.status_text = 'Not Recommended'
             }
             else if(element.status == 2) {
-              element.status_text = 'Verified'
+              element.status_text = 'For Approval'
             }
             else if(element.status == 3) {
+              element.status_text = 'Not Approved'
+            } 
+            else if(element.status == 4) {
               element.status_text = 'Approved'
             }
   

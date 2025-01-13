@@ -39,13 +39,21 @@
     }
 }
 
+.card-accent {
+    border-left: 4px solid var(--primary-color);
+}
+
 .container-info {
     display: flex;
     flex-direction: column;
     justify-content: space-between;
     flex: 0 0 auto;
     width: 60%;
-    padding: 40px 20px 30px;
+    padding: 40px 30px;
+
+    .details-section {
+        margin-bottom: 15px;
+    }
 
     ul {
         list-style-type: none;
@@ -53,30 +61,35 @@
         margin: 0;
 
         li {
+            display: flex;
+            flex-direction: row;
+            align-items: center;
             padding: 5px 0 5px 0;
+            
+            mat-icon {
+                color: rgba(0,0,0,0.60);
+                margin-right: 10px;
+                overflow: visible;
+            }
         }
     }
 
 
     h2 {
+        color: var(--primary-color);
         font-size: 30px;
         font-weight: 600;
+        line-height: normal;
     }
 
-    h6 {
-        font-size: 20px;
+    h4 {
+        font-weight: 600
     }
 
     p {
         text-align: justify;
     }
-
-    .slots {
-        color: #898121;
-        padding: 10px 0px;
-        font-size: 20px;
-    }
-    }
+}
     .image {
         flex: 0 0 auto;
         width: 40%;
@@ -98,7 +111,7 @@
         justify-content: flex-end;
     
         button {
-            width: 100px;
+            width: 150px;
             font-size: 14px;
             margin-left: 10px;
             padding: 8px 4px;

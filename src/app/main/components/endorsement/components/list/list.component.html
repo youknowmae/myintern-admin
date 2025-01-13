@@ -21,9 +21,11 @@
                         <mat-label>Status Filter</mat-label>
                         <mat-select disableRipple (selectionChange)="onStatusFilterChange($event)" [(value)]="statusFilter">
                             <mat-option [value]="'all'"> All </mat-option>
-                            <mat-option [value]="0"> Pending for Endorsement </mat-option>
-                            <mat-option [value]="1"> Rejected</mat-option>
-                            <mat-option [value]="2"> Endorsed </mat-option>
+                            <mat-option [value]="0"> For Recomendation </mat-option>
+                            <mat-option [value]="1"> Not Recomended</mat-option>
+                            <mat-option [value]="2"> For Approval</mat-option>
+                            <mat-option [value]="3"> Not Approved</mat-option>
+                            <mat-option [value]="4"> Approved</mat-option>
                             <!-- <mat-option [value]="3"> Approved</mat-option> -->
                         </mat-select>
                     </mat-form-field>
@@ -34,21 +36,25 @@
         <div class="card-container" *ngIf="filteredIndustryPartners.length > 0; else noItems">
             <div class="card" *ngFor="let industryPartner of filteredIndustryPartners">
                 <div class="status"
+                [class.rejected]="industryPartner.status == 1 || industryPartner.status == 3"
                 [class.pending]="industryPartner.status == 0 || industryPartner.status == 2"
-                [class.rejected]="industryPartner.status == 1"
-                [class.monitoring]="industryPartner.status == 3">
+                [class.monitoring]="industryPartner.status == 4">
                     <h3>{{ industryPartner.status_text }}</h3>
                 </div>
         
                 <img [src]="(industryPartner.image) ? industryPartner.image : 'assets/images/logo.png'" alt="logo image" class="card-image">
-                <h2>{{ industryPartner.company_name }}</h2>
-                <div class="location"> 
+                <div class="info-section"> 
+                    <mat-icon>apartment</mat-icon>
+                    <h2>{{ industryPartner.company_name }}</h2>
+                </div>
+        
+                <div class="info-section"> 
                     <mat-icon>location_on</mat-icon>
                     <p>{{ industryPartner.full_location }}</p>
                 </div>
         
                 <div class="view-button">
-                    <button class="view" (click)="viewIndustryPartnerRequest(industryPartner.id)"><b>View</b></button>
+                    <button class="view" mat-ripple (click)="viewIndustryPartnerRequest(industryPartner.id)"><b>View</b></button>
                 </div>
             </div>
             <div class="pagination-container">

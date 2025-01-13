@@ -10,7 +10,7 @@
         </span>
     </div>
 
-    <div class="card">
+    <div class="card card-accent">
         <mat-stepper [linear]="true" #stepper>
             <mat-step>
                 <ng-template matStepLabel>Company Details</ng-template>
@@ -20,29 +20,48 @@
                     </div>
                     <div class="container-info">
                         <div class="info">
-                            <h2>{{ industryPartner.company_name }}</h2>
-                            <p>{{ industryPartner.description }}</p>
+                            <div class="details-section">
+                                <h2>{{ industryPartner.company_name }}</h2>
+                                <p>{{ industryPartner.description }}</p>
+                            </div>
                             
-                            <h3 style="margin: 0; font-weight: 600;" >Company Head:</h3>
-                            <p> {{ industryPartner.company_head.full_name }}, {{ industryPartner.head_position }}</p>
+                            <div class="details-section">
+                                <p> <b>Company Head:</b> {{ industryPartner.company_head.full_name }}, {{ industryPartner.head_position }}</p>
+                            </div>
+                            
+                            <div class="details-section">
+                                <p> <b>Immediate Supervisor :</b> {{ industryPartner.immediate_supervisor.full_name }}, {{ industryPartner.supervisor_position }}</p>
+                            </div>
             
-                            <h3 style="margin: 0; font-weight: 600;" >Immediate Supervisor :</h3>
-                            <p> {{ industryPartner.immediate_supervisor.full_name }}, {{ industryPartner.supervisor_position }}</p>
                             
-                            <ul>
-                            <li>
-                                <b>Company Address: </b>
-                                {{  industryPartner.street }}
-                                {{  industryPartner.barangay }}
-                                {{  industryPartner.municipality }},
-                                {{  industryPartner.province }}
-                            </li>
-                            <li><b>Official Email Address:</b> {{ industryPartner.email }}</li>
-                            <li *ngIf="industryPartner.telephone_number"><b>Telephone Number:</b> {{ industryPartner.telephone_number }}</li>
-                            <li *ngIf="industryPartner.fax_number"><b>Fax Number:</b> {{ industryPartner.fax_number }}</li>
-                            <li><b>Contact Number:</b> {{ industryPartner.mobile_number }}</li>
-                            <li *ngIf="industryPartner.website"><b>Website:</b> {{ industryPartner.website }}</li>
-                            </ul>
+                            <div class="details-section">
+                                <ul>
+                                    <li>
+                                        <mat-icon>location_on</mat-icon>
+                                        <p><b>Company Address: </b> {{  industryPartner.full_address }}</p> 
+                                    </li>
+                                    <li>
+                                        <mat-icon>mail</mat-icon>
+                                        <p><b>Official Email Address:</b> {{ industryPartner.email }}</p>
+                                    </li>
+                                    <li *ngIf="industryPartner.telephone_number">
+                                        <mat-icon>call</mat-icon>
+                                        <p><b>Telephone Number:</b> {{ industryPartner.telephone_number }}</p>
+                                    </li>
+                                    <li *ngIf="industryPartner.fax_number">
+                                        <mat-icon>fax</mat-icon>
+                                        <p><b>Fax Number:</b> {{ industryPartner.fax_number }}</p>
+                                    </li>
+                                    <li>
+                                        <mat-icon>call</mat-icon>
+                                        <p><b>Contact Number:</b> {{ industryPartner.mobile_number }}</p>
+                                    </li>
+                                    <li *ngIf="industryPartner.website">
+                                        <mat-icon>public</mat-icon>
+                                        <p><b>Website:</b> {{ industryPartner.website }}</p>
+                                    </li>
+                                </ul>   
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -54,42 +73,45 @@
                 </div>
         
                 <div class="action-buttons">
-                    <!-- <button class="warning" *ngIf="industryPartner.status === 0" (click)="reject()">Reject</button> -->
-                    <button class="success" mat-button matStepperNext *ngIf="industryPartner.status != 1">Recommend </button>
-                </div>
-            </mat-step>
-            
-            <mat-step *ngIf="industryPartner.status != 1">
-                <ng-template matStepLabel>Documents</ng-template>
-
-                <div class="stepper-content" *ngIf="industryPartner.status === 0 || industryPartner.status === 1; else mouPreview">
-                    <div class="row" >
-                        <div class="col-md-4">
-                            <div class="file-input-container"> 
-                                <div class="label"> Upload MOU </div>
-                                <input class="file-input" type="file" accept=".jpeg, .png, .jpg, .svg, .pdf" (change)="uploadFile($event)"> 
-                            </div>
-                        </div>
-                    </div>
-                    <div class="preview-container" *ngIf="filePreview">
-                        <img *ngIf="isImage" [src]="filePreview" alt="File Preview" class="image-preview">
-                        <object *ngIf="!isImage" [data]="filePreview" width="100%" height="550px"></object>
-                    </div>
-                </div>
-
-                <div class="action-buttons">
-                    <button class="success" mat-button matStepperPrevious>Back</button>
-                    <button class="success" *ngIf="industryPartner.status === 0" mat-button (click)="verify()">Verify</button>
+                    <button class="warning" mat-ripple *ngIf="industryPartner.status === 0" (click)="reject()">Not Recommend</button>
+                    <button class="success" mat-ripple *ngIf="industryPartner.status === 0" mat-button (click)="verify()">Recommend</button>
+                    <!-- <button class="success" mat-button mat-ripple matStepperNext *ngIf="industryPartner.status != 1">Recommend</button> -->
                 </div>
             </mat-step>
         </mat-stepper>
     </div>
 </div>
 
-<ng-template #mouPreview>
+<!-- <ng-template #mouPreview>
     <div class="stepper-content">
         <div class="preview-container">
             <object [data]="sanitizeUrl(industryPartner.mou.file_location)" width="100%" height="550px"></object>
         </div>
     </div>
-</ng-template>
+</ng-template> -->
+
+
+            
+<!-- <mat-step *ngIf="industryPartner.status != 1">
+    <ng-template matStepLabel>Documents</ng-template>
+
+    <div class="stepper-content" *ngIf="industryPartner.status === 0 || industryPartner.status === 1; else mouPreview">
+        <div class="row" >
+            <div class="col-md-4">
+                <div class="file-input-container"> 
+                    <div class="label"> Upload MOU </div>
+                    <input class="file-input" type="file" accept=".jpeg, .png, .jpg, .svg, .pdf" (change)="uploadFile($event)"> 
+                </div>
+            </div>
+        </div>
+        <div class="preview-container" *ngIf="filePreview">
+            <img *ngIf="isImage" [src]="filePreview" alt="File Preview" class="image-preview">
+            <object *ngIf="!isImage" [data]="filePreview" width="100%" height="550px"></object>
+        </div>
+    </div>
+
+    <div class="action-buttons">
+        <button class="success" mat-button matStepperPrevious>Back</button>
+        <button class="success" *ngIf="industryPartner.status === 0" mat-button (click)="verify()">Verify</button>
+    </div>
+</mat-step> -->
