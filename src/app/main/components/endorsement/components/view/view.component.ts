@@ -66,7 +66,7 @@ export class ViewComponent {
 
   reject() {
     Swal.fire({
-      title: "Please state the reason for rejection?",
+      title: "Please state the reason for not recommending",
       input: "text",
       inputAttributes: {
         autocapitalize: "off"
