@@ -104,7 +104,7 @@ export class ListComponent {
             status = 'Pending - Company Approval'
           }
           else {
-            status = 'Pending - w/o application'
+            status = 'Pending - without application'
           }
 
           return {
