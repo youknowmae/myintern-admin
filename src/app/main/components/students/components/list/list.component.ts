@@ -427,4 +427,10 @@ export class ListComponent {
       (groups[key(item)] ||= []).push(item);
       return groups;
     }, {} as Record<K, T[]>);
+
+    getProgressPercentage(progress: number, required_hours: number) {
+      let percentage = progress/required_hours * 100
+  
+      return Math.round(percentage * 100) / 100 //return 2 decimal
+    }
 }
