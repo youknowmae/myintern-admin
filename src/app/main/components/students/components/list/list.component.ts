@@ -90,6 +90,22 @@ export class ListComponent {
               progress = required_hours
           }
 
+          if(student.seminar_hours_total) {
+            student.seminar_hours_total = student.seminar_hours_total.current_total_hours
+          }
+          else {
+            student.seminar_hours_total = 0
+          }
+
+          if(student.other_task_total_hours) {
+            student.other_task_total_hours = student.other_task_total_hours.current_total_hours
+          }
+          else {
+            student.other_task_total_hours = 0
+          }
+
+          
+
           let status = null
 
           if(progress >= required_hours && student.ojt_exit_poll && student.student_evaluation) {
@@ -354,8 +370,8 @@ export class ListComponent {
             student.last_name,
             student.first_name,
             student.student_profile.student_number,
-            'to be done',
-            'to be done',
+            student.seminar_hours_total,
+            student.other_task_total_hours,
             student.active_ojt_class.required_hours,
             student.progress,
             (student.student_evaluation) ? student.student_evaluation : 'Not Evaluated',
