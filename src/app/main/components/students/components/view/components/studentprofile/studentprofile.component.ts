@@ -40,6 +40,17 @@ export class StudentprofileComponent {
     }
   }
 
+  
+  ojtInfo = {
+    company_name: '',
+    start_date: '',
+    department: '', 
+    task: '',
+    supervisor_full_name: '',
+    supervisor_position: '',
+    full_address: '',
+  }
+
   seminars: any = []
   other_tasks: any = []
   seminar_total_hours: number = 0
@@ -56,6 +67,7 @@ export class StudentprofileComponent {
 
   ngOnInit() {
     this.student = this.us.getStudentProfile()
+    this.getOjtInfo()
     this.student.gender = (this.student.gender == 0) ? 'Female' : 'Male'
     
     if(this.student.student_skills) {
@@ -130,6 +142,30 @@ export class StudentprofileComponent {
     this.dialog.open(ViewImageComponent, {
       data: { title: test.file_name, image: test.file_path}
     })
+  }
+
+  getOjtInfo() {
+    this.ds.get('adviser/students/ojt-information/', this.student.id).subscribe(
+      response => {
+        let data = {
+          ...response.industry_partner,
+          ...response,
+        }
+
+        let supervisor = data.immediate_supervisor;
+        let supervisorFullName = `${supervisor?.first_name || ''} ${supervisor?.last_name || ''} ${supervisor?.ext_name || ''}`.trim();
+        data.supervisor_full_name = supervisorFullName;
+
+        let full_address = `${data?.street || ''} ${data?.barangay || ''} ${data?.municipality || ''}, ${data?.province || ''}`
+        data.full_address = full_address
+
+        this.ojtInfo = data
+        console.log(this.ojtInfo)
+      },
+      error => {
+        console.error(error)
+      }
+    )
   }
 
   
