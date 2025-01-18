@@ -32,13 +32,11 @@ export class AnnouncementComponent {
   getAnnouncements() {
     this.ds.get('adviser/announcements').subscribe(
       announcements => {
-        console.log(announcements)
         this.announcements = announcements
         this.isLoading = false
       },
       error => {
         this.isLoading = false
-        console.error(error)
       }
     )
   }
@@ -50,7 +48,6 @@ export class AnnouncementComponent {
     })
 
     modal.afterClosed().subscribe((result) => {
-      console.log(result)
       if (!result) {
         return
       }
@@ -67,7 +64,6 @@ export class AnnouncementComponent {
     })
     
     modal.afterClosed().subscribe((result) => {
-      console.log(result)
       if (!result) {
         return
       }
@@ -86,7 +82,6 @@ export class AnnouncementComponent {
     this.ds.get(`adviser/announcements/${id}/delete`).subscribe(
       result => {
         this.isSubmitting = false
-        console.log(result)
         this.announcements = this.announcements.filter((announcement: any) => announcement.id !== id);
         Swal.fire({
           title: 'Success!',

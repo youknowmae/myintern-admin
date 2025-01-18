@@ -36,7 +36,6 @@ export class EditTemplateComponent {
   }
   
   uploadDocxFile(event: any) {
-    console.log(event.target.files[0])
     this.docxFile = event.target.files[0];
   }
 
@@ -82,8 +81,6 @@ export class EditTemplateComponent {
   createTemplate() {
     var formDetails = this.formDetails.value
 
-    console.log(formDetails)
-
     var payload = new FormData();
     payload.append('name', formDetails.name);
 
@@ -111,7 +108,7 @@ export class EditTemplateComponent {
       },
       error => {
         this.isSubmitting = false
-        console.error(error)
+        // console.error(error)
         if (error.status == 422) {
           this.gs.errorAlert("Error!", "Invalid input.")
         }

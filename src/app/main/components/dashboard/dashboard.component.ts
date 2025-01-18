@@ -204,7 +204,6 @@ export class DashboardComponent implements AfterViewInit {
   getData() {
     this.ds.get('adviser/dashboard/').subscribe(
       response => {
-        console.log(response)
         this.enrolled_student = response.enrolled_student
         this.student_ojt_status_count = response.student_ojt_status_count
 
@@ -296,7 +295,7 @@ export class DashboardComponent implements AfterViewInit {
         this.evaluationBarChart.update()
       },
       error => {
-        console.error(error)
+        // console.error(error)
       }
     )
   }

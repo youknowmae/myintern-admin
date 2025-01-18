@@ -119,7 +119,6 @@ export class ViewComponent {
       },
       error => {
         this.isSubmitting = false
-        console.error(error)
         if (error.status == 422) {
           Swal.fire({
             title: "error!",

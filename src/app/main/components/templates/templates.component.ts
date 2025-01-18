@@ -43,14 +43,11 @@ export class TemplatesComponent {
   getTemplates() {
     this.ds.get('adviser/templates').subscribe(
       templates => {
-        console.log(templates)
-        // this.dataSource = templates
         this.dataSource.data = templates;
         this.dataSource.paginator = this.paginator;
-        console.log(this.dataSource)
       },
       error => {
-        console.error(error)
+        // console.error(error)
       }
     )
 
@@ -62,7 +59,6 @@ export class TemplatesComponent {
     })
     
     modal.afterClosed().subscribe((result) => {
-      console.log(result)
       if (!result) {
         return
       }
@@ -83,7 +79,6 @@ export class TemplatesComponent {
       return
     }
 
-    console.log(template)
     this.dialogRef.open(PdfPreviewComponent, {
       data: { name: template.name, pdf: template.pdf},
       disableClose: true
@@ -97,11 +92,9 @@ export class TemplatesComponent {
     })
     
     modal.afterClosed().subscribe((result) => {
-      console.log(result)
       if (!result) {
         return
       }
-      
       
       this.dataSource.data = this.dataSource.data.map((template: any) =>
         template.id === result.id ? result : template
@@ -120,15 +113,12 @@ export class TemplatesComponent {
       result => {
         
         this.isSubmitting = false
-        console.log(result)
         this.dataSource.data = this.dataSource.data.filter((template: any) => template.id !== id);
         this.gs.successAlert('Success', 'Template has been deleted.')
       },
       error => {
-        
         this.isSubmitting = false
-        console.error(error)
-        console.log(error.error)
+        // console.error(error)
         if(error.status == 409) {
           this.gs.errorAlert('Error', error.error)
         }
