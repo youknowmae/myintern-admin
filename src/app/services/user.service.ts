@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { Inject,  PLATFORM_ID } from '@angular/core';
 import { isPlatformBrowser } from '@angular/common';
 import { exit } from 'process';
+import { GeneralService } from './general.service';
 
 interface User {
     name: string, 
@@ -23,82 +24,80 @@ export class UserService {
 
     constructor(
         @Inject(PLATFORM_ID) private platformId: any,
+        private gs: GeneralService
     ) {}
 
     setUser(user: User) {
-        sessionStorage.setItem('user', JSON.stringify(user))
+        let encryptedData = this.gs.encrypt(user)
+        sessionStorage.setItem('user', encryptedData)
     }
 
     getUser() {
-        if (!isPlatformBrowser(this.platformId)){
+        let encryptedData = sessionStorage.getItem('user')
+
+        if(!encryptedData) {
             return null
         }
         
-        let user = sessionStorage.getItem('user')
+        let plainTextData = this.gs.decrypt(encryptedData)
 
-        if(!user) {
-            return null
-        }
-
-        return JSON.parse(user)
+        return plainTextData
     }
 
     setIndustryPartner(industryPartner: any) {
-        sessionStorage.setItem(this.industryPartner, JSON.stringify(industryPartner))
+        let encryptedData = this.gs.encrypt(industryPartner)
+        sessionStorage.setItem(this.industryPartner, encryptedData)
     }
 
     getIndustryPartner() {
-        if (!isPlatformBrowser(this.platformId)){
-            return null
-        }
-        
         let industryPartner = sessionStorage.getItem(this.industryPartner)
 
         if(!industryPartner) {
             return null
         }
 
-        return JSON.parse(industryPartner)
+        let plainTextData = this.gs.decrypt(industryPartner)
+
+        return plainTextData
     }
 
     setCompanyEndorsement(industryPartner: any) {
-        sessionStorage.setItem(this.companyEndorsement, JSON.stringify(industryPartner))
+        let encryptedData = this.gs.encrypt(industryPartner)
+        sessionStorage.setItem(this.companyEndorsement, encryptedData)
     }
 
     getCompanyEndorsement() {
-        if (!isPlatformBrowser(this.platformId)){
-            return null
-        }
-        
         let industryPartner = sessionStorage.getItem(this.companyEndorsement)
 
         if(!industryPartner) {
             return null
         }
+        
+        let plainTextData = this.gs.decrypt(industryPartner)
 
-        return JSON.parse(industryPartner)
+        return plainTextData
     }
     
     setStudentExitPoll(exitPoll: any) {
-        sessionStorage.setItem(this.exitPollDetails, JSON.stringify(exitPoll))
+        let encryptedData = this.gs.encrypt(exitPoll)
+        sessionStorage.setItem(this.exitPollDetails, encryptedData)
     }
 
     getStudentExitPoll() {
-        if (!isPlatformBrowser(this.platformId)){
-            return null
-        }
-        
         let exitPoll = sessionStorage.getItem(this.exitPollDetails)
 
         if(!exitPoll) {
             return null
         }
+        
+        let plainTextData = this.gs.decrypt(exitPoll)
 
-        return JSON.parse(exitPoll)
+        return plainTextData
     }
 
-    setStudentEvaluation(exitPoll: any) {
-        sessionStorage.setItem(this.studentEvaluation, JSON.stringify(exitPoll))
+    setStudentEvaluation(data: any) {
+        let encryptedData = this.gs.encrypt(data)
+        sessionStorage.setItem(this.studentEvaluation, encryptedData)
     }
     
     getStudentEvaluation() {
@@ -111,51 +110,43 @@ export class UserService {
         if(!studentEvaluation) {
             return null
         }
+        
+        let plainTextData = this.gs.decrypt(studentEvaluation)
 
-        return JSON.parse(studentEvaluation)
+        return plainTextData
     }
 
-    setStudentProfile(studentProfile: any) {
-        sessionStorage.setItem(this.studentProfile, JSON.stringify(studentProfile))
+    setStudentProfile(data: any) {
+        let encryptedData = this.gs.encrypt(data)
+        sessionStorage.setItem(this.studentProfile, encryptedData)
     }
 
     getStudentProfile() {
-        if (!isPlatformBrowser(this.platformId)){
-            return null
-        }
-        
         let studentProfile = sessionStorage.getItem(this.studentProfile)
 
         if(!studentProfile) {
             return null
         }
+        
+        let plainTextData = this.gs.decrypt(studentProfile)
 
-        return JSON.parse(studentProfile)
+        return plainTextData
     }
 
-    setStudentApplication(studentApplication: any) {
-        sessionStorage.setItem(this.studentApplication, JSON.stringify(studentApplication))
+    setStudentApplication(data: any) {
+        let encryptedData = this.gs.encrypt(data)
+        sessionStorage.setItem(this.studentApplication, encryptedData)
     }
 
     getStudentApplication() {
-        if (!isPlatformBrowser(this.platformId)){
-            return null
-        }
-        
         let studentApplication = sessionStorage.getItem(this.studentApplication)
 
         if(!studentApplication) {
             return null
         }
+        
+        let plainTextData = this.gs.decrypt(studentApplication)
 
-        return JSON.parse(studentApplication)
-    }
-
-    encryptData(data: any) {
-        return data
-    }
-
-    decryptData(data: any) {
-        return data
+        return plainTextData
     }
 }
