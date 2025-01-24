@@ -20,6 +20,7 @@ import { PdfPreviewComponent } from './components/pdf-preview/pdf-preview.compon
 import { ReactiveFormsModule } from '@angular/forms';
 import { NgxDocViewerModule } from 'ngx-doc-viewer';
 import { MaterialsModules } from './modules/materials.module';
+import { ResponseInterceptor } from './interceptors/response.interceptor';
 
 @NgModule({
   declarations: [
@@ -42,6 +43,7 @@ import { MaterialsModules } from './modules/materials.module';
     provideClientHydration(),
     provideAnimationsAsync(),
     { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },
+    { provide: HTTP_INTERCEPTORS, useClass: ResponseInterceptor, multi: true },
     { provide: LocationStrategy, useClass: HashLocationStrategy }
   ],
   bootstrap: [AppComponent]

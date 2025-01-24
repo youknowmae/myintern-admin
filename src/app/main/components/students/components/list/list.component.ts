@@ -70,7 +70,7 @@ export class ListComponent {
       students => {
         console.log(students)
         let studentsList = students.map((student: any) => {
-          //get all classes
+          //get all classes - course code
           if (!this.classList.some((data: any) => data.label.includes(student.active_ojt_class.class_code + ' - ' + student.active_ojt_class.course_code  ))) 
             this.classList.push({
               label: student.active_ojt_class.class_code + ' - ' + student.active_ojt_class.course_code,

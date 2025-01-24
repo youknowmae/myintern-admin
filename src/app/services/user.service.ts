@@ -15,12 +15,13 @@ interface User {
 })
 
 export class UserService {
-    exitPollDetails: string = 'studentExitPoll'
-    industryPartner: string = 'industryPartner'
-    studentEvaluation: string = 'studentEvaluation'
-    studentProfile: string = 'studentProfile'
-    studentApplication: string = 'studentApplication'
-    companyEndorsement: string = 'companyEndorsement'
+    user: string = btoa('user')
+    exitPollDetails: string = btoa('studentExitPoll')
+    industryPartner: string = btoa('industryPartner')
+    studentEvaluation: string = btoa('studentEvaluation')
+    studentProfile: string = btoa('studentProfile')
+    studentApplication: string = btoa('studentApplication')
+    companyEndorsement: string = btoa('companyEndorsement')
 
     constructor(
         @Inject(PLATFORM_ID) private platformId: any,
@@ -29,11 +30,11 @@ export class UserService {
 
     setUser(user: User) {
         let encryptedData = this.gs.encrypt(user)
-        sessionStorage.setItem('user', encryptedData)
+        sessionStorage.setItem(this.user, encryptedData)
     }
 
     getUser() {
-        let encryptedData = sessionStorage.getItem('user')
+        let encryptedData = sessionStorage.getItem(this.user)
 
         if(!encryptedData) {
             return null

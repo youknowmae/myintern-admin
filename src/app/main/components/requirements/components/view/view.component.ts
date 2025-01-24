@@ -276,18 +276,22 @@ export class ViewComponent {
   }
 
   formatTimestamp(timestamp: string): string {
-    const now = new Date();
-    // console.log(now)
     const date = new Date(timestamp);
+    return formatDate(date, 'MMM d, h:mm a', 'en-US');
+
+
+    // const now = new Date();
+    // // console.log(now)
+    // const date = new Date(timestamp);
   
-    const isToday = now.toDateString() === date.toDateString();
+    // const isToday = now.toDateString() === date.toDateString();
   
-    if (isToday) {
-      return formatDate(date, 'h:mm a', 'en-US');
-    } 
-     else {
-      return formatDate(date, 'MMM d, h:mm a', 'en-US');
-    }
+    // if (isToday) {
+    //   return formatDate(date, 'h:mm a', 'en-US');
+    // } 
+    //  else {
+    //   return formatDate(date, 'MMM d, h:mm a', 'en-US');
+    // }
   }
   
 

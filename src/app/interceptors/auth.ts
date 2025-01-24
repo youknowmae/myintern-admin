@@ -20,12 +20,7 @@ export class AuthInterceptor implements HttpInterceptor {
     ) {}
   
     intercept(request: HttpRequest<any>, next: HttpHandler) {
-        //prevent ssr from reading the token
-        if (!isPlatformBrowser(this.platformId)) {
-            return next.handle(request);
-        }
-
-        let token = sessionStorage.getItem('token')
+        let token = sessionStorage.getItem(btoa('token'))
         
         if(!token){
             return next.handle(request);
