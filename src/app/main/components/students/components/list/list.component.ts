@@ -1,4 +1,4 @@
-import { Component, ViewChild, ChangeDetectorRef } from '@angular/core';
+import { Component, ViewChild, ChangeDetectorRef, inject } from '@angular/core';
 
 import { MatPaginator, MatPaginatorIntl } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
@@ -8,10 +8,12 @@ import { UserService } from '../../../../../services/user.service';
 
 import { Router } from '@angular/router';
 import { MatSelectChange } from '@angular/material/select';
+import {MatSort, Sort} from '@angular/material/sort';
 
 import * as ExcelJS from 'exceljs';
 
 import { saveAs } from 'file-saver';
+import { LiveAnnouncer } from '@angular/cdk/a11y';
 
 @Component({
   selector: 'app-list',
@@ -20,7 +22,7 @@ import { saveAs } from 'file-saver';
 })
 export class ListComponent {
   // displayedColumns: string[] = ['name', 'student_number', 'course', 'program', 'progress', 'student_evaluation', 'exit_poll', 'status', 'actions'];
-  displayedColumns: string[] = ['name', 'company', 'class_code', 'progress', 'student_evaluation', 'exit_poll', 'status', 'actions'];
+  displayedColumns: string[] = ['full_name', 'company', 'class_code', 'progress', 'student_evaluation', 'ojt_exit_poll', 'status', 'actions'];
 
   unfilteredStudents: any
   dataSource: any = new MatTableDataSource<any>();
@@ -32,6 +34,12 @@ export class ListComponent {
   isSubmitting: boolean = false
   
   @ViewChild(MatPaginator, {static:true}) paginator!: MatPaginator;
+  @ViewChild(MatSort) sort!: MatSort;
+
+  ngAfterViewInit() {
+    console.log(this.sort)
+    this.dataSource.sort = this.sort;
+  }
   
   constructor(
     private paginatorIntl: MatPaginatorIntl, 
@@ -123,10 +131,14 @@ export class ListComponent {
             status = 'Pending - without application'
           }
 
+          let company = (student.accepted_application) ? student.accepted_application.company_name: 'N/A' 
+
           return {
             full_name: student.first_name + " " + student.last_name,
             progress,
             status,
+            company,
+            class_code: student.active_ojt_class.class_code,
             ...student
           } 
         })

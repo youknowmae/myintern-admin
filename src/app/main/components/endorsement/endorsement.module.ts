@@ -6,6 +6,7 @@ import { EndorsementComponent } from './endorsement.component';
 import { ViewComponent } from './components/view/view.component';
 import { ListComponent } from './components/list/list.component';
 import { MaterialsModules } from '../../../modules/materials.module';
+import { LoadingSpinnerComponent } from '../../../components/loading-spinner/loading-spinner.component';
 
 
 @NgModule({
@@ -17,7 +18,8 @@ import { MaterialsModules } from '../../../modules/materials.module';
   imports: [
     CommonModule,
     EndorsementRoutingModule,
-    MaterialsModules
+    MaterialsModules,
+    LoadingSpinnerComponent
   ]
 })
 export class EndorsementModule { }

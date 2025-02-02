@@ -12,9 +12,11 @@ import { MatIconModule } from '@angular/material/icon'
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatRadioModule } from '@angular/material/radio';
 import { MatCheckboxModule } from '@angular/material/checkbox';
-import { MatStepperModule } from '@angular/material/stepper';
+import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatTabsModule } from '@angular/material/tabs';
+import { MatStepperModule } from '@angular/material/stepper';
+import { MatSortModule } from "@angular/material/sort";
 
 const var_modules = [
     MatFormFieldModule,
@@ -31,10 +33,12 @@ const var_modules = [
     MatDatepickerModule,
     MatRadioModule,
     MatCheckboxModule,
+    MatSidenavModule,    
     MatStepperModule,
     MatProgressSpinnerModule,
     MatTabsModule,
-    MatRippleModule
+    MatRippleModule,
+    MatSortModule
 ]
 
 @NgModule({

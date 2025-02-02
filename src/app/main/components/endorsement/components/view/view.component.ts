@@ -17,6 +17,7 @@ export class ViewComponent {
   filePreview: any
   isImage: boolean = false
 
+  isLoading: boolean = true
   isSubmitting: boolean = false
 
   constructor(
@@ -32,7 +33,37 @@ export class ViewComponent {
   }
 
   getRequestDetails() {
-    this.industryPartner = this.us.getCompanyEndorsement()
+    let id = this.us.getCompanyEndorsement()
+
+    this.ds.get('adviser/request/industryPartners/', id).subscribe(
+      industryPartner => {
+        this.isSubmitting = false
+        let companyHead = industryPartner.company_head;
+        let fullName = `${companyHead?.first_name || ''} ${companyHead?.last_name || ''} ${companyHead?.ext_name || ''}`.trim();
+        industryPartner.company_head.full_name = fullName;
+
+        let supervisor = industryPartner.immediate_supervisor;
+        let supervisorFullName = `${supervisor?.first_name || ''} ${supervisor?.last_name || ''} ${supervisor?.ext_name || ''}`.trim();
+        industryPartner.immediate_supervisor.full_name = supervisorFullName;
+        
+        console.log(industryPartner)
+
+        this.industryPartner = industryPartner
+        this.isLoading = false
+      },
+      error => {
+        this.isLoading = false
+        console.error(error)
+        
+        if(error.status === 404) {
+          this.router.navigate(['main/endorsement/list'])
+          this.gs.errorAlert('Not Found!', 'The industry partner approval not found.')
+        }
+        else {
+          this.gs.errorAlert('Oops', 'Something went wrong. Please try again later.')
+        }
+      }
+    )
   }
 
   uploadFile(event: any) {

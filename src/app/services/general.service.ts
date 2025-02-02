@@ -84,28 +84,4 @@ export class GeneralService {
   
       return pagination
     }
-
-  private secretKey = 'kjSj48U6G0H0BwC'; // Replace with a secure key
-
-  encrypt(data: any): string {
-    try {
-      return CryptoJS.AES.encrypt(JSON.stringify(data), this.secretKey).toString();
-    } catch (error) {
-      console.error('Encryption error:', error);
-      return '';
-    }
-  }
-
-  decrypt(cipherText: string): any {
-    try {
-      const bytes = CryptoJS.AES.decrypt(cipherText, this.secretKey);
-      if (bytes.toString()) {
-        return JSON.parse(bytes.toString(CryptoJS.enc.Utf8));
-      }
-      return null;
-    } catch (error) {
-      console.error('Decryption error:', error);
-      return null;
-    }
-  }
 }

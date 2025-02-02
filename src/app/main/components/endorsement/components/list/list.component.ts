@@ -120,34 +120,8 @@ export class ListComponent {
   }
 
   viewIndustryPartnerRequest(id: number) {
-    if(this.isSubmitting) {
-      return
-    }
-
-    this.isSubmitting = true
-    
-    this.ds.get('adviser/request/industryPartners/', id).subscribe(
-      industryPartner => {
-        this.isSubmitting = false
-        let companyHead = industryPartner.company_head;
-        let fullName = `${companyHead?.first_name || ''} ${companyHead?.last_name || ''} ${companyHead?.ext_name || ''}`.trim();
-        industryPartner.company_head.full_name = fullName;
-
-        let supervisor = industryPartner.immediate_supervisor;
-        let supervisorFullName = `${supervisor?.first_name || ''} ${supervisor?.last_name || ''} ${supervisor?.ext_name || ''}`.trim();
-        industryPartner.immediate_supervisor.full_name = supervisorFullName;
-        
-        console.log(industryPartner)
-
-        this.us.setCompanyEndorsement(industryPartner)
-        this.router.navigate(['main/endorsement/view'])
-      },
-      error => {
-        this.isSubmitting = false
-        console.error(error)
-        this.gs.errorAlert('Oops', 'Something went wrong. Please try again later.')
-      }
-    )
+    this.us.setCompanyEndorsement(id)
+    this.router.navigate(['main/endorsement/view'])
   }
 
   changePage(page: number) {

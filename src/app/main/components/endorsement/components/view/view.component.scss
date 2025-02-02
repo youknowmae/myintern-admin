@@ -4,19 +4,31 @@
     flex-direction: column;
     width: 100%;
 
-.back-btn {
-    display: flex;
-    align-self: flex-start;
-    margin-bottom: 20px;
-    color: #898121;
-    cursor: pointer;
+    .back-button {
+        background: none;
+        width: fit-content;
+        display: flex;
+        align-items: center;
+        margin-bottom: 20px;
+        color: #898121;
+        cursor: pointer;
 
-    .icon {
-        padding-right: 5px;
-        font-size: 20px;
+        .icon {
+            margin-right: 10px;
+            font-size: 20px;
+        }
+
+        p {
+            font-size: 16px;
+        }
+
+        &:hover {
+            background: rgba(0,0,0,.08);
+            transition: all .1s ease-in-out;
+        }
     }
 }
-  
+
 .card {
     margin-top: 25px;
     width: 100%;
@@ -142,7 +154,7 @@
             background-color: white;
         }
     }
-}
+
 
 .students-content {
     display: flex;
