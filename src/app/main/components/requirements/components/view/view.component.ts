@@ -166,6 +166,7 @@ export class ViewComponent {
         this.gs.successAlert('Approved!', response.message)
         this.applicationDetails.status = 3
         this.applicationDetails.status_text = 'Approved'
+        this.applicationDetails.application_documents.unshift(response.data)
 
         this.generateEndorsement()
       },
@@ -247,24 +248,12 @@ export class ViewComponent {
 
   isDownloading: boolean = false
   generateEndorsement() {
-    this.ds.download('adviser/generate/endorsement/', this.applicationDetails.id).subscribe(
+    this.ds.download('adviser/applications/download/endorsement/', this.applicationDetails.id).subscribe(
       (response: Blob) => {
         saveAs(response, 'GCCCS.ENDORSEMENT.LETTER.' + this.applicationDetails.user.first_name + '.' + this.applicationDetails.user.last_name + '.pdf');
         this.isDownloading = false
 
         console.log(response)
-        
-        this.ds.get('adviser/applications/endorsement/', this.applicationDetails.id).subscribe(
-          response => {
-            console.log(response)
-            if(response)
-              this.applicationDetails.application_documents.unshift(response)
-          },
-          error => {
-            console.error(error)
-          }
-        )
-        
       },
       error => {
         this.gs.errorAlert('Error!', 'Something went wrong. Please try again later.')
