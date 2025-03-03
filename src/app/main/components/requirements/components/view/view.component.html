@@ -108,6 +108,15 @@
                             </ul>
                         </div>
         
+                        <div class="details-section" *ngIf="applicationDetails.industry_partner.job_requirements">
+                            <div class="job-requirements">
+                                <p><b>Job/Skills Requirements:</b></p>
+        
+                                <div class="items">
+                                    <p *ngFor="let item of applicationDetails.industry_partner.job_requirements"> {{ item }}</p>
+                                </div>
+                            </div>
+                        </div>  
                         
                         <div class="remarks-section" *ngIf="applicationDetails.status_text">
                             <div class="remarks">
@@ -127,7 +136,7 @@
                         </div>
                         
                         <div class="actions" *ngIf="applicationDetails.status == 0">
-                            <button (click)="rejectApplication()" class="warning">Reject</button>
+                            <button (click)="rejectApplication()" class="warning">Not Approved</button>
                             <button (click)="approveApplication()" class="success">Approve</button>
                         </div>
                     </div>

@@ -68,13 +68,13 @@ export class ViewComponent {
               applicationDetails.status_text = 'Cancelled'
             }
             else if(applicationDetails.status == 2) {
-              applicationDetails.status_text = 'Rejected (Adviser)'
+              applicationDetails.status_text = 'Not Approved (Adviser)'
             }
             else if(applicationDetails.status == 3) {
               applicationDetails.status_text = 'Approved'
             }
             else if(applicationDetails.status == 4) {
-              applicationDetails.status_text = 'Rejected (Company)'
+              applicationDetails.status_text = 'Not Approved (Company)'
             }
             else if (
               applicationDetails.status == 5 ||
@@ -180,8 +180,8 @@ export class ViewComponent {
 
   rejectApplication() {
     Swal.fire({
-      title: "Reject?",
-      text: "Are you sure you want to reject this application?",
+      title: "Not Approved?",
+      text: "Are you sure you want to decline this application?",
       icon: "info",
       showCancelButton: true,
       confirmButtonText: 'Yes',
@@ -205,9 +205,9 @@ export class ViewComponent {
     this.ds.post('adviser/applications/reject/', this.applicationDetails.id, null).subscribe(
       response => {
         this.isSubmitting = false
-        this.gs.successAlert('Rejected!', response.message)
+        this.gs.successAlert('Not Approved!', response.message)
         this.applicationDetails.status = 2
-        this.applicationDetails.status_text = 'Rejected (Adviser)'
+        this.applicationDetails.status_text = 'Not Approved (Adviser)'
       },
       error => {
         this.isSubmitting = false

@@ -1,7 +1,10 @@
 <div class="container">
   <div class="info-header">
     <div class="info-image">
-      <img [src]="(student.image) ? student.image :'assets/images/profile-dark.png'" alt="Image">
+      <img
+        [src]="student.image ? student.image : 'assets/images/profile-dark.png'"
+        alt="Image"
+      />
     </div>
 
     <div class="info-content">
@@ -9,249 +12,396 @@
         <tbody>
           <tr>
             <td><p>Student Number</p></td>
-            <td><p>{{ student.student_profile.student_number }}</p></td>
+            <td>
+              <p>{{ student.student_profile.student_number }}</p>
+            </td>
           </tr>
           <tr>
             <td><p>Full Name</p></td>
-            <td><p>{{ student.first_name }} {{ student.middle_name }} {{ student.last_name }} {{ student.ext_name }}</p></td>
+            <td>
+              <p>
+                {{ student.first_name }} {{ student.middle_name }}
+                {{ student.last_name }} {{ student.ext_name }}
+              </p>
+            </td>
           </tr>
           <tr>
             <td><p>College/Program/Yr. level</p></td>
-            <td><p>CCS/{{ student.student_profile.program }}/{{ student.student_profile.year_level }}</p></td>
+            <td>
+              <p>
+                CCS/{{ student.student_profile.program }}/{{
+                  student.student_profile.year_level
+                }}
+              </p>
+            </td>
           </tr>
           <tr>
             <td><p>Domain Email</p></td>
-            <td><p>{{ student.student_profile.student_number }}&#64;gordoncollege.edu.ph</p></td>
+            <td>
+              <p>
+                {{
+                  student.student_profile.student_number
+                }}&#64;gordoncollege.edu.ph
+              </p>
+            </td>
           </tr>
           <tr>
             <td><p>Mobile Number</p></td>
-            <td><p>{{ student.student_profile.contact_number }}</p></td>
+            <td>
+              <p>{{ student.student_profile.contact_number }}</p>
+            </td>
           </tr>
         </tbody>
       </table>
     </div>
   </div>
-  
+
   <div class="info-container">
-      <div class="content">
-          <h3>Personal Information</h3>
-          <div class="row">
-              <div class="col-md-3">
-                  <mat-form-field appearance="outline" floatLabel='always'>
-                    <mat-label>Date of Birth</mat-label>
-                    <input matInput [(ngModel)]="student.birth_date" readonly>
-                  </mat-form-field>
-              </div>
-              <div class="col-md-2">
-                  <mat-form-field appearance="outline" floatLabel='always'>
-                    <mat-label>Civil Status</mat-label>
-                    <input matInput [(ngModel)]="student.student_profile.civil_status" readonly>
-                  </mat-form-field>
-              </div>
-              <div class="col-md-2">
-                  <mat-form-field appearance="outline" floatLabel='always'>
-                    <mat-label>Gender</mat-label>
-                    <input matInput [(ngModel)]="student.gender" readonly>
-                  </mat-form-field>
-              </div>
-              <div class="col-md-2">
-                  <mat-form-field appearance="outline" floatLabel='always'>
-                    <mat-label>Citizenship</mat-label>
-                    <input matInput [(ngModel)]="student.citizenship" readonly>
-                  </mat-form-field>
-              </div>
-              <div class="col-md-3">
-                  <mat-form-field appearance="outline" floatLabel='always'>
-                    <mat-label>Religion</mat-label>
-                    <input matInput  [(ngModel)]="student.religion" readonly>
-                  </mat-form-field>
-              </div>
-          </div>
-  
-          <div class="row">
-              <div class="col-md-4">
-                  <mat-form-field appearance="outline" floatLabel='always'>
-                    <mat-label>Father's name</mat-label>
-                    <input matInput [(ngModel)]="student.student_profile.father_name" readonly>
-                  </mat-form-field>
-              </div>
-              <div class="col-md-2">
-                  <mat-form-field appearance="outline" floatLabel='always'>
-                    <mat-label>Employment</mat-label>
-                    <input matInput [(ngModel)]="student.student_profile.father_employment" readonly>
-                  </mat-form-field>
-              </div>
-              <div class="col-md-4">
-                <mat-form-field appearance="outline" floatLabel='always'>
-                  <mat-label>Mother's name</mat-label>
-                  <input matInput  [(ngModel)]="student.student_profile.mother_name" readonly>
-                </mat-form-field>
+    <div class="content">
+      <h3>Personal Information</h3>
+      <div class="row">
+        <div class="col-md-3">
+          <mat-form-field appearance="outline" floatLabel="always">
+            <mat-label>Date of Birth</mat-label>
+            <input matInput [(ngModel)]="student.birth_date" readonly />
+          </mat-form-field>
+        </div>
+        <div class="col-md-2">
+          <mat-form-field appearance="outline" floatLabel="always">
+            <mat-label>Civil Status</mat-label>
+            <input
+              matInput
+              [(ngModel)]="student.student_profile.civil_status"
+              readonly
+            />
+          </mat-form-field>
+        </div>
+        <div class="col-md-2">
+          <mat-form-field appearance="outline" floatLabel="always">
+            <mat-label>Gender</mat-label>
+            <input matInput [(ngModel)]="student.gender" readonly />
+          </mat-form-field>
+        </div>
+        <div class="col-md-2">
+          <mat-form-field appearance="outline" floatLabel="always">
+            <mat-label>Citizenship</mat-label>
+            <input matInput [(ngModel)]="student.citizenship" readonly />
+          </mat-form-field>
+        </div>
+        <div class="col-md-3">
+          <mat-form-field appearance="outline" floatLabel="always">
+            <mat-label>Religion</mat-label>
+            <input matInput [(ngModel)]="student.religion" readonly />
+          </mat-form-field>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-md-4">
+          <mat-form-field appearance="outline" floatLabel="always">
+            <mat-label>Father's name</mat-label>
+            <input
+              matInput
+              [(ngModel)]="student.student_profile.father_name"
+              readonly
+            />
+          </mat-form-field>
+        </div>
+        <div class="col-md-2">
+          <mat-form-field appearance="outline" floatLabel="always">
+            <mat-label>Employment</mat-label>
+            <input
+              matInput
+              [(ngModel)]="student.student_profile.father_employment"
+              readonly
+            />
+          </mat-form-field>
+        </div>
+        <div class="col-md-4">
+          <mat-form-field appearance="outline" floatLabel="always">
+            <mat-label>Mother's name</mat-label>
+            <input
+              matInput
+              [(ngModel)]="student.student_profile.mother_name"
+              readonly
+            />
+          </mat-form-field>
+        </div>
+        <div class="col-md-2">
+          <mat-form-field appearance="outline" floatLabel="always">
+            <mat-label>Employment</mat-label>
+            <input
+              matInput
+              [(ngModel)]="student.student_profile.mother_employment"
+              readonly
+            />
+          </mat-form-field>
+        </div>
+      </div>
+    </div>
+
+    <div class="content">
+      <h3>Address</h3>
+      <div class="row">
+        <div class="col-md-3">
+          <mat-form-field appearance="outline" floatLabel="always">
+            <mat-label>Region</mat-label>
+            <input matInput [(ngModel)]="student.region" readonly />
+          </mat-form-field>
+        </div>
+        <div class="col-md-3">
+          <mat-form-field appearance="outline" floatLabel="always">
+            <mat-label>Province</mat-label>
+            <input matInput [(ngModel)]="student.province" readonly />
+          </mat-form-field>
+        </div>
+        <div class="col-md-3">
+          <mat-form-field appearance="outline" floatLabel="always">
+            <mat-label>Municipality</mat-label>
+            <input matInput [(ngModel)]="student.municipality" readonly />
+          </mat-form-field>
+        </div>
+        <div class="col-md-3">
+          <mat-form-field appearance="outline" floatLabel="always">
+            <mat-label>Barangay</mat-label>
+            <input matInput [(ngModel)]="student.barangay" readonly />
+          </mat-form-field>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-6">
+          <mat-form-field appearance="outline" floatLabel="always">
+            <mat-label>Address</mat-label>
+            <input matInput [(ngModel)]="student.address" readonly />
+          </mat-form-field>
+        </div>
+        <div class="col-md-2">
+          <mat-form-field appearance="outline" floatLabel="always">
+            <mat-label>Zip Code</mat-label>
+            <input matInput [(ngModel)]="student.zip_code" readonly />
+          </mat-form-field>
+        </div>
+      </div>
+    </div>
+
+    <!-- seminars and training -->
+    <div class="content" *ngIf="student.practicum_level === 1">
+      <h3>Seminars and Training Attended related to IT</h3>
+      <div class="table-container">
+        <div class="table">
+          <div class="table-row">
+            <div class="col-md-3">
+              <h4>Title of Seminar</h4>
+            </div>
+            <div class="col-md-3">
+              <h4>Venue</h4>
             </div>
             <div class="col-md-2">
-                <mat-form-field appearance="outline" floatLabel='always'>
-                  <mat-label>Employment</mat-label>
-                  <input matInput [(ngModel)]="student.student_profile.mother_employment" readonly>
-                </mat-form-field>
+              <h4>Date</h4>
+            </div>
+            <div class="col-md-2">
+              <h4>Number of Hours</h4>
+            </div>
+            <div class="col-md-2">
+              <h4>Certificate</h4>
             </div>
           </div>
-      </div>
-  
-      <div class="content">
-          <h3>Address</h3>
-          <div class="row">
-              <div class="col-md-3">
-                  <mat-form-field appearance="outline" floatLabel='always'>
-                    <mat-label>Region</mat-label>
-                    <input matInput [(ngModel)]="student.region" readonly>
-                  </mat-form-field>
-              </div>
-              <div class="col-md-3">
-                  <mat-form-field appearance="outline" floatLabel='always'>
-                    <mat-label>Province</mat-label>
-                    <input matInput [(ngModel)]="student.province" readonly>
-                  </mat-form-field>
-              </div>
-              <div class="col-md-3">
-                  <mat-form-field appearance="outline" floatLabel='always'>
-                    <mat-label>Municipality</mat-label>
-                    <input matInput [(ngModel)]="student.municipality" readonly>
-                  </mat-form-field>
-              </div>
-              <div class="col-md-3">
-                  <mat-form-field appearance="outline" floatLabel='always'>
-                    <mat-label>Barangay</mat-label>
-                    <input matInput [(ngModel)]="student.barangay" readonly>
-                  </mat-form-field>
-              </div>
-          </div>
-          <div class="row">
-              <div class="col-md-6">
-                  <mat-form-field appearance="outline" floatLabel='always'>
-                    <mat-label>Address</mat-label>
-                    <input matInput [(ngModel)]="student.address" readonly>
-                  </mat-form-field>
-              </div>
-              <div class="col-md-2">
-                  <mat-form-field appearance="outline" floatLabel='always'>
-                    <mat-label>Zip Code</mat-label>
-                    <input matInput [(ngModel)]="student.zip_code" readonly>
-                  </mat-form-field>
-              </div>
-          </div>
-      </div>
-  
-      <!-- seminars and training -->
-      <div class="content">
-        <h3>Seminars and Training Attended related to IT</h3>
-        <div class="table-container">
-          <div class="table">
-            <div class="table-row">
-              <div class="col-md-3">
-                <h4>Title of Seminar</h4>
-              </div>
-              <div class="col-md-3">
-                <h4>Venue</h4>
-              </div>
-              <div class="col-md-2">
-                <h4>Date</h4>
-              </div>
-              <div class="col-md-2">
-                <h4>Number of Hours</h4>
-              </div>
-              <div class="col-md-2">
-                <h4>Certificate</h4>
-              </div>
+          <div class="table-row" *ngFor="let seminar of seminars">
+            <div class="col-md-3">
+              <p>{{ seminar.seminar_title }}</p>
             </div>
-            <div class="table-row" *ngFor="let seminar of seminars">
-              <div class="col-md-3"> 
-                <p>{{ seminar.seminar_title }}</p> 
-              </div>
-              <div class="col-md-3"> 
-                <p>{{ seminar.venue }}</p> 
-              </div>
-              <div class="col-md-2"> 
-                <p>{{ seminar.date }}</p> 
-              </div>
-              <div class="col-md-2"> 
-                <p>{{ seminar.total_hours }}</p> 
-              </div>
-              <div class="col-md-2"> 
-                <div class="actions">
-                  <button class="view" 
+            <div class="col-md-3">
+              <p>{{ seminar.venue }}</p>
+            </div>
+            <div class="col-md-2">
+              <p>{{ seminar.date }}</p>
+            </div>
+            <div class="col-md-2">
+              <p>{{ seminar.total_hours }}</p>
+            </div>
+            <div class="col-md-2">
+              <div class="actions">
+                <button
+                  class="view"
                   mat-raised-button
                   matTooltip="View"
-                  [matTooltipShowDelay] = "400"
-                  (click)="viewSeminarImage(seminar)">
-                      <i class='bx bx-detail' ></i>
-                  </button>
-                </div>
+                  [matTooltipShowDelay]="400"
+                  (click)="viewSeminarImage(seminar)"
+                >
+                  <i class="bx bx-detail"></i>
+                </button>
               </div>
             </div>
-            <div class="table-row">
-              <p>Total Hours: {{ seminar_total_hours }} </p>
-            </div>
-          </div>  
+          </div>
+          <div class="table-row">
+            <p>Total Hours: {{ seminar_total_hours }}</p>
+          </div>
         </div>
       </div>
-      <!-- seminars and training end -->
+    </div>
+    <!-- seminars and training end -->
 
-
-      <div class="content">
-        <h3>Seminars and Training Attended related to IT</h3>
-        <div class="table-container">
-          <div class="table">
-            <div class="table-row">
-              <div class="col-md-3">
-                <h4>Task Name</h4>
-              </div>
-              <div class="col-md-3">
-                <h4>Venue</h4>
-              </div>
-              <div class="col-md-2">
-                <h4>Date</h4>
-              </div>
-              <div class="col-md-2">
-                <h4>Number of Hours</h4>
-              </div>
-              <div class="col-md-2">
-                <h4>Evidence</h4>
-              </div>
+    <div class="content" *ngIf="student.practicum_level === 1">
+      <h3>Other task/Activities</h3>
+      <div class="table-container">
+        <div class="table">
+          <div class="table-row">
+            <div class="col-md-3">
+              <h4>Task Name</h4>
             </div>
-            <div class="table-row" *ngFor="let item of other_tasks">
-              <div class="col-md-3"> 
-                <p>{{ item.task_name }}</p> 
-              </div>
-              <div class="col-md-3"> 
-                <p>{{ item.venue }}</p> 
-              </div>
-              <div class="col-md-2"> 
-                <p>{{ item.date }}</p> 
-              </div>
-              <div class="col-md-2"> 
-                <p>{{ item.total_hours }}</p> 
-              </div>
-              <div class="col-md-2"> 
-                <div class="actions">
-                  <button class="view" 
+            <div class="col-md-3">
+              <h4>Venue</h4>
+            </div>
+            <div class="col-md-2">
+              <h4>Date</h4>
+            </div>
+            <div class="col-md-2">
+              <h4>Number of Hours</h4>
+            </div>
+            <div class="col-md-2">
+              <h4>Evidence</h4>
+            </div>
+          </div>
+          <div class="table-row" *ngFor="let item of other_tasks">
+            <div class="col-md-3">
+              <p>{{ item.task_name }}</p>
+            </div>
+            <div class="col-md-3">
+              <p>{{ item.venue }}</p>
+            </div>
+            <div class="col-md-2">
+              <p>{{ item.date }}</p>
+            </div>
+            <div class="col-md-2">
+              <p>{{ item.total_hours }}</p>
+            </div>
+            <div class="col-md-2">
+              <div class="actions">
+                <button
+                  class="view"
                   mat-raised-button
                   matTooltip="View"
-                  [matTooltipShowDelay] = "400"
-                  (click)="viewSeminarImage(item)">
-                      <i class='bx bx-detail' ></i>
-                  </button>
-                </div>
+                  [matTooltipShowDelay]="400"
+                  (click)="viewSeminarImage(item)"
+                >
+                  <i class="bx bx-detail"></i>
+                </button>
               </div>
             </div>
-            <div class="table-row">
-              <p>Total Hours: {{ other_task_total_hours }} </p>
-            </div>
-          </div>  
+          </div>
+          <div class="table-row">
+            <p>Total Hours: {{ other_task_total_hours }}</p>
+          </div>
         </div>
       </div>
-      
+    </div>
+
+    <!-- community service -->
+    <div class="content" *ngIf="student.practicum_level === 2">
+      <h3>Community Service</h3>
+      <div class="table-container">
+        <div class="table">
+          <div class="table-row">
+            <div class="col-md-2">
+              <h4>Date</h4>
+            </div>
+            <div class="col-md-2">
+              <h4>Time in</h4>
+            </div>
+            <div class="col-md-2">
+              <h4>Time out</h4>
+            </div>
+            <div class="col-md-3">
+              <h4>Accomplishment</h4>
+            </div>
+            <div class="col-md-2">
+              <h4>Total Hours</h4>
+            </div>
+            <div class="col-md-1">
+              <h4>Status</h4>
+            </div>
+          </div>
+          <div class="table-row" *ngFor="let item of community_service">
+            <div class="col-md-2">
+              <p>{{ item.date }}</p>
+            </div>
+            <div class="col-md-2">
+              <p>{{ item.time_in }}</p>
+            </div>
+            <div class="col-md-2">
+              <p>{{ item.time_out }}</p>
+            </div>
+            <div class="col-md-3">
+              <p>{{ item.accomplishment }}</p>
+            </div>
+            <div class="col-md-2">
+              <p>{{ item.total_hours }}</p>
+            </div>
+            <div class="col-md-1">
+              <p>{{ (item.is_verified) ? 'Verified' : 'Not verified' }}</p>
+            </div>
+          </div>
+          <div class="table-row">
+            <p>Total Hours: {{ community_service_total_hours }} / 150 Hours </p>
+          </div>
+          <!-- <table>
+            <thead>
+              <tr>
+                <th>Date</th>
+                <th>Time In</th>
+                <th>Time Out</th>
+                <th>Accomplishment</th>
+                <th>Total Hours</th>
+                <th>Status</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let item of community_service">
+                <td> {{ item.date }} </td>
+                <td> {{ item.time_in }} </td>
+                <td> {{ item.time_out }} </td>
+                <td> {{ item.accomplishment }} </td>
+                <td> {{ item.total_hours }} </td>
+                <td> 
+                  {{ (item.is_verified) ? 'Verified' : 'Not verified' }}
+                  <div class="actions">
+                    <button class="view" 
+                    mat-raised-button
+                    matTooltip="View"
+                    [matTooltipShowDelay] = "400"
+                    (click)="viewOtherTaskImage(item)"
+                    mat-ripple>
+                        <i class='bx bx-detail' ></i>
+                    </button>
+
+                    <button class="edit" 
+                    mat-raised-button
+                    matTooltip="Edit"
+                    [matTooltipShowDelay] = "400"
+                    (click)="editOtherTask(item)"
+                    mat-ripple>
+                        <i class='bx bxs-edit'></i>
+                    </button> 
+                  </div> 
+                </td>
+              </tr>
+            </tbody>
+          </table> -->
+        </div>
+        <div class="btn" *ngIf="unverified_community_service > 0">
+          <button mat-ripple (click)="verifyCommunityServices()">Verify</button>
+        </div>
+      </div>
+
       <!-- skills -->
       <div class="content">
-        <p class="text">I have done a self-evaluation of my abilities  based on my past experiences. Listed below is what I consider my strong and weak skill areas. If i work in your company, I would like an opportunity to increase my proficiency in weak areas.</p>
+        <h3>Skill area</h3>
+        <p class="text">
+          I have done a self-evaluation of my abilities based on my past
+          experiences. Listed below is what I consider my strong and weak skill
+          areas. If i work in your company, I would like an opportunity to
+          increase my proficiency in weak areas.
+        </p>
         <div class="table-container">
           <div class="table">
             <div class="table-row">
@@ -264,36 +414,44 @@
             </div>
             <div class="table-row" *ngFor="let skill of skills">
               <div class="col-md-6">
-                <p> {{ skill.strong_skill }} </p>
+                <p>{{ skill.strong_skill }}</p>
               </div>
               <div class="col-md-6">
-                <p> {{ skill.weak_skill }} </p>
+                <p>{{ skill.weak_skill }}</p>
               </div>
             </div>
           </div>
         </div>
       </div>
       <!-- skills end -->
-  
+
       <!-- personality test -->
       <div class="content">
         <h3>Personality Test</h3>
         <div class="row">
           <div class="col-md-4">
             <div class="file-input-container">
-              <button *ngIf="personality_test" (click)="viewPersonalityTestImage(personality_test)">View</button>
-              <div class="label"> Personality Test Result </div>
-              <div class="text">{{ (personality_test) ? personality_test.file_name : 'None' }}</div>
+              <button
+                *ngIf="personality_test"
+                (click)="viewPersonalityTestImage(personality_test)"
+              >
+                View
+              </button>
+              <div class="label">Personality Test Result</div>
+              <div class="text">
+                {{ personality_test ? personality_test.file_name : "None" }}
+              </div>
             </div>
           </div>
         </div>
       </div>
       <!-- personality test end -->
+    </div>
   </div>
 </div>
 
 <!-- OJT Information Content -->
-<div class="container">
+<div class="container" *ngIf="ojtInfo?.company_name">
   <div class="info-container">
     <div class="content">
       <h3>OJT Details</h3>
@@ -301,13 +459,13 @@
         <div class="col-md-5">
           <mat-form-field appearance="outline" floatLabel="always">
             <mat-label>Company Name</mat-label>
-            <input matInput [(ngModel)]="ojtInfo.company_name" readonly>
+            <input matInput [(ngModel)]="ojtInfo.company_name" readonly />
           </mat-form-field>
         </div>
         <div class="col-md-7">
           <mat-form-field appearance="outline" floatLabel="always">
             <mat-label>Company Address</mat-label>
-            <input matInput [(ngModel)]="ojtInfo.full_address" readonly>
+            <input matInput [(ngModel)]="ojtInfo.full_address" readonly />
           </mat-form-field>
         </div>
       </div>
@@ -315,13 +473,21 @@
         <div class="col-md-5">
           <mat-form-field appearance="outline" floatLabel="always">
             <mat-label>Supervisor Name</mat-label>
-            <input matInput [(ngModel)]="ojtInfo.supervisor_full_name" readonly>
+            <input
+              matInput
+              [(ngModel)]="ojtInfo.supervisor_full_name"
+              readonly
+            />
           </mat-form-field>
         </div>
         <div class="col-md-3">
           <mat-form-field appearance="outline" floatLabel="always">
             <mat-label>Position</mat-label>
-            <input matInput [(ngModel)]="ojtInfo.supervisor_position" readonly>
+            <input
+              matInput
+              [(ngModel)]="ojtInfo.supervisor_position"
+              readonly
+            />
           </mat-form-field>
         </div>
         <!-- <div class="col-md-3">
@@ -336,34 +502,39 @@
         <div class="col-md-3">
           <mat-form-field appearance="outline" floatLabel="always">
             <mat-label>Start Date</mat-label>
-            <input matInput [(ngModel)]="ojtInfo.start_date" readonly>
+            <input matInput [(ngModel)]="ojtInfo.start_date" readonly />
           </mat-form-field>
         </div>
-        <div class="col-md-3">
+        <!-- <div class="col-md-3">
           <mat-form-field appearance="outline" floatLabel="always">
             <mat-label>End Date</mat-label>
             <input matInput readonly>
           </mat-form-field>
-        </div>
+        </div> -->
         <div class="col-md-3">
           <mat-form-field appearance="outline" floatLabel="always">
             <mat-label>Number of Hours</mat-label>
-            <input matInput [(ngModel)]="student.required_hours" readonly>
+            <input matInput [(ngModel)]="student.required_hours" readonly />
           </mat-form-field>
         </div>
       </div>
-        
+
       <div class="row">
         <div class="col-md-4">
           <mat-form-field appearance="outline" floatLabel="always">
             <mat-label>Department/Unit</mat-label>
-            <input matInput [(ngModel)]="ojtInfo.department" readonly>
+            <input matInput [(ngModel)]="ojtInfo.department" readonly />
           </mat-form-field>
         </div>
         <div class="col-md-6">
           <mat-form-field appearance="outline" floatLabel="always">
             <mat-label>OJT Task</mat-label>
-            <textarea matInput  [(ngModel)]="ojtInfo.task"  rows="4" readonly></textarea>
+            <textarea
+              matInput
+              [(ngModel)]="ojtInfo.task"
+              rows="4"
+              readonly
+            ></textarea>
           </mat-form-field>
         </div>
       </div>

@@ -73,13 +73,13 @@ export class ListComponent {
             element.status_text = 'Cancelled'
           }
           else if(element.status == 2) {
-            element.status_text = 'Rejected'
+            element.status_text = 'Not Approved'
           }
           else if(element.status == 3) {
             element.status_text = 'Approved'
           }
           else if(element.status == 4) {
-            element.status_text = 'Rejected'
+            element.status_text = 'Not Approved'
           }
           else if (
             element.status == 5 ||
