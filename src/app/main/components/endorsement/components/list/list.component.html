@@ -2,8 +2,8 @@
     <div class="container-header">
         <h1>Company Endorsements</h1>
     </div>
-  
-    
+
+
     <ng-container *ngIf="!isLoading; else loading">
         <div class="buttons">
             <div class="filter-container">
@@ -13,7 +13,7 @@
                         <input #searchInput (input)="search(searchInput.value)" matInput placeholder="Aa" />
                     </mat-form-field>
                 </div>
-        
+
             </div>
             <div class="right">
                 <div class="class-filter">
@@ -24,7 +24,7 @@
                             <mat-option [value]="0"> For Recomendation </mat-option>
                             <mat-option [value]="1"> Not Recomended</mat-option>
                             <mat-option [value]="2"> For Approval</mat-option>
-                            <mat-option [value]="3"> Not Approved</mat-option>
+                            <mat-option [value]="3"> Declined</mat-option>
                             <mat-option [value]="4"> Approved</mat-option>
                             <!-- <mat-option [value]="3"> Approved</mat-option> -->
                         </mat-select>
@@ -32,7 +32,7 @@
                 </div>
             </div>
         </div>
-    
+
         <div class="card-container" *ngIf="filteredIndustryPartners.length > 0; else noItems">
             <div class="card" *ngFor="let industryPartner of filteredIndustryPartners">
                 <div class="status"
@@ -41,18 +41,18 @@
                 [class.monitoring]="industryPartner.status == 4">
                     <h3>{{ industryPartner.status_text }}</h3>
                 </div>
-        
+
                 <img [src]="(industryPartner.image) ? industryPartner.image : 'assets/images/logo.png'" alt="logo image" class="card-image">
-                <div class="info-section"> 
+                <div class="info-section">
                     <mat-icon>apartment</mat-icon>
                     <h2>{{ industryPartner.company_name }}</h2>
                 </div>
-        
-                <div class="info-section"> 
+
+                <div class="info-section">
                     <mat-icon>location_on</mat-icon>
                     <p>{{ industryPartner.full_location }}</p>
                 </div>
-        
+
                 <div class="view-button">
                     <button class="view" mat-ripple (click)="viewIndustryPartnerRequest(industryPartner.id)"><b>View</b></button>
                 </div>
@@ -77,7 +77,7 @@
                   </button>
                 </div>
               </div>
-            </div> 
+            </div>
         </div>
     </ng-container>
 </main>
@@ -93,4 +93,3 @@
         <p>Sorry, no data found</p>
     </div>
 </ng-template>
-  

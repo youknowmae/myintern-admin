@@ -16,15 +16,15 @@ import { formatDate } from '@angular/common';
   styleUrl: './view.component.scss'
 })
 export class ViewComponent {
-  id: any 
-  
+  id: any
+
   isLoading: boolean = true
   applicationDetails: any
   comments: any = []
   user: any
 
   commentValue: string = ''
-  isSubmitting: boolean = false 
+  isSubmitting: boolean = false
 
   constructor(
     private ds: DataService,
@@ -43,7 +43,7 @@ export class ViewComponent {
   }
 
   getApplicationDetails() {
-        
+
     let id = this.us.getStudentApplication()
 
     this.ds.get('adviser/applications/', id).subscribe(
@@ -53,11 +53,11 @@ export class ViewComponent {
             let companyHead = industryPartner.company_head;
             let fullName = `${companyHead?.first_name || ''} ${companyHead?.last_name || ''} ${companyHead?.ext_name || ''}`.trim();
             applicationDetails.industry_partner.company_head.full_name = fullName;
-    
+
             let supervisor = industryPartner.immediate_supervisor;
             let supervisorFullName = `${supervisor?.first_name || ''} ${supervisor?.last_name || ''} ${supervisor?.ext_name || ''}`.trim();
             applicationDetails.industry_partner.immediate_supervisor.full_name = supervisorFullName;
-    
+
             let full_address = `${industryPartner?.street || ''} ${industryPartner?.barangay || ''}, ${industryPartner?.municipality || ''}`
             industryPartner.full_address = full_address
 
@@ -68,13 +68,13 @@ export class ViewComponent {
               applicationDetails.status_text = 'Cancelled'
             }
             else if(applicationDetails.status == 2) {
-              applicationDetails.status_text = 'Not Approved (Adviser)'
+              applicationDetails.status_text = 'Declined (Adviser)'
             }
             else if(applicationDetails.status == 3) {
               applicationDetails.status_text = 'Approved'
             }
             else if(applicationDetails.status == 4) {
-              applicationDetails.status_text = 'Not Approved (Company)'
+              applicationDetails.status_text = 'Declined (Company)'
             }
             else if (
               applicationDetails.status == 5 ||
@@ -88,30 +88,30 @@ export class ViewComponent {
               // applicationDetails.status = 6
               applicationDetails.status_text = 'Accepted';
             }
-            
+
             console.log(applicationDetails)
 
             this.applicationDetails = applicationDetails
-    
-            this.comments = this.applicationDetails.application_comments 
+
+            this.comments = this.applicationDetails.application_comments
 
             // .map((applicationDetails: any) => {
             //   if(applicationDetails.supervisor) {
             //     let name = JSON.parse(applicationDetails.supervisor.immediate_supervisor)
-        
+
             //     applicationDetails = {...name, image: applicationDetails.supervisor.image, message: applicationDetails.message}
             //   }
-        
+
             //   if(applicationDetails.user) {
             //     applicationDetails = {...applicationDetails.user, message: applicationDetails.message}
             //   }
-        
+
             //   return applicationDetails
-            // });            
-        
+            // });
+
             this.isLoading = false
             console.log(this.comments)
-    
+
           },
           error => {
             this.isLoading = false
@@ -126,7 +126,7 @@ export class ViewComponent {
           }
         )
 
-        
+
   }
 
   previewDocument(file: any) {
@@ -180,7 +180,7 @@ export class ViewComponent {
 
   rejectApplication() {
     Swal.fire({
-      title: "Not Approved?",
+      title: "Decline?",
       text: "Are you sure you want to decline this application?",
       icon: "info",
       showCancelButton: true,
@@ -205,9 +205,9 @@ export class ViewComponent {
     this.ds.post('adviser/applications/reject/', this.applicationDetails.id, null).subscribe(
       response => {
         this.isSubmitting = false
-        this.gs.successAlert('Not Approved!', response.message)
+        this.gs.successAlert('Declined!', response.message)
         this.applicationDetails.status = 2
-        this.applicationDetails.status_text = 'Not Approved (Adviser)'
+        this.applicationDetails.status_text = 'Declined (Adviser)'
       },
       error => {
         this.isSubmitting = false
@@ -222,13 +222,13 @@ export class ViewComponent {
       return
     }
 
-    this.isSubmitting = true 
+    this.isSubmitting = true
 
     let payload = new FormData
 
     payload.append('message', this.commentValue)
 
-    
+
     this.ds.post('adviser/applications/comment/', this.applicationDetails.id, payload).subscribe(
       response => {
         console.log(response)
@@ -272,17 +272,17 @@ export class ViewComponent {
     // const now = new Date();
     // // console.log(now)
     // const date = new Date(timestamp);
-  
+
     // const isToday = now.toDateString() === date.toDateString();
-  
+
     // if (isToday) {
     //   return formatDate(date, 'h:mm a', 'en-US');
-    // } 
+    // }
     //  else {
     //   return formatDate(date, 'MMM d, h:mm a', 'en-US');
     // }
   }
-  
 
-  
+
+
 }
