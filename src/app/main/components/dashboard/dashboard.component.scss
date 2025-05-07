@@ -9,6 +9,28 @@ h1 {
     padding: 10px;
 }
 
+.academic_year{
+  width: 300px;
+}
+
+.options {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  margin-top: 30px;
+}
+
+.options .export {
+  margin-left: auto;
+  padding: 2px 8px;
+  font-size: 25px;
+  background-color: var(--main-bg-color);
+  border: none;
+  cursor: pointer;
+  color: var(--primary-color);
+  margin-bottom: 10px;
+}
+
 .content {
     display: flex;
     flex-direction: column;
@@ -52,22 +74,22 @@ h1 {
         flex-wrap: wrap;
 
         canvas {
-            width: 100%; 
-            height: 400px; 
+            width: 100%;
+            height: 400px;
         }
 
         .pie {
             min-width: 300px;
             flex: 1;
         }
-          
+
           .pie .chart-data-summary {
             display: flex;
             gap: 1rem;
             align-items: center;
             justify-content: center;
           }
-          
+
           .pie .data-item {
             display: flex;
             flex-direction: column;
@@ -81,28 +103,28 @@ h1 {
             width: 50%;
             margin-bottom: 10px;
           }
-          
+
           .pie .color-dot {
             width: 12px;
             height: 12px;
             border-radius: 50%;
             display: inline-block;
           }
-          
+
           .pie .label {
             flex: 1;
             font-weight: 500;
             font-size: 15px;
             color: var(--main-orange);
           }
-          
+
           .pie .value {
             font-weight: 600;
             font-size: 20px;
             color: var(--main-orange);
           }
-          
-                
+
+
 
         .bar {
             min-width: 400px;
@@ -125,5 +147,5 @@ h1 {
         }
     }
 }
-  
+
 
