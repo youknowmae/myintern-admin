@@ -136,6 +136,14 @@
             <td mat-cell *matCellDef="let element" class="col-md-2">  {{ element.status }} </td>
         </ng-container>
 
+        <!-- Para sa paginput ng grades -->
+        <ng-container matColumnDef="grade">
+            <th mat-header-cell *matHeaderCellDef class="col-md-2"> Grade </th>
+            <td mat-cell *matCellDef="let element" class="col-md-2">
+              <input matInput type="text" [(ngModel)]="element.grade" placeholder="Enter grade" />
+            </td>
+        </ng-container>
+
         <ng-container matColumnDef="actions">
             <th mat-header-cell *matHeaderCellDef class="col-md-1"> Action </th>
             <td mat-cell *matCellDef="let element" class="col-md-1">
@@ -150,6 +158,6 @@
     </table>
 
     <mat-paginator [pageSizeOptions]="[15]" showFirstLastButtons
-    aria-label="Select page of periodic elements">
+        aria-label="Select page of periodic elements">
     </mat-paginator>
 </div>

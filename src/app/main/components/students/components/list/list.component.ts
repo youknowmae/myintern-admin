@@ -22,7 +22,7 @@ import { LiveAnnouncer } from '@angular/cdk/a11y';
 })
 export class ListComponent {
   // displayedColumns: string[] = ['name', 'student_number', 'course', 'program', 'progress', 'student_evaluation', 'exit_poll', 'status', 'actions'];
-  displayedColumns: string[] = ['full_name', 'company', 'class_code', 'progress', 'student_evaluation', 'ojt_exit_poll', 'status', 'actions'];
+  displayedColumns: string[] = ['full_name', 'company', 'progress', 'student_evaluation', 'ojt_exit_poll', 'status','grade', 'actions'];
 
   unfilteredStudents: any
   dataSource: any = new MatTableDataSource<any>();
