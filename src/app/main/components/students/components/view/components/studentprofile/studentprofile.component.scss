@@ -5,7 +5,11 @@
   border-radius: 30px;
   background: white;
   border: 1px solid var(--primary-color);
-  box-shadow: 3px 3px 10px rgba(0, 0, 0, 0.1)
+  box-shadow: 3px 3px 10px rgba(0, 0, 0, 0.1);
+  width: 100%;
+  box-sizing: border-box;
+  align-items: center;
+  justify-content: center;
 
 }
 
@@ -14,17 +18,25 @@
     align-items: center;
     justify-content: center;
     flex-wrap: wrap;
+    gap: 10px;
+    width: 100%;
     padding-bottom: 10px;
+
+
+    h1{
+      font-weight: 900;
+      padding-left: 10px;
+      padding-top: 12px;
+      padding-bottom: 0;
+    }
 
     .info-image {
       display: flex;
       justify-content: center ;
-      flex: 1;
-      flex-basis: 20%;
+      flex: 0 0 180px;
 
       img {
         border: 6px solid var(--secondary-color);
-        margin: 0 10px;
         object-fit: cover;
         width: 180px;
         height: 180px;
@@ -32,25 +44,34 @@
     }
 
     .info-content {
-        flex: 1;
-        flex-basis: 70%;
-        padding: 10px;
-        overflow-x: auto;
-        
+        flex: .5;
+        // flex-basis: 75%;
+        // padding: 10px;
+        // overflow-x: auto;
+        min-width: 100px;
+
         table {
           width: 100%;
-          border: 1px solid rgba(0, 0, 0, .12);
-          border-width: 1px;
-          border-collapse: collapse;
+          // border: 1px solid rgba(0, 0, 0, .12);
+          // border-width: 1px;
+          // border-collapse: collapse;
+
+          // .td .p{
+          //   font-weight: 900;
+          // }
 
           p {
             padding: 8px;
             margin: 0;
           }
-          
-          td:first-child {
-            border-right: 1px solid rgba(0, 0, 0, .12);
-            font-weight: 500;
+
+          // td:first-child {
+          //   border-right: 1px solid rgba(0, 0, 0, .12);
+          //   font-weight: 500;
+          // }
+
+          tr td:first-child p {
+            font-weight: bold;
           }
 
           tr td:first-child {
@@ -61,13 +82,78 @@
             width: 75%;
           }
 
-          tr:not(:last-child) td {
-            border-bottom: 1px solid rgba(0, 0, 0, .12);
-          }
+          // tr:not(:last-child) td {
+          //   border-bottom: 1px solid rgba(0, 0, 0, .12);
+          // }
         }
     }
 }
 
+
+
+//start of resume like layout
+.details {
+  // line-height: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  // flex: 1;
+
+  .section {
+    width: 100%;
+    max-width: 800px;
+    margin: 0 auto 40px auto;
+  }
+
+  .section:last-of-type {
+    margin-bottom: 0px;
+  }
+
+  .section__title {
+    margin-top: 10px;
+    letter-spacing: 2px;
+    color: var(--secondary-color);
+    font-weight: bold;
+    margin-bottom: 10px;
+    text-transform: uppercase;
+    text-align: start;
+  }
+
+  .section__list-item {
+    margin-bottom: 40px;
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+  }
+
+  .section__list-item:last-of-type {
+    margin-bottom: 0;
+  }
+
+  .left,
+  .right {
+    vertical-align: top;
+    display: inline-block;
+  }
+
+  .left {
+    width: 60%;
+  }
+
+  .right {
+    text-align: left;
+    width: 39%;
+  }
+
+  .type {
+    font-weight: bold;
+  }
+
+}
+
+
+//og code
 .info-container {
     display: flex;
     width: 100%;
@@ -87,14 +173,14 @@
         display: flex;
         flex-direction: column;
         padding-bottom: 10px;
-        
+
         h3 {
             font-size: 22px;
             color: var(--primary-color);
             margin-bottom: 20px;
-        
+
         }
-        
+
         .row {
             display: flex;
             flex-wrap: wrap;
@@ -105,24 +191,24 @@
 }
 
 .table-container {
-  width: 100%; 
+  width: 100%;
   padding: 5px 10px;
 
   .table {
     border: 1px solid var(--primary-color);
     display: flex;
     flex-direction: column;
-  
+
     .table-row {
       min-height: 40px;
       display: flex;
       border-bottom: 1px solid rgba(0, 0, 0, .12);
     }
-    
+
     .table-row:last-child {
       border-bottom: none;
     }
-  
+
     p {
       font-size: 12px;
     }
@@ -130,7 +216,7 @@
       font-size: 14px;
       font-weight: 600;
     }
-    
+
     p, h4 {
       font-family: poppins;
       text-align: center;
@@ -150,20 +236,20 @@
 
   button {
       margin: 0 3px;
-      border: 1px solid; 
+      border: 1px solid;
       border-radius: 5px;
       color: #ffffff;
       padding: 1px 8px;
       text-transform:none;
       font-size: large;
       cursor: pointer;
-  
+
       i {
           font-size: 18px;
           transform: translateY(1px);
       }
   }
-  
+
   .view {
       border-color: gray;
       background-color: gray;

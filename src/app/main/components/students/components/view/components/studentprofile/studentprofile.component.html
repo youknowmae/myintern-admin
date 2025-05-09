@@ -8,25 +8,25 @@
     </div>
 
     <div class="info-content">
+      <h1>RIDLEY OTRERA ANGELES</h1>
       <table>
         <tbody>
           <tr>
-            <td><p>Student Number</p></td>
+            <td><p>Student Number:</p></td>
             <td>
               <p>{{ student.student_profile.student_number }}</p>
             </td>
           </tr>
           <tr>
-            <td><p>Full Name</p></td>
+            <td><p>Address:</p></td>
             <td>
               <p>
-                {{ student.first_name }} {{ student.middle_name }}
-                {{ student.last_name }} {{ student.ext_name }}
+                East Bajac Bajac, Olongapo City, Zambales
               </p>
             </td>
           </tr>
-          <tr>
-            <td><p>College/Program/Yr. level</p></td>
+          <!-- <tr>
+            <td><p>College/Program/Yr. level:</p></td>
             <td>
               <p>
                 CCS/{{ student.student_profile.program }}/{{
@@ -34,9 +34,9 @@
                 }}
               </p>
             </td>
-          </tr>
+          </tr> -->
           <tr>
-            <td><p>Domain Email</p></td>
+            <td><p>Domain Email:</p></td>
             <td>
               <p>
                 {{
@@ -46,7 +46,7 @@
             </td>
           </tr>
           <tr>
-            <td><p>Mobile Number</p></td>
+            <td><p>Contact Number:</p></td>
             <td>
               <p>{{ student.student_profile.contact_number }}</p>
             </td>
@@ -56,6 +56,87 @@
     </div>
   </div>
 
+
+
+  <div class="details">
+    <div class="section">
+      <div class="section__title">Personal Information</div>
+      <div class="section__list">
+        <div class="section__list-item">
+          <div class="left">
+            <div class="type">Date of Birth:</div>
+            <div class="p">August 4, 2005</div>
+
+          </div>
+          <div class="right">
+            <div class="type">Citizenship:</div>
+            <div class="p">Filipino</div>
+          </div>
+        </div>
+            <div class="section__list-item">
+          <div class="left">
+            <div class="type">Civil Status:</div>
+            <div class="p">Single</div>
+          </div>
+          <div class="right">
+            <div class="type">Religion:</div>
+            <div class="p">Catholic</div>
+          </div>
+        </div>
+
+        <div class="section_list-item">
+          <div class="left">
+            <div class="type">Gender:</div>
+            <div class="p">Male</div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+    <div class="section">
+      <div class="section__title">Education</div>
+      <div class="section__list">
+        <div class="section__list-item">
+          <div class="left">
+            <div class="type">Bachelor of Science in Information Technology</div>
+            <div class="p">Year Level 3</div>
+            <div class="p">Gordon College</div>
+          </div>
+          <div class="right">
+            <div class="type">2021 - Present</div>
+          </div>
+        </div>
+        <div class="section__list-item">
+          <div class="left">
+            <div class="type">Senior High School - GAS STRAND</div>
+            <div class="p">Mondriaan Aura College</div>
+          </div>
+          <div class="right">
+            <div class="type">2019 - 2021</div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <div class="section">
+      <div class="section__title">Highest Education Attainment</div>
+      <div class="section__list">
+        <div class="section__list-item">
+          <div class="left">
+            <div class="type">Bachelor of Science in Information Technology</div>
+            <div class="p">Year Level 3</div>
+            <div class="p">Gordon College</div>
+          </div>
+          <div class="right">
+            <div class="type">2021 - Present</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- OG Code -->
   <div class="info-container">
     <div class="content">
       <h3>Personal Information</h3>
@@ -185,7 +266,7 @@
     </div>
 
     <!-- seminars and training -->
-    <div class="content" *ngIf="student.practicum_level === 1">
+    <!-- <div class="content" *ngIf="student.practicum_level === 1">
       <h3>Seminars and Training Attended related to IT</h3>
       <div class="table-container">
         <div class="table">
@@ -238,10 +319,10 @@
           </div>
         </div>
       </div>
-    </div>
+    </div> -->
     <!-- seminars and training end -->
 
-    <div class="content" *ngIf="student.practicum_level === 1">
+    <!-- <div class="content" *ngIf="student.practicum_level === 1">
       <h3>Other task/Activities</h3>
       <div class="table-container">
         <div class="table">
@@ -294,7 +375,7 @@
           </div>
         </div>
       </div>
-    </div>
+    </div> -->
 
     <!-- community service -->
     <div class="content" *ngIf="student.practicum_level === 2">
@@ -362,10 +443,10 @@
                 <td> {{ item.time_out }} </td>
                 <td> {{ item.accomplishment }} </td>
                 <td> {{ item.total_hours }} </td>
-                <td> 
+                <td>
                   {{ (item.is_verified) ? 'Verified' : 'Not verified' }}
                   <div class="actions">
-                    <button class="view" 
+                    <button class="view"
                     mat-raised-button
                     matTooltip="View"
                     [matTooltipShowDelay] = "400"
@@ -374,15 +455,15 @@
                         <i class='bx bx-detail' ></i>
                     </button>
 
-                    <button class="edit" 
+                    <button class="edit"
                     mat-raised-button
                     matTooltip="Edit"
                     [matTooltipShowDelay] = "400"
                     (click)="editOtherTask(item)"
                     mat-ripple>
                         <i class='bx bxs-edit'></i>
-                    </button> 
-                  </div> 
+                    </button>
+                  </div>
                 </td>
               </tr>
             </tbody>
