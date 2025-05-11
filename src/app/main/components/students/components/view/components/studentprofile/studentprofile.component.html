@@ -28,11 +28,6 @@
         <li>Node.js</li>
         <li>SQL</li>
       </ul>
-      <!-- <h2>Education</h2>
-      <h3>B.Sc in Computer Science</h3>
-      <p>University of XYZ, 2014-2018</p> <br>
-      <h3>M.Sc in Computer Science</h3>
-      <p>University of XYZ, 2019-2020</p> -->
     </div>
 
     <div class="right">
@@ -115,86 +110,6 @@
           </tr>
         </tbody>
       </table>
-    </div>
-  </div> -->
-
-
-<!--
-  <div class="details">
-    <div class="section">
-      <div class="section__title">Personal Information</div>
-      <div class="section__list">
-        <div class="section__list-item">
-          <div class="left">
-            <div class="type">Date of Birth:</div>
-            <div class="p">August 4, 2005</div>
-
-          </div>
-          <div class="right">
-            <div class="type">Citizenship:</div>
-            <div class="p">Filipino</div>
-          </div>
-        </div>
-            <div class="section__list-item">
-          <div class="left">
-            <div class="type">Civil Status:</div>
-            <div class="p">Single</div>
-          </div>
-          <div class="right">
-            <div class="type">Religion:</div>
-            <div class="p">Catholic</div>
-          </div>
-        </div>
-
-        <div class="section_list-item">
-          <div class="left">
-            <div class="type">Gender:</div>
-            <div class="p">Male</div>
-          </div>
-        </div>
-
-      </div>
-    </div>
-    <div class="section">
-      <div class="section__title">Education</div>
-      <div class="section__list">
-        <div class="section__list-item">
-          <div class="left">
-            <div class="type">Bachelor of Science in Information Technology</div>
-            <div class="p">Year Level 3</div>
-            <div class="p">Gordon College</div>
-          </div>
-          <div class="right">
-            <div class="type">2021 - Present</div>
-          </div>
-        </div>
-        <div class="section__list-item">
-          <div class="left">
-            <div class="type">Senior High School - GAS STRAND</div>
-            <div class="p">Mondriaan Aura College</div>
-          </div>
-          <div class="right">
-            <div class="type">2019 - 2021</div>
-          </div>
-        </div>
-
-      </div>
-    </div>
-
-    <div class="section">
-      <div class="section__title">Highest Education Attainment</div>
-      <div class="section__list">
-        <div class="section__list-item">
-          <div class="left">
-            <div class="type">Bachelor of Science in Information Technology</div>
-            <div class="p">Year Level 3</div>
-            <div class="p">Gordon College</div>
-          </div>
-          <div class="right">
-            <div class="type">2021 - Present</div>
-          </div>
-        </div>
-      </div>
     </div>
   </div> -->
 
@@ -328,8 +243,9 @@
     </div> -->
 
     <!-- seminars and training -->
-    <!-- <div class="content" *ngIf="student.practicum_level === 1">
-      <h3>Seminars and Training Attended related to IT</h3>
+    <div class="other_container" *ngIf="student.practicum_level === 1">
+      <div class="content">
+        <h3>Seminars and Training Attended related to IT</h3>
       <div class="table-container">
         <div class="table">
           <div class="table-row">
@@ -381,11 +297,13 @@
           </div>
         </div>
       </div>
-    </div> -->
+      </div>
+    </div>
     <!-- seminars and training end -->
 
-    <!-- <div class="content" *ngIf="student.practicum_level === 1">
-      <h3>Other task/Activities</h3>
+    <div class="other_container" *ngIf="student.practicum_level === 1">
+      <div class="content">
+        <h3>Other task/Activities</h3>
       <div class="table-container">
         <div class="table">
           <div class="table-row">
@@ -437,10 +355,11 @@
           </div>
         </div>
       </div>
-    </div> -->
+      </div>
+    </div>
 
     <!-- community service -->
-    <div class="content" *ngIf="student.practicum_level === 2">
+    <div class="other_container" *ngIf="student.practicum_level === 2">
       <h3>Community Service</h3>
       <div class="table-container">
         <div class="table">
@@ -593,7 +512,7 @@
 
 
 <!-- OJT Information Content -->
-<div class="container" *ngIf="ojtInfo?.company_name">
+<div class="content" *ngIf="ojtInfo?.company_name">
   <div class="info-container">
     <div class="content">
       <h3>OJT Details</h3>
