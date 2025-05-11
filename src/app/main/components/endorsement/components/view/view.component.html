@@ -74,9 +74,8 @@
                     </div>
             
                     <div class="action-buttons">
-                        <button class="warning" mat-ripple *ngIf="industryPartner.status === 0" (click)="reject()">Not Recommend</button>
-                        <button class="success" mat-ripple *ngIf="industryPartner.status === 0" mat-button (click)="verify()">Recommend</button>
-                        <!-- <button class="success" mat-button mat-ripple matStepperNext *ngIf="industryPartner.status != 1">Recommend</button> -->
+                        <button class="warning" mat-ripple *ngIf="industryPartner.request_status === 0" (click)="reject()">Not Recommend</button>
+                        <button class="success" mat-ripple *ngIf="industryPartner.request_status === 0" mat-button (click)="verify()">Recommend</button>
                     </div>
                 </mat-step>
             </mat-stepper>
@@ -90,36 +89,6 @@
     <app-loading-spinner></app-loading-spinner>
 </ng-template>
 
-<!-- <ng-template #mouPreview>
-    <div class="stepper-content">
-        <div class="preview-container">
-            <object [data]="sanitizeUrl(industryPartner.mou.file_location)" width="100%" height="550px"></object>
-        </div>
-    </div>
-</ng-template> -->
 
 
             
-<!-- <mat-step *ngIf="industryPartner.status != 1">
-    <ng-template matStepLabel>Documents</ng-template>
-
-    <div class="stepper-content" *ngIf="industryPartner.status === 0 || industryPartner.status === 1; else mouPreview">
-        <div class="row" >
-            <div class="col-md-4">
-                <div class="file-input-container"> 
-                    <div class="label"> Upload MOU </div>
-                    <input class="file-input" type="file" accept=".jpeg, .png, .jpg, .svg, .pdf" (change)="uploadFile($event)"> 
-                </div>
-            </div>
-        </div>
-        <div class="preview-container" *ngIf="filePreview">
-            <img *ngIf="isImage" [src]="filePreview" alt="File Preview" class="image-preview">
-            <object *ngIf="!isImage" [data]="filePreview" width="100%" height="550px"></object>
-        </div>
-    </div>
-
-    <div class="action-buttons">
-        <button class="success" mat-button matStepperPrevious>Back</button>
-        <button class="success" *ngIf="industryPartner.status === 0" mat-button (click)="verify()">Verify</button>
-    </div>
-</mat-step> -->

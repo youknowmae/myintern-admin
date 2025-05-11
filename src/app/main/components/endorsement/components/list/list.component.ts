@@ -10,20 +10,20 @@ import { pagination } from '../../../../../model/pagination.model';
 @Component({
   selector: 'app-list',
   templateUrl: './list.component.html',
-  styleUrl: './list.component.scss'
+  styleUrl: './list.component.scss',
 })
 export class ListComponent {
-  industryPartners: IndustryPartner[] = []
-  filteredIndustryPartners: any = []
-  isLoading: boolean = true
+  industryPartners: IndustryPartner[] = [];
+  filteredIndustryPartners: any = [];
+  isLoading: boolean = true;
 
-  statusFilter: string | number = 0
-  searchFilter: string = ''
-  
+  statusFilter: string | number = 0;
+  searchFilter: string = '';
+
   pagination: pagination = <pagination>{};
 
-  isSubmitting: boolean = false
-  
+  isSubmitting: boolean = false;
+
   constructor(
     private us: UserService,
     private router: Router,
@@ -37,105 +37,104 @@ export class ListComponent {
       total: 0,
       per_page: 15,
       last_page: 0,
-    }
+    };
   }
 
   ngOnInit() {
-    this.getIndustryPartnerRequests()
+    this.getIndustryPartnerRequests();
   }
-  
+
   search(search: string) {
-    this.searchFilter = search.trim().toLowerCase()
-    this.filterRequest()
+    this.searchFilter = search.trim().toLowerCase();
+    this.filterRequest();
   }
-  
+
   onStatusFilterChange(event: MatSelectChange) {
-    console.log(event.value)
-    this.statusFilter = event.value
-    this.filterRequest()
+    console.log(event.value);
+    this.statusFilter = event.value;
+    this.filterRequest();
   }
 
   filterRequest() {
-    let data = this.industryPartners
+    let data = this.industryPartners;
 
-    if(this.statusFilter != 'all') {
-      data = data.filter((element: any) => {
-        return element.status == this.statusFilter
-      })
+    if (this.statusFilter != 'all') {
+      data = data.filter((item: any) => {
+        return item.request_status == this.statusFilter;
+      });
     }
 
-    if(this.searchFilter) {
-      data = data.filter((element: any) => {
-        return element.company_name.toLowerCase().includes(this.searchFilter) ||
-          element.full_location.toLowerCase().includes(this.searchFilter)
-          
-      })
+    if (this.searchFilter) {
+      data = data.filter((item: any) => {
+        return (
+          item.company_name.toLowerCase().includes(this.searchFilter) ||
+          item.full_location.toLowerCase().includes(this.searchFilter)
+        );
+      });
     }
 
-    this.pagination = this.gs.getPaginationDetails(data, this.pagination.current_page, this.pagination.per_page)
+    this.pagination = this.gs.getPaginationDetails(
+      data,
+      this.pagination.current_page,
+      this.pagination.per_page
+    );
 
     data = data.slice(this.pagination.from, this.pagination.to);
-    this.pagination.from++
+    this.pagination.from++;
 
-    this.filteredIndustryPartners = data
-
+    this.filteredIndustryPartners = data;
   }
 
   getIndustryPartnerRequests() {
     this.ds.get('adviser/request/industryPartners').subscribe(
-      industryPartners => {
-        this.industryPartners = industryPartners.map(
-          (element: any) => {
-            if(element.status == 0) {
-              element.status_text = 'For Recommendation'
-            }
-            else if(element.status == 1) {
-              element.status_text = 'Not Recommended'
-            }
-            else if(element.status == 2) {
-              element.status_text = 'For Approval'
-            }
-            else if(element.status == 3) {
-              element.status_text = 'Not Approved'
-            } 
-            else if(element.status == 4) {
-              element.status_text = 'Approved'
-            }
-  
-            element.full_location = element.municipality + ", " + element.province
-            return element
-        })
+      (industryPartners) => {
+        this.industryPartners = industryPartners.map((item: any) => {
+          if (item.request_status == 0) {
+            item.status_text = 'For Recommendation';
+          } else if (item.request_status == 1) {
+            item.status_text = 'Not Recommended';
+          } else if (item.request_status == 2) {
+            item.status_text = 'For Approval';
+          } else if (item.request_status == 3) {
+            item.status_text = 'Declined';
+          } else if (item.request_status == 4) {
+            item.status_text = 'Approved';
+          }
 
-        this.filterRequest()
-        
-        this.isLoading = false
+          item.full_location = item.municipality + ', ' + item.province;
+          return item;
+        });
 
-        console.log(industryPartners)
+        this.filterRequest();
+
+        this.isLoading = false;
+
+        console.log(industryPartners);
       },
-      error => {
-        console.error(error)
-        this.isLoading = false
+      (error) => {
+        console.error(error);
+        this.isLoading = false;
       }
-    )
+    );
   }
 
   viewIndustryPartnerRequest(id: number) {
-    this.us.setCompanyEndorsement(id)
-    this.router.navigate(['main/endorsement/view'])
+    this.us.setCompanyEndorsement(id);
+    this.router.navigate(['main/endorsement/view']);
   }
 
   changePage(page: number) {
-    const destination_page = this.pagination.current_page + page
-    if(destination_page < 1 || destination_page > this.pagination.last_page) {
-      return
+    const destination_page = this.pagination.current_page + page;
+    if (destination_page < 1 || destination_page > this.pagination.last_page) {
+      return;
     }
-    
-    this.pagination.current_page += page
-    this.filterRequest()
+
+    this.pagination.current_page += page;
+    this.filterRequest();
   }
 
-  jumpPage(page: number){
-    this.pagination.current_page = page
-    this.filterRequest()
+  jumpPage(page: number) {
+    this.pagination.current_page = page;
+    this.filterRequest();
   }
 }

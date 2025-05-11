@@ -36,9 +36,9 @@
         <div class="card-container" *ngIf="filteredIndustryPartners.length > 0; else noItems">
             <div class="card" *ngFor="let industryPartner of filteredIndustryPartners">
                 <div class="status"
-                [class.rejected]="industryPartner.status == 1 || industryPartner.status == 3"
-                [class.pending]="industryPartner.status == 0 || industryPartner.status == 2"
-                [class.monitoring]="industryPartner.status == 4">
+                [class.rejected]="industryPartner.request_status == 1 || industryPartner.request_status == 3"
+                [class.pending]="industryPartner.request_status == 0 || industryPartner.request_status == 2"
+                [class.monitoring]="industryPartner.request_status == 4">
                     <h3>{{ industryPartner.status_text }}</h3>
                 </div>
 
