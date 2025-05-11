@@ -409,3 +409,64 @@ mat-form-field {
   align-items: center;
   justify-content: center;
 }
+
+
+.ojt_content {
+  margin: 20px 15px;
+  height: fit-content;
+  padding: 30px;
+  border-radius: 30px;
+  background: white;
+  border: 1px solid var(--primary-color);
+  box-shadow: 3px 3px 10px rgba(0, 0, 0, 0.1);
+  width: 100%;
+  box-sizing: border-box;
+  align-items: center;
+  justify-content: center;
+
+
+  .ojt_info-container {
+    display: flex;
+    width: 100%;
+    flex-direction: column;
+    justify-content: space-around;
+
+    mat-label {
+        font-size: 14px;
+    }
+
+    input {
+        font-size: 14px;
+    }
+
+
+    .content {
+      margin-bottom: 30px;
+    }
+
+    .row {
+      display: flex;
+      flex-wrap: wrap;
+    }
+
+    .row > [class^='col-'] {
+      padding-right: 10px;
+      margin-bottom: 15px;
+    }
+
+    mat-form-field {
+      width: 100%;
+    }
+
+    mat-form-field.appearance-outline {
+      margin-bottom: 20px;
+    }
+
+    h3 {
+      font-size: 1.5rem;
+      color: var(--tertiary-color);
+      transform: translateX(-5px);
+      margin-bottom: 20px;
+    }
+}
+}
