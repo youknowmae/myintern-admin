@@ -126,8 +126,8 @@ h1 {
 
         button {
             font-size: 12px;
-            background-color: var(--secondary-color);
-            color: #ffffff;
+            background-color: transparent;
+            color: var(--secondary-color);
             padding: 2px 20px;
             border-radius: 20px;
             cursor: pointer;
@@ -141,6 +141,41 @@ h1 {
     }
 }
 
+input {
+    width: 80px;
+    border: 1px solid var(--primary-color);
+}
+
+.action-btn {
+    display: flex;
+    background-color: transparent;
+
+    i {
+        font-size: 23px;
+    }
+}
+
+.enable-btn {
+    display: flex;
+    justify-content: end;
+
+    button {
+        font-size: 14px;
+        min-width: 80px;
+        background-color: var(--main-orange);
+        padding: 8px 20px;
+        border-radius: 10px;
+        color: var(--primary-font-color);
+        cursor: pointer;
+        border: 1px solid var(--main-orange);
+        transition: all 0.2s ease-in-out;
+    }
+
+    button:hover {
+        background-color: transparent;
+        color: var(--main-orange);
+    }
+}
 mat-paginator {
     background: none
 }
