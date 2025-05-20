@@ -8,56 +8,74 @@ import { UserService } from '../../../../../services/user.service';
 
 import { Router } from '@angular/router';
 import { MatSelectChange } from '@angular/material/select';
-import {MatSort, Sort} from '@angular/material/sort';
+import { MatSort, Sort } from '@angular/material/sort';
 
 import * as ExcelJS from 'exceljs';
 
 import { saveAs } from 'file-saver';
 import { LiveAnnouncer } from '@angular/cdk/a11y';
+import { AcademicYear } from '../../../../../model/academic-year.model';
 
 @Component({
   selector: 'app-list',
   templateUrl: './list.component.html',
-  styleUrl: './list.component.scss'
+  styleUrl: './list.component.scss',
 })
 export class ListComponent {
-  // displayedColumns: string[] = ['name', 'student_number', 'course', 'program', 'progress', 'student_evaluation', 'exit_poll', 'status', 'actions'];
-  displayedColumns: string[] = ['full_name', 'company', 'progress', 'student_evaluation', 'ojt_exit_poll', 'status','grade', 'actions'];
+  displayedColumns: string[] = [
+    'full_name',
+    'company',
+    'progress',
+    'student_evaluation',
+    'ojt_exit_poll',
+    'status',
+    'grade',
+    'actions',
+  ];
 
-  unfilteredStudents: any
+  academicYearOptions: any = [];
+  academicYearFilter: any;
+
+  unfilteredStudents: any;
   dataSource: any = new MatTableDataSource<any>();
-  
-  classList: any = []
-  statusFilter: string = 'all'
-  classFilter: string = 'all'
 
-  isSubmitting: boolean = false
-  
-  @ViewChild(MatPaginator, {static:true}) paginator!: MatPaginator;
+  classList: any = [];
+  statusFilter: string = 'all';
+  classFilter: string = 'all';
+
+  isSubmitting: boolean = false;
+
+  @ViewChild(MatPaginator, { static: true }) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
 
   ngAfterViewInit() {
-    console.log(this.sort)
+    console.log(this.sort);
     this.dataSource.sort = this.sort;
   }
-  
+
   constructor(
-    private paginatorIntl: MatPaginatorIntl, 
+    private paginatorIntl: MatPaginatorIntl,
     private changeDetectorRef: ChangeDetectorRef,
     private router: Router,
     private ds: DataService,
     private us: UserService
   ) {
-    this.paginator = new MatPaginator(this.paginatorIntl, this.changeDetectorRef);
+    this.paginator = new MatPaginator(
+      this.paginatorIntl,
+      this.changeDetectorRef
+    );
 
     const nameFilterPredicate = (data: any, search: string): boolean => {
       return data.full_name.toLowerCase().includes(search);
-    } 
-    
-    const studentNumberFilterPredicate = (data: any, search: string): boolean => {
+    };
+
+    const studentNumberFilterPredicate = (
+      data: any,
+      search: string
+    ): boolean => {
       // return data.student_profile.student_number.toLowerCase().includes(search);
       return data.email.toLowerCase().includes(search);
-    } 
+    };
 
     const filterPredicate = (data: any, search: string): boolean => {
       return (
@@ -66,171 +84,226 @@ export class ListComponent {
       );
     };
 
-    this.dataSource.filterPredicate = filterPredicate
+    this.dataSource.filterPredicate = filterPredicate;
   }
 
   ngOnInit() {
-    this.getStudents()
+    let academicYears = this.us.getAcademicYears();
+    this.academicYearOptions = academicYears;
+    const activeAcadYear = academicYears.find(
+      (item: any) => item.is_active === 1
+    );
+
+    this.academicYearFilter = activeAcadYear;
+
+    this.getStudents(activeAcadYear);
   }
 
-  getStudents() {
-    this.ds.get('adviser/students').subscribe(
-      students => {
-        console.log(students)
-        let studentsList = students.map((student: any) => {
-          //get all classes - course code
-          if (!this.classList.some((data: any) => data.label.includes(student.active_ojt_class.class_code + ' - ' + student.active_ojt_class.course_code  ))) 
-            this.classList.push({
-              label: student.active_ojt_class.class_code + ' - ' + student.active_ojt_class.course_code,
-              value: student.active_ojt_class.class_code
-          }) 
+  onAcademicYearFilterChange(event: MatSelectChange) {
+    this.classList = [];
+    const acadYear = event.value;
+    this.academicYearFilter = acadYear;
+    this.getStudents(acadYear);
+  }
 
-          if(student.student_evaluation) {
-            student.student_evaluation = student.student_evaluation.average
-          }
+  getStudents(acadYear: AcademicYear) {
+    this.ds
+      .get(
+        `adviser/students?acad_year=${acadYear.acad_year}&semester=${acadYear.semester}`
+      )
+      .subscribe(
+        (students) => {
+          console.log(students);
+          let studentsList = students.map((student: any) => {
+            const active_ojt_class = {
+              ...student.ojt_class,
+              ...student.ojt_class.adviser_class,
+              ...student.ojt_class.adviser_class.active_ojt_hours,
+            };
 
-          let required_hours: number = student.active_ojt_class.required_hours
-          let progress: number = 0
+            if (
+              !this.classList.some((data: any) =>
+                data.label.includes(
+                  active_ojt_class.class_code +
+                    ' - ' +
+                    active_ojt_class.course_code
+                )
+              )
+            )
+              this.classList.push({
+                label:
+                  active_ojt_class.class_code +
+                  ' - ' +
+                  active_ojt_class.course_code,
+                value: active_ojt_class.class_code,
+              });
 
-          if(student.verified_attendance_total) {
-            progress += parseInt(student.verified_attendance_total.current_total_hours)
-            if(progress > required_hours)
-              progress = required_hours
-          }
+            if (student.student_evaluation) {
+              student.student_evaluation = student.student_evaluation.average;
+            }
 
-          if(student.seminar_hours_total) {
-            student.seminar_hours_total = student.seminar_hours_total.current_total_hours
-          }
-          else {
-            student.seminar_hours_total = 0
-          }
+            let progress: number = 0;
+            let status = '';
+            const currentApplication = student.active_application;
+            const exitPoll = student.ojt_exit_poll;
+            const studentEvaluation = student.student_evaluation;
+            const required_hours: number = active_ojt_class.required_hours;
+            const courseCode = active_ojt_class.course_code;
 
-          if(student.community_service_total) {
-            student.community_service_total = student.community_service_total.current_total_hours
-          }
-          else {
-            student.community_service_totall = 0
-          }
+            //if has accomplishment report
+            if (student.verified_attendance_total) {
+              progress += parseInt(
+                student.verified_attendance_total.current_total_hours
+              );
+              if (progress > required_hours) progress = required_hours;
+            }
 
-          if(student.other_task_total_hours) {
-            student.other_task_total_hours = student.other_task_total_hours.current_total_hours
-          }
-          else {
-            student.other_task_total_hours = 0
-          }
+            if (student.seminar_hours_total) {
+              student.seminar_hours_total =
+                student.seminar_hours_total.current_total_hours;
+            } else {
+              student.seminar_hours_total = 0;
+            }
 
-          let courseCode = student?.active_ojt_class?.course_code;
-          
-          const level_2 = ['ITP422', 'CS422', 'DAP421'];
-          const level_1 = ['ITP131', 'CS131', 'EMC131'];
-          let practicum_level;
+            if (student.community_service_total) {
+              student.community_service_total =
+                student.community_service_total.current_total_hours;
+            } else {
+              student.community_service_total = 0;
+            }
 
-          if (level_2.includes(courseCode)) {
-            practicum_level = 2;
-          } else {
-            practicum_level = 1;
-          }
-        
-          let status = null
+            if (student.other_task_total_hours) {
+              student.other_task_total_hours =
+                student.other_task_total_hours.current_total_hours;
+            } else {
+              student.other_task_total_hours = 0;
+            }
 
-          if(progress >= required_hours && student.ojt_exit_poll && student.student_evaluation) {
-            status = "Completed"
-          }
-          else if (student.accepted_application) {
-            status = 'Ongoing'
-          }  
-          else if (student.pending_application && student.pending_application.status == 0)
-            status = 'Pending - Adviser\'s Approval'
-          else if(student.pending_application) {
-            status = 'Pending - Company Approval'
-          }
-          else {
-            status = 'Pending - without application'
-          }
+            const level_2 = ['ITP422', 'CS422', 'DAP421'];
+            const level_1 = ['ITP131', 'CS131', 'EMC131'];
+            let practicum_level;
 
-          let company = (student.accepted_application) ? student.accepted_application.company_name: 'N/A' 
+            if (level_2.includes(courseCode)) {
+              practicum_level = 2;
+            } else {
+              practicum_level = 1;
+            }
 
-          return {
-            full_name: student.first_name + " " + student.last_name,
-            progress,
-            status,
-            company,
-            class_code: student.active_ojt_class.class_code,
-            ...student,
-            practicum_level
-          } 
-        })
+            if (progress >= required_hours && exitPoll && studentEvaluation) {
+              status = 'Completed';
+            } else if (student.accepted_application) {
+              status = 'Ongoing';
+            } else if (currentApplication && currentApplication == 0)
+              status = "Pending - Adviser's Approval";
+            else if (
+              currentApplication == 3 ||
+              currentApplication == 5 ||
+              currentApplication == 6 ||
+              currentApplication == 7
+            ) {
+              status = 'Pending - Company Approval';
+            } else {
+              status = 'Pending - without application';
+            }
 
-        
-        studentsList = studentsList.sort((a: any, b: any) => a.last_name.localeCompare(b.last_name))
-        console.log(studentsList)
+            const student_evaluation = studentEvaluation
+              ? studentEvaluation
+              : 'N/A';
+            const exit_poll = exitPoll ? 'Answered' : 'Not Completed';
 
-        this.unfilteredStudents = studentsList
-        this.dataSource.data = studentsList
-        this.dataSource.paginator = this.paginator;
-      },
-      error => {
-        console.error(error)
-      }
-    )
+            const company = currentApplication
+              ? currentApplication.industry_partner.company_name
+              : 'N/A';
+
+            return {
+              full_name: student.first_name + ' ' + student.last_name,
+              progress,
+              status,
+              company,
+              exit_poll,
+              ...student,
+              student_evaluation,
+              practicum_level,
+              active_ojt_class,
+            };
+          });
+
+          studentsList = studentsList.sort((a: any, b: any) =>
+            a.last_name.localeCompare(b.last_name)
+          );
+          console.log(studentsList);
+
+          this.unfilteredStudents = studentsList;
+          this.dataSource.data = studentsList;
+          this.dataSource.paginator = this.paginator;
+        },
+        (error) => {
+          console.error(error);
+        }
+      );
   }
 
   onClassFilterChange(event: MatSelectChange) {
-    this.classFilter = event.value
+    this.classFilter = event.value;
 
-    this.statusFilter = 'all'
-    this.applyFilter()
+    this.statusFilter = 'all';
+    this.applyFilter();
   }
 
   onStatusFilterChange(value: string) {
-    this.statusFilter = value
-    this.applyFilter()
+    this.statusFilter = value;
+    this.applyFilter();
   }
 
   applyFilter() {
     //class filter
-    let students = this.unfilteredStudents
-    
-    if(this.classFilter != 'all') {
+    let students = this.unfilteredStudents;
+
+    if (this.classFilter != 'all') {
       students = students.filter((student: any) => {
-        return student.active_ojt_class.class_code === this.classFilter
-      })
+        return student.active_ojt_class.class_code === this.classFilter;
+      });
     }
 
-    if(this.statusFilter != "all") {
+    if (this.statusFilter != 'all') {
       students = students.filter((student: any) => {
-        return student.status.toLowerCase().includes(this.statusFilter)
-      })    
+        return student.status.toLowerCase().includes(this.statusFilter);
+      });
     }
 
-    this.dataSource.data = students
+    this.dataSource.data = students;
   }
 
   search(search: string) {
-    this.dataSource.filter = search.trim().toLowerCase()
+    this.dataSource.filter = search.trim().toLowerCase();
   }
 
   viewStudent(id: number) {
-    if(this.isSubmitting) {
-      return
+    if (this.isSubmitting) {
+      return;
     }
 
-    this.isSubmitting = true
+    this.isSubmitting = true;
 
-    let studentDetails = this.unfilteredStudents.find((student: any) => student.id == id)
+    let studentDetails = this.unfilteredStudents.find(
+      (student: any) => student.id == id
+    );
 
-    console.log(studentDetails)
+    console.log(studentDetails);
     this.ds.get('adviser/students/', id).subscribe(
-      student => {
-        this.us.setStudentProfile({ ...student, required_hours: studentDetails.active_ojt_class.required_hours })
-        this.router.navigate(['main/students/view'])
-        this.isSubmitting = false
+      (student) => {
+        this.us.setStudentProfile({
+          ...student,
+          required_hours: studentDetails.active_ojt_class.required_hours,
+        });
+        this.router.navigate(['main/students/view']);
+        this.isSubmitting = false;
       },
-      error => {
-        console.error(error)
-        this.isSubmitting = false
+      (error) => {
+        console.error(error);
+        this.isSubmitting = false;
       }
-    )
+    );
   }
 
   async downloadExcel() {
@@ -438,7 +511,7 @@ export class ListComponent {
               student.practicum_level == 2
                 ? student.community_service_total
                 : '---',
-                student.active_ojt_class.required_hours,
+              student.active_ojt_class.required_hours,
               student.progress,
               student.student_evaluation
                 ? student.student_evaluation
@@ -502,9 +575,9 @@ export class ListComponent {
       return groups;
     }, {} as Record<K, T[]>);
 
-    getProgressPercentage(progress: number, required_hours: number) {
-      let percentage = progress/required_hours * 100
-  
-      return Math.round(percentage * 100) / 100 //return 2 decimal
-    }
+  getProgressPercentage(progress: number, required_hours: number) {
+    let percentage = (progress / required_hours) * 100;
+
+    return Math.round(percentage * 100) / 100; //return 2 decimal
+  }
 }

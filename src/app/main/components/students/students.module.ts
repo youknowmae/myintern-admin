@@ -7,6 +7,7 @@ import { ViewComponent } from './components/view/view.component';
 import { MatLabel } from '@angular/material/form-field';
 import { MaterialsModules } from '../../../modules/materials.module';
 import { ViewModule } from './components/view/view.module';
+import { SharedModule } from '../../../modules/shared.module';
 
 
 @NgModule({
@@ -18,7 +19,8 @@ import { ViewModule } from './components/view/view.module';
     CommonModule,
     StudentsRoutingModule,
     MaterialsModules,
-    ViewModule
+    ViewModule,
+    SharedModule
   ]
 })
 export class StudentsModule { }

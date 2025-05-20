@@ -21,7 +21,7 @@ import { EvaluationComponent } from './components/evaluation/evaluation.componen
 import { EvaluationModule } from './components/evaluation/evaluation.module';
 import { EndorsementComponent } from './components/endorsement/endorsement.component';
 import { EndorsementModule } from './components/endorsement/endorsement.module';
-
+import { SharedModule } from '../modules/shared.module';
 
 @NgModule({
   declarations: [
@@ -34,7 +34,7 @@ import { EndorsementModule } from './components/endorsement/endorsement.module';
     StudentsComponent,
     TemplatesComponent,
     EndorsementComponent,
-    EvaluationComponent
+    EvaluationComponent,
   ],
   imports: [
     CommonModule,
@@ -47,7 +47,8 @@ import { EndorsementModule } from './components/endorsement/endorsement.module';
     ExitpollModule,
     RequirementsModule,
     MaterialsModules,
-    EvaluationModule
-  ]
+    EvaluationModule,
+    SharedModule,
+  ],
 })
-export class MainModule { }
+export class MainModule {}
