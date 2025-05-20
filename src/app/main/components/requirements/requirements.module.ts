@@ -6,20 +6,16 @@ import { ViewComponent } from './components/view/view.component';
 import { ListComponent } from './components/list/list.component';
 import { MaterialsModules } from '../../../modules/materials.module';
 import { LoadingSpinnerComponent } from '../../../components/loading-spinner/loading-spinner.component';
-
+import { SharedModule } from '../../../modules/shared.module';
 
 @NgModule({
-  declarations: [
-    // RequirementsComponent
-  
-    ViewComponent,
-    ListComponent
-  ],
+  declarations: [ViewComponent, ListComponent],
   imports: [
     CommonModule,
     RequirementsRoutingModule,
     MaterialsModules,
-    LoadingSpinnerComponent
-  ]
+    LoadingSpinnerComponent,
+    SharedModule,
+  ],
 })
-export class RequirementsModule { }
+export class RequirementsModule {}

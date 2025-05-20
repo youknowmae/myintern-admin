@@ -1,5 +1,8 @@
 import { NgModule } from '@angular/core';
-import { BrowserModule, provideClientHydration } from '@angular/platform-browser';
+import {
+  BrowserModule,
+  provideClientHydration,
+} from '@angular/platform-browser';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -21,13 +24,14 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { NgxDocViewerModule } from 'ngx-doc-viewer';
 import { MaterialsModules } from './modules/materials.module';
 import { ResponseInterceptor } from './interceptors/response.interceptor';
+import { ApplicationStatusTextPipe } from './pipes/application-status-text.pipe';
 
 @NgModule({
   declarations: [
     AppComponent,
     LoginComponent,
     MainComponent,
-    PdfPreviewComponent
+    PdfPreviewComponent,
   ],
   imports: [
     BrowserModule,
@@ -37,15 +41,15 @@ import { ResponseInterceptor } from './interceptors/response.interceptor';
     HttpClientModule,
     ReactiveFormsModule,
     NgxDocViewerModule,
-    MaterialsModules
+    MaterialsModules,
   ],
   providers: [
     provideClientHydration(),
     provideAnimationsAsync(),
     { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },
     { provide: HTTP_INTERCEPTORS, useClass: ResponseInterceptor, multi: true },
-    { provide: LocationStrategy, useClass: HashLocationStrategy }
+    { provide: LocationStrategy, useClass: HashLocationStrategy },
   ],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
 })
-export class AppModule { }
+export class AppModule {}

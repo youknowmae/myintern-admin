@@ -52,18 +52,18 @@ export class StudentprofileComponent {
 
   seminars: any = [];
   other_tasks: any = [];
-  community_service: any = []
+  community_service: any = [];
 
-  community_service_total_hours: any = 0
+  community_service_total_hours: any = 0;
   seminar_total_hours: number = 0;
   other_task_total_hours: number = 0;
 
-  unverified_community_service = 0
+  unverified_community_service = 0;
 
   skills: any = [];
   personality_test: any = null;
 
-  isSubmitting: boolean = false
+  isSubmitting: boolean = false;
 
   constructor(
     private us: UserService,
@@ -74,7 +74,7 @@ export class StudentprofileComponent {
 
   ngOnInit() {
     this.student = this.us.getStudentProfile();
-    this.getOjtInfo()
+    this.getOjtInfo();
 
     let courseCode = this.student?.active_ojt_class?.course_code;
 
@@ -99,12 +99,11 @@ export class StudentprofileComponent {
       this.skills.push({ strong_skill: '', weak_skill: '' });
       this.skills.push({ strong_skill: '', weak_skill: '' });
     }
-    console.log(this.student)
+    console.log(this.student);
 
-    if(this.student.practicum_level === 2) {
+    if (this.student.practicum_level === 2) {
       this.getCommunityService();
-    }
-    else {
+    } else {
       this.getOtherTask();
       this.getSeminars();
     }
@@ -120,10 +119,8 @@ export class StudentprofileComponent {
           this.personality_test = response;
         },
         (error) => {
-          if(error.status === 404) {
-
-          }
-          else {
+          if (error.status === 404) {
+          } else {
             console.error(error);
           }
         }
@@ -145,22 +142,24 @@ export class StudentprofileComponent {
   }
 
   getCommunityService() {
-    this.ds.get('adviser/students/community-service/', this.student.id).subscribe(
-      response => {
-        this.community_service = response
-        this.unverified_community_service = 0
-        this.community_service.forEach((data: any) => {
-          this.community_service_total_hours += data.total_hours
-          if(!data.is_verified) {
-            this.unverified_community_service += 1
-          }
-        });
-        console.log(this.unverified_community_service)
-      },
-      error => { 
-        // console.error(error)
-      }
-    )
+    this.ds
+      .get('adviser/students/community-service/', this.student.id)
+      .subscribe(
+        (response) => {
+          this.community_service = response;
+          this.unverified_community_service = 0;
+          this.community_service.forEach((data: any) => {
+            this.community_service_total_hours += data.total_hours;
+            if (!data.is_verified) {
+              this.unverified_community_service += 1;
+            }
+          });
+          console.log(this.unverified_community_service);
+        },
+        (error) => {
+          // console.error(error)
+        }
+      );
   }
 
   getSeminars() {
@@ -196,30 +195,32 @@ export class StudentprofileComponent {
   }
 
   verifyCommunityServices() {
-    if(this.isSubmitting) {
-      return
+    if (this.isSubmitting) {
+      return;
     }
 
-    this.isSubmitting = true
+    this.isSubmitting = true;
 
-    this.ds.get('adviser/students/community-service/verify-all/', this.student.id).subscribe(
-      response => {
-        this.community_service = this.community_service.map((data: any) => {
-          data.is_verified = 1
-  
-          return data
-        })
+    this.ds
+      .get('adviser/students/community-service/verify-all/', this.student.id)
+      .subscribe(
+        (response) => {
+          this.community_service = this.community_service.map((data: any) => {
+            data.is_verified = 1;
 
-        this.unverified_community_service = 0
+            return data;
+          });
 
-        this.gs.successToastAlert(response.message)
-        this.isSubmitting = false
-      },
-      error => {
-        console.error(error)
-        this.isSubmitting = false
-      }
-    )
+          this.unverified_community_service = 0;
+
+          this.gs.successToastAlert(response.message);
+          this.isSubmitting = false;
+        },
+        (error) => {
+          console.error(error);
+          this.isSubmitting = false;
+        }
+      );
   }
   getOjtInfo() {
     this.ds.get('adviser/students/ojt-information/', this.student.id).subscribe(

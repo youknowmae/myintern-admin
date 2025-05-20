@@ -296,6 +296,7 @@ export class ListComponent {
           ...student,
           required_hours: studentDetails.active_ojt_class.required_hours,
         });
+        this.us.setSelectedAcademicYears(this.academicYearFilter); //store current acad year
         this.router.navigate(['main/students/view']);
         this.isSubmitting = false;
       },

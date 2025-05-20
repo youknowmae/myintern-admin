@@ -1,5 +1,4 @@
-import { Component, ViewChild, ChangeDetectorRef  } from '@angular/core';
-
+import { Component, ViewChild, ChangeDetectorRef } from '@angular/core';
 
 import { MatPaginator, MatPaginatorIntl } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
@@ -13,39 +12,52 @@ import { GeneralService } from '../../../../../services/general.service';
 @Component({
   selector: 'app-list',
   templateUrl: './list.component.html',
-  styleUrl: './list.component.scss'
+  styleUrl: './list.component.scss',
 })
 export class ListComponent {
   // displayedColumns: string[] = ['name', 'student_number', 'category', 'year', 'program', 'company', 'status', 'actions'];
-  displayedColumns: string[] = ['name', 'course_code', 'class_code', 'company', 'application_date', 'status', 'actions'];
-  statusFilter: number = 0
+  displayedColumns: string[] = [
+    'name',
+    'course_code',
+    'class_code',
+    'company',
+    'application_date',
+    'status',
+    'actions',
+  ];
+  statusFilter: number = 0;
 
-  
-  currentFilter: string = 'all'
-  unfilteredStudents: any
+  currentFilter: string = 'all';
+  unfilteredStudents: any;
   dataSource: any = new MatTableDataSource<any>();
 
-  isSubmitting: boolean = false
-  
-  @ViewChild(MatPaginator, {static:true}) paginator!: MatPaginator;
-  
+  isSubmitting: boolean = false;
+
+  @ViewChild(MatPaginator, { static: true }) paginator!: MatPaginator;
+
   constructor(
-    private paginatorIntl: MatPaginatorIntl, 
+    private paginatorIntl: MatPaginatorIntl,
     private changeDetectorRef: ChangeDetectorRef,
     private ds: DataService,
     private router: Router,
     private us: UserService,
     private gs: GeneralService
   ) {
-    this.paginator = new MatPaginator(this.paginatorIntl, this.changeDetectorRef);
+    this.paginator = new MatPaginator(
+      this.paginatorIntl,
+      this.changeDetectorRef
+    );
     const nameFilterPredicate = (data: any, search: string): boolean => {
       return data.user.full_name.toLowerCase().includes(search);
-    } 
-    
-    const studentNumberFilterPredicate = (data: any, search: string): boolean => {
+    };
+
+    const studentNumberFilterPredicate = (
+      data: any,
+      search: string
+    ): boolean => {
       // return data.student_profile.student_number.toLowerCase().includes(search);
       return data.user.email.toLowerCase().includes(search);
-    } 
+    };
 
     const filterPredicate = (data: any, search: string): boolean => {
       return (
@@ -54,75 +66,58 @@ export class ListComponent {
       );
     };
 
-    this.dataSource.filterPredicate = filterPredicate
+    this.dataSource.filterPredicate = filterPredicate;
   }
 
   ngOnInit() {
-    this.getStudents() 
+    this.getStudents();
   }
 
   getStudents() {
     this.ds.get('adviser/applications').subscribe(
-      students => {
-        console.log(students)
+      (students) => {
         this.unfilteredStudents = students.map((element: any) => {
-          if(element.status == 0) {
-            element.status_text = 'Pending'
-          }
-          else if(element.status == 1) {
-            element.status_text = 'Cancelled'
-          }
-          else if(element.status == 2) {
-            element.status_text = 'Not Approved'
-          }
-          else if(element.status == 3) {
-            element.status_text = 'Approved'
-          }
-          else if(element.status == 4) {
-            element.status_text = 'Not Approved'
-          }
-          else if (
+          const ojtClass = element.user.ojt_class.adviser_class;
+
+          if (
             element.status == 5 ||
             element.status == 6 ||
             element.status == 7
           ) {
-            element.status = 5
-            element.status_text = 'For Interview';
-
-          }
-          else if (element.status == 8) {
-            element.status = 6
-            element.status_text = 'Accepted';
+            element.status = 5;
+          } else if (element.status == 8) {
+            element.status = 6;
           }
 
-          let student = element.user
+          let student = element.user;
 
-          let full_name = student.first_name + " " + student.last_name
-          element.user.full_name = full_name
+          let full_name = student.first_name + ' ' + student.last_name;
+          element.user.full_name = full_name;
 
-          return element
-          
+          return { ...element, ...ojtClass };
         });
+
+        console.log(this.unfilteredStudents);
 
         this.dataSource.data = this.unfilteredStudents;
         this.dataSource.paginator = this.paginator;
 
-        this.filterStudent()
+        this.filterStudent();
       },
-      error => {
-        console.error(error)
+      (error) => {
+        console.error(error);
       }
-    )
+    );
   }
 
   viewApplication(id: number) {
-    this.us.setStudentApplication(id)
-    this.router.navigate(['main/requirements/view'])
+    this.us.setStudentApplication(id);
+    this.router.navigate(['main/requirements/view']);
   }
-  
+
   applyFilter(value: string) {
-    this.currentFilter = value
-    this.filterStudent()
+    this.currentFilter = value;
+    this.filterStudent();
     // if(value == "all") {
     //   this.dataSource.data = this.unfilteredStudents
     //   return
@@ -134,32 +129,32 @@ export class ListComponent {
   }
 
   onStatusFilterChange(event: MatSelectChange) {
-    console.log(event.value)
-    this.statusFilter = event.value
-    this.filterStudent()
+    console.log(event.value);
+    this.statusFilter = event.value;
+    this.filterStudent();
   }
 
   filterStudent() {
-    let student 
+    let student;
 
-    if(this.currentFilter == "all") {
-      student = this.unfilteredStudents
-    }
-    else {
+    if (this.currentFilter == 'all') {
+      student = this.unfilteredStudents;
+    } else {
       student = this.unfilteredStudents.filter((student: any) => {
-        return student.user.student_profile.program.includes(this.currentFilter)
-      })
+        return student.user.student_profile.program.includes(
+          this.currentFilter
+        );
+      });
     }
-
 
     student = student.filter((student: any) => {
-      return student.status == this.statusFilter
-    })
+      return student.status == this.statusFilter;
+    });
 
-    this.dataSource.data = student
+    this.dataSource.data = student;
   }
 
   search(search: string) {
-    this.dataSource.filter = search.trim().toLowerCase()
+    this.dataSource.filter = search.trim().toLowerCase();
   }
 }
