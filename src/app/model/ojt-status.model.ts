@@ -4,8 +4,15 @@ export interface OjtStatus {
   completed: number;
 }
 
-
 export interface ExitPollStatus {
-     pending: number, 
-     completed: number
+  pending: number;
+  completed: number;
+}
+
+export interface EvaluationStatus {
+  excellent: number;
+  very_good: number;
+  good: number;
+  fair: number;
+  poor: number;
 }

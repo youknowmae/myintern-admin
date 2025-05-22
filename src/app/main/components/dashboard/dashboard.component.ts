@@ -12,7 +12,11 @@ import {
 } from 'chart.js';
 import { channel } from 'diagnostics_channel';
 import { DataService } from '../../../services/data.service';
-import { ExitPollStatus, OjtStatus } from '../../../model/ojt-status.model';
+import {
+  EvaluationStatus,
+  ExitPollStatus,
+  OjtStatus,
+} from '../../../model/ojt-status.model';
 import { AcademicYear } from '../../../model/academic-year.model';
 import { MatSelectChange } from '@angular/material/select';
 import { UserService } from '../../../services/user.service';
@@ -79,7 +83,7 @@ export class DashboardComponent implements AfterViewInit {
   public barConfig: ChartConfiguration<'bar'> = {
     type: 'bar',
     data: {
-      labels: [],
+      labels: ['ITP422'],
       datasets: [
         {
           label: 'Pending',
@@ -127,7 +131,7 @@ export class DashboardComponent implements AfterViewInit {
   public ojtBarConfig: ChartConfiguration<'bar'> = {
     type: 'bar',
     data: {
-      labels: ['BSIT', 'BSCS', 'BSEMC'],
+      labels: ['ITP422'],
       datasets: [
         {
           label: 'Pending',
@@ -166,7 +170,7 @@ export class DashboardComponent implements AfterViewInit {
   public evaluationConfig: ChartConfiguration<'bar'> = {
     type: 'bar',
     data: {
-      labels: ['BSIT', 'BSCS', 'BSEMC'],
+      labels: ['ITP 422'],
       datasets: [
         {
           label: '100-96',
@@ -266,6 +270,10 @@ export class DashboardComponent implements AfterViewInit {
           let exitPollStatusByCourse: { [courseCode: string]: ExitPollStatus } =
             {};
 
+          let evaluationAverageByCourse: {
+            [courseCode: string]: EvaluationStatus;
+          } = {};
+
           console.log(response);
           response.forEach((student: any) => {
             const ojt_class = {
@@ -324,17 +332,31 @@ export class DashboardComponent implements AfterViewInit {
               exitPollStatusByCourse[courseCode].pending += 1;
             }
 
-            //  if ($average >= 96 && $average <= 100) {
-            //             $performanceEvalulation->$program->excellent += 1;
-            //         } elseif ($average >= 91 && $average < 96) {
-            //             $performanceEvalulation->$program->very_good += 1;
-            //         } elseif ($average >= 86 && $average < 91) {
-            //             $performanceEvalulation->$program->good += 1;
-            //         } elseif ($average >= 81 && $average < 86) {
-            //             $performanceEvalulation->$program->fair += 1;
-            //         } elseif ($average >= 75 && $average < 81) {
-            //             $performanceEvalulation->$program->poor += 1;
-            //         }
+            if (!evaluationAverageByCourse[courseCode]) {
+              evaluationAverageByCourse[courseCode] = {
+                excellent: 0,
+                very_good: 0,
+                good: 0,
+                fair: 0,
+                poor: 0,
+              };
+            }
+
+            const evaluation = student.student_evaluation;
+            if (evaluation) {
+              const average = evaluation.average;
+              if (average >= 96 && average <= 100) {
+                evaluationAverageByCourse[courseCode].excellent += 1;
+              } else if (average >= 91 && average < 96) {
+                evaluationAverageByCourse[courseCode].very_good += 1;
+              } else if (average >= 86 && average < 91) {
+                evaluationAverageByCourse[courseCode].good += 1;
+              } else if (average >= 81 && average < 86) {
+                evaluationAverageByCourse[courseCode].fair += 1;
+              } else if (average >= 75 && average < 81) {
+                evaluationAverageByCourse[courseCode].poor += 1;
+              }
+            }
           });
 
           const courseCountArray = Object.entries(enrolledCoursesCount).map(
@@ -355,15 +377,12 @@ export class DashboardComponent implements AfterViewInit {
             courseCountArray.map((item: any) => item.count);
 
           this.totalEnrolledCoursePie.update();
-          console.log('1');
-
           const statusByCourseArray = Object.entries(statusByCourse).map(
             ([courseCode, data]) => ({
               course_code: courseCode,
               ...data,
             })
           );
-          console.log(statusByCourseArray);
 
           this.barChart.data.labels = [];
           this.barChart.data.datasets[0].data = [];
@@ -395,65 +414,26 @@ export class DashboardComponent implements AfterViewInit {
 
           this.ojtBarChart.update();
 
-          // this.barChart.data.datasets[0].data = [
-          //   response.student_ojt_status.bsit.pending,
-          //   response.student_ojt_status.bscs.pending,
-          //   response.student_ojt_status.bsemc.pending,
-          //   response.student_ojt_status.act.pending,
-          // ];
+          const evaluationAverageByCourseArray = Object.entries(
+            evaluationAverageByCourse
+          ).map(([courseCode, data]) => ({ course_code: courseCode, ...data }));
 
-          // this.barChart.data.datasets[1].data = [
-          //   response.student_ojt_status.bsit.ongoing,
-          //   response.student_ojt_status.bscs.ongoing,
-          //   response.student_ojt_status.bsemc.ongoing,
-          //   response.student_ojt_status.act.ongoing,
-          // ];
+          this.evaluationBarChart.data.labels = [];
+          this.evaluationBarChart.data.datasets[0].data = [];
+          this.evaluationBarChart.data.datasets[1].data = [];
+          this.evaluationBarChart.data.datasets[2].data = [];
+          this.evaluationBarChart.data.datasets[3].data = [];
+          this.evaluationBarChart.data.datasets[4].data = [];
+          evaluationAverageByCourseArray.forEach((item: any) => {
+            this.evaluationBarChart.data.labels.push(item.course_code);
+            this.evaluationBarChart.data.datasets[0].data.push(item.excellent);
+            this.evaluationBarChart.data.datasets[1].data.push(item.very_good);
+            this.evaluationBarChart.data.datasets[2].data.push(item.good);
+            this.evaluationBarChart.data.datasets[3].data.push(item.fair);
+            this.evaluationBarChart.data.datasets[4].data.push(item.poor);
+          });
 
-          // this.barChart.data.datasets[2].data = [
-          //   response.student_ojt_status.bsit.completed,
-          //   response.student_ojt_status.bscs.completed,
-          //   response.student_ojt_status.bsemc.completed,
-          //   response.student_ojt_status.act.completed,
-          // ];
-
-          // this.barChart.update();
-
-          // this.evaluationBarChart.data.datasets[0].data = [
-          //   response.student_performance_evaluation.bsit.excellent,
-          //   response.student_performance_evaluation.bscs.excellent,
-          //   response.student_performance_evaluation.bsemc.excellent,
-          //   response.student_performance_evaluation.act.excellent,
-          // ];
-
-          // this.evaluationBarChart.data.datasets[1].data = [
-          //   response.student_performance_evaluation.bsit.very_good,
-          //   response.student_performance_evaluation.bscs.very_good,
-          //   response.student_performance_evaluation.bsemc.very_good,
-          //   response.student_performance_evaluation.act.very_good,
-          // ];
-
-          // this.evaluationBarChart.data.datasets[2].data = [
-          //   response.student_performance_evaluation.bsit.good,
-          //   response.student_performance_evaluation.bscs.good,
-          //   response.student_performance_evaluation.bsemc.good,
-          //   response.student_performance_evaluation.act.good,
-          // ];
-
-          // this.evaluationBarChart.data.datasets[3].data = [
-          //   response.student_performance_evaluation.bsit.fair,
-          //   response.student_performance_evaluation.bscs.fair,
-          //   response.student_performance_evaluation.bsemc.fair,
-          //   response.student_performance_evaluation.act.fair,
-          // ];
-
-          // this.evaluationBarChart.data.datasets[4].data = [
-          //   response.student_performance_evaluation.bsit.poor,
-          //   response.student_performance_evaluation.bscs.poor,
-          //   response.student_performance_evaluation.bsemc.poor,
-          //   response.student_performance_evaluation.act.poor,
-          // ];
-
-          // this.evaluationBarChart.update();
+          this.evaluationBarChart.update();
         },
         (error) => {}
       );
