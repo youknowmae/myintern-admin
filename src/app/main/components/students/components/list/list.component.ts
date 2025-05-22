@@ -13,7 +13,6 @@ import { MatSort, Sort } from '@angular/material/sort';
 import * as ExcelJS from 'exceljs';
 
 import { saveAs } from 'file-saver';
-import { LiveAnnouncer } from '@angular/cdk/a11y';
 import { AcademicYear } from '../../../../../model/academic-year.model';
 
 @Component({
@@ -109,7 +108,8 @@ export class ListComponent {
   getStudents(acadYear: AcademicYear) {
     this.ds
       .get(
-        `adviser/students?acad_year=${acadYear.acad_year}&semester=${acadYear.semester}`
+        `adviser/students`,
+        `?acad_year=${acadYear.acad_year}&semester=${acadYear.semester}`
       )
       .subscribe(
         (students) => {
@@ -289,22 +289,33 @@ export class ListComponent {
       (student: any) => student.id == id
     );
 
+    const acadYear = this.academicYearFilter;
+
     console.log(studentDetails);
-    this.ds.get('adviser/students/', id).subscribe(
-      (student) => {
-        this.us.setStudentProfile({
-          ...student,
-          required_hours: studentDetails.active_ojt_class.required_hours,
-        });
-        this.us.setSelectedAcademicYears(this.academicYearFilter); //store current acad year
-        this.router.navigate(['main/students/view']);
-        this.isSubmitting = false;
-      },
-      (error) => {
-        console.error(error);
-        this.isSubmitting = false;
-      }
-    );
+    this.ds
+      .get(
+        `adviser/students/${id}`,
+        `?acad_year=${acadYear.acad_year}&semester=${acadYear.semester}`
+      )
+      .subscribe(
+        (student) => {
+          student.ojt_class = {
+            ...student.ojt_class.adviser_class,
+            ...student.ojt_class.adviser_class.active_ojt_hours,
+          };
+          this.us.setStudentProfile({
+            ...student,
+            required_hours: student.ojt_class?.required_hours || 0,
+          });
+          this.us.setSelectedAcademicYears(this.academicYearFilter); //store current acad year
+          this.router.navigate(['main/students/view']);
+          this.isSubmitting = false;
+        },
+        (error) => {
+          console.error(error);
+          this.isSubmitting = false;
+        }
+      );
   }
 
   async downloadExcel() {
@@ -332,7 +343,7 @@ export class ListComponent {
     );
 
     if (this.classFilter === 'all') {
-      students['All Classess'] = this.unfilteredStudents.sort(
+      students['All Classes'] = this.unfilteredStudents.sort(
         (a: any, b: any) =>
           a.active_ojt_class.class_code - b.active_ojt_class.class_code
       );
@@ -538,19 +549,6 @@ export class ListComponent {
           currentPageLine = 0;
         });
 
-      // //format width
-      // worksheet.columns.forEach((column: any) => {
-      //   let maxLength = 0;
-      //   column.eachCell({ includeEmpty: true }, (cell: any) => {
-      //     items.forEach((item: any) => {
-      //       if (cell.row >= item.start && cell.row <= item.end) {
-      //         const cellValue = cell.value ? cell.value.toString() : '';
-      //         maxLength = Math.max(maxLength, cellValue.length);
-      //       }
-      //     });
-      //   });
-      //   column.width = maxLength < 6 ? 6 : maxLength + 1;
-      // });
       return excel; // Return the excel workbook
     } catch (error) {
       console.error('Error in convertExcel:', error);

@@ -10,15 +10,15 @@ import { pagination } from '../../../../../model/pagination.model';
 @Component({
   selector: 'app-list',
   templateUrl: './list.component.html',
-  styleUrl: './list.component.scss'
+  styleUrl: './list.component.scss',
 })
 export class ListComponent {
-  industryPartners: IndustryPartner[] = []
-  filteredIndustryPartners: any = []
-  isLoading: boolean = true
+  industryPartners: IndustryPartner[] = [];
+  filteredIndustryPartners: any = [];
+  isLoading: boolean = true;
 
-  searchValue: string = ''
-  
+  searchValue: string = '';
+
   pagination: pagination = <pagination>{};
 
   constructor(
@@ -34,84 +34,90 @@ export class ListComponent {
       total: 0,
       per_page: 15,
       last_page: 0,
-    }
+    };
   }
 
   ngOnInit() {
-    this.getIndustryPartners()
+    this.getIndustryPartners();
   }
 
   search(value: string) {
-    value = value.toLowerCase()
-    this.searchValue = value
-    this.pagination.current_page = 1
+    value = value.toLowerCase();
+    this.searchValue = value;
+    this.pagination.current_page = 1;
 
-    this.filterIndustryPartners()
+    this.filterIndustryPartners();
   }
 
   getIndustryPartners() {
     this.ds.get('adviser/industryPartners').subscribe(
-      industryPartners => {
-        this.industryPartners = industryPartners.map(
-          (element: any) => {
-            element.full_location = element.municipality + ", " + element.province
+      (industryPartners) => {
+        this.industryPartners = industryPartners.map((element: any) => {
+          element.full_location =
+            element.municipality + ', ' + element.province;
 
-            return element
-          }
-        )
-        
-        this.filterIndustryPartners()
+          return element;
+        });
 
-        console.log(this.filteredIndustryPartners)
-        this.isLoading = false
+        this.filterIndustryPartners();
+
+        console.log(this.filteredIndustryPartners);
+        this.isLoading = false;
       },
-      error => {
-        this.gs.errorAlert('Oops!', 'Something went wrong, please try again later.')
-        this.isLoading = false
-        console.error(error)
+      (error) => {
+        this.gs.makeAlert(
+          'Oops!',
+          'Something went wrong, please try again later.',
+          'error'
+        );
+        this.isLoading = false;
+        console.error(error);
       }
-    )
+    );
   }
 
   getIndustryPartner(id: number) {
-    this.us.setIndustryPartner(id)
-    this.router.navigate(['main/industrypartners/view'])
+    this.us.setIndustryPartner(id);
+    this.router.navigate(['main/industrypartners/view']);
   }
 
   filterIndustryPartners() {
-    let search = this.searchValue.toLowerCase()
+    let search = this.searchValue.toLowerCase();
 
-    var data = this.industryPartners
-    if(search) {
-      data = data.filter(
-        (item: IndustryPartner) => {
-          return item.company_name.toLowerCase().includes(search) ||
-            item.full_location.toLowerCase().includes(search) 
-        }
-      )
+    var data = this.industryPartners;
+    if (search) {
+      data = data.filter((item: IndustryPartner) => {
+        return (
+          item.company_name.toLowerCase().includes(search) ||
+          item.full_location.toLowerCase().includes(search)
+        );
+      });
     }
 
-    this.pagination = this.gs.getPaginationDetails(data, this.pagination.current_page, this.pagination.per_page)
+    this.pagination = this.gs.getPaginationDetails(
+      data,
+      this.pagination.current_page,
+      this.pagination.per_page
+    );
 
     data = data.slice(this.pagination.from, this.pagination.to);
-    this.pagination.from++
-    
+    this.pagination.from++;
 
-    this.filteredIndustryPartners = data
+    this.filteredIndustryPartners = data;
   }
 
   changePage(page: number) {
-    const destination_page = this.pagination.current_page + page
-    if(destination_page < 1 || destination_page > this.pagination.last_page) {
-      return
+    const destination_page = this.pagination.current_page + page;
+    if (destination_page < 1 || destination_page > this.pagination.last_page) {
+      return;
     }
-    
-    this.pagination.current_page += page
-    this.filterIndustryPartners()
+
+    this.pagination.current_page += page;
+    this.filterIndustryPartners();
   }
 
-  jumpPage(page: number){
-    this.pagination.current_page = page
-    this.filterIndustryPartners()
+  jumpPage(page: number) {
+    this.pagination.current_page = page;
+    this.filterIndustryPartners();
   }
 }

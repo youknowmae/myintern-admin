@@ -52,13 +52,11 @@ export class StudentprofileComponent {
 
   seminars: any = [];
   other_tasks: any = [];
-  community_service: any = [];
+  community_service: any;
 
   community_service_total_hours: any = 0;
   seminar_total_hours: number = 0;
   other_task_total_hours: number = 0;
-
-  unverified_community_service = 0;
 
   skills: any = [];
   personality_test: any = null;
@@ -76,7 +74,7 @@ export class StudentprofileComponent {
     this.student = this.us.getStudentProfile();
     this.getOjtInfo();
 
-    let courseCode = this.student?.active_ojt_class?.course_code;
+    let courseCode = this.student?.ojt_class.course_code;
 
     const level_2 = ['ITP422', 'CS422', 'DAP421'];
     const level_1 = ['ITP131', 'CS131', 'EMC131'];
@@ -147,18 +145,9 @@ export class StudentprofileComponent {
       .subscribe(
         (response) => {
           this.community_service = response;
-          this.unverified_community_service = 0;
-          this.community_service.forEach((data: any) => {
-            this.community_service_total_hours += data.total_hours;
-            if (!data.is_verified) {
-              this.unverified_community_service += 1;
-            }
-          });
-          console.log(this.unverified_community_service);
+          if (response.is_verified) this.community_service_total_hours = 150;
         },
-        (error) => {
-          // console.error(error)
-        }
+        (error) => {}
       );
   }
 
@@ -201,19 +190,19 @@ export class StudentprofileComponent {
 
     this.isSubmitting = true;
 
+    const acadYear = this.us.getSelectedAcademicYears();
+
     this.ds
-      .get('adviser/students/community-service/verify-all/', this.student.id)
+      .get(
+        `adviser/students/community-service/verify/${this.student.id}`,
+        `?acad_year=${acadYear.acad_year}&semester=${acadYear.semester}`
+      )
       .subscribe(
         (response) => {
-          this.community_service = this.community_service.map((data: any) => {
-            data.is_verified = 1;
+          this.community_service_total_hours = 150;
+          this.community_service.is_verified = true
 
-            return data;
-          });
-
-          this.unverified_community_service = 0;
-
-          this.gs.successToastAlert(response.message);
+          this.gs.makeToast(response.message);
           this.isSubmitting = false;
         },
         (error) => {

@@ -1,4 +1,4 @@
-import Swal, { SweetAlertIcon } from 'sweetalert2';
+import Swal, { SweetAlertIcon, SweetAlertPosition } from 'sweetalert2';
 import { Injectable } from '@angular/core';
 import { pagination } from '../model/pagination.model';
 import * as CryptoJS from 'crypto-js';
@@ -7,10 +7,16 @@ import * as CryptoJS from 'crypto-js';
   providedIn: 'root',
 })
 export class GeneralService {
-  errorToastAlert(title: string) {
-    const Toast = Swal.mixin({
+  makeToast(
+    title: string,
+    icon: SweetAlertIcon = 'success',
+    position: SweetAlertPosition = 'top-end'
+  ) {
+    Swal.fire({
+      icon,
+      title,
       toast: true,
-      position: 'top-end',
+      position,
       showConfirmButton: false,
       timer: 2500,
       timerProgressBar: true,
@@ -19,57 +25,9 @@ export class GeneralService {
         toast.onmouseleave = Swal.resumeTimer;
       },
     });
-    Toast.fire({
-      icon: 'error',
-      title,
-    });
   }
 
-  successToastAlert(title: string) {
-    const Toast = Swal.mixin({
-      toast: true,
-      position: 'top-end',
-      showConfirmButton: false,
-      timer: 2500,
-      timerProgressBar: true,
-      didOpen: (toast) => {
-        toast.onmouseenter = Swal.stopTimer;
-        toast.onmouseleave = Swal.resumeTimer;
-      },
-    });
-    Toast.fire({
-      icon: 'success',
-      title,
-    });
-  }
-
-  errorAlert(title: string, text: string) {
-    Swal.fire({
-      title,
-      text,
-      icon: 'error',
-      timer: 2000,
-      showConfirmButton: false,
-      // confirmButtonText: 'Close',
-      // confirmButtonColor: "#777777",
-      // scrollbarPadding: false,
-    });
-  }
-
-  successAlert(title: string, text: string) {
-    Swal.fire({
-      title,
-      text,
-      icon: 'success',
-      timer: 2000,
-      showConfirmButton: false,
-      // confirmButtonText: 'Close',
-      // confirmButtonColor: "#777777",
-      // scrollbarPadding: false,
-    });
-  }
-
-  makeAlert(title: string, text: string, icon: SweetAlertIcon) {
+  makeAlert(title: string, text: string, icon: SweetAlertIcon = 'success') {
     Swal.fire({
       title,
       text,
@@ -83,7 +41,8 @@ export class GeneralService {
     title: string,
     text: string,
     icon: SweetAlertIcon,
-    confirmButtonText: string = 'Yes'
+    confirmButtonText: string = 'Yes',
+    type: 'destructive' | 'confirmation' = 'destructive'
   ) {
     let alert: Promise<boolean> = Swal.fire({
       title,
@@ -92,7 +51,7 @@ export class GeneralService {
       showCancelButton: true,
       confirmButtonText,
       cancelButtonText: 'No',
-      confirmButtonColor: '#AB0E0E',
+      confirmButtonColor: type === 'destructive' ? '#AB0E0E' : '#527853',
       cancelButtonColor: '#777777',
       heightAuto: false,
     }).then((res: any) => {

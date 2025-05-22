@@ -4,18 +4,15 @@ import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 @Component({
   selector: 'app-view-image',
   templateUrl: './view-image.component.html',
-  styleUrl: './view-image.component.scss'
+  styleUrl: './view-image.component.scss',
 })
 export class ViewImageComponent {
-
   constructor(
     @Inject(MAT_DIALOG_DATA) public data: any,
-    private ref: MatDialogRef<ViewImageComponent>,
-  ) {
+    private ref: MatDialogRef<ViewImageComponent>
+  ) {}
 
-  }
-  
-  closepopup() {
+  closePopup() {
     this.ref.close(null);
   }
 }

@@ -7,15 +7,14 @@ import Swal from 'sweetalert2';
 @Component({
   selector: 'app-add-announcement',
   templateUrl: './add-announcement.component.html',
-  styleUrl: './add-announcement.component.scss'
+  styleUrl: './add-announcement.component.scss',
 })
 export class AddAnnouncementComponent {
-  file: any = null
-  isSubmitting = false
+  file: any = null;
+  isSubmitting = false;
 
-  formDetails: FormGroup 
+  formDetails: FormGroup;
 
-  
   constructor(
     private ref: MatDialogRef<AddAnnouncementComponent>,
     private fb: FormBuilder,
@@ -26,46 +25,46 @@ export class AddAnnouncementComponent {
     this.formDetails = this.fb.group({
       title: [null, [Validators.required, Validators.maxLength(128)]],
       description: [null, [Validators.required, Validators.maxLength(2048)]],
-      date: [null]
-    })
+      date: [null],
+    });
 
     this.formDetails.patchValue({
-      date: today.toISOString().split('T')[0]
-    })
+      date: today.toISOString().split('T')[0],
+    });
   }
-  
+
   uploadFile(event: any) {
     this.file = event.target.files[0];
   }
 
-  closepopup() {
+  closePopup() {
     Swal.fire({
-      title: "Cancel",
-      text: "Are you sure you want to cancel adding announcement?",
-      icon: "question",
+      title: 'Cancel',
+      text: 'Are you sure you want to cancel adding announcement?',
+      icon: 'question',
       showCancelButton: true,
       confirmButtonText: 'Yes',
       cancelButtonText: 'No',
-      confirmButtonColor: "#AB0E0E",
-      cancelButtonColor: "#777777",
+      confirmButtonColor: '#AB0E0E',
+      cancelButtonColor: '#777777',
     }).then((result) => {
       if (result.isConfirmed) {
         this.ref.close(null);
 
         const Toast = Swal.mixin({
           toast: true,
-          position: "top-end",
+          position: 'top-end',
           showConfirmButton: false,
           timer: 2500,
           timerProgressBar: true,
           didOpen: (toast) => {
             toast.onmouseenter = Swal.stopTimer;
             toast.onmouseleave = Swal.resumeTimer;
-          }
+          },
         });
         Toast.fire({
-          icon: "error",
-          title: "Changes not saved."
+          icon: 'error',
+          title: 'Changes not saved.',
         });
       }
     });
@@ -73,65 +72,62 @@ export class AddAnnouncementComponent {
 
   submit() {
     Swal.fire({
-      title: "Post New Announcement",
-      text: "Are you sure you want to post this announcement?",
-      icon: "warning",
+      title: 'Post New Announcement',
+      text: 'Are you sure you want to post this announcement?',
+      icon: 'warning',
       showCancelButton: true,
       confirmButtonText: 'Yes',
       cancelButtonText: 'Cancel',
-      confirmButtonColor: "#4f6f52",
-      cancelButtonColor: "#777777",
+      confirmButtonColor: '#4f6f52',
+      cancelButtonColor: '#777777',
     }).then((result) => {
       if (result.isConfirmed) {
-        this.createAnnouncement()
+        this.createAnnouncement();
       }
     });
   }
 
   createAnnouncement() {
-    if(this.isSubmitting) {
-      return
+    if (this.isSubmitting) {
+      return;
     }
 
-    this.isSubmitting = true
+    this.isSubmitting = true;
 
-    var formDetails = this.formDetails.value
+    var formDetails = this.formDetails.value;
 
     var payload = new FormData();
     payload.append('title', formDetails.title);
     payload.append('description', formDetails.description);
 
-    if(this.file)
-      payload.append('image', this.file);
-    
+    if (this.file) payload.append('image', this.file);
+
     this.ds.post('adviser/announcements', '', payload).subscribe(
-      result => {
-        this.isSubmitting = false
+      (result) => {
+        this.isSubmitting = false;
         Swal.fire({
-          title: "Success!",
+          title: 'Success!',
           text: result.message,
-          icon: "success",
+          icon: 'success',
         });
         this.ref.close(result.data);
-        
       },
-      error => {
-        this.isSubmitting = false
+      (error) => {
+        this.isSubmitting = false;
         if (error.status == 422) {
           Swal.fire({
-            title: "error!",
-            text: "Invalid input.",
-            icon: "error",
+            title: 'error!',
+            text: 'Invalid input.',
+            icon: 'error',
           });
-        }
-        else {
+        } else {
           Swal.fire({
-            title: "error!",
-            text: "Something went wrong, please try again later.",
-            icon: "error",
+            title: 'error!',
+            text: 'Something went wrong, please try again later.',
+            icon: 'error',
           });
         }
       }
-    )
+    );
   }
 }

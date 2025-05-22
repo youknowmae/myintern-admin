@@ -8,27 +8,25 @@ import { GeneralService } from '../../../../../services/general.service';
 @Component({
   selector: 'app-add-template',
   templateUrl: './add-template.component.html',
-  styleUrl: './add-template.component.scss'
+  styleUrl: './add-template.component.scss',
 })
 export class AddTemplateComponent {
-  docxFile: any = null
-  pdfFile: any = null
+  docxFile: any = null;
+  pdfFile: any = null;
 
   formDetails: FormGroup = this.fb.group({
-    name: [null, [Validators.required, Validators.maxLength(128)]]
-  })
-  
-  isSubmitting: boolean = false
+    name: [null, [Validators.required, Validators.maxLength(128)]],
+  });
 
-  
+  isSubmitting: boolean = false;
+
   constructor(
     private ref: MatDialogRef<AddTemplateComponent>,
     private fb: FormBuilder,
     private gs: GeneralService,
     private ds: DataService
-  ) {
-  }
-  
+  ) {}
+
   uploadDocxFile(event: any) {
     this.docxFile = event.target.files[0];
   }
@@ -37,104 +35,77 @@ export class AddTemplateComponent {
     this.pdfFile = event.target.files[0];
   }
 
-  closepopup() {
-    Swal.fire({
-      title: "Cancel",
-      text: "Are you sure you want to cancel adding template?",
-      icon: "question",
-      showCancelButton: true,
-      confirmButtonText: 'Yes',
-      cancelButtonText: 'No',
-      confirmButtonColor: "#AB0E0E",
-      cancelButtonColor: "#777777",
-    }).then((result) => {
-      if (result.isConfirmed) {
-        this.ref.close(null);
+  async closePopup() {
+    const res = await this.gs.confirmationAlert(
+      'Cancel?',
+      'Are you sure you want to cancel adding template?',
+      'question'
+    );
 
-        const Toast = Swal.mixin({
-          toast: true,
-          position: "top-end",
-          showConfirmButton: false,
-          timer: 2500,
-          timerProgressBar: true,
-          didOpen: (toast) => {
-            toast.onmouseenter = Swal.stopTimer;
-            toast.onmouseleave = Swal.resumeTimer;
-          }
-        });
-        Toast.fire({
-          icon: "error",
-          title: "Changes not saved."
-        });
-      }
-    });
+    if (!res) return;
+
+    this.ref.close(null);
+    this.gs.makeToast('Changes not saved.', 'error');
   }
 
-  submit() {
-    Swal.fire({
-      title: "Create?",
-      text: "Are you sure you want to create this template?",
-      icon: "warning",
-      showCancelButton: true,
-      confirmButtonText: 'Yes',
-      cancelButtonText: 'Cancel',
-      confirmButtonColor: "#4f6f52",
-      cancelButtonColor: "#777777",
-    }).then((result) => {
-      if (result.isConfirmed) {
-        this.createTemplate()
-      }
-    });
-  }
+  async submit() {
+    const res = await this.gs.confirmationAlert(
+      'Create?',
+      'Are you sure you want to create this template?',
+      'info',
+      'Yes',
+      'confirmation'
+    );
 
-  createTemplate() {
-    var formDetails = this.formDetails.value
+    if (!res) return;
+
+    var formDetails = this.formDetails.value;
 
     var payload = new FormData();
     payload.append('name', formDetails.name);
 
-    if(!this.docxFile) {
-      this.gs.errorAlert('Error', 'Docx file is required.')
-      return
+    if (!this.docxFile) {
+      this.gs.makeAlert('Error', 'Docx file is required.', 'error');
+      return;
     }
 
-    if(!this.pdfFile) {
-      this.gs.errorAlert('Error', 'Pdf file is required.')
-      return
+    if (!this.pdfFile) {
+      this.gs.makeAlert('Error', 'Pdf file is required.', 'error');
+      return;
     }
 
     payload.append('docx', this.docxFile);
     payload.append('pdf', this.pdfFile);
-    
-    
-    if(this.isSubmitting) {
-      return
+
+    if (this.isSubmitting) {
+      return;
     }
 
-    this.isSubmitting = true
-    
+    this.isSubmitting = true;
+
     this.ds.post('adviser/templates', '', payload).subscribe(
-      result => {
-        this.isSubmitting = false
+      (result) => {
+        this.isSubmitting = false;
         Swal.fire({
-          title: "Success!",
+          title: 'Success!',
           text: result.message,
-          icon: "success",
+          icon: 'success',
         });
         this.ref.close(result.data);
-        
       },
-      error => {
-        this.isSubmitting = false
+      (error) => {
+        this.isSubmitting = false;
         // console.error(error)
         if (error.status == 422) {
-          this.gs.errorAlert('Error!', 'Invalid input.')
-        }
-        else {
-          this.gs.errorAlert('Error!', 'Something went wrong, please try again later.')
+          this.gs.makeAlert('Error!', 'Invalid input.', 'error');
+        } else {
+          this.gs.makeAlert(
+            'Error!',
+            'Something went wrong, please try again later.',
+            'error'
+          );
         }
       }
-    )
+    );
   }
-
 }

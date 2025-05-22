@@ -1,4 +1,4 @@
-import { Component, ViewChild, ChangeDetectorRef  } from '@angular/core';
+import { Component, ViewChild, ChangeDetectorRef } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 
 import { MatPaginator, MatPaginatorIntl } from '@angular/material/paginator';
@@ -14,144 +14,122 @@ import { GeneralService } from '../../../services/general.service';
 @Component({
   selector: 'app-templates',
   templateUrl: './templates.component.html',
-  styleUrl: './templates.component.scss'
+  styleUrl: './templates.component.scss',
 })
 export class TemplatesComponent {
   displayedColumns: string[] = ['name', 'actions'];
 
   dataSource: any = new MatTableDataSource<any>();
-  
-  @ViewChild(MatPaginator, {static:true}) paginator!: MatPaginator;
 
-  
-  isSubmitting: boolean = false
-  
+  @ViewChild(MatPaginator, { static: true }) paginator!: MatPaginator;
+
+  isSubmitting: boolean = false;
+
   constructor(
     private dialogRef: MatDialog,
-    private paginatorIntl: MatPaginatorIntl, 
+    private paginatorIntl: MatPaginatorIntl,
     private changeDetectorRef: ChangeDetectorRef,
     private ds: DataService,
     private gs: GeneralService
   ) {
-    this.paginator = new MatPaginator(this.paginatorIntl, this.changeDetectorRef);
+    this.paginator = new MatPaginator(
+      this.paginatorIntl,
+      this.changeDetectorRef
+    );
   }
 
   ngOnInit() {
-    this.getTemplates() 
+    this.getTemplates();
   }
 
   getTemplates() {
-    this.ds.get('adviser/templates').subscribe(
-      templates => {
-        this.dataSource.data = templates;
-        this.dataSource.paginator = this.paginator;
-      },
-      error => {
-        // console.error(error)
-      }
-    )
-
+    this.ds.get('adviser/templates').subscribe((templates) => {
+      this.dataSource.data = templates;
+      this.dataSource.paginator = this.paginator;
+    });
   }
-  
+
   addTemplate() {
     var modal = this.dialogRef.open(AddTemplateComponent, {
-      disableClose: true 
-    })
-    
+      disableClose: true,
+    });
+
     modal.afterClosed().subscribe((result) => {
       if (!result) {
-        return
+        return;
       }
-      
-      this.dataSource.data = [...this.dataSource.data, result]
+
+      this.dataSource.data = [...this.dataSource.data, result];
     });
   }
 
   previewTemplate(template: any) {
-    if(!template.pdf) {
-      Swal.fire({
-        title: 'Error!',
-        text: 'This file has no pdf preview file.',
-        icon: 'error',
-        confirmButtonText: 'Close',
-        confirmButtonColor: '#777777',
-      });
-      return
+    if (!template.pdf) {
+      this.gs.makeAlert('Error!', 'This file has no pdf preview file.');
+      return;
     }
 
     this.dialogRef.open(PdfPreviewComponent, {
-      data: { name: template.name, pdf: template.pdf},
-      disableClose: true
-    })
+      data: { name: template.name, pdf: template.pdf },
+      disableClose: true,
+    });
   }
 
   editTemplate(template: any) {
     var modal = this.dialogRef.open(EditTemplateComponent, {
       data: template,
-      disableClose: true 
-    })
-    
+      disableClose: true,
+    });
+
     modal.afterClosed().subscribe((result) => {
       if (!result) {
-        return
+        return;
       }
-      
+
       this.dataSource.data = this.dataSource.data.map((template: any) =>
         template.id === result.id ? result : template
       );
     });
   }
 
-  deleteTemplate(id: number) {
-    if(this.isSubmitting) {
-      return
+  async deleteTemplate(id: number) {
+    const res = await this.gs.confirmationAlert(
+      'Delete?',
+      'Are you sure you want to delete this template?',
+      'warning',
+      'Yes',
+      'destructive'
+    );
+
+    if (!res) return;
+
+    if (this.isSubmitting) {
+      return;
     }
 
-    this.isSubmitting = true
+    this.isSubmitting = true;
 
     this.ds.get(`adviser/templates/${id}/delete`).subscribe(
-      result => {
-        
-        this.isSubmitting = false
-        this.dataSource.data = this.dataSource.data.filter((template: any) => template.id !== id);
-        this.gs.successAlert('Success', 'Template has been deleted.')
+      (result) => {
+        this.isSubmitting = false;
+        this.dataSource.data = this.dataSource.data.filter(
+          (template: any) => template.id !== id
+        );
+        this.gs.makeAlert('Success', 'Template has been deleted.');
       },
-      error => {
-        this.isSubmitting = false
+      (error) => {
+        this.isSubmitting = false;
         // console.error(error)
-        if(error.status == 409) {
-          this.gs.errorAlert('Error', error.error)
+        if (error.status == 409) {
+          this.gs.makeAlert('Error', error.error, 'error');
+        } else {
+          this.gs.makeAlert(
+            'Oops!',
+            'Something went wrong. Please try again later.',
+            'error'
+          );
         }
-        else {
-          this.gs.errorAlert('Oops!', "Something went wrong. Please try again later.")
-        }
-
-        // Swal.fire({
-        //   title: 'Error!',
-        //   text: 'Something went wrong. Please try again later.',
-        //   icon: 'error',
-        //   confirmButtonText: 'Close',
-        //   confirmButtonColor: '#777777',
-        // });
-      })
-
-  }
-
-  deleteConfirmation(id: number) {
-    Swal.fire({
-      title: 'Delete?',
-      text: 'Are you sure you want to delete this template?',
-      icon: 'warning',
-      showCancelButton: true,
-      confirmButtonText: 'Yes',
-      cancelButtonText: 'Cancel',
-      confirmButtonColor: '#AB0E0E',
-      cancelButtonColor: '#777777',
-    }).then((result) => {
-      if (result.isConfirmed) {
-        this.deleteTemplate(id);
       }
-    });
+    );
   }
-
 }

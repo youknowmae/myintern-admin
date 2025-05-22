@@ -141,9 +141,10 @@ export class EvaluationComponent {
           if (error.status === 404) {
             this.isEmpty = true;
           } else {
-            this.gs.errorAlert(
+            this.gs.makeAlert(
               'Oops!',
-              'Something went wrong. Please try again later.'
+              'Something went wrong. Please try again later.',
+              'error'
             );
           }
           this.isLoading = false;

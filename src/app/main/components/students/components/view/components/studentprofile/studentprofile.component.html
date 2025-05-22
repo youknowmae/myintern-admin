@@ -1,7 +1,7 @@
 <div class="container">
   <div class="header">
     <div class="img-area">
-      <img src="/src/assets/images/profile-dark.png" alt="">
+      <img src="/src/assets/images/profile-dark.png" alt="" />
     </div>
     <h1>Juan Dela Cruz</h1>
     <h3>Bachelor of Science in Information Technology</h3>
@@ -37,11 +37,11 @@
       <p><strong>Duration:</strong> 2021 - Present</p>
       <ul>
         <li>Year Level 3</li>
-      </ul> <br>
+      </ul>
+      <br />
       <h3>Senior High School - General Academic Strand</h3>
       <p><strong>School:</strong> Mondriaan Aura College</p>
       <p><strong>Duration:</strong> 2019 - 2021</p>
-
 
       <h2>Highest Educational Attainment</h2>
       <h3>Bachelor of Science in Information Technology</h3>
@@ -49,11 +49,11 @@
       <p><strong>Duration:</strong> 2021 - Present</p>
       <ul>
         <li>Year Level 3</li>
-      </ul> <br>
+      </ul>
+      <br />
     </div>
   </div>
 </div>
-
 
 <!-- <div class="container">
   <div class="info-header">
@@ -82,7 +82,7 @@
               </p>
             </td>
           </tr> -->
-          <!-- <tr>
+<!-- <tr>
             <td><p>College/Program/Yr. level:</p></td>
             <td>
               <p>
@@ -92,7 +92,7 @@
               </p>
             </td>
           </tr> -->
-          <!-- <tr>
+<!-- <tr>
             <td><p>Domain Email:</p></td>
             <td>
               <p>
@@ -113,8 +113,8 @@
     </div>
   </div> -->
 
-  <!-- OG Code -->
-  <!-- <div class="info-container">
+<!-- OG Code -->
+<!-- <div class="info-container">
     <div class="content">
       <h3>Personal Information</h3>
       <div class="row">
@@ -242,274 +242,229 @@
       </div>
     </div> -->
 
-    <!-- seminars and training -->
-    <div class="other_container" *ngIf="student.practicum_level === 1">
-      <div class="content">
-        <h3>Seminars and Training Attended related to IT</h3>
-      <div class="table-container">
-        <div class="table">
-          <div class="table-row">
-            <div class="col-md-3">
-              <h4>Title of Seminar</h4>
-            </div>
-            <div class="col-md-3">
-              <h4>Venue</h4>
-            </div>
-            <div class="col-md-2">
-              <h4>Date</h4>
-            </div>
-            <div class="col-md-2">
-              <h4>Number of Hours</h4>
-            </div>
-            <div class="col-md-2">
-              <h4>Certificate</h4>
-            </div>
+<!-- seminars and training -->
+<div class="other_container" *ngIf="student.practicum_level === 1">
+  <div class="content">
+    <h3>Seminars and Training Attended related to IT</h3>
+    <div class="table-container">
+      <div class="table">
+        <div class="table-row">
+          <div class="col-md-3">
+            <h4>Title of Seminar</h4>
           </div>
-          <div class="table-row" *ngFor="let seminar of seminars">
-            <div class="col-md-3">
-              <p>{{ seminar.seminar_title }}</p>
-            </div>
-            <div class="col-md-3">
-              <p>{{ seminar.venue }}</p>
-            </div>
-            <div class="col-md-2">
-              <p>{{ seminar.date }}</p>
-            </div>
-            <div class="col-md-2">
-              <p>{{ seminar.total_hours }}</p>
-            </div>
-            <div class="col-md-2">
-              <div class="actions">
-                <button
-                  class="view"
-                  mat-raised-button
-                  matTooltip="View"
-                  [matTooltipShowDelay]="400"
-                  (click)="viewSeminarImage(seminar)"
-                >
-                  <i class="bx bx-detail"></i>
-                </button>
-              </div>
-            </div>
+          <div class="col-md-3">
+            <h4>Venue</h4>
           </div>
-          <div class="table-row">
-            <p>Total Hours: {{ seminar_total_hours }}</p>
+          <div class="col-md-2">
+            <h4>Date</h4>
+          </div>
+          <div class="col-md-2">
+            <h4>Number of Hours</h4>
+          </div>
+          <div class="col-md-2">
+            <h4>Certificate</h4>
           </div>
         </div>
-      </div>
-      </div>
-    </div>
-    <!-- seminars and training end -->
-
-    <div class="other_container" *ngIf="student.practicum_level === 1">
-      <div class="content">
-        <h3>Other task/Activities</h3>
-      <div class="table-container">
-        <div class="table">
-          <div class="table-row">
-            <div class="col-md-3">
-              <h4>Task Name</h4>
-            </div>
-            <div class="col-md-3">
-              <h4>Venue</h4>
-            </div>
-            <div class="col-md-2">
-              <h4>Date</h4>
-            </div>
-            <div class="col-md-2">
-              <h4>Number of Hours</h4>
-            </div>
-            <div class="col-md-2">
-              <h4>Evidence</h4>
-            </div>
+        <div class="table-row" *ngFor="let seminar of seminars">
+          <div class="col-md-3">
+            <p>{{ seminar.seminar_title }}</p>
           </div>
-          <div class="table-row" *ngFor="let item of other_tasks">
-            <div class="col-md-3">
-              <p>{{ item.task_name }}</p>
-            </div>
-            <div class="col-md-3">
-              <p>{{ item.venue }}</p>
-            </div>
-            <div class="col-md-2">
-              <p>{{ item.date }}</p>
-            </div>
-            <div class="col-md-2">
-              <p>{{ item.total_hours }}</p>
-            </div>
-            <div class="col-md-2">
-              <div class="actions">
-                <button
-                  class="view"
-                  mat-raised-button
-                  matTooltip="View"
-                  [matTooltipShowDelay]="400"
-                  (click)="viewSeminarImage(item)"
-                >
-                  <i class="bx bx-detail"></i>
-                </button>
-              </div>
-            </div>
+          <div class="col-md-3">
+            <p>{{ seminar.venue }}</p>
           </div>
-          <div class="table-row">
-            <p>Total Hours: {{ other_task_total_hours }}</p>
+          <div class="col-md-2">
+            <p>{{ seminar.date }}</p>
           </div>
-        </div>
-      </div>
-      </div>
-    </div>
-
-    <!-- community service -->
-    <div class="other_container" *ngIf="student.practicum_level === 2">
-      <h3>Community Service</h3>
-      <div class="table-container">
-        <div class="table">
-          <div class="table-row">
-            <div class="col-md-2">
-              <h4>Date</h4>
-            </div>
-            <div class="col-md-2">
-              <h4>Time in</h4>
-            </div>
-            <div class="col-md-2">
-              <h4>Time out</h4>
-            </div>
-            <div class="col-md-3">
-              <h4>Accomplishment</h4>
-            </div>
-            <div class="col-md-2">
-              <h4>Total Hours</h4>
-            </div>
-            <div class="col-md-1">
-              <h4>Status</h4>
-            </div>
+          <div class="col-md-2">
+            <p>{{ seminar.total_hours }}</p>
           </div>
-          <div class="table-row" *ngFor="let item of community_service">
-            <div class="col-md-2">
-              <p>{{ item.date }}</p>
-            </div>
-            <div class="col-md-2">
-              <p>{{ item.time_in }}</p>
-            </div>
-            <div class="col-md-2">
-              <p>{{ item.time_out }}</p>
-            </div>
-            <div class="col-md-3">
-              <p>{{ item.accomplishment }}</p>
-            </div>
-            <div class="col-md-2">
-              <p>{{ item.total_hours }}</p>
-            </div>
-            <div class="col-md-1">
-              <p>{{ (item.is_verified) ? 'Verified' : 'Not verified' }}</p>
-            </div>
-          </div>
-          <div class="table-row">
-            <p>Total Hours: {{ community_service_total_hours }} / 150 Hours </p>
-          </div>
-          <!-- <table>
-            <thead>
-              <tr>
-                <th>Date</th>
-                <th>Time In</th>
-                <th>Time Out</th>
-                <th>Accomplishment</th>
-                <th>Total Hours</th>
-                <th>Status</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr *ngFor="let item of community_service">
-                <td> {{ item.date }} </td>
-                <td> {{ item.time_in }} </td>
-                <td> {{ item.time_out }} </td>
-                <td> {{ item.accomplishment }} </td>
-                <td> {{ item.total_hours }} </td>
-                <td>
-                  {{ (item.is_verified) ? 'Verified' : 'Not verified' }}
-                  <div class="actions">
-                    <button class="view"
-                    mat-raised-button
-                    matTooltip="View"
-                    [matTooltipShowDelay] = "400"
-                    (click)="viewOtherTaskImage(item)"
-                    mat-ripple>
-                        <i class='bx bx-detail' ></i>
-                    </button>
-
-                    <button class="edit"
-                    mat-raised-button
-                    matTooltip="Edit"
-                    [matTooltipShowDelay] = "400"
-                    (click)="editOtherTask(item)"
-                    mat-ripple>
-                        <i class='bx bxs-edit'></i>
-                    </button>
-                  </div>
-                </td>
-              </tr>
-            </tbody>
-          </table> -->
-        </div>
-        <div class="btn" *ngIf="unverified_community_service > 0">
-          <button mat-ripple (click)="verifyCommunityServices()">Verify</button>
-        </div>
-      </div>
-
-      <!-- skills -->
-      <div class="content">
-        <h3>Skill area</h3>
-        <p class="text">
-          I have done a self-evaluation of my abilities based on my past
-          experiences. Listed below is what I consider my strong and weak skill
-          areas. If i work in your company, I would like an opportunity to
-          increase my proficiency in weak areas.
-        </p>
-        <div class="table-container">
-          <div class="table">
-            <div class="table-row">
-              <div class="col-md-6">
-                <h4>Strong Skills Area</h4>
-              </div>
-              <div class="col-md-6">
-                <h4>Weak Skills Area</h4>
-              </div>
-            </div>
-            <div class="table-row" *ngFor="let skill of skills">
-              <div class="col-md-6">
-                <p>{{ skill.strong_skill }}</p>
-              </div>
-              <div class="col-md-6">
-                <p>{{ skill.weak_skill }}</p>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-      <!-- skills end -->
-
-      <!-- personality test -->
-      <div class="content">
-        <h3>Personality Test</h3>
-        <div class="row">
-          <div class="col-md-4">
-            <div class="file-input-container">
+          <div class="col-md-2">
+            <div class="actions">
               <button
-                *ngIf="personality_test"
-                (click)="viewPersonalityTestImage(personality_test)"
+                class="view"
+                mat-raised-button
+                matTooltip="View"
+                [matTooltipShowDelay]="400"
+                (click)="viewSeminarImage(seminar)"
               >
-                View
+                <i class="bx bx-detail"></i>
               </button>
-              <div class="label">Personality Test Result</div>
-              <div class="text">
-                {{ personality_test ? personality_test.file_name : "None" }}
-              </div>
             </div>
           </div>
         </div>
+        <div class="table-row">
+          <p>Total Hours: {{ seminar_total_hours }}</p>
+        </div>
       </div>
-      <!-- personality test end -->
     </div>
+  </div>
+</div>
+<!-- seminars and training end -->
 
+<div class="other_container" *ngIf="student.practicum_level === 1">
+  <div class="content">
+    <h3>Other task/Activities</h3>
+    <div class="table-container">
+      <div class="table">
+        <div class="table-row">
+          <div class="col-md-3">
+            <h4>Task Name</h4>
+          </div>
+          <div class="col-md-3">
+            <h4>Venue</h4>
+          </div>
+          <div class="col-md-2">
+            <h4>Date</h4>
+          </div>
+          <div class="col-md-2">
+            <h4>Number of Hours</h4>
+          </div>
+          <div class="col-md-2">
+            <h4>Evidence</h4>
+          </div>
+        </div>
+        <div class="table-row" *ngFor="let item of other_tasks">
+          <div class="col-md-3">
+            <p>{{ item.task_name }}</p>
+          </div>
+          <div class="col-md-3">
+            <p>{{ item.venue }}</p>
+          </div>
+          <div class="col-md-2">
+            <p>{{ item.date }}</p>
+          </div>
+          <div class="col-md-2">
+            <p>{{ item.total_hours }}</p>
+          </div>
+          <div class="col-md-2">
+            <div class="actions">
+              <button
+                class="view"
+                mat-raised-button
+                matTooltip="View"
+                [matTooltipShowDelay]="400"
+                (click)="viewSeminarImage(item)"
+              >
+                <i class="bx bx-detail"></i>
+              </button>
+            </div>
+          </div>
+        </div>
+        <div class="table-row">
+          <p>Total Hours: {{ other_task_total_hours }}</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- community service -->
+<div class="other_container" *ngIf="student.practicum_level === 2">
+  <h3>Community Service</h3>
+  <div class="table-container">
+    <div class="table">
+      <div class="table-row">
+        <div class="col-md-2">
+          <h4>Project Name</h4>
+        </div>
+        <div class="col-md-2">
+          <h4>Beneficiary</h4>
+        </div>
+        <div class="col-md-2">
+          <h4>Date Start</h4>
+        </div>
+        <div class="col-md-3">
+          <h4>Date End</h4>
+        </div>
+        <div class="col-md-2">
+          <h4>Status</h4>
+        </div>
+        <div class="col-md-1">
+          <h4>Actions</h4>
+        </div>
+      </div>
+      <div class="table-row" *ngIf="community_service">
+        <div class="col-md-2">
+          <p>{{ community_service.project_name }}</p>
+        </div>
+        <div class="col-md-2">
+          <p>{{ community_service.beneficiary }}</p>
+        </div>
+        <div class="col-md-2">
+          <p>{{ community_service.start_date | date : "MMM d, y" }}</p>
+        </div>
+        <div class="col-md-3">
+          <p>{{ community_service.end_date | date : "MMM d, y" }}</p>
+        </div>
+        <div class="col-md-2">
+          <p>
+            {{ community_service.is_verified ? "Verified" : "Not verified" }}
+          </p>
+        </div>
+        <div class="col-md-1">
+          <p>Action here?</p>
+        </div>
+      </div>
+      <div class="table-row">
+        <p>Total Hours: {{ community_service_total_hours }} / 150 Hours</p>
+      </div>
+    </div>
+    <div
+      class="btn"
+      *ngIf="community_service && community_service.is_verified == false"
+    >
+      <button mat-ripple (click)="verifyCommunityServices()">Verify</button>
+    </div>
+  </div>
+
+  <!-- skills -->
+  <div class="content">
+    <h3>Skill area</h3>
+    <div class="table-container">
+      <div class="table">
+        <div class="table-row">
+          <div class="col-md-6">
+            <h4>Strong Skills Area</h4>
+          </div>
+          <div class="col-md-6">
+            <h4>Weak Skills Area</h4>
+          </div>
+        </div>
+        <div class="table-row" *ngFor="let skill of skills">
+          <div class="col-md-6">
+            <p>{{ skill.strong_skill }}</p>
+          </div>
+          <div class="col-md-6">
+            <p>{{ skill.weak_skill }}</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- skills end -->
+
+  <!-- personality test -->
+  <div class="content">
+    <h3>Personality Test</h3>
+    <div class="row">
+      <div class="col-md-4">
+        <div class="file-input-container">
+          <button
+            *ngIf="personality_test"
+            (click)="viewPersonalityTestImage(personality_test)"
+          >
+            View
+          </button>
+          <div class="label">Personality Test Result</div>
+          <div class="text">
+            {{ personality_test ? personality_test.file_name : "None" }}
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- personality test end -->
+</div>
 
 <!-- OJT Information Content -->
 <div class="ojt_content" *ngIf="ojtInfo?.company_name">
@@ -551,12 +506,6 @@
             />
           </mat-form-field>
         </div>
-        <!-- <div class="col-md-3">
-          <mat-form-field appearance="outline" floatLabel="always">
-            <mat-label>Contact Number</mat-label>
-            <input matInput readonly>
-          </mat-form-field>
-        </div> -->
       </div>
 
       <div class="row">
@@ -566,12 +515,6 @@
             <input matInput [(ngModel)]="ojtInfo.start_date" readonly />
           </mat-form-field>
         </div>
-        <!-- <div class="col-md-3">
-          <mat-form-field appearance="outline" floatLabel="always">
-            <mat-label>End Date</mat-label>
-            <input matInput readonly>
-          </mat-form-field>
-        </div> -->
         <div class="col-md-3">
           <mat-form-field appearance="outline" floatLabel="always">
             <mat-label>Number of Hours</mat-label>

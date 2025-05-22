@@ -63,14 +63,16 @@ export class ViewComponent {
 
         if (error.status === 404) {
           this.router.navigate(['main/endorsement/list']);
-          this.gs.errorAlert(
+          this.gs.makeAlert(
             'Not Found!',
-            'The industry partner approval not found.'
+            'The industry partner approval not found.',
+            'error'
           );
         } else {
-          this.gs.errorAlert(
+          this.gs.makeAlert(
             'Oops',
-            'Something went wrong. Please try again later.'
+            'Something went wrong. Please try again later.',
+            'error'
           );
         }
       }
@@ -127,20 +129,29 @@ export class ViewComponent {
           )
           .subscribe(
             (response) => {
-              this.gs.successAlert(response.title, response.message);
+              this.gs.makeAlert(response.title, response.message, 'success');
               this.router.navigate(['main/endorsement/list']);
               this.industryPartner.status = 1;
             },
             (error) => {
               console.error(error);
               if (error.status === 409) {
-                this.gs.errorAlert(error.error.title, error.error.message);
+                this.gs.makeAlert(
+                  error.error.title,
+                  error.error.message,
+                  'error'
+                );
               } else if (error.status === 422) {
-                this.gs.errorAlert(error.error.title, error.error.error);
+                this.gs.makeAlert(
+                  error.error.title,
+                  error.error.error,
+                  'error'
+                );
               } else {
-                this.gs.errorAlert(
+                this.gs.makeAlert(
                   'Oops!',
-                  'Something went wrong. Please try again later.'
+                  'Something went wrong. Please try again later.',
+                  'error'
                 );
               }
             }
@@ -171,18 +182,18 @@ export class ViewComponent {
           (response) => {
             this.isSubmitting = false;
             this.router.navigate(['main/endorsement/list']);
-            this.gs.successAlert(response.title, response.message);
+            this.gs.makeAlert(response.title, response.message);
             this.industryPartner.status = 2;
           },
           (error) => {
             this.isSubmitting = false;
             console.error(error);
             if (error.status === 409) {
-              this.gs.errorAlert(error.error.title, error.error.message);
+              this.gs.makeAlert(error.error.title, error.error.message);
             } else if (error.status === 422) {
-              this.gs.errorAlert(error.error.title, error.error.error);
+              this.gs.makeAlert(error.error.title, error.error.error);
             } else {
-              this.gs.errorAlert(
+              this.gs.makeAlert(
                 'Oops!',
                 'Something went wrong. Please try again later.'
               );
