@@ -1,9 +1,10 @@
-import { Component } from '@angular/core';
+import { Component, ElementRef, ViewChild } from '@angular/core';
 import { UserService } from '../../../../../../../services/user.service';
 import { DataService } from '../../../../../../../services/data.service';
 import { MatDialog } from '@angular/material/dialog';
 import { ViewImageComponent } from '../../../../../../../components/view-image/view-image.component';
 import { GeneralService } from '../../../../../../../services/general.service';
+import html2canvas from 'html2canvas';
 
 @Component({
   selector: 'app-studentprofile',
@@ -11,6 +12,8 @@ import { GeneralService } from '../../../../../../../services/general.service';
   styleUrl: './studentprofile.component.scss',
 })
 export class StudentprofileComponent {
+  @ViewChild('captureArea', { static: false }) captureArea!: ElementRef;
+
   student: any = {
     first_name: '',
     middle_name: '',
@@ -107,6 +110,18 @@ export class StudentprofileComponent {
     }
 
     this.getPersonalityTest();
+  }
+
+  downloadResume(): void {
+    html2canvas(this.captureArea.nativeElement, {
+      useCORS: true,
+      allowTaint: true,
+    }).then((canvas) => {
+      const link = document.createElement('a');
+      link.download = 'resume.png';
+      link.href = canvas.toDataURL('image/png');
+      link.click();
+    });
   }
 
   getPersonalityTest() {
