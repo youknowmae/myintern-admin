@@ -20,6 +20,9 @@ import {
 import { AcademicYear } from '../../../model/academic-year.model';
 import { MatSelectChange } from '@angular/material/select';
 import { UserService } from '../../../services/user.service';
+import html2canvas from 'html2canvas';
+import { Workbook } from 'exceljs';
+import * as FileSaver from 'file-saver';
 
 // Register all necessary components
 Chart.register(...registerables);
@@ -250,6 +253,239 @@ export class DashboardComponent implements AfterViewInit {
     this.academicYearFilter = acadYear;
     this.getData(acadYear);
   }
+
+blobToBase64(blob: Blob): Promise<string> {
+  return new Promise((resolve, reject) => {
+    const reader = new FileReader();
+    reader.onloadend = () => {
+      if (typeof reader.result === 'string') {
+        resolve(reader.result);
+      } else {
+        reject('Failed to convert blob to base64');
+      }
+    };
+    reader.onerror = () => reject('Failed to read blob');
+    reader.readAsDataURL(blob);
+  });
+}
+
+
+exportToExcel = async (): Promise<void> => {
+  const workbook = new Workbook();
+  const worksheet = workbook.addWorksheet('Dashboard Report');
+  
+
+  // Load and add images as base64
+  const gcImageResponse = await fetch('assets/images/GC.png');
+  const gcImageBlob = await gcImageResponse.blob();
+  const gcImageBase64 = await this.blobToBase64(gcImageBlob);
+  const gcLogo = workbook.addImage({
+    base64: gcImageBase64,
+    extension: 'png',
+  });
+
+  const ccsImageResponse = await fetch('assets/images/ccs.png');
+  const ccsImageBlob = await ccsImageResponse.blob();
+  const ccsImageBase64 = await this.blobToBase64(ccsImageBlob);
+  const ccsLogo = workbook.addImage({
+    base64: ccsImageBase64,
+    extension: 'png',
+  });
+
+  let currentRow = 1;
+
+  // Add logos
+  worksheet.addImage(gcLogo, {
+    tl: { col: 0, row: currentRow - 1 },
+    ext: { width: 120, height: 120 },
+    editAs: 'absolute',
+  });
+
+  // Position CCS logo exactly at column F (col index 5)
+  worksheet.addImage(ccsLogo, {
+    tl: { col: 5, row: currentRow - 1 }, // col 5 is column F (zero-based)
+    ext: { width: 120, height: 120 },
+    editAs: 'absolute',
+  });
+
+  // Add one empty row before content to avoid overlap
+  currentRow += 1;  // Add space after logos
+
+  // Header lines - merge and set text, center align, set font size and boldness
+  const addHeaderLine = (text: string, fontSize: number, bold = false) => {
+    worksheet.mergeCells(`A${currentRow}:N${currentRow}`);
+    const cell = worksheet.getCell(`A${currentRow}`);
+    cell.value = text;
+    cell.alignment = { vertical: 'middle', horizontal: 'center' };
+    cell.font = { size: fontSize, bold };
+    currentRow++;
+  };
+
+  addHeaderLine('Gordon College', 16, true);
+  addHeaderLine('College of Computer Studies', 12);
+  addHeaderLine(`A.Y. ${this.acadYear?.acad_year || 'N/A'}`, 12);
+  // If you want dynamic course code in header, replace below with actual course code string
+  const courseCode = 'Dashboard Report'; 
+  addHeaderLine(courseCode, 12);
+
+  // Add empty row spacing after header
+  worksheet.addRow([]);
+  currentRow++;
+
+  // --- Now add your sections with orange highlights and center alignments ---
+
+  // Helper to add section title with orange highlight fill only columns A-F, center aligned
+  const addSectionTitle = (title: string) => {
+    const row = worksheet.getRow(currentRow++);
+    row.height = 24;
+    row.getCell(1).value = title;
+    row.font = { bold: true, color: { argb: 'FFFFFFFF' }, size: 14 };
+    row.alignment = { vertical: 'middle', horizontal: 'center' };
+
+    row.eachCell({ includeEmpty: true }, (cell, colNumber) => {
+      if (colNumber <= 6) {
+        cell.fill = {
+          type: 'gradient',
+          gradient: 'angle',
+          degree: 0,
+          stops: [
+            { position: 0, color: { argb: 'FFEE7214' } },
+            { position: 1, color: { argb: 'FFB85400' } },
+          ],
+        };
+        cell.font = { bold: true, color: { argb: 'FFFFFFFF' }, size: 14 };
+        cell.alignment = { vertical: 'middle', horizontal: 'center' };
+      }
+    });
+
+    worksheet.mergeCells(`A${row.number}:F${row.number}`);
+  };
+
+  // Add headers (same orange fill A-F, center aligned)
+  const addHeaders = (headers: string[]) => {
+    const row = worksheet.getRow(currentRow++);
+    row.height = 20;
+    headers.forEach((header, i) => {
+      const cell = row.getCell(i + 1);
+      cell.value = header;
+      if (i < 6) {
+        cell.fill = {
+          type: 'pattern',
+          pattern: 'solid',
+          fgColor: { argb: 'FFEE7214' },
+        };
+      }
+      cell.font = { bold: true, color: { argb: 'FFFFFFFF' } };
+      cell.alignment = { horizontal: 'center', vertical: 'middle' };
+      cell.border = {
+        top: { style: 'thin', color: { argb: 'FFDD7700' } },
+        left: { style: 'thin', color: { argb: 'FFDD7700' } },
+        bottom: { style: 'thin', color: { argb: 'FFDD7700' } },
+        right: { style: 'thin', color: { argb: 'FFDD7700' } },
+      };
+    });
+  };
+
+  // Add data rows with light orange alternating fill and center align
+  const addDataRows = (rows: any[][]) => {
+    rows.forEach((data, idx) => {
+      const row = worksheet.getRow(currentRow++);
+      row.height = 18;
+      data.forEach((val, i) => {
+        const cell = row.getCell(i + 1);
+        cell.value = val;
+        if (i < 6 && idx % 2 === 0) {
+          cell.fill = {
+            type: 'pattern',
+            pattern: 'solid',
+            fgColor: { argb: 'FFFFF3E6' },
+          };
+        }
+        cell.alignment = { horizontal: 'center', vertical: 'middle' };
+        cell.border = {
+          top: { style: 'thin', color: { argb: 'FFF5C27A' } },
+          left: { style: 'thin', color: { argb: 'FFF5C27A' } },
+          bottom: { style: 'thin', color: { argb: 'FFF5C27A' } },
+          right: { style: 'thin', color: { argb: 'FFF5C27A' } },
+        };
+      });
+    });
+  };
+
+  // Example usage of your existing data and charts:
+  // Section 1: Enrolled Students per Course
+  addSectionTitle('Enrolled Students per Course');
+  addHeaders(['Course Code', 'Count']);
+  const enrolledRows = this.enrolledCourseCount.map((item: any) => [
+    item.course_code,
+    item.count,
+  ]);
+  addDataRows(enrolledRows);
+
+  currentRow++;
+
+  // Section 2: OJT Status
+  addSectionTitle('OJT Status per Course');
+  addHeaders(['Course Code', 'Pending', 'Ongoing', 'Completed']);
+  const ojtStatusRows = this.barChart.data.labels.map((label: string, i: number) => [
+    label,
+    this.barChart.data.datasets[0].data[i],
+    this.barChart.data.datasets[1].data[i],
+    this.barChart.data.datasets[2].data[i],
+  ]);
+  addDataRows(ojtStatusRows);
+
+  currentRow++;
+
+  // Section 3: Exit Poll Status
+  addSectionTitle('Exit Poll Status per Course');
+  addHeaders(['Course Code', 'Pending', 'Completed']);
+  const exitPollRows = this.ojtBarChart.data.labels.map((label: string, i: number) => [
+    label,
+    this.ojtBarChart.data.datasets[0].data[i],
+    this.ojtBarChart.data.datasets[1].data[i],
+  ]);
+  addDataRows(exitPollRows);
+
+  currentRow++;
+
+  // Section 4: Evaluation Averages
+  addSectionTitle('Evaluation Averages per Course');
+  addHeaders(['Course Code', 'Excellent', 'Very Good', 'Good', 'Fair', 'Poor']);
+  const evaluationRows = this.evaluationBarChart.data.labels.map((label: string, i: number) => [
+    label,
+    this.evaluationBarChart.data.datasets[0].data[i],
+    this.evaluationBarChart.data.datasets[1].data[i],
+    this.evaluationBarChart.data.datasets[2].data[i],
+    this.evaluationBarChart.data.datasets[3].data[i],
+    this.evaluationBarChart.data.datasets[4].data[i],
+  ]);
+  addDataRows(evaluationRows);
+
+  // Autofit columns only A-F
+  worksheet.columns.forEach((col, idx) => {
+    if (idx < 6) {
+      let maxLength = 12;
+      if (col.eachCell) {
+        col.eachCell({ includeEmpty: true }, (cell) => {
+          const val = cell.value ? cell.value.toString() : '';
+          maxLength = Math.max(maxLength, val.length);
+        });
+      }
+      col.width = maxLength + 4;
+    } else {
+      col.width = 0; // hide columns beyond F
+    }
+  });
+
+  // Save Excel file
+  workbook.xlsx.writeBuffer().then((buffer: any) => {
+    const blob = new Blob([buffer], {
+      type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+    });
+    FileSaver.saveAs(blob, 'Dashboard_Report.xlsx');
+  });
+};
 
   getData(acadYear: AcademicYear) {
     this.ds
