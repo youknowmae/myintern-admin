@@ -5,6 +5,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { ViewImageComponent } from '../../../../../../../components/view-image/view-image.component';
 import { GeneralService } from '../../../../../../../services/general.service';
 import html2canvas from 'html2canvas';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-studentprofile',
@@ -13,7 +14,6 @@ import html2canvas from 'html2canvas';
 })
 export class StudentprofileComponent {
   @ViewChild('captureArea', { static: false }) captureArea!: ElementRef;
-
 
   student: any = {
     first_name: '',
@@ -54,8 +54,6 @@ export class StudentprofileComponent {
     full_address: '',
   };
 
-  
-  displayedSkills: string[] = [];
   educationFormDetails: FormGroup = this.fb.group({
     type: [null, Validators.required],
     institution_name: [null, Validators.maxLength(64)],
@@ -84,8 +82,7 @@ export class StudentprofileComponent {
     private gs: GeneralService,
     private dialog: MatDialog,
     private userService: UserService,
-    private fb: FormBuilder,
-
+    private fb: FormBuilder
   ) {}
 
   ngOnInit() {
@@ -152,29 +149,6 @@ export class StudentprofileComponent {
       }
     );
   }
-
-      getProfile() {
-    let profile = this.userService.getUser();
-
-    if (profile.personality_test) {
-      this.personality_test = profile.personality_test;
-    }
-
-    switch (profile.gender) {
-      case 0:
-        profile.gender = 'Female';
-        break;
-      case 1:
-        profile.gender = 'Male';
-        break;
-    }
-
-    this.student = { ...profile };
-
-    this.skills = profile.student_skills?.skill_areas || [0, 0, 0];
-    this.displayedSkills = profile.student_skills?.technical_skills || [];
-  }
-
 
   getPersonalityTest() {
     this.ds
@@ -267,7 +241,7 @@ export class StudentprofileComponent {
       .subscribe(
         (response) => {
           this.community_service_total_hours = 150;
-          this.community_service.is_verified = true
+          this.community_service.is_verified = true;
 
           this.gs.makeToast(response.message);
           this.isSubmitting = false;

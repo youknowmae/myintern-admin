@@ -1,138 +1,138 @@
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA==" crossorigin="anonymous" referrerpolicy="no-referrer"/>
+<link
+  rel="stylesheet"
+  href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
+  integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA=="
+  crossorigin="anonymous"
+  referrerpolicy="no-referrer"
+/>
 
 <div class="container">
   <div class="download-btn" (click)="downloadResume()">
     <i class="fa-solid fa-download"></i>
   </div>
   <div class="resumecontent" #captureArea>
-          <div class="header">
-            <div class="img-area">
-              <img
-                [src]="
-                  profilePictureUrl
-                    ? profilePictureUrl
-                    : 'assets/images/profile.png'
-                "
-                alt="Image"
-              />
+    <div class="header">
+      <div class="img-area">
+        <img
+          [src]="
+            profilePictureUrl ? profilePictureUrl : 'assets/images/profile.png'
+          "
+          alt="Image"
+        />
+      </div>
+      <h1>
+        {{ student.first_name }} {{ student.middle_name }}
+        {{ student.last_name }} {{ student.ext_name }}
+      </h1>
+      <h3>Bachelor of Science in Information Technology</h3>
+      <h3>{{ student.student_profile.student_number }}</h3>
+    </div>
+
+    <div class="main">
+      <div>
+        <h2>Personal Information</h2>
+        <div class="details">
+          <p>
+            <strong>Name:</strong> {{ student.first_name }}
+            {{ student.middle_name }} {{ student.last_name }}
+            {{ student.ext_name }}
+          </p>
+          <p><strong>Gender:</strong> {{ student.gender }}</p>
+          <p>
+            <strong>Address:</strong> {{ student.address }},
+            {{ student.barangay }}, {{ student.municipality }},
+            {{ student.province }} {{ student.zip_code }}
+          </p>
+          <p><strong>Date of Birth:</strong> {{ student.birth_date }}</p>
+          <p>
+            <strong>Civil Status:</strong>
+            {{ student.student_profile.civil_status }}
+          </p>
+          <p><strong>Citizenship:</strong> {{ student.citizenship }}</p>
+          <p><strong>Religion:</strong> {{ student.religion }}</p>
+          <p>
+            <strong>Email:</strong>
+            {{
+              student.student_profile.student_number
+            }}&#64;gordoncollege.edu.ph
+          </p>
+          <p>
+            <strong>Phone:</strong>
+            {{ student.student_profile.contact_number }}
+          </p>
+        </div>
+
+        <h2>Skills</h2>
+
+        <div class="details text-semi-bold">
+          <p
+            class="skill-item"
+            *ngFor="let item of student.student_skills?.technical_skills"
+          >
+            {{ item }}
+          </p>
+        </div>
+      </div>
+
+      <div>
+        <h2>Education</h2>
+        <div class="details">
+          <div>
+            <h3>
+              {{ student.student_profile.program | courseShortToFull }}
+            </h3>
+            <div class="education-details">
+              <h4><b>Gordon College</b></h4>
+              <p class="sub-text">
+                {{ student.student_profile.student_number | slice : 0 : 4 }}
+                - Current
+              </p>
             </div>
-            <h1>
-              {{ student.first_name }} {{ student.middle_name }}
-              {{ student.last_name }} {{ student.ext_name }}
-            </h1>
-            <h3>Bachelor of Science in Information Technology</h3>
-            <h3>{{ student.student_profile.student_number }}</h3>
           </div>
 
-          <div class="main">
-            <div>
-              <h2>Personal Information</h2>
-              <div class="details">
-                <p>
-                  <strong>Name:</strong> {{ student.first_name }}
-                  {{ student.middle_name }} {{ student.last_name }}
-                  {{ student.ext_name }}
-                </p>
-                <p><strong>Gender:</strong> {{ student.gender }}</p>
-                <p>
-                  <strong>Address:</strong> {{ student.address }},
-                  {{ student.barangay }}, {{ student.municipality }},
-                  {{ student.province }} {{ student.zip_code }}
-                </p>
-                <p><strong>Date of Birth:</strong> {{ student.birth_date }}</p>
-                <p>
-                  <strong>Civil Status:</strong>
-                  {{ student.student_profile.civil_status }}
-                </p>
-                <p><strong>Citizenship:</strong> {{ student.citizenship }}</p>
-                <p><strong>Religion:</strong> {{ student.religion }}</p>
-                <p>
-                  <strong>Email:</strong>
-                  {{
-                    student.student_profile.student_number
-                  }}&#64;gordoncollege.edu.ph
-                </p>
-                <p>
-                  <strong>Phone:</strong>
-                  {{ student.student_profile.contact_number }}
-                </p>
-              </div>
-
-              <h2>Skills</h2>
-
-              <div class="details text-semi-bold">
-                <p class="skill-item" *ngFor="let item of displayedSkills">
-                  {{ item }}
-                </p>
-              </div>
-            </div>
-
-            <div>
-              <h2>Education</h2>
-              <div class="details">
-                <div>
-                  <h3>
-                    {{ student.student_profile.program | courseShortToFull }}
-                  </h3>
-                  <div class="education-details">
-                    <h4><b>Gordon College</b></h4>
-                    <p class="sub-text">
-                      {{
-                        student.student_profile.student_number | slice : 0 : 4
-                      }}
-                      - Current
-                    </p>
-                  </div>
-                </div>
-
-                <div *ngIf="student.senior_high_school">
-                  <h3>{{ student.senior_high_school.program }}</h3>
-                  <div class="education-details">
-                    <h4>{{ student.senior_high_school.institution_name }}</h4>
-                    <p class="sub-text">
-                      Year Graduated:
-                      {{ student.senior_high_school.year_graduated }}
-                    </p>
-                  </div>
-                </div>
-              </div>
-
-              <h2 *ngIf="student.highest_attainment?.length > 0">
-                Highest Educational Attainment
-              </h2>
-              <div
-                class="details"
-                *ngIf="student.highest_attainment?.length > 0"
-              >
-                <div *ngFor="let item of student.highest_attainment">
-                  <ng-container
-                    *ngIf="
-                      item.type === 'National Certificate';
-                      else regularEducation
-                    "
-                  >
-                    <h3>
-                      National Certificate {{ item.nc_level | romanNumeral }}
-                    </h3>
-                    <div class="education-details">
-                      <h4>{{ item.program || "N/A" }}</h4>
-                    </div>
-                  </ng-container>
-
-                  <ng-template #regularEducation>
-                    <h3>{{ item.program | courseShortToFull }}</h3>
-                    <div class="education-details">
-                      <h4>{{ item.institution_name || "N/A" }}</h4>
-                      <p class="sub-text">
-                        Year Graduated: {{ item.year_graduated || "N/A" }}
-                      </p>
-                    </div>
-                  </ng-template>
-                </div>
-              </div>
+          <div *ngIf="student.senior_high_school">
+            <h3>{{ student.senior_high_school.program }}</h3>
+            <div class="education-details">
+              <h4>{{ student.senior_high_school.institution_name }}</h4>
+              <p class="sub-text">
+                Year Graduated:
+                {{ student.senior_high_school.year_graduated }}
+              </p>
             </div>
           </div>
         </div>
+
+        <h2 *ngIf="student.highest_attainment?.length > 0">
+          Highest Educational Attainment
+        </h2>
+        <div class="details" *ngIf="student.highest_attainment?.length > 0">
+          <div *ngFor="let item of student.highest_attainment">
+            <ng-container
+              *ngIf="
+                item.type === 'National Certificate';
+                else regularEducation
+              "
+            >
+              <h3>National Certificate {{ item.nc_level | romanNumeral }}</h3>
+              <div class="education-details">
+                <h4>{{ item.program || "N/A" }}</h4>
+              </div>
+            </ng-container>
+
+            <ng-template #regularEducation>
+              <h3>{{ item.program | courseShortToFull }}</h3>
+              <div class="education-details">
+                <h4>{{ item.institution_name || "N/A" }}</h4>
+                <p class="sub-text">
+                  Year Graduated: {{ item.year_graduated || "N/A" }}
+                </p>
+              </div>
+            </ng-template>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
 </div>
 
 <!-- <div class="container">
