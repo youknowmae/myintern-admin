@@ -301,17 +301,14 @@ exportToExcel = async (): Promise<void> => {
     editAs: 'absolute',
   });
 
-  // Position CCS logo exactly at column F (col index 5)
   worksheet.addImage(ccsLogo, {
     tl: { col: 5, row: currentRow - 1 }, // col 5 is column F (zero-based)
     ext: { width: 120, height: 120 },
     editAs: 'absolute',
   });
 
-  // Add one empty row before content to avoid overlap
   currentRow += 1;  // Add space after logos
 
-  // Header lines - merge and set text, center align, set font size and boldness
   const addHeaderLine = (text: string, fontSize: number, bold = false) => {
     worksheet.mergeCells(`A${currentRow}:N${currentRow}`);
     const cell = worksheet.getCell(`A${currentRow}`);
@@ -323,18 +320,13 @@ exportToExcel = async (): Promise<void> => {
 
   addHeaderLine('Gordon College', 16, true);
   addHeaderLine('College of Computer Studies', 12);
-  addHeaderLine(`A.Y. ${this.acadYear?.acad_year || 'N/A'}`, 12);
-  // If you want dynamic course code in header, replace below with actual course code string
+  addHeaderLine(`A.Y.`, 12);
   const courseCode = 'Dashboard Report'; 
   addHeaderLine(courseCode, 12);
 
-  // Add empty row spacing after header
   worksheet.addRow([]);
   currentRow++;
 
-  // --- Now add your sections with orange highlights and center alignments ---
-
-  // Helper to add section title with orange highlight fill only columns A-F, center aligned
   const addSectionTitle = (title: string) => {
     const row = worksheet.getRow(currentRow++);
     row.height = 24;
@@ -412,8 +404,7 @@ exportToExcel = async (): Promise<void> => {
     });
   };
 
-  // Example usage of your existing data and charts:
-  // Section 1: Enrolled Students per Course
+
   addSectionTitle('Enrolled Students per Course');
   addHeaders(['Course Code', 'Count']);
   const enrolledRows = this.enrolledCourseCount.map((item: any) => [

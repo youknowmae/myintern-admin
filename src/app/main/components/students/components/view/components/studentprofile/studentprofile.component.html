@@ -8,11 +8,18 @@
     <div class="header">
       <div class="img-area">
       <img
-        [src]="student.image ? student.image : 'assets/images/profile-dark.png'"
-        alt="Image"
-      />     
+                [src]="
+                  profilePictureUrl
+                    ? profilePictureUrl
+                    : 'assets/images/profile.png'
+                "
+                alt="Image"
+              />    
       </div>
-      <h1>Juan Dela Cruz</h1>
+      <h1>
+        {{ student.first_name }} {{ student.middle_name }}
+        {{ student.last_name }} {{ student.ext_name }}
+      </h1>
       <h3>Bachelor of Science in Information Technology</h3>
       <h3>{{ student.student_profile.student_number }}</h3>
     </div>
@@ -20,7 +27,8 @@
     <div class="main">
       <div class="left">
         <h2>Personal Information</h2>
-        <p><strong>Name:</strong> Juan Dela Cruz</p>
+        <p><strong>Name:</strong> {{ student.first_name }} {{ student.middle_name }}
+        {{ student.last_name }} {{ student.ext_name }}</p>
         <p><strong>Gender:</strong> {{student.gender}}</p>
         <p><strong>Address:</strong>
           {{ student.address }}, {{ student.barangay }}, {{ student.municipality }}, {{ student.province }} {{ student.zip_code }}
@@ -32,36 +40,76 @@
         <p><strong>Email:</strong> {{student.student_profile.student_number}}&#64;gordoncollege.edu.ph</p>
         <p><strong>Phone:</strong> {{ student.student_profile.contact_number }}</p>
         <h2>Skills</h2>
-        <ul>
-          <li>HTML/CSS</li>
-          <li>JavaScript</li>
-          <li>React</li>
-          <li>Node.js</li>
-          <li>SQL</li>
-        </ul>
+        <div class="details text-semi-bold">
+          <p class="skill-item" *ngFor="let item of displayedSkills">
+            {{ item }}
+          </p>
+        </div>
       </div>
-
-      <div class="right">
+      
+      <div>
         <h2>Education</h2>
-        <h3>Bachelor of Science in Information Technology</h3>
-        <p><strong>School:</strong> Gordon College</p>
-        <p><strong>Duration:</strong> 2021 - Present</p>
-        <ul>
-          <li>Year Level 3</li>
-        </ul>
-        <br />
-        <h3>Senior High School - General Academic Strand</h3>
-        <p><strong>School:</strong> Mondriaan Aura College</p>
-        <p><strong>Duration:</strong> 2019 - 2021</p>
+        <div class="details">
+          <div>
+            <h3>
+              {{ student.student_profile.program }}
+            </h3>
+            <div class="education-details">
+              <h4>Gordon College</h4>
+              <p class="sub-text">
+                {{
+                  student.student_profile.student_number | slice : 0 : 4
+                }}
+                - Current
+              </p>
+            </div>
+          </div>
 
-        <h2>Highest Educational Attainment</h2>
-        <h3>Bachelor of Science in Information Technology</h3>
-        <p><strong>School:</strong> Gordon College</p>
-        <p><strong>Duration:</strong> 2021 - Present</p>
-        <ul>
-          <li>Year Level 3</li>
-        </ul>
-        <br />
+          <div *ngIf="student.senior_high_school">
+            <h3>{{ student.senior_high_school.program }}</h3>
+            <div class="education-details">
+              <h4>{{ student.senior_high_school.institution_name }}</h4>
+              <p class="sub-text">
+                  Year Graduated:
+                  {{ student.senior_high_school.year_graduated }}
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <h2 *ngIf="student.highest_attainment?.length > 0">
+          Highest Educational Attainment
+        </h2>
+        <div
+          class="details"
+          *ngIf="student.highest_attainment?.length > 0"
+        >
+        <div *ngFor="let item of student.highest_attainment">
+        <ng-container
+          *ngIf="
+          item.type === 'National Certificate';
+          else regularEducation
+          "
+        >
+          <h3>
+            National Certificate {{ item.nc_level | romanNumeral }}
+          </h3>
+          <div class="education-details">
+            <h4>{{ item.program || "N/A" }}</h4>
+          </div>
+        </ng-container>
+
+        <ng-template #regularEducation>
+          <h3>{{ item.program | courseShortToFull }}</h3>
+            <div class="education-details">
+              <h4>{{ item.institution_name || "N/A" }}</h4>
+              <p class="sub-text">
+                Year Graduated: {{ item.year_graduated || "N/A" }}
+              </p>
+            </div>
+        </ng-template>
+      </div>
+      </div>
       </div>
     </div>
   </div>

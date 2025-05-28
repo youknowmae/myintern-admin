@@ -5,6 +5,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { ViewImageComponent } from '../../../../../../../components/view-image/view-image.component';
 import { GeneralService } from '../../../../../../../services/general.service';
 import html2canvas from 'html2canvas';
+import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-studentprofile',
@@ -13,6 +14,7 @@ import html2canvas from 'html2canvas';
 })
 export class StudentprofileComponent {
   @ViewChild('captureArea', { static: false }) captureArea!: ElementRef;
+
 
   student: any = {
     first_name: '',
@@ -65,6 +67,7 @@ export class StudentprofileComponent {
   personality_test: any = null;
 
   isSubmitting: boolean = false;
+  fb: any;
 
   constructor(
     private us: UserService,
@@ -122,6 +125,20 @@ export class StudentprofileComponent {
       link.href = canvas.toDataURL('image/png');
       link.click();
     });
+  }
+
+  profilePictureUrl: string | null = null;
+
+  getProfilePicture() {
+    this.ds.download('student/profile/picture').subscribe(
+      (response: Blob) => {
+        this.profilePictureUrl = URL.createObjectURL(response);
+        console.log(this.profilePictureUrl);
+      },
+      (error) => {
+        console.error(error);
+      }
+    );
   }
 
   getPersonalityTest() {
