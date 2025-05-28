@@ -40,11 +40,11 @@
         <p><strong>Email:</strong> {{student.student_profile.student_number}}&#64;gordoncollege.edu.ph</p>
         <p><strong>Phone:</strong> {{ student.student_profile.contact_number }}</p>
         <h2>Skills</h2>
-        <div class="details text-semi-bold">
+        <!-- <div class="details text-semi-bold">
           <p class="skill-item" *ngFor="let item of displayedSkills">
             {{ item }}
           </p>
-        </div>
+        </div> -->
       </div>
       
       <div>
@@ -52,7 +52,7 @@
         <div class="details">
           <div>
             <h3>
-              {{ student.student_profile.program }}
+              {{ student.student_profile.program | courseShortToFull }}
             </h3>
             <div class="education-details">
               <h4>Gordon College</h4>
@@ -92,7 +92,7 @@
           "
         >
           <h3>
-            National Certificate {{ item.nc_level | romanNumeral }}
+            National Certificate {{ item.nc_level | romanNumeral}}
           </h3>
           <div class="education-details">
             <h4>{{ item.program || "N/A" }}</h4>
@@ -100,7 +100,7 @@
         </ng-container>
 
         <ng-template #regularEducation>
-          <h3>{{ item.program | courseShortToFull }}</h3>
+          <h3>{{ item.program | courseShortToFull}}</h3>
             <div class="education-details">
               <h4>{{ item.institution_name || "N/A" }}</h4>
               <p class="sub-text">
