@@ -6,6 +6,7 @@ import { ViewImageComponent } from '../../../../../../../components/view-image/v
 import { GeneralService } from '../../../../../../../services/general.service';
 import html2canvas from 'html2canvas';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { PdfPreviewComponent } from '../../../../../../../components/pdf-preview/pdf-preview.component';
 
 @Component({
   selector: 'app-studentprofile',
@@ -209,6 +210,15 @@ export class StudentprofileComponent {
   viewOtherTaskImage(seminar: any) {
     this.dialog.open(ViewImageComponent, {
       data: { title: seminar.task_name, image: seminar.image },
+    });
+  }
+
+  viewCommunityService(communityService: any) {
+    this.dialog.open(PdfPreviewComponent, {
+      data: {
+        name: communityService.project_name,
+        pdf: communityService.file_path,
+      },
     });
   }
 

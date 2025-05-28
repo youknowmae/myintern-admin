@@ -482,7 +482,17 @@
           </p>
         </div>
         <div class="col-md-1">
-          <p>Action here?</p>
+          <div class="actions">
+            <button
+              class="view"
+              mat-raised-button
+              matTooltip="View"
+              [matTooltipShowDelay]="400"
+              (click)="viewCommunityService(community_service)"
+            >
+              <i class="bx bx-detail"></i>
+            </button>
+          </div>
         </div>
       </div>
       <div class="table-row">

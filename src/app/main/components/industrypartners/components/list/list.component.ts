@@ -52,12 +52,14 @@ export class ListComponent {
   getIndustryPartners() {
     this.ds.get('adviser/industryPartners').subscribe(
       (industryPartners) => {
-        this.industryPartners = industryPartners.map((element: any) => {
-          element.full_location =
-            element.municipality + ', ' + element.province;
+        this.industryPartners = industryPartners
+          .map((element: any) => {
+            element.full_location =
+              element.municipality + ', ' + element.province;
 
-          return element;
-        });
+            return element;
+          })
+          .filter((item: any) => item.is_archived === 0);
 
         this.filterIndustryPartners();
 
