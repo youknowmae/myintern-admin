@@ -88,6 +88,7 @@ export class StudentprofileComponent {
 
   ngOnInit() {
     this.student = this.us.getStudentProfile();
+    this.getProfilePicture();
     this.getOjtInfo();
 
     let courseCode = this.student?.ojt_class.course_code;
@@ -140,7 +141,7 @@ export class StudentprofileComponent {
   profilePictureUrl: string | null = null;
 
   getProfilePicture() {
-    this.ds.download('student/profile/picture').subscribe(
+    this.ds.download('adviser/students/picture/', this.student.id).subscribe(
       (response: Blob) => {
         this.profilePictureUrl = URL.createObjectURL(response);
         console.log(this.profilePictureUrl);
