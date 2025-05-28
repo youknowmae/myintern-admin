@@ -55,6 +55,16 @@ export class StudentprofileComponent {
     full_address: '',
   };
 
+  
+  displayedSkills: string[] = [];
+  educationFormDetails: FormGroup = this.fb.group({
+    type: [null, Validators.required],
+    institution_name: [null, Validators.maxLength(64)],
+    program: [null, Validators.maxLength(64)],
+    year_graduated: [null, Validators.pattern(/^\d{4}$/)],
+    nc_level: [null],
+  });
+
   seminars: any = [];
   other_tasks: any = [];
   community_service: any;
@@ -67,13 +77,16 @@ export class StudentprofileComponent {
   personality_test: any = null;
 
   isSubmitting: boolean = false;
-  fb: any;
+  // fb: any;
 
   constructor(
     private us: UserService,
     private ds: DataService,
     private gs: GeneralService,
-    private dialog: MatDialog
+    private dialog: MatDialog,
+    private userService: UserService,
+    private fb: FormBuilder,
+
   ) {}
 
   ngOnInit() {
@@ -140,6 +153,29 @@ export class StudentprofileComponent {
       }
     );
   }
+
+      getProfile() {
+    let profile = this.userService.getUser();
+
+    if (profile.personality_test) {
+      this.personality_test = profile.personality_test;
+    }
+
+    switch (profile.gender) {
+      case 0:
+        profile.gender = 'Female';
+        break;
+      case 1:
+        profile.gender = 'Male';
+        break;
+    }
+
+    this.student = { ...profile };
+
+    this.skills = profile.student_skills?.skill_areas || [0, 0, 0];
+    this.displayedSkills = profile.student_skills?.technical_skills || [];
+  }
+
 
   getPersonalityTest() {
     this.ds
