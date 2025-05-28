@@ -40,11 +40,11 @@
         <p><strong>Email:</strong> {{student.student_profile.student_number}}&#64;gordoncollege.edu.ph</p>
         <p><strong>Phone:</strong> {{ student.student_profile.contact_number }}</p>
         <h2>Skills</h2>
-        <!-- <div class="details text-semi-bold">
-          <p class="skill-item" *ngFor="let item of displayedSkills">
+        <div class="details text-semi-bold">
+          <p class="skill-item" *ngFor="let item of student.student_skills?.technical_skills">
             {{ item }}
           </p>
-        </div> -->
+        </div>
       </div>
       
       <div>

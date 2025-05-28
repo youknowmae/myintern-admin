@@ -320,7 +320,8 @@ exportToExcel = async (): Promise<void> => {
 
   addHeaderLine('Gordon College', 16, true);
   addHeaderLine('College of Computer Studies', 12);
-  addHeaderLine(`A.Y.`, 12);
+  addHeaderLine(`A.Y. ${this.academicYearFilter || 'N/A'}`, 12);
+  // If you want dynamic course code in header, replace below with actual course code string
   const courseCode = 'Dashboard Report'; 
   addHeaderLine(courseCode, 12);
 
@@ -369,7 +370,7 @@ exportToExcel = async (): Promise<void> => {
       }
       cell.font = { bold: true, color: { argb: 'FFFFFFFF' } };
       cell.alignment = { horizontal: 'center', vertical: 'middle' };
-      cell.border = {
+      cell.border = { 
         top: { style: 'thin', color: { argb: 'FFDD7700' } },
         left: { style: 'thin', color: { argb: 'FFDD7700' } },
         bottom: { style: 'thin', color: { argb: 'FFDD7700' } },

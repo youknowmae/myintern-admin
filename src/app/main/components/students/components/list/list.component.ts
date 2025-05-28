@@ -14,6 +14,7 @@ import * as ExcelJS from 'exceljs';
 
 import { saveAs } from 'file-saver';
 import { AcademicYear } from '../../../../../model/academic-year.model';
+import { GeneralService } from '../../../../../services/general.service';
 
 @Component({
   selector: 'app-list',
@@ -57,7 +58,8 @@ export class ListComponent {
     private changeDetectorRef: ChangeDetectorRef,
     private router: Router,
     private ds: DataService,
-    private us: UserService
+    private us: UserService,
+    private gs: GeneralService
   ) {
     this.paginator = new MatPaginator(
       this.paginatorIntl,
@@ -191,7 +193,10 @@ export class ListComponent {
 
             if (progress >= required_hours && exitPoll && studentEvaluation) {
               status = 'Completed';
-            } else if (student.accepted_application) {
+            } else if (
+              student.active_application &&
+              student.active_application.status == 8
+            ) {
               status = 'Ongoing';
             } else if (currentApplication && currentApplication == 0)
               status = "Pending - Adviser's Approval";
@@ -214,7 +219,6 @@ export class ListComponent {
             const company = currentApplication
               ? currentApplication.industry_partner.company_name
               : 'N/A';
-
             return {
               full_name: student.first_name + ' ' + student.last_name,
               progress,
@@ -225,6 +229,7 @@ export class ListComponent {
               student_evaluation,
               practicum_level,
               active_ojt_class,
+              grades: active_ojt_class.grades,
             };
           });
 
@@ -272,6 +277,75 @@ export class ListComponent {
     }
 
     this.dataSource.data = students;
+  }
+
+  editGrade(element: any) {
+    if (element.status !== 'Completed') {
+      this.gs.makeToast(
+        'Cannot edit grade: Student is not yet marked as completed.',
+        'warning'
+      );
+      return;
+    }
+    element.isEditing = true;
+  }
+
+  // When input loses focus or Enter is pressed
+  saveGrade(element: any, grades: string) {
+    const numericGrade = Number(grades);
+
+    if (
+      grades === null ||
+      grades === '' ||
+      isNaN(numericGrade) ||
+      numericGrade < 65 ||
+      numericGrade > 100
+    ) {
+      this.gs.makeToast('Grade not saved: Invalid input.', 'error');
+      element.isEditing = false;
+      element.grades = null;
+      return;
+    }
+
+    const payload = {
+      id: element.id,
+      grades: numericGrade,
+    };
+
+    const acadYear = this.academicYearFilter;
+    this.ds
+      .post(
+        `adviser/students/submit-grade`,
+        `?acad_year=${acadYear.acad_year}&semester=${acadYear.semester}`,
+        payload
+      )
+      .subscribe({
+        next: (response: any) => {
+          element.grades = numericGrade;
+          element.isEditing = false;
+
+          this.gs.makeToast('Grades saved!', 'success');
+
+          console.log('Saved grade:', element.grade);
+        },
+        error: (error: any) => {
+          console.error(error);
+          element.isEditing = false;
+          if (error.status == 422) {
+            this.gs.makeAlert(
+              error.error.title || 'Invalid Input!',
+              error.error.message || 'Invalid grades value!.',
+              'error'
+            );
+          } else {
+            this.gs.makeAlert(
+              'Error!',
+              'Something went wrong, please try again later.',
+              'error'
+            );
+          }
+        },
+      });
   }
 
   search(search: string) {

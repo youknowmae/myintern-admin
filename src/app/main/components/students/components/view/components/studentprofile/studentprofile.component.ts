@@ -5,7 +5,6 @@ import { MatDialog } from '@angular/material/dialog';
 import { ViewImageComponent } from '../../../../../../../components/view-image/view-image.component';
 import { GeneralService } from '../../../../../../../services/general.service';
 import html2canvas from 'html2canvas';
-import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-studentprofile',
