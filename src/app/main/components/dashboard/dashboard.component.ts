@@ -23,6 +23,7 @@ import { UserService } from '../../../services/user.service';
 import html2canvas from 'html2canvas';
 import { Workbook } from 'exceljs';
 import * as FileSaver from 'file-saver';
+import { SemesterTextPipe } from '../../../pipes/semester-text.pipe';
 
 // Register all necessary components
 Chart.register(...registerables);
@@ -39,6 +40,7 @@ Chart.register(
   selector: 'app-dashboard',
   templateUrl: './dashboard.component.html',
   styleUrls: ['./dashboard.component.scss'],
+  providers: [SemesterTextPipe],
 })
 export class DashboardComponent implements AfterViewInit {
   academicYearOptions: any = [];
@@ -224,7 +226,11 @@ export class DashboardComponent implements AfterViewInit {
     },
   };
 
-  constructor(private ds: DataService, private us: UserService) {}
+  constructor(
+    private ds: DataService,
+    private us: UserService,
+    private semesterTextPipe: SemesterTextPipe
+  ) {}
 
   ngAfterViewInit(): void {
     this.totalEnrolledCoursePie = new Chart('pieChart', this.config);
@@ -318,7 +324,12 @@ export class DashboardComponent implements AfterViewInit {
 
     addHeaderLine('Gordon College', 16, true);
     addHeaderLine('College of Computer Studies', 12);
-    addHeaderLine(`A.Y. ${this.academicYearFilter.acad_year || 'N/A'}`, 12);
+    addHeaderLine(
+      `A.Y. ${
+        this.academicYearFilter.acad_year
+      }, ${this.semesterTextPipe.transform(this.academicYearFilter.semester)}`,
+      12
+    );
     // If you want dynamic course code in header, replace below with actual course code string
     const courseCode = 'Dashboard Report';
     addHeaderLine(courseCode, 12);

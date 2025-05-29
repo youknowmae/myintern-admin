@@ -15,11 +15,13 @@ import * as ExcelJS from 'exceljs';
 import { saveAs } from 'file-saver';
 import { AcademicYear } from '../../../../../model/academic-year.model';
 import { GeneralService } from '../../../../../services/general.service';
+import { SemesterTextPipe } from '../../../../../pipes/semester-text.pipe';
 
 @Component({
   selector: 'app-list',
   templateUrl: './list.component.html',
   styleUrl: './list.component.scss',
+  providers: [SemesterTextPipe],
 })
 export class ListComponent {
   displayedColumns: string[] = [
@@ -59,7 +61,8 @@ export class ListComponent {
     private router: Router,
     private ds: DataService,
     private us: UserService,
-    private gs: GeneralService
+    private gs: GeneralService,
+    private semesterTextPipe: SemesterTextPipe
   ) {
     this.paginator = new MatPaginator(
       this.paginatorIntl,
@@ -551,9 +554,11 @@ export class ListComponent {
           worksheet.mergeCells(
             `A${currentPageLine + 1}:N${currentPageLine + 1}`
           );
-          worksheet.getCell(
-            `A${currentPageLine + 1}`
-          ).value = `A.Y. ${this.academicYearFilter.acad_year}`;
+          worksheet.getCell(`A${currentPageLine + 1}`).value = `A.Y. ${
+            this.academicYearFilter.acad_year
+          }, ${this.semesterTextPipe.transform(
+            this.academicYearFilter.semester
+          )}`;
           worksheet.getCell(`A${currentPageLine + 1}`).alignment = {
             vertical: 'middle',
             horizontal: 'center',
