@@ -13,7 +13,6 @@ import { TemplatesComponent } from './components/templates/templates.component';
 import { AnnouncementModule } from './components/announcement/announcement.module';
 import { IndustrypartnersModule } from './components/industrypartners/industrypartners.module';
 import { StudentsModule } from './components/students/students.module';
-import { TemplatesModule } from './components/templates/templates.module';
 import { ExitpollModule } from './components/exitpoll/exitpoll.module';
 import { RequirementsModule } from './components/requirements/requirements.module';
 import { MaterialsModules } from '../modules/materials.module';
@@ -42,7 +41,6 @@ import { SharedModule } from '../modules/shared.module';
     AnnouncementModule,
     IndustrypartnersModule,
     StudentsModule,
-    TemplatesModule,
     EndorsementModule,
     ExitpollModule,
     RequirementsModule,

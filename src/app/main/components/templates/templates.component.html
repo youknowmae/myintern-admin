@@ -1,9 +1,9 @@
 <main>
   <div class="container-header">
     <h1>Templates</h1>
-    <div class="btn">
+    <!-- <div class="btn">
       <button mat-ripple (click)="addTemplate()">+ New</button>
-    </div>
+    </div> -->
   </div>
 
   <div class="container">
@@ -30,27 +30,6 @@
               <i class="bx bx-detail"></i>
             </button>
 
-            <button
-              class="edit"
-              mat-raised-button
-              mat-ripple
-              matTooltip="Edit"
-              [matTooltipShowDelay]="400"
-              (click)="editTemplate(element)"
-            >
-              <i class="bx bxs-edit"></i>
-            </button>
-
-            <button
-              class="delete"
-              mat-raised-button
-              mat-ripple
-              matTooltip="Delete"
-              [matTooltipShowDelay]="400"
-              (click)="deleteTemplate(element.id)"
-            >
-              <i class="bx bxs-trash"></i>
-            </button>
           </div>
         </td>
       </ng-container>

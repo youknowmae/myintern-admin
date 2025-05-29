@@ -5,9 +5,6 @@ import { MatPaginator, MatPaginatorIntl } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
 
 import { DataService } from '../../../services/data.service';
-import Swal from 'sweetalert2';
-import { AddTemplateComponent } from './components/add-template/add-template.component';
-import { EditTemplateComponent } from './components/edit-template/edit-template.component';
 import { PdfPreviewComponent } from '../../../components/pdf-preview/pdf-preview.component';
 import { GeneralService } from '../../../services/general.service';
 
@@ -49,20 +46,6 @@ export class TemplatesComponent {
     });
   }
 
-  addTemplate() {
-    var modal = this.dialogRef.open(AddTemplateComponent, {
-      disableClose: true,
-    });
-
-    modal.afterClosed().subscribe((result) => {
-      if (!result) {
-        return;
-      }
-
-      this.dataSource.data = [...this.dataSource.data, result];
-    });
-  }
-
   previewTemplate(template: any) {
     if (!template.pdf) {
       this.gs.makeAlert('Error!', 'This file has no pdf preview file.');
@@ -73,63 +56,5 @@ export class TemplatesComponent {
       data: { name: template.name, pdf: template.pdf },
       disableClose: true,
     });
-  }
-
-  editTemplate(template: any) {
-    var modal = this.dialogRef.open(EditTemplateComponent, {
-      data: template,
-      disableClose: true,
-    });
-
-    modal.afterClosed().subscribe((result) => {
-      if (!result) {
-        return;
-      }
-
-      this.dataSource.data = this.dataSource.data.map((template: any) =>
-        template.id === result.id ? result : template
-      );
-    });
-  }
-
-  async deleteTemplate(id: number) {
-    const res = await this.gs.confirmationAlert(
-      'Delete?',
-      'Are you sure you want to delete this template?',
-      'warning',
-      'Yes',
-      'destructive'
-    );
-
-    if (!res) return;
-
-    if (this.isSubmitting) {
-      return;
-    }
-
-    this.isSubmitting = true;
-
-    this.ds.get(`adviser/templates/${id}/delete`).subscribe(
-      (result) => {
-        this.isSubmitting = false;
-        this.dataSource.data = this.dataSource.data.filter(
-          (template: any) => template.id !== id
-        );
-        this.gs.makeAlert('Success', 'Template has been deleted.');
-      },
-      (error) => {
-        this.isSubmitting = false;
-        // console.error(error)
-        if (error.status == 409) {
-          this.gs.makeAlert('Error', error.error, 'error');
-        } else {
-          this.gs.makeAlert(
-            'Oops!',
-            'Something went wrong. Please try again later.',
-            'error'
-          );
-        }
-      }
-    );
   }
 }
