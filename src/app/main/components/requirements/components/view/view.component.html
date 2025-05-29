@@ -1,151 +1,277 @@
 <ng-container *ngIf="!isLoading; else loading">
-    <div class="container">
-        <div class="left-container">
-            <div class="card">
-                <div class="upload">
-                    <button mat-ripple mat-button class="back-btn" [routerLink]="['../list']">
-                        <span class="icon">
-                            <i class="fa-solid fa-arrow-left"></i>
-                        </span>
-                        <p>
-                            Back
-                        </p>
-                    </button>
+  <div class="container">
+    <div class="left-container">
+      <div class="card">
+        <div class="upload">
+          <button
+            mat-ripple
+            mat-button
+            class="back-btn"
+            [routerLink]="['../list']"
+          >
+            <span class="icon">
+              <i class="fa-solid fa-arrow-left"></i>
+            </span>
+            <p>Back</p>
+          </button>
 
-                    <h4>Uploaded Documents</h4>
+          <h4>Uploaded Documents</h4>
 
-                    <div class="files" *ngIf="applicationDetails">
-                        <div class="items" *ngFor="let item of applicationDetails.application_documents">
-                            <div class="name">
-                                <span class="material-symbols-outlined">
-                                    picture_as_pdf
-                                </span>
-                                <p>{{ item.file_name }}</p>
-                            </div>
-                            <i class="fa-solid fa-magnifying-glass" (click)="previewDocument(item)"></i>
-                        </div>
-                    </div>
-                </div>
+          <div class="files" *ngIf="applicationDetails">
+            <div
+              class="items"
+              *ngFor="let item of applicationDetails.application_documents"
+            >
+              <div class="name">
+                <span class="material-symbols-outlined"> picture_as_pdf </span>
+                <p>{{ item.file_name }}</p>
+              </div>
+              <i
+                class="fa-solid fa-magnifying-glass"
+                (click)="previewDocument(item)"
+              ></i>
             </div>
-
-            <div class="card">
-                <div class="comment">
-                    <div class="profile-container">
-                        <img [src]="(user.image) ? user.image : 'assets/images/profile-dark.png'">
-                    </div>
-                    <form>
-                        <input type="text" [(ngModel)]="commentValue" [ngModelOptions]="{standalone: true}" placeholder="Write a comment..." (keyup.enter)="comment()">
-                    </form>
-                    <span class="material-symbols-outlined" style="color: black;" (click)="comment()">
-                        send
-                    </span>
-                </div>
-            </div>
-
-            <div class="card" *ngIf="comments.length > 0">
-                <div class="comment-log">
-                    <div class="message-container" *ngFor="let comment of comments">
-                        <div class="profile-container">
-                            <img [src]="(comment.image) ? comment.image : 'assets/images/profile-dark.png'">
-                        </div>
-                        <div class="message">
-                            <h5> {{ comment.user.first_name }} {{ comment.user.middle_name }} {{ comment.user.last_name }} {{ comment.user.ext_name }} <span class="sub-text">{{ formatTimestamp(comment.created_at) }} </span> </h5>
-                            <p> {{ comment.message }}</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
+          </div>
         </div>
+      </div>
 
-        <div class="right-container">
-            <div class="card card-accent" *ngIf="applicationDetails">
-                <div class="company-details">
-                    <div class="image">
-                        <img [src]="(applicationDetails.industry_partner.image) ? applicationDetails.industry_partner.image : 'assets/images/logo.png'">
-                    </div>
-
-                    <div class="content-info">
-                        <div class="details-section">
-                            <h2>{{ applicationDetails.industry_partner.company_name }}</h2>
-                            <p>{{ applicationDetails.industry_partner.description }}</p>
-                        </div>
-
-                        <div class="details-section">
-                            <p> <b>Company Head:</b> {{ applicationDetails.industry_partner.company_head.full_name }}, {{ applicationDetails.industry_partner.head_position }}</p>
-                        </div>
-
-                        <div class="details-section">
-                            <p> <b>Immediate Supervisor :</b> {{ applicationDetails.industry_partner.immediate_supervisor.full_name }}, {{ applicationDetails.industry_partner.supervisor_position }}</p>
-                        </div>
-
-                        <div class="details-section">
-                            <ul>
-                                <li>
-                                    <mat-icon>location_on</mat-icon>
-                                    <p><b>Company Address: </b> {{  applicationDetails.industry_partner.full_address }}</p>
-                                </li>
-                                <li>
-                                    <mat-icon>mail</mat-icon>
-                                    <p><b>Official Email Address:</b> {{ applicationDetails.industry_partner.email }}</p>
-                                </li>
-                                <li *ngIf="applicationDetails.industry_partner.telephone_number">
-                                    <mat-icon>call</mat-icon>
-                                    <p><b>Telephone Number:</b> {{ applicationDetails.industry_partner.telephone_number }}</p>
-                                </li>
-                                <li *ngIf="applicationDetails.industry_partner.fax_number">
-                                    <mat-icon>fax</mat-icon>
-                                    <p><b>Fax Number:</b> {{ applicationDetails.industry_partner.fax_number }}</p>
-                                </li>
-                                <li>
-                                    <mat-icon>call</mat-icon>
-                                    <p><b>Contact Number:</b> {{ applicationDetails.industry_partner.mobile_number }}</p>
-                                </li>
-                                <li *ngIf="applicationDetails.industry_partner.website">
-                                    <mat-icon>public</mat-icon>
-                                    <p><b>Website:</b> {{ applicationDetails.industry_partner.website }}</p>
-                                </li>
-                            </ul>
-                        </div>
-
-                        <div class="details-section" *ngIf="applicationDetails.industry_partner.job_requirements">
-                            <div class="job-requirements">
-                                <p><b>Job/Skills Requirements:</b></p>
-
-                                <div class="items">
-                                    <p *ngFor="let item of applicationDetails.industry_partner.job_requirements"> {{ item }}</p>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="remarks-section" *ngIf="applicationDetails.status_text">
-                            <div class="remarks">
-                                <p
-                                [class.warning-text]="applicationDetails.status == 1 || applicationDetails.status == 2 || applicationDetails.status == 4"
-                                [class.pending-text]="applicationDetails.status == 0 || applicationDetails.status == 5 || applicationDetails.status == 6 || applicationDetails.status == 7"
-                                [class.success-text]="applicationDetails.status == 3 ||applicationDetails.status == 8"
-                                >
-                                    {{ applicationDetails.status_text }}
-                                    <span class="sub-text" *ngIf="applicationDetails.rejection_remarks"><br> Reason: {{ applicationDetails.rejection_remarks }}</span>
-                                    <span class="sub-text" *ngIf="applicationDetails.department"><br> Department: {{ applicationDetails.department }} </span>
-                                    <span class="sub-text" *ngIf="applicationDetails.task"><br> Task: {{ applicationDetails.task }} </span>
-                                    <span class="sub-text" *ngIf="applicationDetails.start_date"><br> Start Date: {{ applicationDetails.start_date }}</span>
-                                </p>
-
-                            </div>
-                        </div>
-
-                        <div class="actions" *ngIf="applicationDetails.status == 0">
-                            <button (click)="rejectApplication()" class="warning">Decline</button>
-                            <button (click)="approveApplication()" class="success">Approve</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
+      <div class="card">
+        <div class="comment">
+          <div class="profile-container">
+            <img
+              [src]="user.image ? user.image : 'assets/images/profile-dark.png'"
+            />
+          </div>
+          <form>
+            <input
+              type="text"
+              [(ngModel)]="commentValue"
+              [ngModelOptions]="{ standalone: true }"
+              placeholder="Write a comment..."
+              (keyup.enter)="comment()"
+            />
+          </form>
+          <span
+            class="material-symbols-outlined"
+            style="color: black"
+            (click)="comment()"
+          >
+            send
+          </span>
         </div>
+      </div>
+
+      <div class="card" *ngIf="comments.length > 0">
+        <div class="comment-log">
+          <div class="message-container" *ngFor="let comment of comments">
+            <div class="profile-container">
+              <img
+                [src]="
+                  comment.image
+                    ? comment.image
+                    : 'assets/images/profile-dark.png'
+                "
+              />
+            </div>
+            <div class="message">
+              <h5>
+                {{ comment.user.first_name }} {{ comment.user.middle_name }}
+                {{ comment.user.last_name }} {{ comment.user.ext_name }}
+                <span class="sub-text"
+                  >{{ formatTimestamp(comment.created_at) }}
+                </span>
+              </h5>
+              <p>{{ comment.message }}</p>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
+
+    <div class="right-container">
+      <div class="card card-accent" *ngIf="applicationDetails">
+        <div class="company-details">
+          <div class="image">
+            <img
+              [src]="
+                applicationDetails.industry_partner.image
+                  ? applicationDetails.industry_partner.image
+                  : 'assets/images/logo.png'
+              "
+            />
+          </div>
+
+          <div class="content-info">
+            <div class="details-section">
+              <h2>{{ applicationDetails.industry_partner.company_name }}</h2>
+              <p>{{ applicationDetails.industry_partner.description }}</p>
+            </div>
+
+            <div class="details-section">
+              <p>
+                <b>Company Head:</b>
+                {{
+                  applicationDetails.industry_partner.company_head.full_name
+                }}, {{ applicationDetails.industry_partner.head_position }}
+              </p>
+            </div>
+
+            <div class="details-section">
+              <p>
+                <b>Immediate Supervisor :</b>
+                {{
+                  applicationDetails.industry_partner.immediate_supervisor
+                    .full_name
+                }},
+                {{ applicationDetails.industry_partner.supervisor_position }}
+              </p>
+            </div>
+
+            <div class="details-section">
+              <ul>
+                <li>
+                  <mat-icon>location_on</mat-icon>
+                  <p>
+                    <b>Company Address: </b>
+                    {{ applicationDetails.industry_partner.full_address }}
+                  </p>
+                </li>
+                <li>
+                  <mat-icon>mail</mat-icon>
+                  <p>
+                    <b>Official Email Address:</b>
+                    {{ applicationDetails.industry_partner.email }}
+                  </p>
+                </li>
+                <li
+                  *ngIf="applicationDetails.industry_partner.telephone_number"
+                >
+                  <mat-icon>call</mat-icon>
+                  <p>
+                    <b>Telephone Number:</b>
+                    {{ applicationDetails.industry_partner.telephone_number }}
+                  </p>
+                </li>
+                <li *ngIf="applicationDetails.industry_partner.fax_number">
+                  <mat-icon>fax</mat-icon>
+                  <p>
+                    <b>Fax Number:</b>
+                    {{ applicationDetails.industry_partner.fax_number }}
+                  </p>
+                </li>
+                <li>
+                  <mat-icon>call</mat-icon>
+                  <p>
+                    <b>Contact Number:</b>
+                    {{ applicationDetails.industry_partner.mobile_number }}
+                  </p>
+                </li>
+                <li *ngIf="applicationDetails.industry_partner.website">
+                  <mat-icon>public</mat-icon>
+                  <p>
+                    <b>Website:</b>
+                    {{ applicationDetails.industry_partner.website }}
+                  </p>
+                </li>
+              </ul>
+            </div>
+
+            <div
+              class="details-section"
+              *ngIf="applicationDetails.industry_partner.job_requirements"
+            >
+              <div class="job-requirements">
+                <p><b>Job/Skills Requirements:</b></p>
+
+                <div class="items">
+                  <p
+                    *ngFor="
+                      let item of applicationDetails.industry_partner
+                        .job_requirements
+                    "
+                  >
+                    {{ item }}
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            <div
+              class="details-section"
+              *ngIf="applicationDetails.industry_partner.technical_skills"
+            >
+              <p><b>Technical Skills:</b></p>
+
+              <mat-chip-set>
+                <mat-chip
+                  disableRipple
+                  *ngFor="
+                    let item of applicationDetails.industry_partner
+                      .technical_skills
+                  "
+                >
+                  {{ item }}
+                </mat-chip>
+              </mat-chip-set>
+            </div>
+
+            <div class="remarks-section" *ngIf="applicationDetails.status_text">
+              <div class="remarks">
+                <p
+                  [class.warning-text]="
+                    applicationDetails.status == 1 ||
+                    applicationDetails.status == 2 ||
+                    applicationDetails.status == 4
+                  "
+                  [class.pending-text]="
+                    applicationDetails.status == 0 ||
+                    applicationDetails.status == 5 ||
+                    applicationDetails.status == 6 ||
+                    applicationDetails.status == 7
+                  "
+                  [class.success-text]="
+                    applicationDetails.status == 3 ||
+                    applicationDetails.status == 8
+                  "
+                >
+                  {{ applicationDetails.status_text }}
+                  <span
+                    class="sub-text"
+                    *ngIf="applicationDetails.rejection_remarks"
+                    ><br />
+                    Reason: {{ applicationDetails.rejection_remarks }}</span
+                  >
+                  <span class="sub-text" *ngIf="applicationDetails.department"
+                    ><br />
+                    Department: {{ applicationDetails.department }}
+                  </span>
+                  <span class="sub-text" *ngIf="applicationDetails.task"
+                    ><br />
+                    Task: {{ applicationDetails.task }}
+                  </span>
+                  <span class="sub-text" *ngIf="applicationDetails.start_date"
+                    ><br />
+                    Start Date: {{ applicationDetails.start_date }}</span
+                  >
+                </p>
+              </div>
+            </div>
+
+            <div class="actions" *ngIf="applicationDetails.status == 0">
+              <button (click)="rejectApplication()" class="warning">
+                Decline
+              </button>
+              <button (click)="approveApplication()" class="success">
+                Approve
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
 </ng-container>
 
 <ng-template #loading>
-    <app-loading-spinner></app-loading-spinner>
+  <app-loading-spinner></app-loading-spinner>
 </ng-template>

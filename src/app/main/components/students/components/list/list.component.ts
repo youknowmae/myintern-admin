@@ -453,7 +453,7 @@ export class ListComponent {
       'Rendered OJT Hours',
       'Student Evaluation',
       'Exit Poll',
-      'Remarks',
+      'Grades',
     ];
 
     const excel = new ExcelJS.Workbook();
@@ -605,7 +605,7 @@ export class ListComponent {
                 ? student.student_evaluation
                 : 'Not Evaluated',
               student.ojt_exit_poll ? 'Answered' : 'Not Completed',
-              student.status === 'Completed' ? 'Completed' : 'Incomplete',
+              student.grades ? student.grades : 'INC',
             ]);
             counter++;
             currentPageLine++;

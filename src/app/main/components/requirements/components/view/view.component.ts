@@ -66,6 +66,8 @@ export class ViewComponent {
         }, ${industryPartner?.municipality || ''}`;
         industryPartner.full_address = full_address;
 
+        console.log(industryPartner);
+
         if (applicationDetails.application_endorsement)
           applicationDetails.application_documents.unshift(
             applicationDetails.application_endorsement
