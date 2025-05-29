@@ -7,6 +7,7 @@ import { GeneralService } from '../../../../../../../services/general.service';
 import html2canvas from 'html2canvas';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { PdfPreviewComponent } from '../../../../../../../components/pdf-preview/pdf-preview.component';
+import { AcademicYear } from '../../../../../../../model/academic-year.model';
 
 @Component({
   selector: 'app-studentprofile',
@@ -169,22 +170,34 @@ export class StudentprofileComponent {
   }
 
   getOtherTask() {
-    this.ds.get('adviser/students/other-task/', this.student.id).subscribe(
-      (response) => {
-        this.other_tasks = response;
-        this.other_tasks.forEach((data: any) => {
-          this.other_task_total_hours += data.total_hours;
-        });
-      },
-      (error) => {
-        console.error(error);
-      }
-    );
+    const acadYear: AcademicYear = this.us.getSelectedAcademicYears();
+    
+    this.ds
+      .get(
+        `adviser/students/other-task/${this.student.id}`,
+        `?acad_year=${acadYear.acad_year}&semester=${acadYear.semester}`
+      )
+      .subscribe(
+        (response) => {
+          this.other_tasks = response;
+          this.other_tasks.forEach((data: any) => {
+            this.other_task_total_hours += data.total_hours;
+          });
+        },
+        (error) => {
+          console.error(error);
+        }
+      );
   }
 
   getCommunityService() {
+    const acadYear: AcademicYear = this.us.getSelectedAcademicYears();
+
     this.ds
-      .get('adviser/students/community-service/', this.student.id)
+      .get(
+        `adviser/students/community-service/${this.student.id}`,
+        `?acad_year=${acadYear.acad_year}&semester=${acadYear.semester}`
+      )
       .subscribe(
         (response) => {
           this.community_service = response;
@@ -195,17 +208,24 @@ export class StudentprofileComponent {
   }
 
   getSeminars() {
-    this.ds.get('adviser/students/seminar/', this.student.id).subscribe(
-      (response) => {
-        this.seminars = response;
-        this.seminars.forEach((seminar: any) => {
-          this.seminar_total_hours += seminar.total_hours;
-        });
-      },
-      (error) => {
-        console.error(error);
-      }
-    );
+    const acadYear: AcademicYear = this.us.getSelectedAcademicYears();
+
+    this.ds
+      .get(
+        `adviser/students/seminar/${this.student.id}`,
+        `?acad_year=${acadYear.acad_year}&semester=${acadYear.semester}`
+      )
+      .subscribe(
+        (response) => {
+          this.seminars = response;
+          this.seminars.forEach((seminar: any) => {
+            this.seminar_total_hours += seminar.total_hours;
+          });
+        },
+        (error) => {
+          console.error(error);
+        }
+      );
   }
 
   viewOtherTaskImage(seminar: any) {
@@ -264,30 +284,37 @@ export class StudentprofileComponent {
       );
   }
   getOjtInfo() {
-    this.ds.get('adviser/students/ojt-information/', this.student.id).subscribe(
-      (response) => {
-        let data = {
-          ...response.industry_partner,
-          ...response,
-        };
+    const acadYear: AcademicYear = this.us.getSelectedAcademicYears();
 
-        let supervisor = data.immediate_supervisor;
-        let supervisorFullName = `${supervisor?.first_name || ''} ${
-          supervisor?.last_name || ''
-        } ${supervisor?.ext_name || ''}`.trim();
-        data.supervisor_full_name = supervisorFullName;
+    this.ds
+      .get(
+        `adviser/students/ojt-information/${this.student.id}`,
+        `?acad_year=${acadYear.acad_year}&semester=${acadYear.semester}`
+      )
+      .subscribe(
+        (response) => {
+          let data = {
+            ...response.industry_partner,
+            ...response,
+          };
 
-        let full_address = `${data?.street || ''} ${data?.barangay || ''} ${
-          data?.municipality || ''
-        }, ${data?.province || ''}`;
-        data.full_address = full_address;
+          let supervisor = data.immediate_supervisor;
+          let supervisorFullName = `${supervisor?.first_name || ''} ${
+            supervisor?.last_name || ''
+          } ${supervisor?.ext_name || ''}`.trim();
+          data.supervisor_full_name = supervisorFullName;
 
-        this.ojtInfo = data;
-        console.log(this.ojtInfo);
-      },
-      (error) => {
-        console.error(error);
-      }
-    );
+          let full_address = `${data?.street || ''} ${data?.barangay || ''} ${
+            data?.municipality || ''
+          }, ${data?.province || ''}`;
+          data.full_address = full_address;
+
+          this.ojtInfo = data;
+          console.log(this.ojtInfo);
+        },
+        (error) => {
+          console.error(error);
+        }
+      );
   }
 }
