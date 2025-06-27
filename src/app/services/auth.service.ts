@@ -21,7 +21,10 @@ export class AuthService {
   ) {}
 
   login(credentials: { email: string; password: string }) {
-    return this.http.post<any>(`${this.apiUrl}login/adviser`, credentials).pipe(
+    const payload = {
+      payload: this.us.encryptPayload(credentials)
+    }
+    return this.http.post<any>(`${this.apiUrl}login/adviser`,  payload).pipe(
       tap((response) => {
         if (response.token) {
           this.us.setUserLogState();

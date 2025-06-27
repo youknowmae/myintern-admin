@@ -234,7 +234,11 @@ export class ViewComponent {
 
     let payload = new FormData();
 
-    payload.append('message', this.commentValue);
+    const data = {
+      message: this.commentValue
+    }
+
+    payload.append('payload', this.us.encryptPayload(data));
 
     this.ds
       .post(
@@ -295,18 +299,5 @@ export class ViewComponent {
   formatTimestamp(timestamp: string): string {
     const date = new Date(timestamp);
     return formatDate(date, 'MMM d, h:mm a', 'en-US');
-
-    // const now = new Date();
-    // // console.log(now)
-    // const date = new Date(timestamp);
-
-    // const isToday = now.toDateString() === date.toDateString();
-
-    // if (isToday) {
-    //   return formatDate(date, 'h:mm a', 'en-US');
-    // }
-    //  else {
-    //   return formatDate(date, 'MMM d, h:mm a', 'en-US');
-    // }
   }
 }

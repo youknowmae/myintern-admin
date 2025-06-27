@@ -3,6 +3,7 @@ import { MatDialogRef } from '@angular/material/dialog';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { DataService } from '../../../../../services/data.service';
 import Swal from 'sweetalert2';
+import { UserService } from '../../../../../services/user.service';
 
 @Component({
   selector: 'app-add-announcement',
@@ -18,7 +19,8 @@ export class AddAnnouncementComponent {
   constructor(
     private ref: MatDialogRef<AddAnnouncementComponent>,
     private fb: FormBuilder,
-    private ds: DataService
+    private ds: DataService,
+    private us: UserService
   ) {
     const today = new Date();
 
@@ -97,8 +99,11 @@ export class AddAnnouncementComponent {
     var formDetails = this.formDetails.value;
 
     var payload = new FormData();
-    payload.append('title', formDetails.title);
-    payload.append('description', formDetails.description);
+    const data = {
+      title: formDetails.title,
+      description: formDetails.description,
+    };
+    payload.append('payload', this.us.encryptPayload(data));
 
     if (this.file) payload.append('image', this.file);
 

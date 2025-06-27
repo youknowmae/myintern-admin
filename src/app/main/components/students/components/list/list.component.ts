@@ -310,7 +310,7 @@ export class ListComponent {
       return;
     }
 
-    const payload = {
+    const data = {
       id: element.id,
       grades: numericGrade,
     };
@@ -320,7 +320,7 @@ export class ListComponent {
       .post(
         `adviser/students/submit-grade`,
         `?acad_year=${acadYear.acad_year}&semester=${acadYear.semester}`,
-        payload
+        {payload: this.us.encryptPayload(data)}
       )
       .subscribe({
         next: (response: any) => {

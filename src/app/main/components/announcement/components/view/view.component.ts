@@ -3,6 +3,8 @@ import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { DataService } from '../../../../../services/data.service';
 import Swal from 'sweetalert2';
+import { UserService } from '../../../../../services/user.service';
+import { GlobalMethods } from '../../../../../shared/global.shared';
 
 @Component({
   selector: 'app-view',
@@ -19,7 +21,9 @@ export class ViewComponent {
     @Inject(MAT_DIALOG_DATA) public data: any,
     private ds: DataService,
     private ref: MatDialogRef<ViewComponent>,
-    private fb: FormBuilder
+    private fb: FormBuilder,
+    private us: UserService,
+    private gb: GlobalMethods
   ) {
     this.formDetails = this.fb.group({
       title: [null, Validators.required],
@@ -32,7 +36,7 @@ export class ViewComponent {
     this.formDetails.patchValue({
       title: this.data.title,
       description: this.data.description,
-      date: this.data.created_at,
+      date: this.gb.formatDate(this.data.created_at, 'MMMM, d, y'),
     });
   }
 
@@ -100,8 +104,12 @@ export class ViewComponent {
     var formDetails = this.formDetails.value;
 
     var payload = new FormData();
-    payload.append('title', formDetails.title);
-    payload.append('description', formDetails.description);
+
+    const data = {
+      title: formDetails.title,
+      description: formDetails.description,
+    };
+    payload.append('payload', this.us.encryptPayload(data));
 
     if (this.file) payload.append('image', this.file);
 

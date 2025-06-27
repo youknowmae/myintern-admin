@@ -120,7 +120,12 @@ export class ViewComponent {
     }).then((result) => {
       if (result.isConfirmed) {
         const formData = new FormData();
-        formData.append('remarks', result.value);
+
+        const data = {
+          remarks: result.value
+        }
+
+        formData.append('payload', this.us.encryptPayload(data));
         this.ds
           .post(
             'adviser/request/industryPartners/reject/',
