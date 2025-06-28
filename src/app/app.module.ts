@@ -15,7 +15,10 @@ import { RouterModule } from '@angular/router';
 
 import { LocationStrategy, HashLocationStrategy } from '@angular/common';
 
-import { HttpClientModule } from '@angular/common/http';
+import {
+  provideHttpClient,
+  withInterceptorsFromDi,
+} from '@angular/common/http';
 
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { AuthInterceptor } from './interceptors/auth';
@@ -33,12 +36,12 @@ import { ApplicationStatusTextPipe } from './pipes/application-status-text.pipe'
     MainComponent,
     PdfPreviewComponent,
   ],
+  bootstrap: [AppComponent],
   imports: [
     BrowserModule,
     AppRoutingModule,
     MatDialogModule,
     RouterModule,
-    HttpClientModule,
     ReactiveFormsModule,
     NgxDocViewerModule,
     MaterialsModules,
@@ -49,7 +52,7 @@ import { ApplicationStatusTextPipe } from './pipes/application-status-text.pipe'
     { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },
     { provide: HTTP_INTERCEPTORS, useClass: ResponseInterceptor, multi: true },
     { provide: LocationStrategy, useClass: HashLocationStrategy },
+    provideHttpClient(withInterceptorsFromDi()),
   ],
-  bootstrap: [AppComponent],
 })
 export class AppModule {}
