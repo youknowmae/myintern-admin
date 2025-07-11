@@ -1,54 +1,67 @@
-<main>
-    <div class="container-header">
-        <h1>Announcement</h1>
-        <div class="btn">
-            <button mat-ripple (click)="addAnnouncement()">+ New</button>
+<div class="header-container">
+  <h1>Announcement</h1>
+  <div class="btn">
+    <button mat-ripple (click)="addAnnouncement()">+ New</button>
+  </div>
+</div>
+
+<ng-container *ngIf="!isLoading; else loading">
+  <div class="card-container" *ngIf="announcements.length > 0; else noItems">
+    <div
+      class="card"
+      *ngFor="let announcement of announcements; let i = index"
+      [ngStyle]="{ 'animation-delay': i * 0.1 + 's' }"
+    >
+      <div class="image-container">
+        <img
+          [src]="
+            announcement.image ? announcement.image : 'assets/images/logo.png'
+          "
+          alt="logo image"
+          class="card-image"
+        />
+      </div>
+      <div class="card-details">
+        <h2>{{ announcement.title }}</h2>
+        <p>
+          <i class="fa-regular fa-calendar"></i
+          >{{ announcement.created_at | date : "MMMM d, y" }}
+        </p>
+        <p class="description">{{ announcement.description }}</p>
+
+        <div class="action-buttons">
+          <button
+            class="delete"
+            mat-raised-button
+            mat-ripple
+            matTooltip="Delete"
+            [matTooltipShowDelay]="400"
+            (click)="deleteConfirmation(announcement.id)"
+          >
+            <i class="bx bxs-trash"></i>
+          </button>
+          <button
+            class="edit"
+            mat-ripple
+            mat-raised-button
+            matTooltip="Edit"
+            [matTooltipShowDelay]="400"
+            (click)="editAnnouncement(announcement)"
+          >
+            <i class="bx bxs-edit"></i>
+          </button>
         </div>
+      </div>
     </div>
-    
-    <ng-container *ngIf="!isLoading; else loading">
-        <div class="card-container" *ngIf="announcements.length > 0; else noItems">
-            <div class="card" *ngFor="let announcement of announcements; let i = index" [ngStyle]="{'animation-delay': (i * 0.1) + 's'}">
-                <div class="image-container">
-                    <img [src]="(announcement.image) ? announcement.image : 'assets/images/logo.png'" alt="logo image" class="card-image">
-                </div>
-                <div class="card-details">
-                    <h2>{{ announcement.title }}</h2>
-                    <p><i class="fa-regular fa-calendar"></i>{{ announcement.created_at | date:'MMMM d, y'  }}</p>
-                    <p class="description">{{ announcement.description }}</p>
-    
-                    <div class="view-button">
-                        <button class="delete" 
-                            mat-raised-button
-                            mat-ripple
-                            matTooltip="Delete"
-                            [matTooltipShowDelay] = "400" 
-                            (click)="deleteConfirmation(announcement.id)">
-                            <i class='bx bxs-trash'></i>
-                        </button>
-                        <button class="edit" 
-                            mat-ripple
-                            mat-raised-button
-                            matTooltip="Edit"
-                            [matTooltipShowDelay] = "400" 
-                             (click)="editAnnouncement(announcement)">
-                            <i class='bx bxs-edit'></i>
-                        </button>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </ng-container>
-</main>
+  </div>
+</ng-container>
 
 <ng-template #loading>
-    <div class="loading">
-        <mat-spinner></mat-spinner>
-    </div>
+  <app-loading-spinner />
 </ng-template>
 
 <ng-template #noItems>
-    <div class="no-items-container">
-        <p>Sorry, no announcements found</p>
-    </div>
+  <div class="no-items-container">
+    <p>Sorry, no announcements found</p>
+  </div>
 </ng-template>

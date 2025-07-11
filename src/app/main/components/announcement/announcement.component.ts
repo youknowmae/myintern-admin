@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { ViewComponent } from './components/view/view.component';
+import { EditAnnouncementComponent } from './components/edit-announcement/edit-announcement.component';
 import { MatDialog } from '@angular/material/dialog';
 import { AddAnnouncementComponent } from './components/add-announcement/add-announcement.component';
 
@@ -42,7 +42,7 @@ export class AnnouncementComponent {
   }
 
   editAnnouncement(announcement: announcement) {
-    var modal = this.dialogRef.open(ViewComponent, {
+    var modal = this.dialogRef.open(EditAnnouncementComponent, {
       data: announcement,
       disableClose: true       
     })

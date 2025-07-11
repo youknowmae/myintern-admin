@@ -115,18 +115,18 @@ export class ListComponent {
     this.router.navigate(['main/requirements/view']);
   }
 
-  applyFilter(value: string) {
-    this.currentFilter = value;
-    this.filterStudent();
-    // if(value == "all") {
-    //   this.dataSource.data = this.unfilteredStudents
-    //   return
-    // }
+  // applyFilter(value: string) {
+  //   this.currentFilter = value;
+  //   this.filterStudent();
+  //   if (value == 'all') {
+  //     this.dataSource.data = this.unfilteredStudents;
+  //     return;
+  //   }
 
-    // this.dataSource.data = this.unfilteredStudents.filter((student: any) => {
-    //   return student.user.student_profile.program.includes(value)
-    // })
-  }
+  //   this.dataSource.data = this.unfilteredStudents.filter((student: any) => {
+  //     return student.user.student_profile.program.includes(value);
+  //   });
+  // }
 
   onStatusFilterChange(event: MatSelectChange) {
     console.log(event.value);
@@ -135,17 +135,17 @@ export class ListComponent {
   }
 
   filterStudent() {
-    let student;
+    let student = this.unfilteredStudents;
 
-    if (this.currentFilter == 'all') {
-      student = this.unfilteredStudents;
-    } else {
-      student = this.unfilteredStudents.filter((student: any) => {
-        return student.user.student_profile.program.includes(
-          this.currentFilter
-        );
-      });
-    }
+    // if (this.currentFilter == 'all') {
+    //   student = this.unfilteredStudents;
+    // } else {
+    //   student = this.unfilteredStudents.filter((student: any) => {
+    //     return student.user.student_profile.program.includes(
+    //       this.currentFilter
+    //     );
+    //   });
+    // }
 
     student = student.filter((student: any) => {
       return student.status == this.statusFilter;

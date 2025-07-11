@@ -8,6 +8,7 @@ import { MatLabel } from '@angular/material/form-field';
 import { MaterialsModules } from '../../../modules/materials.module';
 import { ViewModule } from './components/view/view.module';
 import { SharedModule } from '../../../modules/shared.module';
+import { DragScrollComponent, DragScrollItemDirective } from 'ngx-drag-scroll';
 
 
 @NgModule({
@@ -20,7 +21,9 @@ import { SharedModule } from '../../../modules/shared.module';
     StudentsRoutingModule,
     MaterialsModules,
     ViewModule,
-    SharedModule
+    SharedModule,
+    DragScrollComponent,
+    DragScrollItemDirective,
   ]
 })
 export class StudentsModule { }

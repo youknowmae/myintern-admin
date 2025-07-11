@@ -7,11 +7,11 @@ import { UserService } from '../../../../../services/user.service';
 import { GlobalMethods } from '../../../../../shared/global.shared';
 
 @Component({
-  selector: 'app-view',
-  templateUrl: './view.component.html',
-  styleUrl: './view.component.scss',
+  selector: 'app-edit-announcement',
+  templateUrl: './edit-announcement.component.html',
+  styleUrl: './edit-announcement.component.scss'
 })
-export class ViewComponent {
+export class EditAnnouncementComponent {
   file: any = null;
   formDetails: FormGroup;
 
@@ -20,7 +20,7 @@ export class ViewComponent {
   constructor(
     @Inject(MAT_DIALOG_DATA) public data: any,
     private ds: DataService,
-    private ref: MatDialogRef<ViewComponent>,
+    private ref: MatDialogRef<EditAnnouncementComponent>,
     private fb: FormBuilder,
     private us: UserService,
     private gb: GlobalMethods
@@ -141,4 +141,5 @@ export class ViewComponent {
       }
     );
   }
+
 }

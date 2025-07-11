@@ -1,225 +1,49 @@
-@keyframes fade-in {
-  from {
-    opacity: 0;
-  }
-  to {
-    opacity: 1;
-  }
-}
+@use "../../../themes/page-header";
+@use "../../../themes/card-list-base";
 
-.container-header {
-    width: 100%;
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    justify-content: space-between;
-    h1 {
-        margin: 0;
-        color: var(--main-orange);
-        opacity: .7;
-        font-size: 40px;
-        font-weight: 400;
-        padding: 10px;
-    }
-  
-    .btn {
-    
-        button {
-            border: 2px solid var(--secondary-color);
-            background-color: #ffffff;
-            font-size: 20px;
-            border-radius: 30px;
-            padding: 10px;
-            width: 120px;
-            cursor: pointer;
-        }
-  
-        button:hover {
-          background-color: var(--secondary-color);
-          color: #ffffff;
-        }
-    }
-  }
-    .card-container {
-      padding: 10px 0px;
-      height: 50%;
-      display: grid;
-      grid-template-columns: repeat(3, minmax(30%, 1fr));
-      gap: 8px;
-    }
-    .card {
-      width: auto;
-      // height: fit-content;
-      background-color: #ffffff; /* White background */
-      border-radius: 10px; /* Rounded corners */
-      box-shadow: 0 4px 8px rgba(0,0,0,0.5);  /*Card shadow */
-      border: solid 2px var(--border-color);
-      margin: 10px;
-      padding: 20px;
-      transform: scale(1);
-      transition: all .2s ease-in;
-
-      animation: fade-in 1s forwards; 
-      opacity: 0;         
-      will-change: opacity;     
-      
-  
-      .card-image {
-        width: 100%; /* or any specific width */
-        height: 200px; /* or any specific height */
-        background-color: #f3f3f3; /* a light grey placeholder color */
-        border-radius: 5px; /* if you want rounded corners */
-        margin-bottom: 10px; /* space between the image and the text below */
-        object-fit: contain;
-      }
-
-      h2, p {
-        i {
-          margin-right: 5px;
-        }
-
-        text-wrap: nowrap;
-        text-overflow: ellipsis;
-        overflow: hidden;
-      }
-
-      h2 {
-        font-size: medium; /* Larger title text */
-        margin: 0;
-      }
-
-      p {
-        font-size:small;
-        margin: 0;
-      }
-
-    }
-  
-    .card:hover{
-      transform: scale(1.05);
-      transition: all .2s ease-in;
-    }
-  
-  
-   /* CARD BUTTON */
-    .view-button {
-      margin-top: 4px;
-      display: flex;
-      flex-direction: row-reverse;
-    }
-  
-    .card button {
-      border: 2px solid; 
-      border-radius: 5px;
-      color: #ffffff;
-      padding: 2px 12px;
-      text-transform:none;
-      font-size: large;
-      cursor: pointer;
-
-      i {
-        font-size: 18px;
-        transform: translateY(1px);
-      }
-    }
-
-    .edit{     
-      background-color: var(--primary-color);
-    }
-    .delete{     
-      background-color: var(--warning-color);
-    }
-    
-    .card button:hover {
-      box-shadow: 0px 8px 15px -10px rgb(61, 61, 61);
-      transform: translate(0px, -2px);
-      background: white;
-    }
-
-    
-    .edit:hover {
-      color: var(--primary-color) !important;
-    }
-    .delete:hover {
-      color: var(--warning-color) !important;
-    }
-  
-.loading {
-  width: 100%;
-  height: 70vh;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
-.no-items-container {
-  padding: 20px;
-  animation: forwards fade-in .2s;
-
-  p {
-    font-size: 18px;
-    color: #666;
-  }
-}
-  
-  .pagination-container {
-    grid-column: 1 / -1;
-    margin-top: 20px;
-    display: flex;
-    justify-content: flex-end ;
-  }
-  
-  .pagination {
-    justify-content: center;
-    display: flex;
-    flex-direction: row;
-    padding: 30px;
-    flex-wrap: wrap;
-    align-items: center;
-  
-    div {
-      padding: 20px 20px;
-    }
-  
+.header-container {
+  .btn {
     button {
-      margin: 0px 10px;
-      border: none;
-      background: none;
+      border: 2px solid var(--secondary-color);
+      background-color: #ffffff;
+      font-size: 20px;
+      border-radius: 30px;
+      padding: 10px;
+      width: 120px;
       cursor: pointer;
     }
-  
-    // button:hover {
-    //   // background-color: red;
-    // }
-  
-    button:disabled {
-      opacity: 0.5;
-      cursor: default;
+
+    button:hover {
+      background-color: var(--secondary-color);
+      color: #ffffff;
     }
-    button:disabled img {
-      background-color: transparent !important;
-    }
-  
+  }
+}
+
+@media only screen and (min-width: 1080px) {
+  .card {
+    h2,
     p {
-      font-size: large;
+      i {
+        margin-right: 5px;
+      }
+
+      text-wrap: nowrap;
+      text-overflow: ellipsis;
+      overflow: hidden;
+    }
+
+    h2 {
+      font-size: medium; /* Larger title text */
+      margin: 0;
+    }
+
+    p {
+      font-size: small;
+      margin: 0;
     }
   }
-  
-  .icons img {
-    width: 30px;
-    height: 30px;
-    object-fit: none;
-    border-radius: 50%;
-    padding: 0px 10px;
-    transform: scale(1.4);
-    transition: all .2s ease-in-out;
-  }
-  
-  .icons img:hover{
-    background-color: #e2e2e2;
-    transition: all .2s ease-in-out;
-  }
-  
+
   .card-container > div:first-child {
     grid-column: 1/-1;
     height: 350px;
@@ -231,7 +55,7 @@
       width: 30%;
     }
 
-    .card-image {  
+    .card-image {
       width: 100%;
       height: 100%;
     }
@@ -262,15 +86,4 @@
   .card-container > div:first-child:hover {
     transform: scale(1.02);
   }
-
-  @media only screen and (min-width: 1900px) {
-    .card-container {
-      grid-template-columns: repeat(4, minmax(20%, 1fr));
-    }
-  }
-
-  @media only screen and (max-width: 1120px) {
-    .card-container {
-      grid-template-columns: repeat(2, minmax(40%, 1fr));
-    }
 }

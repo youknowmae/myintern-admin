@@ -1,7 +1,7 @@
 <div class="container">
   <div class="content">
     <div class="header">
-      <h1>Add Announcement</h1>
+      <h1>Edit Announcement</h1>
       <i class="fa-solid fa-xmark" (click)="closePopup()"></i>
     </div>
     <div class="body">
@@ -43,18 +43,20 @@
             <div class="col-md-4">
               <div class="file-input-container">
                 <div class="label">Upload Image</div>
+                <!-- (change)="uploadFile($event)" -->
                 <input
                   class="file-input"
                   type="file"
-                  accept=".jpeg, .png, .jpg, .svg"
+                  accept=".jpeg, .png, .jpg, .svgs"
                   (change)="uploadFile($event)"
                 />
               </div>
             </div>
           </div>
-
           <div class="btn">
-            <button type="submit" [disabled]="formDetails.invalid">Post</button>
+            <button type="submit" [disabled]="formDetails.invalid">
+              Update
+            </button>
           </div>
         </div>
       </form>

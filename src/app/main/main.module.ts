@@ -21,6 +21,7 @@ import { EvaluationModule } from './components/evaluation/evaluation.module';
 import { EndorsementComponent } from './components/endorsement/endorsement.component';
 import { EndorsementModule } from './components/endorsement/endorsement.module';
 import { SharedModule } from '../modules/shared.module';
+import { LoadingSpinnerComponent } from "../components/loading-spinner/loading-spinner.component";
 
 @NgModule({
   declarations: [
@@ -47,6 +48,7 @@ import { SharedModule } from '../modules/shared.module';
     MaterialsModules,
     EvaluationModule,
     SharedModule,
-  ],
+    LoadingSpinnerComponent
+],
 })
 export class MainModule {}

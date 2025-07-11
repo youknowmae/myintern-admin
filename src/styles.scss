@@ -184,6 +184,10 @@ mat-form-field {
   width: 100%;
 }
 
+.mat-sort-header-container {
+  justify-content: center;
+}
+
 @media only screen and (max-width: 720px) {
   .col-md-1,
   .col-md-2,

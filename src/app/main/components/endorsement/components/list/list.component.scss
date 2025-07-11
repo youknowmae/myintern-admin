@@ -1,290 +1,66 @@
-@keyframes fade-in {
-    from {
-      opacity: 0;
-    }
-    to {
-      opacity: 1;
-    }
-  }
+@use "../../../../../themes/page-header";
+@use "../../../../../themes/card-list-base";
+@use "../../../../../themes/custom-pagination";
 
-  .buttons {
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    margin: 10px 0px;
-
-    button {
-        padding: 2px 8px;
-        font-size: 18px;
-        background-color: var(--main-bg-color);
-        border: none;
-        cursor: pointer;
-        color: var(--primary-color);
-        margin-bottom: 10px;
-    }
-
-    .filter-container {
-        display: flex;
-        flex-direction: row;
-    }
-    .filter {
-        display: flex;
-        justify-content: center;
-        margin-right: 30px;
-        position: relative;
-    }
-
-    .filter::before {
-        content: '';
-        position: absolute; 
-        transform: translateY(45px);
-        width: 0px;
-        height: 2px;
-        background: var(--primary-color);
-        transition: all .3s ease-in-out;
-      }
-
-    .filter.active::before {
-        width: 120px;
-    }
-
-    
-    .search-container {
-      width: 300px;
-      padding: 0 10px;
-    }
-
-    .right {
-        display: flex;
-
-        .class-filter {
-            width: 180px;
-            margin-left: 20px;
-        }
-
-        .export {
-            margin-left: 20px;
-        }
-    }
-}
-  
-  .container-header {
-    width: 100%;
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    justify-content: space-between;
-    h1 {
-        color: var(--main-orange);
-        opacity: .6;
-        font-size: 40px;
-        font-weight: 400;
-        padding: 10px;
-    }
-  }
-    .card-container {
-      padding: 10px 0px;
-      height: 50%;
-      display: grid;
-      grid-template-columns: repeat(3, minmax(30%, 1fr));
-      gap: 8px;
-    }
-    .card {
-      width: auto;
-      // height: fit-content;
-      background-color: #ffffff; /* White background */
-      border-radius: 10px; /* Rounded corners */
-      box-shadow: 0 4px 8px rgba(0,0,0,0.5);  /*Card shadow */
-      border: solid 2px var(--border-color);
-      margin: 10px;
-      padding: 20px;
-      transform: scale(1);
-      transition: all .2s ease-in;
-      
-      animation: fade-in 1s forwards; 
-      opacity: 0;         
-      will-change: opacity;    
-
-      .info-section {
-        display: flex;
-        align-items: center;
-        margin-bottom: 6px;
-  
-        mat-icon {
-          color: rgba(0,0,0,0.60);
-          margin-right: 5px;
-          overflow: visible;
-        }
-      }
-
-      
-      h2 {
-        font-size: medium; 
-        line-height: 22px;
-        margin: 0;
-      }
-
-      p {
-        font-size:small;
-      }
-    
-      .status {
-        width: 200px;
-        height: 30px;
-        margin-bottom: 15px;
-        border-radius: 5px;
-  
-        //rejected and cancelled
-        &.rejected {
-          background: linear-gradient(179.1deg, rgb(245, 86, 86) 2.3%, rgb(255, 21, 21) 98.3%);
-        }
-  
-        //accepted and pending
-        &.pending {
-          background: #e4c659; //#F4D35E - lighter alternative
-        }
-  
-        //monitoring
-        &.monitoring {
-          background: linear-gradient(179.1deg, rgb(43, 170, 96) 2.3%, rgb(129, 204, 104) 98.3%);
-        }
-        h3 {
-          padding: 0;
-          text-align: center;
-          color: var(--primary-font-color);
-          width: 100%;
-        }
-      }
-  
-    }
-  
-  /* CARD CONTENTS */
-  .card-image {
-      width: 100%; /* or any specific width */
-      height: 200px; /* or any specific height */
-      background-color: #f3f3f3; /* a light grey placeholder color */
-      border-radius: 5px; /* if you want rounded corners */
-      margin-bottom: 10px; /* space between the image and the text below */
-      object-fit: contain;
-    }
-  
-  
-   /* CARD BUTTON */
-    .view-button {
-      display: flex;
-      height: 12%;
-      flex-direction: row-reverse;
-    }
-  
-    .card button {
-      background-color: var(--main-orange);
-      border: 2px solid var(--main-orange);
-      border-radius: 5px; /* Rounded corners */
-      color: var(--primary-font-color);
-      padding: 3px 20px;
-      text-transform:none;
-      font-size: medium;
-      cursor: pointer;
-  }
-    .card button:hover {
-      box-shadow: 0px 8px 15px -10px rgb(61, 61, 61);
-      transform: translate(0px, -2px);
-      background: white;
-      color: var(--main-orange);
-      cursor: pointer;
-    }
-
-.loading {
-  width: 100%;
-  height: 70vh;
+.filters {
   display: flex;
-  justify-content: center;
-  align-items: center;
+  flex-direction: row;
+  justify-content: space-between;
+  gap: 10px;
+  padding: 10px;
+  flex-wrap: wrap;
+
+  .search-filter {
+    width: 300px;
+  }
+
+  .class-filter {
+    width: 180px;
+  }
 }
 
-.no-items-container {
-  padding: 20px;
-  animation: forwards fade-in .2s;
-
-  p {
-    font-size: 18px;
-    color: #666;
-  }
-}
-  
-  
-  .pagination-container {
-    grid-column: 1 / -1;
-    margin-top: 20px;
-    display: flex;
-    justify-content: flex-end ;
-  }
-  
-  .pagination {
-    justify-content: center;
-    display: flex;
-    flex-direction: row;
-    padding: 30px;
-    flex-wrap: wrap;
-    align-items: center;
-  
-    div {
-      padding: 20px 20px;
-    }
-  
-    button {
-      margin: 0px 10px;
-      border: none;
-      background: none;
-      cursor: pointer;
-    }
-  
-    // button:hover {
-    //   // background-color: red;
-    // }
-  
-    button:disabled {
-      opacity: 0.5;
-      cursor: default;
-    }
-    button:disabled img {
-      background-color: transparent !important;
-    }
-  
-    p {
-      font-size: large;
-    }
-  }
-  
-  .icons img {
-    width: 30px;
+.card {
+  .status {
+    width: 200px;
     height: 30px;
-    object-fit: none;
-    border-radius: 50%;
-    padding: 0px 10px;
-    transform: scale(1.4);
-    transition: all .2s ease-in-out;
-  }
-  
-  .icons img:hover{
-    background-color: #e2e2e2;
-    transition: all .2s ease-in-out;
-  }
-  
-  @media only screen and (min-width: 1900px) {
-    .card-container {
-      grid-template-columns: repeat(4, minmax(20%, 1fr));
+    margin-bottom: 15px;
+    border-radius: 5px;
+
+    //rejected and cancelled
+    &.rejected {
+      background: linear-gradient(
+        179.1deg,
+        rgb(245, 86, 86) 2.3%,
+        rgb(255, 21, 21) 98.3%
+      );
+    }
+
+    //accepted and pending
+    &.pending {
+      background: #e4c659; //#F4D35E - lighter alternative
+    }
+
+    //monitoring
+    &.monitoring {
+      background: linear-gradient(
+        179.1deg,
+        rgb(43, 170, 96) 2.3%,
+        rgb(129, 204, 104) 98.3%
+      );
+    }
+    h3 {
+      padding: 0;
+      text-align: center;
+      color: var(--primary-font-color);
+      width: 100%;
     }
   }
-  
-  @media only screen and (max-width: 1120px) {
-    .card-container {
-      grid-template-columns: repeat(2, minmax(40%, 1fr));
+}
+
+@media only screen and (max-width: 680px) {
+  .filters {
+    > * {
+      flex: 1;
     }
   }
-  
-  @media only screen and (max-width: 768px) {
-    .card-container {
-      grid-template-columns: repeat(1, minmax(90% , 1fr));
-    }
-  }
+}

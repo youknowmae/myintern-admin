@@ -1,95 +1,133 @@
-<main>
-    <div class="container-header">
-        <h1>Company Endorsements</h1>
+<div class="header-container">
+  <h1>Company Endorsements</h1>
+</div>
+
+<ng-container *ngIf="!isLoading; else loading">
+  <div class="filters">
+    <div class="search-filter">
+      <mat-form-field floatLabel="always">
+        <mat-label>Search</mat-label>
+        <input
+          #searchInput
+          (input)="search(searchInput.value)"
+          matInput
+          placeholder="Aa"
+        />
+      </mat-form-field>
     </div>
+    <div class="class-filter">
+      <mat-form-field>
+        <mat-label>Status Filter</mat-label>
+        <mat-select
+          disableRipple
+          (selectionChange)="onStatusFilterChange($event)"
+          [(value)]="statusFilter"
+        >
+          <mat-option [value]="'all'"> All </mat-option>
+          <mat-option [value]="0"> For Recomendation </mat-option>
+          <mat-option [value]="1"> Not Recomended</mat-option>
+          <mat-option [value]="2"> For Approval</mat-option>
+          <mat-option [value]="3"> Declined</mat-option>
+          <mat-option [value]="4"> Approved</mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
+  </div>
 
+  <div
+    class="card-container"
+    *ngIf="filteredIndustryPartners.length > 0; else noItems"
+  >
+    <div class="card" *ngFor="let industryPartner of filteredIndustryPartners">
+      <div
+        class="status"
+        [class.rejected]="
+          industryPartner.request_status == 1 ||
+          industryPartner.request_status == 3
+        "
+        [class.pending]="
+          industryPartner.request_status == 0 ||
+          industryPartner.request_status == 2
+        "
+        [class.monitoring]="industryPartner.request_status == 4"
+      >
+        <h3>{{ industryPartner.status_text }}</h3>
+      </div>
 
-    <ng-container *ngIf="!isLoading; else loading">
-        <div class="buttons">
-            <div class="filter-container">
-                <div class="search-container">
-                    <mat-form-field floatLabel="always">
-                        <mat-label>Search</mat-label>
-                        <input #searchInput (input)="search(searchInput.value)" matInput placeholder="Aa" />
-                    </mat-form-field>
-                </div>
+      <img
+        [src]="
+          industryPartner.image
+            ? industryPartner.image
+            : 'assets/images/logo.png'
+        "
+        alt="logo image"
+        class="card-image"
+      />
+      <div class="info-section">
+        <mat-icon>apartment</mat-icon>
+        <h2>{{ industryPartner.company_name }}</h2>
+      </div>
 
-            </div>
-            <div class="right">
-                <div class="class-filter">
-                    <mat-form-field>
-                        <mat-label>Status Filter</mat-label>
-                        <mat-select disableRipple (selectionChange)="onStatusFilterChange($event)" [(value)]="statusFilter">
-                            <mat-option [value]="'all'"> All </mat-option>
-                            <mat-option [value]="0"> For Recomendation </mat-option>
-                            <mat-option [value]="1"> Not Recomended</mat-option>
-                            <mat-option [value]="2"> For Approval</mat-option>
-                            <mat-option [value]="3"> Declined</mat-option>
-                            <mat-option [value]="4"> Approved</mat-option>
-                            <!-- <mat-option [value]="3"> Approved</mat-option> -->
-                        </mat-select>
-                    </mat-form-field>
-                </div>
-            </div>
+      <div class="info-section">
+        <mat-icon>location_on</mat-icon>
+        <p>{{ industryPartner.full_location }}</p>
+      </div>
+
+      <div class="action-buttons">
+        <button
+          class="edit"
+          mat-ripple
+          (click)="viewIndustryPartnerRequest(industryPartner.id)"
+        >
+          <b>View</b>
+        </button>
+      </div>
+    </div>
+    <div class="pagination-container">
+      <div class="pagination">
+        <div>
+          <p>
+            {{ pagination.from }} - {{ pagination.to }} of
+            {{ pagination.total }}
+          </p>
         </div>
-
-        <div class="card-container" *ngIf="filteredIndustryPartners.length > 0; else noItems">
-            <div class="card" *ngFor="let industryPartner of filteredIndustryPartners">
-                <div class="status"
-                [class.rejected]="industryPartner.request_status == 1 || industryPartner.request_status == 3"
-                [class.pending]="industryPartner.request_status == 0 || industryPartner.request_status == 2"
-                [class.monitoring]="industryPartner.request_status == 4">
-                    <h3>{{ industryPartner.status_text }}</h3>
-                </div>
-
-                <img [src]="(industryPartner.image) ? industryPartner.image : 'assets/images/logo.png'" alt="logo image" class="card-image">
-                <div class="info-section">
-                    <mat-icon>apartment</mat-icon>
-                    <h2>{{ industryPartner.company_name }}</h2>
-                </div>
-
-                <div class="info-section">
-                    <mat-icon>location_on</mat-icon>
-                    <p>{{ industryPartner.full_location }}</p>
-                </div>
-
-                <div class="view-button">
-                    <button class="view" mat-ripple (click)="viewIndustryPartnerRequest(industryPartner.id)"><b>View</b></button>
-                </div>
-            </div>
-            <div class="pagination-container">
-              <div class="pagination">
-                <div>
-                    <p> {{ pagination.from}} - {{ pagination.to }} of {{ pagination.total }} </p>
-                </div>
-                <div class="icons">
-                  <button (click)="jumpPage(1)" [disabled]="pagination.current_page === 1">
-                      <img src="assets/images/chevron-bar-left.svg" >
-                  </button>
-                  <button (click)="changePage(-1)" [disabled]="pagination.current_page === 1">
-                      <img src="assets/images/chevron-left.svg" >
-                  </button>
-                  <button (click)="changePage(1)"[disabled]="pagination.current_page === pagination.last_page">
-                      <img src="assets/images/chevron-right.svg">
-                  </button>
-                  <button (click)="jumpPage(pagination.last_page)" [disabled]="pagination.current_page === pagination.last_page">
-                      <img src="assets/images/chevron-bar-right.svg">
-                  </button>
-                </div>
-              </div>
-            </div>
+        <div class="icons">
+          <button
+            (click)="jumpPage(1)"
+            [disabled]="pagination.current_page === 1"
+          >
+            <img src="assets/images/chevron-bar-left.svg" />
+          </button>
+          <button
+            (click)="changePage(-1)"
+            [disabled]="pagination.current_page === 1"
+          >
+            <img src="assets/images/chevron-left.svg" />
+          </button>
+          <button
+            (click)="changePage(1)"
+            [disabled]="pagination.current_page === pagination.last_page"
+          >
+            <img src="assets/images/chevron-right.svg" />
+          </button>
+          <button
+            (click)="jumpPage(pagination.last_page)"
+            [disabled]="pagination.current_page === pagination.last_page"
+          >
+            <img src="assets/images/chevron-bar-right.svg" />
+          </button>
         </div>
-    </ng-container>
-</main>
+      </div>
+    </div>
+  </div>
+</ng-container>
 
 <ng-template #loading>
-    <div class="loading">
-        <mat-spinner></mat-spinner>
-    </div>
+  <app-loading-spinner />
 </ng-template>
 
 <ng-template #noItems>
-    <div class="no-items-container">
-        <p>Sorry, no data found</p>
-    </div>
+  <div class="no-items-container">
+    <p>Sorry, no data found</p>
+  </div>
 </ng-template>

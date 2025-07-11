@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import { NgModule, isDevMode } from '@angular/core';
 import {
   BrowserModule,
   provideClientHydration,
@@ -28,6 +28,7 @@ import { NgxDocViewerModule } from 'ngx-doc-viewer';
 import { MaterialsModules } from './modules/materials.module';
 import { ResponseInterceptor } from './interceptors/response.interceptor';
 import { ApplicationStatusTextPipe } from './pipes/application-status-text.pipe';
+import { ServiceWorkerModule } from '@angular/service-worker';
 
 @NgModule({
   declarations: [
@@ -45,6 +46,12 @@ import { ApplicationStatusTextPipe } from './pipes/application-status-text.pipe'
     ReactiveFormsModule,
     NgxDocViewerModule,
     MaterialsModules,
+    ServiceWorkerModule.register('ngsw-worker.js', {
+      enabled: !isDevMode(),
+      // Register the ServiceWorker as soon as the application is stable
+      // or after 30 seconds (whichever comes first).
+      registrationStrategy: 'registerWhenStable:30000'
+    }),
   ],
   providers: [
     provideClientHydration(),
