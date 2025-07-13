@@ -1,94 +1,131 @@
-
-  
 <ng-container *ngIf="!isLoading; else loading">
-    <div class="container">
-        <button class="back-button" mat-button mat-ripple [routerLink]="['../list']" routerLinkActive="router-link-active">
-            <span class="icon">
-                <i class="fa-solid fa-arrow-left"></i>
-            </span>
-            <p>
-                Back
-            </p>
-        </button>
-    
-        <div class="card card-accent">
-            <mat-stepper [linear]="true" #stepper>
-                <mat-step>
-                    <ng-template matStepLabel>Company Details</ng-template>
-                    <div class="details">
-                        <div class="image">
-                            <img [src]="(industryPartner.image) ? industryPartner.image : 'assets/images/logo.png'" alt="logo image">
-                        </div>
-                        <div class="container-info">
-                            <div class="info">
-                                <div class="details-section">
-                                    <h2>{{ industryPartner.company_name }}</h2>
-                                    <p>{{ industryPartner.description }}</p>
-                                </div>
-                                
-                                <div class="details-section">
-                                    <p> <b>Company Head:</b> {{ industryPartner.company_head.full_name }}, {{ industryPartner.head_position }}</p>
-                                </div>
-                                
-                                <div class="details-section">
-                                    <p> <b>Immediate Supervisor :</b> {{ industryPartner.immediate_supervisor.full_name }}, {{ industryPartner.supervisor_position }}</p>
-                                </div>
-                
-                                
-                                <div class="details-section">
-                                    <ul>
-                                        <li>
-                                            <mat-icon>location_on</mat-icon>
-                                            <p><b>Company Address: </b> {{  industryPartner.full_address }}</p> 
-                                        </li>
-                                        <li>
-                                            <mat-icon>mail</mat-icon>
-                                            <p><b>Official Email Address:</b> {{ industryPartner.email }}</p>
-                                        </li>
-                                        <li *ngIf="industryPartner.telephone_number">
-                                            <mat-icon>call</mat-icon>
-                                            <p><b>Telephone Number:</b> {{ industryPartner.telephone_number }}</p>
-                                        </li>
-                                        <li *ngIf="industryPartner.fax_number">
-                                            <mat-icon>fax</mat-icon>
-                                            <p><b>Fax Number:</b> {{ industryPartner.fax_number }}</p>
-                                        </li>
-                                        <li>
-                                            <mat-icon>call</mat-icon>
-                                            <p><b>Contact Number:</b> {{ industryPartner.mobile_number }}</p>
-                                        </li>
-                                        <li *ngIf="industryPartner.website">
-                                            <mat-icon>public</mat-icon>
-                                            <p><b>Website:</b> {{ industryPartner.website }}</p>
-                                        </li>
-                                    </ul>   
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="stepper-content">
-                        <div *ngIf="industryPartner.remarks">
-                            <h3 style="margin: 0; font-weight: 600;" >Remarks:</h3>
-                            <p>{{ industryPartner.remarks }}</p>
-                        </div>
-                    </div>
-            
-                    <div class="action-buttons">
-                        <button class="warning" mat-ripple *ngIf="industryPartner.request_status === 0" (click)="reject()">Not Recommend</button>
-                        <button class="success" mat-ripple *ngIf="industryPartner.request_status === 0" mat-button (click)="verify()">Recommend</button>
-                    </div>
-                </mat-step>
-            </mat-stepper>
-        </div>
-    </div>
+  <div class="container">
+    <button
+      class="back-button"
+      mat-button
+      mat-ripple
+      [routerLink]="['../list']"
+      routerLinkActive="router-link-active"
+    >
+      <span class="icon">
+        <i class="fa-solid fa-arrow-left"></i>
+      </span>
+      <p>Back</p>
+    </button>
 
+    <div class="card card-accent">
+      <mat-stepper [linear]="true" #stepper>
+        <mat-step>
+          <ng-template matStepLabel>Company Details</ng-template>
+          <div class="details">
+            <div class="image">
+              <img
+                [src]="
+                  industryPartner.image
+                    ? industryPartner.image
+                    : 'assets/images/logo.png'
+                "
+                alt="logo image"
+              />
+            </div>
+            <div class="container-info">
+              <div class="info">
+                <div class="details-section">
+                  <h2>{{ industryPartner.company_name }}</h2>
+                  <p>{{ industryPartner.description }}</p>
+                </div>
+
+                <div class="details-section">
+                  <p>
+                    <b>Company Head:</b>
+                    {{ industryPartner.company_head.full_name }},
+                    {{ industryPartner.head_position }}
+                  </p>
+                </div>
+
+                <div class="details-section">
+                  <p>
+                    <b>Immediate Supervisor :</b>
+                    {{ industryPartner.immediate_supervisor.full_name }},
+                    {{ industryPartner.supervisor_position }}
+                  </p>
+                </div>
+
+                <div class="details-section">
+                  <ul>
+                    <li>
+                      <mat-icon>location_on</mat-icon>
+                      <p>
+                        <b>Company Address: </b>
+                        {{ industryPartner.full_address }}
+                      </p>
+                    </li>
+                    <li>
+                      <mat-icon>mail</mat-icon>
+                      <p>
+                        <b>Official Email Address:</b>
+                        {{ industryPartner.email }}
+                      </p>
+                    </li>
+                    <li *ngIf="industryPartner.telephone_number">
+                      <mat-icon>call</mat-icon>
+                      <p>
+                        <b>Telephone Number:</b>
+                        {{ industryPartner.telephone_number }}
+                      </p>
+                    </li>
+                    <li *ngIf="industryPartner.fax_number">
+                      <mat-icon>fax</mat-icon>
+                      <p><b>Fax Number:</b> {{ industryPartner.fax_number }}</p>
+                    </li>
+                    <li>
+                      <mat-icon>call</mat-icon>
+                      <p>
+                        <b>Contact Number:</b>
+                        {{ industryPartner.mobile_number }}
+                      </p>
+                    </li>
+                    <li *ngIf="industryPartner.website">
+                      <mat-icon>public</mat-icon>
+                      <p><b>Website:</b> {{ industryPartner.website }}</p>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="stepper-content" *ngIf="industryPartner.remarks">
+            <div>
+              <h3 style="margin: 0; font-weight: 600">Remarks:</h3>
+              <p>{{ industryPartner.remarks }}</p>
+            </div>
+          </div>
+
+          <div class="action-buttons">
+            <button
+              class="warning"
+              mat-ripple
+              *ngIf="industryPartner.request_status === 0"
+              (click)="reject()"
+            >
+              Not Recommend
+            </button>
+            <button
+              class="success"
+              mat-ripple
+              *ngIf="industryPartner.request_status === 0"
+              mat-button
+              (click)="verify()"
+            >
+              Recommend
+            </button>
+          </div>
+        </mat-step>
+      </mat-stepper>
+    </div>
+  </div>
 </ng-container>
 
-
 <ng-template #loading>
-    <app-loading-spinner></app-loading-spinner>
+  <app-loading-spinner></app-loading-spinner>
 </ng-template>
-
-
-
-            

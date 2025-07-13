@@ -11,8 +11,7 @@ import { EvaluationComponent } from './components/evaluation/evaluation.componen
 import { LoadingSpinnerComponent } from '../../../../../components/loading-spinner/loading-spinner.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { SharedModule } from '../../../../../modules/shared.module';
-
-
+import { DragScrollComponent, DragScrollItemDirective } from 'ngx-drag-scroll';
 
 @NgModule({
   declarations: [
@@ -20,8 +19,7 @@ import { SharedModule } from '../../../../../modules/shared.module';
     AttendanceformComponent,
     AccomplishmentreportComponent,
     ExitPollComponent,
-    EvaluationComponent
-
+    EvaluationComponent,
   ],
   imports: [
     CommonModule,
@@ -29,7 +27,9 @@ import { SharedModule } from '../../../../../modules/shared.module';
     ViewRoutingModule,
     LoadingSpinnerComponent,
     ReactiveFormsModule,
-    SharedModule
-  ]
+    SharedModule,
+    DragScrollComponent,
+    DragScrollItemDirective,
+  ],
 })
-export class ViewModule { }
+export class ViewModule {}

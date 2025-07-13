@@ -1,15 +1,7 @@
-<link
-  rel="stylesheet"
-  href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
-  integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA=="
-  crossorigin="anonymous"
-  referrerpolicy="no-referrer"
-/>
-
 <div class="container">
-  <div class="download-btn" (click)="downloadResume()">
+  <!-- <div class="download-btn" (click)="downloadResume()">
     <i class="fa-solid fa-download"></i>
-  </div>
+  </div> -->
   <div class="resumecontent" #captureArea>
     <div class="header">
       <div class="img-area">
@@ -135,507 +127,326 @@
   </div>
 </div>
 
-<!-- <div class="container">
-  <div class="info-header">
-    <div class="info-image">
-      <img
-        [src]="student.image ? student.image : 'assets/images/profile-dark.png'"
-        alt="Image"
-      />
+<div style="padding: 10px">
+  <div class="card">
+    <!-- seminars and training -->
+    <div class="other_container" *ngIf="student.practicum_level === 1">
+      <div class="content">
+        <h3>Seminars and Training Attended related to IT</h3>
+        <div class="table-container">
+          <div class="table">
+            <div class="table-row">
+              <div class="col-md-3">
+                <h4>Title of Seminar</h4>
+              </div>
+              <div class="col-md-2">
+                <h4>Organizer</h4>
+              </div>
+              <div class="col-md-3">
+                <h4>Venue</h4>
+              </div>
+              <div class="col-md-2">
+                <h4>Date</h4>
+              </div>
+              <div class="col-md-2">
+                <h4>No. of Hours</h4>
+              </div>
+              <div class="col-md-2">
+                <h4>Certificate</h4>
+              </div>
+            </div>
+            <div class="table-row" *ngFor="let seminar of seminars">
+              <div class="col-md-3">
+                <p>{{ seminar.title }}</p>
+              </div>
+              <div class="col-md-2">
+                <p>{{ seminar.organizer }}</p>
+              </div>
+              <div class="col-md-3">
+                <p>{{ seminar.venue }}</p>
+              </div>
+              <div class="col-md-2">
+                <p>{{ seminar.date }}</p>
+              </div>
+              <div class="col-md-2">
+                <p>{{ seminar.total_hours }}</p>
+              </div>
+              <div class="col-md-2">
+                <div class="actions">
+                  <button
+                    class="view"
+                    mat-raised-button
+                    matTooltip="View"
+                    [matTooltipShowDelay]="400"
+                    (click)="viewSeminarImage(seminar)"
+                  >
+                    <i class="bx bx-detail"></i>
+                  </button>
+                </div>
+              </div>
+            </div>
+            <div class="table-row">
+              <p>Total Hours: {{ seminar_total_hours }}</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- seminars and training end -->
+
+    <div class="other_container" *ngIf="student.practicum_level === 1">
+      <div class="content">
+        <h3>Other task/Activities</h3>
+        <div class="table-container">
+          <div class="table">
+            <div class="table-row">
+              <div class="col-md-3">
+                <h4>Task Name</h4>
+              </div>
+              <div class="col-md-3">
+                <h4>Venue</h4>
+              </div>
+              <div class="col-md-2">
+                <h4>Date</h4>
+              </div>
+              <div class="col-md-2">
+                <h4>Number of Hours</h4>
+              </div>
+              <div class="col-md-2">
+                <h4>Evidence</h4>
+              </div>
+            </div>
+            <div class="table-row" *ngFor="let item of other_tasks">
+              <div class="col-md-3">
+                <p>{{ item.title }}</p>
+              </div>
+              <div class="col-md-3">
+                <p>{{ item.venue }}</p>
+              </div>
+              <div class="col-md-2">
+                <p>{{ item.date }}</p>
+              </div>
+              <div class="col-md-2">
+                <p>{{ item.total_hours }}</p>
+              </div>
+              <div class="col-md-2">
+                <div class="actions">
+                  <button
+                    class="view"
+                    mat-raised-button
+                    matTooltip="View"
+                    [matTooltipShowDelay]="400"
+                    (click)="viewSeminarImage(item)"
+                  >
+                    <i class="bx bx-detail"></i>
+                  </button>
+                </div>
+              </div>
+            </div>
+            <div class="table-row">
+              <p>Total Hours: {{ other_task_total_hours }}</p>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
 
-    <div class="info-content">
-      <h1>RIDLEY OTRERA ANGELES</h1>
-      <table>
-        <tbody>
-          <tr>
-            <td><p>Student Number:</p></td>
-            <td>
-              <p>{{ student.student_profile.student_number }}</p>
-            </td>
-          </tr>
-          <tr>
-            <td><p>Address:</p></td>
-            <td>
-              <p>
-                East Bajac Bajac, Olongapo City, Zambales
-              </p>
-            </td>
-          </tr> -->
-<!-- <tr>
-            <td><p>College/Program/Yr. level:</p></td>
-            <td>
-              <p>
-                CCS/{{ student.student_profile.program }}/{{
-                  student.student_profile.year_level
-                }}
-              </p>
-            </td>
-          </tr> -->
-<!-- <tr>
-            <td><p>Domain Email:</p></td>
-            <td>
+    <!-- community service -->
+    <div class="other_container" *ngIf="student.practicum_level === 2">
+      <h3>Community Service</h3>
+      <div class="table-container">
+        <div class="table">
+          <div class="table-row">
+            <div class="col-md-2">
+              <h4>Project Name</h4>
+            </div>
+            <div class="col-md-2">
+              <h4>Beneficiary</h4>
+            </div>
+            <div class="col-md-2">
+              <h4>Date Start</h4>
+            </div>
+            <div class="col-md-3">
+              <h4>Date End</h4>
+            </div>
+            <div class="col-md-2">
+              <h4>Status</h4>
+            </div>
+            <div class="col-md-1">
+              <h4>Actions</h4>
+            </div>
+          </div>
+          <div class="table-row" *ngIf="community_service">
+            <div class="col-md-2">
+              <p>{{ community_service.project_name }}</p>
+            </div>
+            <div class="col-md-2">
+              <p>{{ community_service.beneficiary }}</p>
+            </div>
+            <div class="col-md-2">
+              <p>{{ community_service.start_date | date : "MMM d, y" }}</p>
+            </div>
+            <div class="col-md-3">
+              <p>{{ community_service.end_date | date : "MMM d, y" }}</p>
+            </div>
+            <div class="col-md-2">
               <p>
                 {{
-                  student.student_profile.student_number
-                }}&#64;gordoncollege.edu.ph
+                  community_service.is_verified ? "Verified" : "Not verified"
+                }}
               </p>
-            </td>
-          </tr>
-          <tr>
-            <td><p>Contact Number:</p></td>
-            <td>
-              <p>{{ student.student_profile.contact_number }}</p>
-            </td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
-  </div> -->
-
-<!-- OG Code -->
-<!-- <div class="info-container">
-    <div class="content">
-      <h3>Personal Information</h3>
-      <div class="row">
-        <div class="col-md-3">
-          <mat-form-field appearance="outline" floatLabel="always">
-            <mat-label>Date of Birth</mat-label>
-            <input matInput [(ngModel)]="student.birth_date" readonly />
-          </mat-form-field>
+            </div>
+            <div class="col-md-1">
+              <div class="actions">
+                <button
+                  class="view"
+                  mat-raised-button
+                  matTooltip="View"
+                  [matTooltipShowDelay]="400"
+                  (click)="viewCommunityService(community_service)"
+                >
+                  <i class="bx bx-detail"></i>
+                </button>
+              </div>
+            </div>
+          </div>
+          <div class="table-row">
+            <p>Total Hours: {{ community_service_total_hours }} / 150 Hours</p>
+          </div>
         </div>
-        <div class="col-md-2">
-          <mat-form-field appearance="outline" floatLabel="always">
-            <mat-label>Civil Status</mat-label>
-            <input
-              matInput
-              [(ngModel)]="student.student_profile.civil_status"
-              readonly
-            />
-          </mat-form-field>
-        </div>
-        <div class="col-md-2">
-          <mat-form-field appearance="outline" floatLabel="always">
-            <mat-label>Gender</mat-label>
-            <input matInput [(ngModel)]="student.gender" readonly />
-          </mat-form-field>
-        </div>
-        <div class="col-md-2">
-          <mat-form-field appearance="outline" floatLabel="always">
-            <mat-label>Citizenship</mat-label>
-            <input matInput [(ngModel)]="student.citizenship" readonly />
-          </mat-form-field>
-        </div>
-        <div class="col-md-3">
-          <mat-form-field appearance="outline" floatLabel="always">
-            <mat-label>Religion</mat-label>
-            <input matInput [(ngModel)]="student.religion" readonly />
-          </mat-form-field>
+        <div
+          class="btn"
+          *ngIf="community_service && community_service.is_verified == false"
+        >
+          <button mat-ripple (click)="verifyCommunityServices()">Verify</button>
         </div>
       </div>
 
-      <div class="row">
-        <div class="col-md-4">
-          <mat-form-field appearance="outline" floatLabel="always">
-            <mat-label>Father's name</mat-label>
-            <input
-              matInput
-              [(ngModel)]="student.student_profile.father_name"
-              readonly
-            />
-          </mat-form-field>
-        </div>
-        <div class="col-md-2">
-          <mat-form-field appearance="outline" floatLabel="always">
-            <mat-label>Employment</mat-label>
-            <input
-              matInput
-              [(ngModel)]="student.student_profile.father_employment"
-              readonly
-            />
-          </mat-form-field>
-        </div>
-        <div class="col-md-4">
-          <mat-form-field appearance="outline" floatLabel="always">
-            <mat-label>Mother's name</mat-label>
-            <input
-              matInput
-              [(ngModel)]="student.student_profile.mother_name"
-              readonly
-            />
-          </mat-form-field>
-        </div>
-        <div class="col-md-2">
-          <mat-form-field appearance="outline" floatLabel="always">
-            <mat-label>Employment</mat-label>
-            <input
-              matInput
-              [(ngModel)]="student.student_profile.mother_employment"
-              readonly
-            />
-          </mat-form-field>
-        </div>
-      </div>
-    </div>
-
-    <div class="content">
-      <h3>Address</h3>
-      <div class="row">
-        <div class="col-md-3">
-          <mat-form-field appearance="outline" floatLabel="always">
-            <mat-label>Region</mat-label>
-            <input matInput [(ngModel)]="student.region" readonly />
-          </mat-form-field>
-        </div>
-        <div class="col-md-3">
-          <mat-form-field appearance="outline" floatLabel="always">
-            <mat-label>Province</mat-label>
-            <input matInput [(ngModel)]="student.province" readonly />
-          </mat-form-field>
-        </div>
-        <div class="col-md-3">
-          <mat-form-field appearance="outline" floatLabel="always">
-            <mat-label>Municipality</mat-label>
-            <input matInput [(ngModel)]="student.municipality" readonly />
-          </mat-form-field>
-        </div>
-        <div class="col-md-3">
-          <mat-form-field appearance="outline" floatLabel="always">
-            <mat-label>Barangay</mat-label>
-            <input matInput [(ngModel)]="student.barangay" readonly />
-          </mat-form-field>
-        </div>
-      </div>
-      <div class="row">
-        <div class="col-md-6">
-          <mat-form-field appearance="outline" floatLabel="always">
-            <mat-label>Address</mat-label>
-            <input matInput [(ngModel)]="student.address" readonly />
-          </mat-form-field>
-        </div>
-        <div class="col-md-2">
-          <mat-form-field appearance="outline" floatLabel="always">
-            <mat-label>Zip Code</mat-label>
-            <input matInput [(ngModel)]="student.zip_code" readonly />
-          </mat-form-field>
-        </div>
-      </div>
-    </div> -->
-
-<!-- seminars and training -->
-<div class="other_container" *ngIf="student.practicum_level === 1">
-  <div class="content">
-    <h3>Seminars and Training Attended related to IT</h3>
-    <div class="table-container">
-      <div class="table">
-        <div class="table-row">
-          <div class="col-md-3">
-            <h4>Title of Seminar</h4>
-          </div>
-          <div class="col-md-2">
-            <h4>Organizer</h4>
-          </div>
-          <div class="col-md-3">
-            <h4>Venue</h4>
-          </div>
-          <div class="col-md-2">
-            <h4>Date</h4>
-          </div>
-          <div class="col-md-2">
-            <h4>No. of Hours</h4>
-          </div>
-          <div class="col-md-2">
-            <h4>Certificate</h4>
-          </div>
-        </div>
-        <div class="table-row" *ngFor="let seminar of seminars">
-          <div class="col-md-3">
-            <p>{{ seminar.title }}</p>
-          </div>
-          <div class="col-md-2">
-            <p>{{ seminar.organizer }}</p>
-          </div>
-          <div class="col-md-3">
-            <p>{{ seminar.venue }}</p>
-          </div>
-          <div class="col-md-2">
-            <p>{{ seminar.date }}</p>
-          </div>
-          <div class="col-md-2">
-            <p>{{ seminar.total_hours }}</p>
-          </div>
-          <div class="col-md-2">
-            <div class="actions">
-              <button
-                class="view"
-                mat-raised-button
-                matTooltip="View"
-                [matTooltipShowDelay]="400"
-                (click)="viewSeminarImage(seminar)"
-              >
-                <i class="bx bx-detail"></i>
-              </button>
+      <!-- skills -->
+      <div class="content">
+        <h3>Skill area</h3>
+        <div class="table-container">
+          <div class="table">
+            <div class="table-row">
+              <div class="col-md-6">
+                <h4>Strong Skills Area</h4>
+              </div>
+              <div class="col-md-6">
+                <h4>Weak Skills Area</h4>
+              </div>
+            </div>
+            <div class="table-row" *ngFor="let skill of skills">
+              <div class="col-md-6">
+                <p>{{ skill.strong_skill }}</p>
+              </div>
+              <div class="col-md-6">
+                <p>{{ skill.weak_skill }}</p>
+              </div>
             </div>
           </div>
         </div>
-        <div class="table-row">
-          <p>Total Hours: {{ seminar_total_hours }}</p>
-        </div>
       </div>
-    </div>
-  </div>
-</div>
-<!-- seminars and training end -->
+      <!-- skills end -->
 
-<div class="other_container" *ngIf="student.practicum_level === 1">
-  <div class="content">
-    <h3>Other task/Activities</h3>
-    <div class="table-container">
-      <div class="table">
-        <div class="table-row">
-          <div class="col-md-3">
-            <h4>Task Name</h4>
-          </div>
-          <div class="col-md-3">
-            <h4>Venue</h4>
-          </div>
-          <div class="col-md-2">
-            <h4>Date</h4>
-          </div>
-          <div class="col-md-2">
-            <h4>Number of Hours</h4>
-          </div>
-          <div class="col-md-2">
-            <h4>Evidence</h4>
-          </div>
-        </div>
-        <div class="table-row" *ngFor="let item of other_tasks">
-          <div class="col-md-3">
-            <p>{{ item.title }}</p>
-          </div>
-          <div class="col-md-3">
-            <p>{{ item.venue }}</p>
-          </div>
-          <div class="col-md-2">
-            <p>{{ item.date }}</p>
-          </div>
-          <div class="col-md-2">
-            <p>{{ item.total_hours }}</p>
-          </div>
-          <div class="col-md-2">
-            <div class="actions">
+      <!-- personality test -->
+      <div class="content">
+        <h3>Personality Test</h3>
+        <div class="row">
+          <div class="col-md-4">
+            <div class="file-input-container">
               <button
-                class="view"
-                mat-raised-button
-                matTooltip="View"
-                [matTooltipShowDelay]="400"
-                (click)="viewSeminarImage(item)"
+                *ngIf="personality_test"
+                (click)="viewPersonalityTestImage(personality_test)"
               >
-                <i class="bx bx-detail"></i>
+                View
               </button>
+              <div class="label">Personality Test Result</div>
+              <div class="text">
+                {{ personality_test ? personality_test.file_name : "None" }}
+              </div>
             </div>
           </div>
         </div>
-        <div class="table-row">
-          <p>Total Hours: {{ other_task_total_hours }}</p>
-        </div>
       </div>
-    </div>
-  </div>
-</div>
-
-<!-- community service -->
-<div class="other_container" *ngIf="student.practicum_level === 2">
-  <h3>Community Service</h3>
-  <div class="table-container">
-    <div class="table">
-      <div class="table-row">
-        <div class="col-md-2">
-          <h4>Project Name</h4>
-        </div>
-        <div class="col-md-2">
-          <h4>Beneficiary</h4>
-        </div>
-        <div class="col-md-2">
-          <h4>Date Start</h4>
-        </div>
-        <div class="col-md-3">
-          <h4>Date End</h4>
-        </div>
-        <div class="col-md-2">
-          <h4>Status</h4>
-        </div>
-        <div class="col-md-1">
-          <h4>Actions</h4>
-        </div>
-      </div>
-      <div class="table-row" *ngIf="community_service">
-        <div class="col-md-2">
-          <p>{{ community_service.project_name }}</p>
-        </div>
-        <div class="col-md-2">
-          <p>{{ community_service.beneficiary }}</p>
-        </div>
-        <div class="col-md-2">
-          <p>{{ community_service.start_date | date : "MMM d, y" }}</p>
-        </div>
-        <div class="col-md-3">
-          <p>{{ community_service.end_date | date : "MMM d, y" }}</p>
-        </div>
-        <div class="col-md-2">
-          <p>
-            {{ community_service.is_verified ? "Verified" : "Not verified" }}
-          </p>
-        </div>
-        <div class="col-md-1">
-          <div class="actions">
-            <button
-              class="view"
-              mat-raised-button
-              matTooltip="View"
-              [matTooltipShowDelay]="400"
-              (click)="viewCommunityService(community_service)"
-            >
-              <i class="bx bx-detail"></i>
-            </button>
-          </div>
-        </div>
-      </div>
-      <div class="table-row">
-        <p>Total Hours: {{ community_service_total_hours }} / 150 Hours</p>
-      </div>
-    </div>
-    <div
-      class="btn"
-      *ngIf="community_service && community_service.is_verified == false"
-    >
-      <button mat-ripple (click)="verifyCommunityServices()">Verify</button>
+      <!-- personality test end -->
     </div>
   </div>
 
-  <!-- skills -->
-  <div class="content">
-    <h3>Skill area</h3>
-    <div class="table-container">
-      <div class="table">
-        <div class="table-row">
-          <div class="col-md-6">
-            <h4>Strong Skills Area</h4>
+  <!-- OJT Information Content -->
+  <div class="card" *ngIf="ojtInfo?.company_name">
+    <div class="ojt_info-container">
+      <div class="content">
+        <h3>OJT Details</h3>
+        <div class="row">
+          <div class="col-md-5">
+            <mat-form-field appearance="outline" floatLabel="always">
+              <mat-label>Company Name</mat-label>
+              <input matInput [(ngModel)]="ojtInfo.company_name" readonly />
+            </mat-form-field>
           </div>
-          <div class="col-md-6">
-            <h4>Weak Skills Area</h4>
-          </div>
-        </div>
-        <div class="table-row" *ngFor="let skill of skills">
-          <div class="col-md-6">
-            <p>{{ skill.strong_skill }}</p>
-          </div>
-          <div class="col-md-6">
-            <p>{{ skill.weak_skill }}</p>
+          <div class="col-md-7">
+            <mat-form-field appearance="outline" floatLabel="always">
+              <mat-label>Company Address</mat-label>
+              <input matInput [(ngModel)]="ojtInfo.full_address" readonly />
+            </mat-form-field>
           </div>
         </div>
-      </div>
-    </div>
-  </div>
-  <!-- skills end -->
+        <div class="row">
+          <div class="col-md-5">
+            <mat-form-field appearance="outline" floatLabel="always">
+              <mat-label>Supervisor Name</mat-label>
+              <input
+                matInput
+                [(ngModel)]="ojtInfo.supervisor_full_name"
+                readonly
+              />
+            </mat-form-field>
+          </div>
+          <div class="col-md-3">
+            <mat-form-field appearance="outline" floatLabel="always">
+              <mat-label>Position</mat-label>
+              <input
+                matInput
+                [(ngModel)]="ojtInfo.supervisor_position"
+                readonly
+              />
+            </mat-form-field>
+          </div>
+        </div>
 
-  <!-- personality test -->
-  <div class="content">
-    <h3>Personality Test</h3>
-    <div class="row">
-      <div class="col-md-4">
-        <div class="file-input-container">
-          <button
-            *ngIf="personality_test"
-            (click)="viewPersonalityTestImage(personality_test)"
-          >
-            View
-          </button>
-          <div class="label">Personality Test Result</div>
-          <div class="text">
-            {{ personality_test ? personality_test.file_name : "None" }}
+        <div class="row">
+          <div class="col-md-3">
+            <mat-form-field appearance="outline" floatLabel="always">
+              <mat-label>Start Date</mat-label>
+              <input matInput [(ngModel)]="ojtInfo.start_date" readonly />
+            </mat-form-field>
+          </div>
+          <div class="col-md-3">
+            <mat-form-field appearance="outline" floatLabel="always">
+              <mat-label>Number of Hours</mat-label>
+              <input matInput [(ngModel)]="student.required_hours" readonly />
+            </mat-form-field>
           </div>
         </div>
-      </div>
-    </div>
-  </div>
-  <!-- personality test end -->
-</div>
 
-<!-- OJT Information Content -->
-<div class="ojt_content" *ngIf="ojtInfo?.company_name">
-  <div class="ojt_info-container">
-    <div class="content">
-      <h3>OJT Details</h3>
-      <div class="row">
-        <div class="col-md-5">
-          <mat-form-field appearance="outline" floatLabel="always">
-            <mat-label>Company Name</mat-label>
-            <input matInput [(ngModel)]="ojtInfo.company_name" readonly />
-          </mat-form-field>
-        </div>
-        <div class="col-md-7">
-          <mat-form-field appearance="outline" floatLabel="always">
-            <mat-label>Company Address</mat-label>
-            <input matInput [(ngModel)]="ojtInfo.full_address" readonly />
-          </mat-form-field>
-        </div>
-      </div>
-      <div class="row">
-        <div class="col-md-5">
-          <mat-form-field appearance="outline" floatLabel="always">
-            <mat-label>Supervisor Name</mat-label>
-            <input
-              matInput
-              [(ngModel)]="ojtInfo.supervisor_full_name"
-              readonly
-            />
-          </mat-form-field>
-        </div>
-        <div class="col-md-3">
-          <mat-form-field appearance="outline" floatLabel="always">
-            <mat-label>Position</mat-label>
-            <input
-              matInput
-              [(ngModel)]="ojtInfo.supervisor_position"
-              readonly
-            />
-          </mat-form-field>
-        </div>
-      </div>
-
-      <div class="row">
-        <div class="col-md-3">
-          <mat-form-field appearance="outline" floatLabel="always">
-            <mat-label>Start Date</mat-label>
-            <input matInput [(ngModel)]="ojtInfo.start_date" readonly />
-          </mat-form-field>
-        </div>
-        <div class="col-md-3">
-          <mat-form-field appearance="outline" floatLabel="always">
-            <mat-label>Number of Hours</mat-label>
-            <input matInput [(ngModel)]="student.required_hours" readonly />
-          </mat-form-field>
-        </div>
-      </div>
-
-      <div class="row">
-        <div class="col-md-4">
-          <mat-form-field appearance="outline" floatLabel="always">
-            <mat-label>Department/Unit</mat-label>
-            <input matInput [(ngModel)]="ojtInfo.department" readonly />
-          </mat-form-field>
-        </div>
-        <div class="col-md-6">
-          <mat-form-field appearance="outline" floatLabel="always">
-            <mat-label>OJT Task</mat-label>
-            <textarea
-              matInput
-              [(ngModel)]="ojtInfo.task"
-              rows="4"
-              readonly
-            ></textarea>
-          </mat-form-field>
+        <div class="row">
+          <div class="col-md-4">
+            <mat-form-field appearance="outline" floatLabel="always">
+              <mat-label>Department/Unit</mat-label>
+              <input matInput [(ngModel)]="ojtInfo.department" readonly />
+            </mat-form-field>
+          </div>
+          <div class="col-md-6">
+            <mat-form-field appearance="outline" floatLabel="always">
+              <mat-label>OJT Task</mat-label>
+              <textarea
+                matInput
+                [(ngModel)]="ojtInfo.task"
+                rows="4"
+                readonly
+              ></textarea>
+            </mat-form-field>
+          </div>
         </div>
       </div>
     </div>

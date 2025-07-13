@@ -7,6 +7,7 @@ import { ListComponent } from './components/list/list.component';
 import { MaterialsModules } from '../../../modules/materials.module';
 import { LoadingSpinnerComponent } from '../../../components/loading-spinner/loading-spinner.component';
 import { SharedModule } from '../../../modules/shared.module';
+import { DragScrollComponent, DragScrollItemDirective } from 'ngx-drag-scroll';
 
 @NgModule({
   declarations: [ViewComponent, ListComponent],
@@ -16,6 +17,8 @@ import { SharedModule } from '../../../modules/shared.module';
     MaterialsModules,
     LoadingSpinnerComponent,
     SharedModule,
+    DragScrollComponent,
+    DragScrollItemDirective,
   ],
 })
 export class RequirementsModule {}
